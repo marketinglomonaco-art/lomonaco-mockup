@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lo Monaco · Colchones · Diseño 2</title>
+<meta name="description" content="Cuatro colchones. Pruébalo 14 noches. Envío y montaje gratis.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300..800&display=swap">
+<link rel="stylesheet" href="assets/d2.css?v=1793280437">
+</head>
+<body data-page="home" data-producto="">
+<div id="hd"></div>
+<main id="main">
+
+<!-- 1 · HERO a sangre: una frase, un botón -->
+<section class="hero">
+  <picture><source media="(max-width: 700px)" srcset="img/hero-movil-860.webp"><img src="img/hero-1800.webp" srcset="img/hero-960.webp 960w, img/hero-1800.webp 1800w" sizes="100vw" width="1800" height="1139" alt="Una pareja en su dormitorio, sobre un colchón Lo Monaco" fetchpriority="high"></picture>
+  <div class="w hero-in">
+    <div><span class="k"><span class="hide-m">Colchones Lo Monaco · </span><span class="stars" aria-hidden="true">★★★★½</span> 4,39 en Trusted Shops</span>
+      <h1 class="d1 hero-t"><span class="ln"><span>Elige bien.</span></span><span class="ln" style="--d:120ms"><span><em>Duerme mejor.</em></span></span></h1></div>
+    <div class="hero-side rv" style="--d:300ms">
+      <p>Colchones desde<br><b class="num" id="h-desde"></b></p>
+      <a class="b" href="#elige">Encuentra el tuyo <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a>
+      <a class="u" href="#coleccion">Ver los cuatro colchones</a>
+    </div>
+  </div>
+</section>
+
+<!-- 2 · LOS CUATRO: filas a todo el ancho, un clic a cada ficha -->
+<section class="sec" id="coleccion" style="padding-bottom:0">
+  <div class="w sec-h"><div><span class="k">La colección</span><h2 class="d2"><span class="ln"><span>Cuatro colchones.</span></span><span class="ln" style="--d:100ms"><span><em>Uno es el tuyo.</em></span></span></h2></div>
+    <a class="u" href="colchones.html">Compararlos en tu medida</a></div>
+  <div class="list" id="list"></div>
+</section>
+
+<!-- 3 · ¿CUÁL ES EL TUYO?: dos preguntas, recomendación al momento -->
+<section class="split pick" id="elige">
+  <div class="pick-q" id="pick-q">
+    <div><span class="k">En 20 segundos</span><h2 class="d2" style="margin-top:18px"><span class="ln"><span>¿Cuál es</span></span><span class="ln" style="--d:100ms"><span><em>el tuyo?</em></span></span></h2></div>
+    <div class="pick-g"><p>¿Cómo te gusta el colchón?</p><div class="seg">
+      <button type="button" data-q="sens" data-v="firme" aria-pressed="false">Firme</button>
+      <button type="button" data-q="sens" data-v="media" aria-pressed="true">Ni duro ni blando</button>
+      <button type="button" data-q="sens" data-v="suave" aria-pressed="false">Suave</button></div></div>
+    <div class="pick-g"><p>¿Pasas calor por la noche?</p><div class="seg">
+      <button type="button" data-q="calor" data-v="si" aria-pressed="false">Sí</button>
+      <button type="button" data-q="calor" data-v="no" aria-pressed="true">No</button></div></div>
+    <p style="color:var(--mute);font-size:14px">¿Prefieres hablarlo? <a class="u" href="tel:+34868286752" data-lead="selector">868 28 67 52</a> · L–V de 9:00 a 18:00</p>
+  </div>
+  <div class="pick-r" id="pick-r" aria-live="polite"></div>
+</section>
+
+<!-- 4 · BANDA LM: sin riesgo -->
+<section class="band sec"><div class="w">
+  <div class="sec-h"><div><span class="k">Sin riesgo</span><h2 class="d2"><span class="ln"><span>Compra con calma.</span></span></h2></div></div>
+  <ul class="prom">
+    <li class="rv"><b class="num">14</b><span>noches de prueba</span><small>Duerme con él en casa. Si no te convence, lo recogemos en tu casa.</small></li>
+    <li class="rv" style="--d:90ms"><b class="num">10</b><span>años de garantía</span><small>Cubre los defectos de fabricación y el núcleo del colchón.</small></li>
+    <li class="rv" style="--d:180ms"><b class="num">0 €</b><span>envío y montaje</span><small>En la península. Te llega en 5 a 7 días laborables.</small></li>
+  </ul>
+</div></section>
+
+<!-- 5 · PACK a sangre: colchón + canapé, con regalos -->
+<section class="split">
+  <figure><img src="img/pack-conf-canape-1200.webp" srcset="img/pack-conf-canape-700.webp 700w, img/pack-conf-canape-1200.webp 1200w" sizes="(max-width: 900px) 100vw, 50vw" width="1200" height="896" alt="Colchón Lo Monaco sobre canapé abatible, con almohadas y edredón" loading="lazy"></figure>
+  <div class="split-b">
+    <span class="k k--lm">Packs</span>
+    <h2 class="d2" style="margin-top:18px"><span class="ln"><span>Colchón + canapé.</span></span><span class="ln" style="--d:100ms"><span><em>Lo demás, de regalo.</em></span></span></h2>
+    <ul class="gifts" id="gifts"></ul>
+    <div class="pack-p"><a class="b" href="colchon-natura-gold.html?base=canape">Montar mi pack <i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></i></a><p>Packs desde<b class="num" id="pack-desde"></b></p></div>
+  </div>
+</section>
+
+<!-- 6 · OPINIONES REALES -->
+<section class="sec sec--t quote"><div class="w">
+  <span class="k">Opiniones verificadas · <span class="stars">★★★★½</span> 4,39 en Trusted Shops</span>
+  <blockquote id="q" style="margin-top:28px"></blockquote>
+  <div class="quote-f"><p class="quote-m" id="q-m"></p><div class="dots" id="q-dots"></div></div>
+</div></section>
+
+<!-- 7 · LLAMADA: la otra vía de compra -->
+<section class="call"><div class="w">
+  <span class="k">¿Dudas? Te ayudamos a elegir</span>
+  <a class="tel num" href="tel:+34868286752" data-lead="home-final">868 28 67 52</a>
+  <div class="call-f"><span>De lunes a viernes, de 9:00 a 18:00</span><span>O escríbenos por <a class="u" href="https://wa.me/+34650282094" data-lead="whatsapp">WhatsApp</a></span></div>
+</div></section>
+
+</main>
+<div id="ft"></div>
+<script src="assets/datos.js?v=1793280437"></script>
+<script src="assets/d2.js?v=1793280437"></script>
+</body>
+</html>
