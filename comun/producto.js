@@ -27,10 +27,12 @@
   var alts = ['sobre un canapé de madera, con almohadas', 'esquina con la cinta Lomonaco', 'esquina sobre canapé de madera',
     'lateral con el nombre del modelo', 'detalle de la etiqueta', 'detalle del asa lateral', 'superficie acolchada de cerca'];
   var fotos = alts.map(function (alt, i) { return { f: '../img/producto-0' + (i + 1), g: i ? 947 : 1400, h: i ? 947 : 1200, alt: alt, video: i === 1 || i === 2 }; });
+  // Paco, 29/10: la foto grande es la nueva de cada modelo (antes salía el Gran Natura en las 4 fichas)
+  if (P.fotoNueva) fotos[0] = { f: P.fotoNueva, g: 1024, h: 1024, alt: 'esquina con el nombre del modelo', sq: true };
   var PLAY = '<span class="p-vid" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span><span class="p-vid-k" aria-hidden="true">Vídeo</span>';
   var gal = $('#p-gal');
   gal.innerHTML = fotos.map(function (x, i) {
-    return '<figure' + (i ? '' : ' class="is-main"') + (x.video ? ' data-video' : '') + '><img src="' + x.f + '-' + x.g + '.webp" srcset="' + x.f + '-560.webp 560w, ' + x.f + '-' + x.g + '.webp ' + x.g + 'w"' +
+    return '<figure' + (i ? '' : ' class="is-main' + (x.sq ? ' is-square' : '') + '"') + (x.video ? ' data-video' : '') + '><img src="' + x.f + '-' + x.g + '.webp" srcset="' + x.f + '-560.webp 560w, ' + x.f + '-' + x.g + '.webp ' + x.g + 'w"' +
       ' sizes="' + (i ? '(max-width: 900px) 100vw, 32vw' : '(max-width: 900px) 100vw, 64vw') + '" width="' + x.g + '" height="' + x.h + '"' +
       ' alt="' + P.titulo + ': ' + x.alt + '"' + (i ? ' loading="lazy"' : ' fetchpriority="high"') + '>' +
       (x.video ? '<button type="button" class="p-vid-b" aria-label="Ver el vídeo: ' + x.alt + '">' + PLAY + '</button>' : '') + '</figure>';
@@ -56,8 +58,13 @@
     $('#p-base').innerHTML = BASES.map(function (b) {
       var d = b.tabla[st.medida], dis = !d;
       var diff = d && b.k !== 'solo' ? '+' + LM.eur(d.p - solo.p) : (d ? LM.eur(d.p) : 'No disponible en ' + LM.medidaTxt(st.medida));
-      return '<label class="p-card' + (dis ? ' is-na' : '') + '"><input type="radio" name="base" value="' + b.k + '"' + (st.base === b.k ? ' checked' : '') + (dis ? ' disabled' : '') + '>' +
-        '<span><b>' + b.t + '</b><small>' + b.d + '</small></span><em>' + diff + '</em></label>';
+      // Paco, 29/10: «Solo colchón» lleva la foto de la almohada y destaca que se regalan (120 € el par)
+      var R = b.k === 'solo' && LM.REGALO_SOLO;
+      return '<label class="p-card' + (R ? ' p-card--regalo' : '') + (dis ? ' is-na' : '') + '"><input type="radio" name="base" value="' + b.k + '"' + (st.base === b.k ? ' checked' : '') + (dis ? ' disabled' : '') + '>' +
+        (R ? '<img class="p-card-img" src="' + R.img + '" alt="Almohada Lomonaco" width="240" height="160" loading="lazy">' : '') +
+        '<span><b>' + b.t + '</b><small>' + b.d + '</small></span><em>' + diff + '</em>' +
+        (R ? '<span class="p-card-gift">' + LM.ico('gift') + '<span><strong>' + R.t + '</strong> · ' + R.d + '</span></span>' : '') +
+        '</label>';
     }).join('');
   }
   var sel = LM.selector($('#p-size'), {

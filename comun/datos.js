@@ -159,7 +159,7 @@ LM.PRODUCTOS = {
     sensacionLarga: 'Es el más acogedor de nuestros cuatro colchones: tiene la firmeza más baja de la gama. Notas que te recibe suave y, debajo, que los muelles te sujetan.',
     durTxt: 'El látex recupera su forma después de cada noche: así evitas que se hunda donde duermes.',
     id: 41658, nombre: 'Natura Látex', titulo: 'Colchón Natura Látex', url: 'colchon-natura-latex.html',
-    img: '../img/natura-latex-01-560.webp', imgDetalle: '../img/natura-latex-02-560.webp', foto: 'nueva',
+    img: '../img/natura-latex-nueva-560.webp', foto: 'nueva', fotoNueva: '../img/natura-latex-nueva', imgDetalle: '../img/natura-latex-02-560.webp',
     etiqueta: 'Efecto nube', nucleo: 'Muelles ensacados + látex', tipo: 'latex', altura: '32 cm',
     firmeza: 75, adaptabilidad: 85, sensacion: 'acogedora',
     sensacionTxt: 'La más acogedora de la gama. Te recibe suave y te sujeta bien.',
@@ -332,6 +332,8 @@ LM.FILTROS_B = {
 /* Ficha de pack (29/10). Paco: comprando colchón + canapé (o base) juntos, se regalan almohadas, edredón y protector.
    Colores: canapé = los 4 de la tienda. Base: Paco pide 4 colores; son los de la «Base tapizada de tela»
    (la base del pack en la tienda, la antideslizante, solo tiene Blanco y Chocolate): pendiente de confirmar. */
+/* Promo de la ficha (Paco, 29/10): al comprar solo el colchón regalamos las almohadas, valoradas en 120 € el par */
+LM.REGALO_SOLO = { t: 'Almohadas de regalo', d: 'Valoradas en 120\u00a0€ el par', img: '../img/almohada-regalo-240.webp' };
 LM.REGALOS = [['Almohadas', 'Para cada lado de la cama', 'almohada'], ['Edredón nórdico', 'Listo para la primera noche', 'edredon'], ['Protector de colchón', 'Cuida tu colchón desde el primer día', 'protector']];
 LM.PACK_BASES = {
   canape: { t: 'Canapé abatible', corto: 'canapé', d: 'De madera, con mucho espacio para guardar', img: '../img/pack-conf-canape', tabla: 'Canape',
