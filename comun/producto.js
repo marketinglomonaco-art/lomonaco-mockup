@@ -27,12 +27,10 @@
   var alts = ['sobre un canapé de madera, con almohadas', 'esquina con la cinta Lomonaco', 'esquina sobre canapé de madera',
     'lateral con el nombre del modelo', 'detalle de la etiqueta', 'detalle del asa lateral', 'superficie acolchada de cerca'];
   var fotos = alts.map(function (alt, i) { return { f: '../img/producto-0' + (i + 1), g: i ? 947 : 1400, h: i ? 947 : 1200, alt: alt, video: i === 1 || i === 2 }; });
-  // Paco, 29/10: la foto grande es la nueva de cada modelo (antes salía el Gran Natura en las 4 fichas)
-  if (P.fotoNueva) fotos[0] = { f: P.fotoNueva, g: 1024, h: 1024, alt: 'esquina con el nombre del modelo', sq: true };
   var PLAY = '<span class="p-vid" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span><span class="p-vid-k" aria-hidden="true">Vídeo</span>';
   var gal = $('#p-gal');
   gal.innerHTML = fotos.map(function (x, i) {
-    return '<figure' + (i ? '' : ' class="is-main' + (x.sq ? ' is-square' : '') + '"') + (x.video ? ' data-video' : '') + '><img src="' + x.f + '-' + x.g + '.webp" srcset="' + x.f + '-560.webp 560w, ' + x.f + '-' + x.g + '.webp ' + x.g + 'w"' +
+    return '<figure' + (i ? '' : ' class="is-main"') + (x.video ? ' data-video' : '') + '><img src="' + x.f + '-' + x.g + '.webp" srcset="' + x.f + '-560.webp 560w, ' + x.f + '-' + x.g + '.webp ' + x.g + 'w"' +
       ' sizes="' + (i ? '(max-width: 900px) 100vw, 32vw' : '(max-width: 900px) 100vw, 64vw') + '" width="' + x.g + '" height="' + x.h + '"' +
       ' alt="' + P.titulo + ': ' + x.alt + '"' + (i ? ' loading="lazy"' : ' fetchpriority="high"') + '>' +
       (x.video ? '<button type="button" class="p-vid-b" aria-label="Ver el vídeo: ' + x.alt + '">' + PLAY + '</button>' : '') + '</figure>';

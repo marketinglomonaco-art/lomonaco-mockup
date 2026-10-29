@@ -27,8 +27,8 @@
       (o.fee === false ? '' : '<span class="pr-fee num">o 3 pagos de ' + eur(cuota(d.p)) + ' sin intereses</span>') + '</div>';
   }
   var SENS = { firme: 'Firme', equilibrada: 'Ni duro ni blando', acogedora: 'Suave' };
-  var IMG = { visco: 'img/natura-visco-nueva', gold: 'img/natura-gold-nueva', latex: 'img/natura-latex-nueva', gran: 'img/gran-natura-nueva' };
-  var IMG_W = { visco: 1024, gold: 1024, latex: 1024, gran: 1024 };
+  var IMG = { visco: 'img/natura-visco-nueva', gold: 'img/natura-gold-nueva', latex: 'img/natura-latex-01', gran: 'img/gran-natura-nueva' };
+  var IMG_W = { visco: 1024, gold: 1024, latex: 1100, gran: 1024 };
   function foto(k, small) { return IMG[k] + '-' + (small ? 560 : IMG_W[k]) + '.webp'; }
   function url(k, q) { return P[k].url + (q ? '?' + q : ''); }
   var ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
@@ -129,8 +129,10 @@
     // Lista editorial
     $('#list').innerHTML = ORDEN.map(function (k, i) {
       var p = P[k], d = desde(PR[k]);
-      return '<a class="row rv" style="--d:' + i * 80 + 'ms" href="' + url(k) + '" data-img="' + foto(k, true) + '">' +
-        '<img class="th" src="' + foto(k, true) + '" alt="" width="72" height="72" loading="lazy">' +
+      // Paco, 29/10: en el bloque de la home donde eliges colchón va la foto nueva de cada modelo
+      var fh = 'img/' + LM.FOTO_HOME[k];
+      return '<a class="row rv" style="--d:' + i * 80 + 'ms" href="' + url(k) + '" data-img="' + fh + '-760.webp">' +
+        '<img class="th" src="' + fh + '-480.webp" alt="" width="72" height="72" loading="lazy">' +
         '<h3>' + p.nombre + '</h3><p>' + SENS[p.sensacion] + '. ' + p.diferencia + '</p>' +
         '<span class="pr"><span class="pr-from">Desde</span><b class="num">' + eur(d.p) + '</b></span>' +
         '<span class="go">' + ARROW + '</span></a>';

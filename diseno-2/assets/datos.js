@@ -159,7 +159,7 @@ LM.PRODUCTOS = {
     sensacionLarga: 'Es el más acogedor de nuestros cuatro colchones: tiene la firmeza más baja de la gama. Notas que te recibe suave y, debajo, que los muelles te sujetan.',
     durTxt: 'El látex recupera su forma después de cada noche: así evitas que se hunda donde duermes.',
     id: 41658, nombre: 'Natura Látex', titulo: 'Colchón Natura Látex', url: 'colchon-natura-latex.html',
-    img: '../img/natura-latex-nueva-560.webp', foto: 'nueva', fotoNueva: '../img/natura-latex-nueva', imgDetalle: '../img/natura-latex-02-560.webp',
+    img: '../img/natura-latex-01-560.webp', imgDetalle: '../img/natura-latex-02-560.webp', foto: 'nueva',
     etiqueta: 'Efecto nube', nucleo: 'Muelles ensacados + látex', tipo: 'latex', altura: '32 cm',
     firmeza: 75, adaptabilidad: 85, sensacion: 'acogedora',
     sensacionTxt: 'La más acogedora de la gama. Te recibe suave y te sujeta bien.',
@@ -196,6 +196,8 @@ LM.PRODUCTOS = {
             ['Termorregulación', 'Deja pasar el aire y expulsa el calor.']] }
 };
 LM.ORDEN = ['visco', 'gold', 'latex', 'gran'];
+/* Paco, 29/10: foto nueva de cada modelo SOLO en el bloque de la home donde eliges colchón (ficha y listas sin cambios) */
+LM.FOTO_HOME = { visco: 'natura-visco-home', gold: 'natura-gold-home', latex: 'natura-latex-home', gran: 'gran-natura-home' };
 
 /* Packs (categoría /packs/ de la web actual) */
 LM.PACKS = [

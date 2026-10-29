@@ -49,7 +49,8 @@
       var p = LM.PRODUCTOS[k], d = LM.desde(k), href = LM.href(p.url);
       return '<article class="lm-card h-pc" data-testid="product-card-' + k + '">' +
         // V4 · Cambio 10: la misma foto en las 4 tarjetas y su foto «hover» (Photoshop de Paco)
-        '<div class="lm-card-img"><img src="../img/colchon-card-760.webp" srcset="../img/colchon-card-480.webp 480w, ../img/colchon-card-760.webp 760w" sizes="(max-width: 600px) 100vw, 25vw" alt="" width="760" height="760" loading="lazy">' +
+        // Paco, 29/10: cada tarjeta lleva la foto nueva de su modelo
+        '<div class="lm-card-img"><img src="../img/' + LM.FOTO_HOME[k] + '-760.webp" srcset="../img/' + LM.FOTO_HOME[k] + '-480.webp 480w, ../img/' + LM.FOTO_HOME[k] + '-760.webp 760w" sizes="(max-width: 600px) 100vw, 25vw" alt="Colchón ' + p.nombre + '" width="760" height="760" loading="lazy">' +
         '<img class="lm-detalle" src="../img/colchon-card-hover-760.webp" srcset="../img/colchon-card-hover-480.webp 480w, ../img/colchon-card-hover-760.webp 760w" sizes="(max-width: 600px) 100vw, 25vw" alt="" width="760" height="760" loading="lazy"><span class="lm-pill">' + p.etiqueta + '</span></div>' +
         '<div class="lm-card-b"><p class="lm-card-k">' + p.nucleo + ' · ' + p.altura + '</p>' +
         '<h3><a class="lm-stretch" href="' + href + '" data-select="' + p.id + '">' + p.titulo + '</a></h3>' +
