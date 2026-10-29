@@ -59,7 +59,7 @@
       // Paco, 29/10: «Solo colchón» lleva la foto de la almohada y destaca que se regalan (120 € el par)
       var R = b.k === 'solo' && LM.REGALO_SOLO;
       return '<label class="p-card' + (R ? ' p-card--regalo' : '') + (dis ? ' is-na' : '') + '"><input type="radio" name="base" value="' + b.k + '"' + (st.base === b.k ? ' checked' : '') + (dis ? ' disabled' : '') + '>' +
-        (R ? '<img class="p-card-img" src="' + R.img + '" alt="Almohada Lomonaco" width="240" height="160" loading="lazy">' : '') +
+        (R ? '<img class="p-card-img" src="' + R.img + '" alt="Almohada Lomonaco" width="240" height="180" loading="lazy">' : '') +
         '<span><b>' + b.t + '</b><small>' + b.d + '</small></span><em>' + diff + '</em>' +
         (R ? '<span class="p-card-gift">' + LM.ico('gift') + '<span><strong>' + R.t + '</strong> · ' + R.d + '</span></span>' : '') +
         '</label>';
