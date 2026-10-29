@@ -335,7 +335,7 @@ LM.FILTROS_B = {
    Colores: canapé = los 4 de la tienda. Base: Paco pide 4 colores; son los de la «Base tapizada de tela»
    (la base del pack en la tienda, la antideslizante, solo tiene Blanco y Chocolate): pendiente de confirmar. */
 /* Promo de la ficha (Paco, 29/10): al comprar solo el colchón regalamos las almohadas, valoradas en 120 € el par */
-LM.REGALO_SOLO = { t: 'Almohadas de regalo', d: 'Valoradas en 120\u00a0€ el par', img: '../img/almohada-regalo-240.webp' };
+LM.REGALO_SOLO = { t: 'Almohadas de regalo', d: 'Valoradas en 120\u00a0€ el par', img: '../img/almohada-regalo-2-240.webp' };
 LM.REGALOS = [['Almohadas', 'Para cada lado de la cama', 'almohada'], ['Edredón nórdico', 'Listo para la primera noche', 'edredon'], ['Protector de colchón', 'Cuida tu colchón desde el primer día', 'protector']];
 LM.PACK_BASES = {
   canape: { t: 'Canapé abatible', corto: 'canapé', d: 'De madera, con mucho espacio para guardar', img: '../img/pack-conf-canape', tabla: 'Canape',
