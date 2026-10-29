@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Showroom Live: visita la tienda por videollamada | LOMONACO</title>
+<meta name="description" content="Pasea por nuestro showroom y reserva una videollamada gratis: te enseñamos los colchones de cerca y resolvemos tus dudas.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300..800&family=Playfair+Display:ital,wght@1,400;1,500&display=swap">
+<link rel="preload" as="image" href="../img/showroom-7035-2400.webp" imagesrcset="../img/showroom-7035-1400.webp 1400w, ../img/showroom-7035-2400.webp 2400w" imagesizes="100vw">
+<link rel="stylesheet" href="../comun/base.css?v=1793272649">
+<link rel="stylesheet" href="../comun/paginas.css?v=1793272649">
+<link rel="stylesheet" href="../comun/diseno1.css?v=1793272649">
+<link rel="stylesheet" href="../comun/rojo.css?v=1793272649">
+</head>
+<body data-page="showroom" data-opcion="diseno1-a" data-variante="a" data-producto="" data-version="4">
+<a class="lm-skip" href="#main">Saltar al contenido</a>
+<div id="lm-header" data-active="Showroom Live"></div>
+<main id="main">
+<!-- SHOWROOM LIVE · objetivo: conseguir la videollamada o la llamada -->
+<section class="s-hero" aria-labelledby="s-h1">
+  <img class="s-hero-bg" src="../img/showroom-7035-2400.webp" srcset="../img/showroom-7035-1400.webp 1400w, ../img/showroom-7035-2400.webp 2400w" sizes="100vw" width="2400" height="1350" alt="" fetchpriority="high">
+  <div class="lm-w s-hero-in">
+    <p class="s-live"><i class="lm-live-dot" aria-hidden="true"></i>Showroom Live</p>
+    <h1 id="s-h1">Visita nuestra tienda <em>sin salir de casa.</em></h1>
+    <p class="s-hero-sub">Un asesor te enseña los colchones por videollamada: te los acerca a la cámara, te explica en qué se diferencian y resuelve tus dudas. <span data-cfg="videollamada"></span>.</p>
+    <div class="s-hero-cta">
+      <a class="lm-btn lm-btn--white" href="#reserva" data-testid="showroom-book">Reservar videollamada</a>
+      <a class="lm-btn lm-btn--ghost" href="#" data-tel="showroom-hero">Llamar ahora</a>
+    </div>
+    <p class="s-hero-state" data-estado></p>
+  </div>
+  <a class="s-hero-down" href="#tour">Pasea por el showroom<svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></a>
+</section>
+
+<section class="s-tour" id="tour" aria-labelledby="s-tour-t">
+  <div class="lm-w s-tour-head">
+    <div>
+      <p class="lm-eyebrow">Paseo virtual</p>
+      <h2 class="lm-h2" id="s-tour-t">Muévete por el showroom. <em>Curiosea.</em></h2>
+    </div>
+    <p class="lm-sub">Arrastra para mirar a tu alrededor. Toca los puntos para ver cada cama y las flechas para avanzar.</p>
+  </div>
+  <div class="s-sv-wrap">
+    <div class="s-sv" id="s-sv" data-testid="showroom-viewer"></div>
+  </div>
+</section>
+
+<section class="lm-sec s-how" aria-labelledby="s-how-t">
+  <div class="lm-w">
+    <p class="lm-eyebrow">Cómo funciona</p>
+    <h2 class="lm-h2" id="s-how-t">Tres pasos. <em>Sin moverte del sofá.</em></h2>
+    <ol class="s-steps">
+      <li><span class="s-num">1</span><b>Eliges día y hora</b><p>De lunes a viernes, de 9:00 a 18:00. Solo te pedimos tu nombre y tu teléfono.</p></li>
+      <li><span class="s-num">2</span><b>Te llamamos por vídeo</b><p>Por <span data-cfg="videoCanales"></span>. Te enseñamos las camas que quieras ver, de cerca.</p></li>
+      <li><span class="s-num">3</span><b>Decides con calma</b><p>Te ayudamos con la medida y la base. Si te convence, lo pides por teléfono o en la web.</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="lm-sec lm-alt s-book" id="reserva" aria-labelledby="s-book-t">
+  <div class="lm-w s-book-in">
+    <div class="s-book-main">
+      <p class="lm-eyebrow">Reserva tu videollamada</p>
+      <h2 class="lm-h2" id="s-book-t">¿Cuándo te viene bien?</h2>
+      <form class="s-form" id="s-form" novalidate data-testid="showroom-form">
+        <fieldset class="s-fs"><legend><span>1</span>Elige el día</legend><div class="s-chips" id="s-dias" role="radiogroup" aria-label="Día"></div></fieldset>
+        <fieldset class="s-fs"><legend><span>2</span>Elige la hora</legend><div class="s-chips s-chips--h" id="s-horas" role="radiogroup" aria-label="Hora"></div></fieldset>
+        <fieldset class="s-fs"><legend><span>3</span>¿Qué quieres ver? <small>Puedes marcar varios</small></legend><div class="s-chips" id="s-interes"></div></fieldset>
+        <fieldset class="s-fs"><legend><span>4</span>¿Cómo prefieres que te llamemos?</legend>
+          <div class="s-canal" id="s-canal">
+            <label><input type="radio" name="canal" value="WhatsApp" checked><span><b>WhatsApp</b><small>Videollamada desde tu móvil</small></span></label>
+            <label><input type="radio" name="canal" value="Google Meet"><span><b>Google Meet</b><small>Desde el ordenador, sin instalar nada</small></span></label>
+            <label><input type="radio" name="canal" value="llamada normal"><span><b>Llamada normal</b><small>Sin vídeo, solo voz</small></span></label>
+          </div>
+        </fieldset>
+        <fieldset class="s-fs"><legend><span>5</span>Tus datos</legend>
+          <div class="s-fields">
+            <label class="s-field"><span>Nombre</span><input type="text" name="nombre" autocomplete="given-name" required><em class="s-err" hidden>Escribe tu nombre.</em></label>
+            <label class="s-field"><span>Teléfono <small>para llamarte</small></span><input type="tel" name="tel" autocomplete="tel" inputmode="tel" placeholder="600 000 000" required><em class="s-err" hidden>Revisa el teléfono: tiene que tener 9 cifras.</em></label>
+          </div>
+          <label class="s-check"><input type="checkbox" name="privacidad" required><span>He leído la <a href="https://www.grupolomonaco.com/politica-de-privacidad/" target="_blank" rel="noopener">política de privacidad</a>.</span></label>
+          <em class="s-err s-err-priv" hidden>Necesitamos que aceptes la política de privacidad.</em>
+        </fieldset>
+        <button class="lm-btn lm-btn--buy lm-btn--full s-submit" type="submit" id="s-submit">Reservar mi videollamada</button>
+        <p class="lm-note"><span data-cfg="videollamada"></span>. <span class="lm-pend">Maqueta: la reserva no se envía. Conectar con la agenda del call center</span></p>
+      </form>
+      <div class="s-done" id="s-done" hidden tabindex="-1"></div>
+    </div>
+    <aside class="s-sum" aria-label="Resumen de tu reserva">
+      <div class="s-sum-card">
+        <p class="s-sum-k">Tu videollamada</p>
+        <dl id="s-sum"></dl>
+        <p class="s-sum-free"><span data-cfg="videollamada"></span></p>
+      </div>
+      <div class="s-sum-now">
+        <p data-estado></p>
+        <p>¿Prefieres hablar ya?</p>
+        <div id="s-call"></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="lm-sec s-det" aria-labelledby="s-det-t">
+  <div class="lm-w">
+    <p class="lm-eyebrow">Así lo verás</p>
+    <h2 class="lm-h2" id="s-det-t">De cerca. <em>Como si estuvieras aquí.</em></h2>
+    <div class="s-det-grid" id="s-det"></div>
+  </div>
+</section>
+
+<section class="lm-sec lm-alt s-faq" aria-labelledby="s-faq-t">
+  <div class="lm-w h-faq-in">
+    <div>
+      <p class="lm-eyebrow">Dudas</p>
+      <h2 class="lm-h2" id="s-faq-t">Antes de reservar.</h2>
+      <a class="lm-btn" href="#reserva">Reservar videollamada</a>
+    </div>
+    <div class="lm-faqs" id="s-faq"></div>
+  </div>
+</section>
+
+<div class="lm-stick s-stick" id="s-stick" aria-hidden="true">
+  <div class="lm-stick-t"><small>Showroom Live · gratis</small><b>Ver la tienda por vídeo</b></div>
+  <a class="lm-stick-call" href="#" data-tel="showroom-sticky" aria-label="Llamar"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></a>
+  <a class="lm-btn lm-btn--buy" href="#reserva" tabindex="-1">Reservar</a>
+</div>
+
+</main>
+<div id="lm-footer"></div>
+<script src="../comun/datos.js?v=1793272649"></script>
+<script src="../comun/componentes.js?v=1793272649"></script>
+<script>LM.init();</script>
+<script src="../comun/compromisos.js?v=1793272649"></script>
+<script src="../comun/packs.js?v=1793272649"></script>
+<script src="../comun/showroom.js?v=1793272649"></script>
+<script src="../comun/pack.js?v=1793272649"></script>
+<script src="../comun/asistente.js?v=1793272649"></script>
+<script src="../comun/presion.js?v=1793272649"></script>
+<script src="../comun/animaciones.js?v=1793272649"></script>
+<script src="../comun/v4.js?v=1793272649"></script>
+<script src="../comun/versiones.js?v=1793272649"></script>
+</body>
+</html>

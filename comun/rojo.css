@@ -1,0 +1,69 @@
+/* LO MONACO · Diseño 1 · Deslizador «Rojo LM ↔ original» (comun/versiones.js)
+   --p1 … --p8 van de 0 (color LM) a 1 (color original de antes del 29/10), en este orden de superficie:
+   1 franja de confianza · 2 franja superior · 3 titulares · 4 botones de tarjeta y menú ·
+   5 etiquetas de foto · 6 descuentos · 7 barras · 8 detalles nuevos (flechas, iconos, selección).
+   Los botones de comprar ya eran LM antes, así que no cambian. Los antetítulos ya están en negro. */
+:root { --p1: 0; --p2: 0; --p3: 0; --p4: 0; --p5: 0; --p6: 0; --p7: 0; --p8: 0; --o-bg: #f6f6f6; --o-ink: #1d1d1f; }
+
+/* 1 · Franja de confianza: fondo gris clarísimo, texto oscuro, iconos en círculo blanco */
+html .h-strip { background: color-mix(in srgb, var(--acc), var(--o-bg) calc(var(--p1) * 100%)); color: color-mix(in srgb, #fff, var(--o-ink) calc(var(--p1) * 100%)); }
+html .h-strip .h-ic { color: inherit; background: color-mix(in srgb, transparent, #fff calc(var(--p1) * 100%)); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, rgba(255,255,255,.85), #e2e2e5 calc(var(--p1) * 100%)); }
+html .h-strip .lm-chk { text-decoration-color: color-mix(in srgb, rgba(255,255,255,.75), #c98a00 calc(var(--p1) * 100%)); }
+
+/* 2 · Franja superior */
+html .lm-top { background: color-mix(in srgb, var(--acc), var(--o-bg) calc(var(--p2) * 100%)); color: color-mix(in srgb, #fff, var(--o-ink) calc(var(--p2) * 100%)); }
+
+/* 3 · Titulares de 48 px */
+html .lm-h2 { color: color-mix(in srgb, var(--acc), var(--o-ink) calc(var(--p3) * 100%)); }
+
+/* 4 · Botones que antes eran negros: tarjetas, «Packs» del menú, icono de llamada */
+html .lm-card .lm-btn, html .lm-packs, html .lm-dpacks, html .lm-call > .lm-i { background: color-mix(in srgb, var(--acc), var(--o-ink) calc(var(--p4) * 100%)); }
+
+/* 5 · Etiquetas de foto */
+html .lm-pill:not(.lm-pill--soft) { background: color-mix(in srgb, var(--acc), var(--o-ink) calc(var(--p5) * 100%)); }
+
+/* 6 · Descuentos */
+html .lm-price-off { background: color-mix(in srgb, var(--acc), var(--o-ink) calc(var(--p6) * 100%)); }
+
+/* 7 · Barras de firmeza y adaptabilidad */
+html .lm-bar i { background: color-mix(in srgb, var(--acc), var(--o-ink) calc(var(--p7) * 100%)); }
+
+/* 8 · Detalles nuevos en LM: flechas y puntos del carrusel, iconos y números, selección del configurador */
+html .h4c-arr, html .h4c-dots button.is-on, html .h4p-seg button[aria-checked="true"] { background: color-mix(in srgb, var(--acc), var(--o-ink) calc(var(--p8) * 100%)); }
+html .h4c-ic, html .h4c-q b, html .h4p-inc .lm-i { color: color-mix(in srgb, var(--acc), var(--o-ink) calc(var(--p8) * 100%)); }
+html .h4p-cols button[aria-checked="true"] { box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--acc), var(--o-ink) calc(var(--p8) * 100%)); }
+
+/* Mientras se mueve el deslizador, sin fundidos: el cambio de color es instantáneo */
+.lm-rojo-snap .h-strip, .lm-rojo-snap .h-strip *, .lm-rojo-snap .lm-top, .lm-rojo-snap .lm-top *, .lm-rojo-snap .lm-h2, .lm-rojo-snap .lm-btn,
+.lm-rojo-snap .lm-packs, .lm-rojo-snap .lm-dpacks, .lm-rojo-snap .lm-call > .lm-i, .lm-rojo-snap .lm-pill, .lm-rojo-snap .lm-price-off,
+.lm-rojo-snap .lm-bar i, .lm-rojo-snap .h4c-arr, .lm-rojo-snap .h4c-dots button, .lm-rojo-snap .h4p-seg button, .lm-rojo-snap .h4p-cols button { transition: none !important; }
+
+/* ---------- Barra de revisión: selector de diseño + deslizador (centrada abajo) ---------- */
+.lm-dock { position: fixed; left: 50%; bottom: 12px; z-index: 130; transform: translateX(-50%); display: flex; align-items: center; gap: 6px; padding: 5px; border-radius: 999px; background: #1d1d1f; color: #fff; font: 600 13px/1.2 var(--font); box-shadow: 0 8px 26px rgba(0,0,0,.22); }
+.lm-has-stick .lm-dock { bottom: 84px; }
+.lm-dock .lm-vers { position: relative; }
+.lm-vers-b { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border-radius: 999px; background: rgba(255,255,255,.14); color: #fff; font-weight: 700; white-space: nowrap; }
+.lm-vers-b:hover { background: rgba(255,255,255,.24); }
+.lm-vers-p { position: absolute; left: 50%; bottom: 46px; transform: translateX(-50%); width: 240px; padding: 14px; border-radius: 14px; background: #fff; color: #1d1d1f; box-shadow: 0 16px 40px rgba(0,0,0,.2); display: grid; gap: 10px; }
+.lm-vers-p[hidden] { display: none; }
+.lm-vers-t { margin: 0; font-weight: 700; }
+.lm-vers-ops { display: flex; gap: 6px; }
+.lm-vers-ops a { flex: 1; min-height: 42px; display: grid; place-items: center; border-radius: 10px; background: #f4f4f4; color: inherit; text-decoration: none; font-weight: 600; }
+.lm-vers-ops a:hover { background: #e9e9e9; }
+.lm-vers-ops a[aria-current] { background: #1d1d1f; color: #fff; }
+.lm-rojo { display: flex; align-items: center; gap: 10px; padding: 0 12px 0 8px; cursor: pointer; }
+.lm-rojo-k { opacity: .8; }
+.lm-rojo-v { min-width: 58px; text-align: right; font-variant-numeric: tabular-nums; }
+.lm-rojo input { --fill: 0%; -webkit-appearance: none; appearance: none; width: clamp(110px, 16vw, 200px); height: 6px; border-radius: 6px; background: linear-gradient(90deg, #f6f6f6 0 var(--fill), #7c1919 var(--fill) 100%); outline-offset: 6px; cursor: pointer; }
+.lm-rojo input::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 3px solid #7c1919; box-shadow: 0 2px 6px rgba(0,0,0,.3); }
+.lm-rojo input::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: #fff; border: 3px solid #7c1919; }
+@media (max-width: 600px) {
+  .lm-dock { bottom: 74px; }
+  .lm-has-stick .lm-dock { bottom: 140px; }
+  .lm-rojo-k { display: none; }
+  .lm-rojo-v { min-width: 50px; }
+}
+/* Globos añadidos el 29/10 (comentario 3 de categoría): vuelven a negro con el grupo 8 */
+html .c-chip[aria-checked="true"], html .s-num, html .s-fs legend span { background: color-mix(in srgb, var(--acc), var(--o-ink) calc(var(--p8) * 100%)); }
+html .c-keys li { background: color-mix(in srgb, var(--acc), var(--o-ink) calc(var(--p5) * 100%)); }
+html .c-pictos .lm-i { color: color-mix(in srgb, var(--acc), var(--o-ink) calc(var(--p8) * 100%)); }
