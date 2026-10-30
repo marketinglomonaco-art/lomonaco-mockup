@@ -62,7 +62,7 @@
       var valor = '<s>' + (R.estado ? LM.mark(R, LM.eur(R.valor)) : LM.eur(R.valor)) + '</s>';
       return '<label class="p-card p-card--regalo' + (dis ? ' is-na' : '') + '"><input type="radio" name="base" value="' + b.k + '"' + (st.base === b.k ? ' checked' : '') + (dis ? ' disabled' : '') + '>' +
         // Paco, 30/10: en los packs, las fotos de los regalos una al lado de la otra
-        (R.imgs ? '<span class="p-card-imgs">' + R.imgs.map(function (x) { return '<img src="' + x[0] + '" alt="' + x[1] + ' de regalo" width="160" height="160" loading="lazy">'; }).join('') + '</span>'
+        (R.imgs ? '<span class="p-card-imgs">' + R.imgs.map(function (x) { return '<img src="' + x[0] + '" alt="' + x[1] + ' de regalo" width="160" height="160" loading="lazy">'; }).join('<b class="p-card-plus" aria-hidden="true">+</b>') + '</span>'
           : '<img class="p-card-img" src="' + R.img + '" alt="' + R.alt + '" width="240" height="180" loading="lazy">') +
         '<span><b>' + (b.k === 'solo' ? R.t : b.t) + '</b><small>' + b.d + '</small>' +
         '<small class="p-card-val">Valorado en ' + valor + ' <strong>Gratis</strong></small></span><em>' + diff + '</em>' +

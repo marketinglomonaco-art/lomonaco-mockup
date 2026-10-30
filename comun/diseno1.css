@@ -518,3 +518,14 @@ body[data-variante="b"] .p-scrub-hint { bottom: 40px; }
 .pk-ticket-tot { border-bottom: 0 !important; justify-content: space-between; font-weight: 700; }
 .pk-ticket-tot b { font-size: 20px; }
 @media (max-width: 420px) { .pk-sw--tiles { grid-template-columns: repeat(2, 1fr); } }
+
+/* 30/10 · Regalos con foto y valor tachado + «Gratis» (fichas de pack) */
+.pk-gimg { width: 52px; height: 52px; border-radius: 10px; object-fit: cover; background: #e2e2e2; flex: none; }
+.pk-gval { display: grid; justify-items: end; line-height: 1.15; flex: none; text-align: right; }
+.pk-gval s { font-size: 13px; color: var(--mute); }
+.pk-gval strong { font-size: 15px; font-weight: 800; color: var(--acc); }
+.pk-gift-k small, .pk-ticket-reg small { display: block; font-size: 13px; font-weight: 500; color: var(--mute); margin-top: 2px; }
+.pk-gift-k small strong, .pk-ticket-reg small strong { color: var(--acc); font-weight: 800; }
+.pk-ti--acc { color: var(--acc); }
+.pk-ticket .pk-gimg { width: 44px; height: 44px; border-radius: 8px; }
+.pk-regalo-chip s { opacity: .75; font-weight: 500; }

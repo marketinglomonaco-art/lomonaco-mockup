@@ -340,7 +340,10 @@ LM.REGALO_SOLO = { t: 'Solo colchón + almohadas gratis', valor: 120, img: '../i
    Valor: 120 € de las almohadas (Paco) + 144 € del edredón y 48 € del protector (precios «desde» de la tienda; cambian con la medida). */
 LM.REGALO_PACK = { valor: 312, alt: 'Almohadas, edredón y protector Lomonaco de regalo',
                    imgs: [['../img/regalo-almohada-160.webp', 'Almohadas'], ['../img/regalo-edredon-160.webp', 'Edredón'], ['../img/regalo-protector-160.webp', 'Protector']] }; // 312 € confirmado por Paco (30/10)
-LM.REGALOS = [['Almohadas', 'Para cada lado de la cama', 'almohada'], ['Edredón nórdico', 'Listo para la primera noche', 'edredon'], ['Protector de colchón', 'Cuida tu colchón desde el primer día', 'protector']];
+// [nombre, frase, icono, foto, valor en €]. Paco, 30/10: en las fichas de pack se ve la foto y el valor tachado con «Gratis»
+LM.REGALOS = [['Almohadas', 'Para cada lado de la cama', 'almohada', '../img/regalo-almohada-160.webp', 120],
+              ['Edredón nórdico', 'Listo para la primera noche', 'edredon', '../img/regalo-edredon-160.webp', 144],
+              ['Protector de colchón', 'Cuida tu colchón desde el primer día', 'protector', '../img/regalo-protector-160.webp', 48]];
 LM.PACK_BASES = {
   canape: { t: 'Canapé abatible', corto: 'canapé', d: 'De madera, con mucho espacio para guardar', img: '../img/pack-conf-canape', tabla: 'Canape',
             colores: [['Blanco', '#f1eee8'], ['Nórdico', '#dcc6a2'], ['Roble', '#b5875a'], ['Nogal', '#5b3d2c']], porDefecto: 'Nogal', foto: 'Nogal' },

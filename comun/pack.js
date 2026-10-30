@@ -26,6 +26,10 @@
     regalo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11h16v9H4zM3 7h18v4H3zM12 7v13M12 7c-1.5-3-5-3.5-5-1s3 1 5 1c2 0 5 1.5 5-1s-3.5-2-5 1"/></svg>'
   };
   var MINI = { canape: '../img/canape-760.webp', base: '../img/base-3d-760.webp' };
+  // Regalos (Paco, 30/10): foto + valor tachado + «Gratis», siempre a la vista
+  var VALOR = LM.REGALOS.reduce(function (t, r) { return t + r[4]; }, 0);
+  function gratis(v) { return '<span class="pk-gval"><s>' + LM.eur(v) + '</s><strong>Gratis</strong></span>'; }
+  function fotoRegalo(r) { return '<img class="pk-gimg" src="' + r[3] + '" alt="' + r[0] + ' de regalo" width="160" height="160" loading="lazy">'; }
 
   /* Galería: la primera foto es la del pack con la base elegida; luego, las del colchón */
   var gal = $('#p-gal');
@@ -33,7 +37,7 @@
   function galeria() {
     var f = base().img;
     gal.innerHTML = '<figure class="is-main pk-main"><img src="' + f + '-1200.webp" srcset="' + f + '-700.webp 700w, ' + f + '-1200.webp 1200w" sizes="(max-width: 900px) 100vw, 64vw" width="1200" height="896" alt="' + nombrePack() + '" fetchpriority="high">' +
-      '<span class="pk-regalo-chip">' + IC.regalo + 'Almohadas, edredón y protector de regalo</span></figure>' +
+      '<span class="pk-regalo-chip">' + IC.regalo + 'Almohadas, edredón y protector · <s>' + LM.eur(VALOR) + '</s> <b>Gratis</b></span></figure>' +
       alts.map(function (a, i) { return '<figure><img src="../img/producto-0' + (i + 2) + '-947.webp" srcset="../img/producto-0' + (i + 2) + '-560.webp 560w, ../img/producto-0' + (i + 2) + '-947.webp 947w" sizes="(max-width: 900px) 100vw, 32vw" width="947" height="947" alt="' + P.titulo + ': ' + a + '" loading="lazy"></figure>'; }).join('');
   }
   galeria();
@@ -59,14 +63,14 @@
     }).join('');
   }
   function regalos() {
-    return LM.REGALOS.map(function (r) { return '<li><span class="pk-gi">' + IC[r[2]] + '</span><span><b>' + r[0] + '</b><small>' + r[1] + '</small></span><em>Regalo</em></li>'; }).join('');
+    return LM.REGALOS.map(function (r) { return '<li>' + fotoRegalo(r) + '<span><b>' + r[0] + '</b><small>' + r[1] + '</small></span>' + gratis(r[4]) + '</li>'; }).join('');
   }
   if (!B) {
     cfg.innerHTML =
       '<div class="p-size" id="p-size" data-testid="size-selector"></div>' +
       '<fieldset class="p-opt"><legend>¿Canapé o base?</legend><div class="p-opt-list" id="pk-bases"></div></fieldset>' +
       '<fieldset class="p-opt"><legend>Color: <b id="pk-color-n"></b></legend><div id="pk-colores"></div></fieldset>' +
-      '<div class="pk-gift"><p class="pk-gift-k"><span class="pk-gi">' + IC.regalo + '</span>De regalo con tu pack</p><ul>' + regalos() + '</ul></div>';
+      '<div class="pk-gift"><p class="pk-gift-k"><span class="pk-gi">' + IC.regalo + '</span><span>De regalo con tu pack<small>Valorados en <s>' + LM.eur(VALOR) + '</s> · <strong>Gratis</strong></small></span></p><ul>' + regalos() + '</ul></div>';
   } else {
     cfg.innerHTML =
       '<div class="pk-build"><p class="pk-build-k">Monta tu pack en 3 pasos</p><ol class="pk-steps">' +
@@ -90,7 +94,8 @@
       $('#pk-ticket').innerHTML =
         '<li><span class="pk-ti">' + LM.ico('check') + '</span><span><b>Colchón ' + P.nombre + '</b><small>' + LM.medidaTxt(st.medida) + ' · ' + P.nucleo + '</small></span></li>' +
         '<li><span class="pk-ti">' + LM.ico('check') + '</span><span><b>' + base().t + ' ' + st.color[st.base] + '</b><small>' + base().d + '</small></span></li>' +
-        LM.REGALOS.map(function (r) { return '<li class="is-regalo"><span class="pk-ti">' + IC[r[2]] + '</span><span><b>' + r[0] + '</b><small>' + r[1] + '</small></span><em>Regalo</em></li>'; }).join('') +
+        '<li class="pk-ticket-reg"><span class="pk-ti pk-ti--acc">' + IC.regalo + '</span><span><b>De regalo con tu pack</b><small>Valorados en <s>' + LM.eur(VALOR) + '</s> · <strong>Gratis</strong></small></span></li>' +
+        LM.REGALOS.map(function (r) { return '<li class="is-regalo">' + fotoRegalo(r) + '<span><b>' + r[0] + '</b><small>' + r[1] + '</small></span>' + gratis(r[4]) + '</li>'; }).join('') +
         '<li class="pk-ticket-tot"><span>Total del pack</span><b>' + (d ? LM.eur(d.p + (st.recogida ? LM.RECOGIDA.p : 0)) : '—') + '</b></li>';
     }
     var total = d ? d.p + (st.recogida ? LM.RECOGIDA.p : 0) : 0;
