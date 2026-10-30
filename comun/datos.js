@@ -338,7 +338,8 @@ LM.FILTROS_B = {
 LM.REGALO_SOLO = { t: 'Solo colchón + almohadas gratis', valor: 120, img: '../img/almohada-regalo-2-240.webp', alt: 'Almohadas Lomonaco de regalo' };
 /* Paco, 30/10: los packs muestran la foto de los regalos (almohadas, edredón y protector) y su valor tachado.
    Valor: 120 € de las almohadas (Paco) + 144 € del edredón y 48 € del protector (precios «desde» de la tienda; cambian con la medida). */
-LM.REGALO_PACK = { valor: 312, img: '../img/regalos-pack-240.webp', alt: 'Almohadas, edredón y protector Lomonaco de regalo' }; // 312 € confirmado por Paco (30/10)
+LM.REGALO_PACK = { valor: 312, alt: 'Almohadas, edredón y protector Lomonaco de regalo',
+                   imgs: [['../img/regalo-almohada-160.webp', 'Almohadas'], ['../img/regalo-edredon-160.webp', 'Edredón'], ['../img/regalo-protector-160.webp', 'Protector']] }; // 312 € confirmado por Paco (30/10)
 LM.REGALOS = [['Almohadas', 'Para cada lado de la cama', 'almohada'], ['Edredón nórdico', 'Listo para la primera noche', 'edredon'], ['Protector de colchón', 'Cuida tu colchón desde el primer día', 'protector']];
 LM.PACK_BASES = {
   canape: { t: 'Canapé abatible', corto: 'canapé', d: 'De madera, con mucho espacio para guardar', img: '../img/pack-conf-canape', tabla: 'Canape',

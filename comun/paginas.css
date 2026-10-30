@@ -596,3 +596,14 @@
 .p-card-val { display: block; margin-top: 3px; font-size: 13px; color: var(--mute); }
 .p-card-val s { color: var(--mute); }
 .p-card-val strong { color: var(--acc); font-weight: 700; margin-left: 2px; }
+
+/* 30/10 · Regalos del pack: tres fotos una al lado de la otra */
+.p-card-imgs { display: flex; gap: 4px; }
+.p-card-imgs img { width: 46px; height: 46px; object-fit: cover; border-radius: 8px; background: #e2e2e2; }
+@media (max-width: 600px) {
+  /* En móvil las tres fotos van en su propia fila, debajo del texto, para no estrechar la descripción */
+  .p-card--regalo:has(.p-card-imgs) { grid-template-columns: auto 1fr auto; }
+  .p-card--regalo:has(.p-card-imgs) > input { grid-row: 1 / span 2; }
+  .p-card-imgs { grid-column: 2 / -1; grid-row: 2; gap: 6px; margin-top: 2px; }
+  .p-card-imgs img { width: 52px; height: 52px; }
+}
