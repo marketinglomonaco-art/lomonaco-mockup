@@ -609,6 +609,6 @@
 }
 
 /* 30/10 · Opción B: «+» entre las fotos de los regalos (en la A no se muestra) */
-.p-card-plus { display: none; }
-body[data-variante="b"] .p-card-plus { display: grid; place-items: center; font-size: 20px; font-weight: 800; color: var(--ink); line-height: 1; padding: 0 1px; }
+.p-card .p-card-plus { display: none; } /* gana a «.p-card b { display: block }» */
+body[data-variante="b"] .p-card .p-card-plus { display: grid; place-items: center; font-size: 20px; font-weight: 800; color: var(--ink); line-height: 1; padding: 0 1px; }
 body[data-variante="b"] .p-card-imgs { align-items: center; }
