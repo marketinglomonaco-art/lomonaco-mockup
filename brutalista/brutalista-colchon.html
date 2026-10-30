@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>COLCHÓN · LOMONACO</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="brutal.css">
+<style>
+  .top { display: grid; grid-template-columns: 1.15fr 1fr; border-bottom: var(--b); }
+  .top .foto { border: 0; border-right: var(--b); aspect-ratio: 1; position: sticky; top: 92px; align-self: start; }
+  .buy > * { border-bottom: var(--b); padding: 16px var(--pad); }
+  .buy > *:last-child { border-bottom: 0; }
+  .buy h1 { font-size: clamp(44px, 7vw, 120px); }
+  .precio b { font: 400 clamp(42px, 6vw, 88px)/.9 'Archivo Black', sans-serif; letter-spacing: -.03em; display: block; }
+  .precio s { font-size: 18px; }
+  .k { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; margin-bottom: 8px; }
+  .medidas { grid-template-columns: repeat(4, 1fr); }
+  .medidas > .chip { padding: 0; }
+  .ops { display: grid; border: var(--b); }
+  .ops label { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; padding: 12px; border-bottom: var(--b); cursor: pointer; }
+  .ops label:last-child { border-bottom: 0; }
+  .ops label:has(input:checked) { background: var(--k); color: var(--w); }
+  .ops label:has(input:disabled) { color: #999; cursor: not-allowed; }
+  .ops input { width: 20px; height: 20px; accent-color: var(--acc); margin: 0; }
+  .ops small { display: block; font-size: 12px; margin-top: 2px; }
+  .ops em { font-style: normal; font-weight: 700; }
+  .capas { display: grid; grid-template-columns: repeat(4, 1fr); }
+  .capas > div { border-right: var(--b); padding: 18px var(--pad); }
+  .capas > div:last-child { border-right: 0; }
+  .capas b { display: block; font: 400 48px/1 'Archivo Black', sans-serif; color: var(--acc); margin-bottom: 8px; }
+  .otros { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .otros .card:last-child { border-right: 0; }
+  @media (max-width: 760px) {
+    .top { grid-template-columns: 1fr; } .top .foto { border-right: 0; border-bottom: var(--b); position: static; }
+    .capas, .otros { grid-template-columns: 1fr; } .capas > div { border-right: 0; border-bottom: var(--b); }
+  }
+</style>
+</head>
+<body data-pag="ficha">
+<div id="cab"></div>
+<main>
+  <section class="top">
+    <div class="foto" id="foto"></div>
+    <div class="buy">
+      <div><span class="k" id="tag"></span><h1 class="big" id="nombre"></h1><p id="dif" style="margin-top:12px"></p></div>
+      <div class="precio" id="precio" aria-live="polite"></div>
+      <div><span class="k">Medida</span><div class="celdas medidas" id="medidas" role="group" aria-label="Medida"></div></div>
+      <div><span class="k">¿Cómo lo quieres?</span><div class="ops" id="ops"></div></div>
+      <div><a class="btn btn--full" id="comprar" target="_blank" rel="noopener">Comprar</a><p style="margin-top:10px">o llama al <a href="tel:+34868286752"><b>868 28 67 52</b></a> · L–V 9:00–18:00</p></div>
+    </div>
+  </section>
+  <section class="sec"><h2 class="sec-t big">Por dentro</h2><div class="capas" id="capas"></div></section>
+  <section class="sec"><h2 class="sec-t big">Datos</h2><table class="bt" id="datos"></table></section>
+  <section class="sec"><h2 class="sec-t big">Otros</h2><div class="grid otros" id="otros"></div></section>
+</main>
+<div id="pie"></div>
+<script src="datos.js"></script>
+<script src="brutal.js"></script>
+<script>
+(function () {
+  'use strict';
+  var X = window.LMX, m = X.porK(X.param('m', 'latex')) || X.M[0];
+  var st = { md: X.param('medida', X.MEDIDA), base: 'solo' };
+  if (!m.precios[st.md]) st.md = X.MEDIDA;
+  document.title = m.titulo.toUpperCase() + ' · LOMONACO';
+  document.getElementById('tag').textContent = m.etiqueta + ' · ' + m.nucleo;
+  document.getElementById('nombre').textContent = m.nombre;
+  document.getElementById('dif').textContent = m.diferencia + ' ' + m.paraQuien;
+  document.getElementById('comprar').href = m.web;
+  var pk = X.PACKS[m.k];
+  function tabla() { return st.base === 'solo' ? m.precios : pk[st.base]; }
+  function pintar() {
+    var d = tabla()[st.md];
+    // La foto y su descuento van juntos y cambian con la medida y la opción elegidas
+    document.getElementById('foto').innerHTML = '<img src="' + m.img + '" alt="' + m.titulo + '" fetchpriority="high"><span class="dto">−' + X.dto(d) + '<small>%</small></span>';
+    document.getElementById('precio').innerHTML = '<span class="k">' + X.medidaTxt(st.md) + ' cm' + (st.base === 'solo' ? '' : ' · pack con ' + (st.base === 'canape' ? 'canapé' : 'base')) + '</span><b>' + X.eur(d.p) + '</b><s>' + X.eur(d.r) + '</s> · o en 3 pagos sin intereses';
+    document.getElementById('medidas').innerHTML = X.MEDIDAS.map(function (k) { var ok = !!tabla()[k]; return '<button class="chip" data-m="' + k + '" aria-pressed="' + (k === st.md) + '"' + (ok ? '' : ' disabled') + '>' + k + '</button>'; }).join('');
+    var ops = [['solo', 'Solo colchón', m.precios[st.md], 'Almohadas <s>120 €</s> <span class="gratis">GRATIS</span>'],
+               ['canape', 'Pack con canapé', pk.canape[st.md], 'Almohadas + edredón + protector <s>312 €</s> <span class="gratis">GRATIS</span>'],
+               ['base', 'Pack con base tapizada', pk.base[st.md], 'Almohadas + edredón + protector <s>312 €</s> <span class="gratis">GRATIS</span>']];
+    document.getElementById('ops').innerHTML = ops.map(function (o) {
+      return '<label><input type="radio" name="base" value="' + o[0] + '"' + (st.base === o[0] ? ' checked' : '') + (o[2] ? '' : ' disabled') + '><span><b>' + o[1] + '</b><small>' + o[3] + '</small></span><em>' + (o[2] ? X.eur(o[2].p) : '—') + '</em></label>';
+    }).join('');
+    document.getElementById('comprar').textContent = 'Comprar · ' + X.eur(d.p);
+  }
+  document.getElementById('medidas').addEventListener('click', function (e) { var b = e.target.closest('[data-m]'); if (!b || b.disabled) return; st.md = b.dataset.m; pintar(); });
+  document.getElementById('ops').addEventListener('change', function (e) { st.base = e.target.value; if (!tabla()[st.md]) st.md = X.MEDIDA; pintar(); });
+  document.getElementById('capas').innerHTML = m.capas.map(function (c, i) { return '<div><b>0' + (i + 1) + '</b><h3 class="big" style="font-size:22px">' + c[0] + '</h3><p style="margin-top:8px">' + c[1] + '</p></div>'; }).join('');
+  document.getElementById('datos').innerHTML = [['Núcleo', m.nucleo], ['Altura', m.altura], ['Firmeza', m.firmeza + '%'], ['Adaptabilidad', m.adapt + '%'], ['Prueba', '14 noches'], ['Garantía', '10 años'], ['Envío', 'Gratis con montaje · península']]
+    .map(function (r) { return '<tr><th>' + r[0] + '</th><td>' + r[1] + '</td></tr>'; }).join('');
+  document.getElementById('otros').innerHTML = X.M.filter(function (o) { return o.k !== m.k; }).map(function (o) { return X.tarjeta(o, st.md); }).join('');
+  pintar();
+})();
+</script>
+</body>
+</html>

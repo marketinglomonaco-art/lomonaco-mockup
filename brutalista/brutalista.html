@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LOMONACO · HASTA −63 %</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="brutal.css">
+<style>
+  .hero { display: grid; grid-template-columns: 1.2fr 1fr; border-bottom: var(--b); }
+  .hero-t { padding: clamp(18px, 4vw, 48px) var(--pad); border-right: var(--b); display: grid; align-content: space-between; gap: 24px; }
+  .hero-t h1 { font-size: clamp(56px, 11vw, 190px); }
+  .hero-t h1 span { color: var(--acc); }
+  .hero-t p { max-width: 30em; font-size: 15px; }
+  .hero .foto { border: 0; min-height: 360px; }
+  .pack { display: grid; grid-template-columns: 1fr 1fr; }
+  .pack .foto { border: 0; border-right: var(--b); aspect-ratio: 16 / 10; }
+  .pack-t { padding: var(--pad); display: grid; gap: 14px; align-content: center; }
+  .pack-t h3 { font-size: clamp(30px, 4vw, 60px); }
+  .reg { display: grid; border: var(--b); }
+  .reg p { display: flex; justify-content: space-between; gap: 10px; padding: 10px 12px; border-bottom: var(--b); font-weight: 700; }
+  .reg p:last-child { border-bottom: 0; background: var(--k); color: var(--w); }
+  @media (max-width: 760px) { .hero, .pack { grid-template-columns: 1fr; } .hero-t { border-right: 0; border-bottom: var(--b); } .pack .foto { border-right: 0; border-bottom: var(--b); } }
+</style>
+</head>
+<body data-pag="home">
+<div id="cab"></div>
+<main>
+  <section class="hero">
+    <div class="hero-t">
+      <p><b>TIENDA DE COLCHONES, CANAPÉS Y ALMOHADAS</b></p>
+      <h1 class="big">Hasta<br><span>−63%</span></h1>
+      <p>La marca de toda la vida. Cuatro colchones fabricados por nosotros, con almohadas de regalo. Precios para 150 × 190.</p>
+      <a class="btn" href="brutalista-colchones.html">Ver colchones →</a>
+    </div>
+    <div class="foto" id="hero-foto"></div>
+  </section>
+
+  <section class="sec">
+    <h2 class="sec-t big">Colchones</h2>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section class="sec" id="packs">
+    <h2 class="sec-t big">Packs</h2>
+    <div class="pack">
+      <div class="foto"><img src="img/pack-latex-canape-760.webp" alt="Pack Natura Látex con canapé" loading="lazy"><span class="dto" id="pack-dto"></span></div>
+      <div class="pack-t">
+        <h3 class="big">Colchón + canapé o base</h3>
+        <p>Cómpralos juntos y te regalamos esto:</p>
+        <div class="reg">
+          <p><span>Almohadas</span><span><s>120 €</s> <span class="gratis">GRATIS</span></span></p>
+          <p><span>Edredón nórdico</span><span><s>144 €</s> <span class="gratis">GRATIS</span></span></p>
+          <p><span>Protector de colchón</span><span><s>48 €</s> <span class="gratis">GRATIS</span></span></p>
+          <p><span>Tú pagas por los regalos</span><span>0 €</span></p>
+        </div>
+        <a class="btn" href="https://www.grupolomonaco.com/packs/">Ver packs →</a>
+      </div>
+    </div>
+  </section>
+</main>
+<div id="pie"></div>
+<script src="datos.js"></script>
+<script src="brutal.js"></script>
+<script>
+(function () {
+  'use strict';
+  var X = window.LMX;
+  var L = X.M.slice().sort(function (a, b) { return X.dto(b.precios[X.MEDIDA]) - X.dto(a.precios[X.MEDIDA]); });
+  document.getElementById('grid').innerHTML = L.map(function (m) { return X.tarjeta(m, X.MEDIDA); }).join('');
+  var top = L[0], d = top.precios[X.MEDIDA];
+  document.getElementById('hero-foto').innerHTML = '<img src="' + top.img + '" alt="' + top.titulo + '" fetchpriority="high"><span class="dto">−' + X.dto(d) + '<small>%</small></span>';
+  var pk = X.PACKS.latex.canape[X.MEDIDA];
+  document.getElementById('pack-dto').innerHTML = '−' + X.dto(pk) + '<small>%</small>';
+})();
+</script>
+</body>
+</html>

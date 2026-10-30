@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>COLCHONES · LOMONACO</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap">
+<link rel="stylesheet" href="brutal.css">
+<style>
+  .tit { display: grid; grid-template-columns: 1fr auto; border-bottom: var(--b); }
+  .tit h1 { padding: 18px var(--pad); font-size: clamp(40px, 8.6vw, 170px); min-width: 0; }
+  .tabla-wrap { overflow-x: auto; }
+  .tit p { padding: 18px var(--pad); border-left: var(--b); max-width: 22em; align-self: end; }
+  .fil { display: grid; grid-template-columns: 140px 1fr; border-bottom: var(--b); }
+  .fil > b { padding: 14px var(--pad); border-right: var(--b); text-transform: uppercase; display: flex; align-items: center; }
+  .medidas { grid-template-columns: repeat(6, 1fr); border: 0; }
+  .medidas .chip { border: 0; border-right: var(--b); border-bottom: var(--b); }
+  .medidas .chip:nth-child(6n) { border-right: 0; }
+  .medidas .chip:nth-last-child(-n+6) { border-bottom: 0; }
+  .orden { display: flex; }
+  .orden .chip { flex: 1; border-right: var(--b); }
+  .orden .chip:last-child { border-right: 0; }
+  @media (max-width: 760px) {
+    .tit { grid-template-columns: 1fr; } .tit h1 { font-size: 13vw; } .tit p { border-left: 0; border-top: var(--b); }
+    .fil { grid-template-columns: 1fr; } .fil > b { border-right: 0; border-bottom: var(--b); }
+    .medidas { grid-template-columns: repeat(3, 1fr); }
+    .medidas .chip:nth-child(6n) { border-right: var(--b); } .medidas .chip:nth-child(3n) { border-right: 0; }
+    .medidas .chip:nth-last-child(-n+6) { border-bottom: var(--b); } .medidas .chip:nth-last-child(-n+3) { border-bottom: 0; }
+  }
+</style>
+</head>
+<body data-pag="cat">
+<div id="cab"></div>
+<main>
+  <div class="tit"><h1 class="big">Colchones</h1><p>Elige tu medida. El descuento de cada foto es el de esa medida.</p></div>
+  <div class="fil"><b>Medida</b><div class="celdas medidas" id="medidas" role="group" aria-label="Medida"></div></div>
+  <div class="fil"><b>Orden</b><div class="orden" id="orden" role="group" aria-label="Orden">
+    <button class="chip" data-o="dto" aria-pressed="true">Más descuento</button><button class="chip" data-o="asc" aria-pressed="false">Más barato</button><button class="chip" data-o="desc" aria-pressed="false">Más caro</button></div></div>
+  <section class="sec"><div class="grid" id="grid"></div></section>
+  <section class="sec">
+    <h2 class="sec-t big">Compáralos</h2>
+    <div class="tabla-wrap"><table class="bt" id="tabla"></table></div>
+  </section>
+</main>
+<div id="pie"></div>
+<script src="datos.js"></script>
+<script src="brutal.js"></script>
+<script>
+(function () {
+  'use strict';
+  var X = window.LMX, st = { md: X.param('medida', X.MEDIDA), o: 'dto' };
+  var med = document.getElementById('medidas');
+  function pintar() {
+    med.innerHTML = X.MEDIDAS.map(function (m) { return '<button class="chip" data-m="' + m + '" aria-pressed="' + (m === st.md) + '">' + m + '</button>'; }).join('');
+    var L = X.M.filter(function (m) { return m.precios[st.md]; });
+    L.sort(function (a, b) { var x = a.precios[st.md], y = b.precios[st.md]; return st.o === 'asc' ? x.p - y.p : st.o === 'desc' ? y.p - x.p : X.dto(y) - X.dto(x); });
+    document.getElementById('grid').innerHTML = L.map(function (m) { return X.tarjeta(m, st.md); }).join('') +
+      X.M.filter(function (m) { return !m.precios[st.md]; }).map(function (m) { return '<div class="card" style="padding:24px var(--pad)"><h3 class="big">' + m.nombre + '</h3><p>No se hace en ' + X.medidaTxt(st.md) + '.</p></div>'; }).join('');
+    document.getElementById('tabla').innerHTML = '<tr><th></th>' + X.M.map(function (m) { return '<th>' + m.nombre + '</th>'; }).join('') + '</tr>' +
+      [['Precio ' + st.md, function (m) { var d = m.precios[st.md]; return d ? '<b>' + X.eur(d.p) + '</b> <s>' + X.eur(d.r) + '</s> <span class="gratis">−' + X.dto(d) + '%</span>' : '—'; }],
+       ['Núcleo', function (m) { return m.nucleo; }], ['Altura', function (m) { return m.altura; }],
+       ['Firmeza', function (m) { return m.firmeza + '%'; }], ['Adaptabilidad', function (m) { return m.adapt + '%'; }], ['Para quién', function (m) { return m.paraQuien; }]]
+        .map(function (r) { return '<tr><th>' + r[0] + '</th>' + X.M.map(function (m) { return '<td>' + r[1](m) + '</td>'; }).join('') + '</tr>'; }).join('');
+  }
+  med.addEventListener('click', function (e) { var b = e.target.closest('[data-m]'); if (!b) return; st.md = b.dataset.m; pintar(); });
+  document.getElementById('orden').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-o]'); if (!b) return; st.o = b.dataset.o;
+    this.querySelectorAll('.chip').forEach(function (c) { c.setAttribute('aria-pressed', c === b); }); pintar();
+  });
+  pintar();
+})();
+</script>
+</body>
+</html>
