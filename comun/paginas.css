@@ -591,3 +591,8 @@
 @media (min-width: 901px) { .p-buy { top: var(--cab); transition: top .4s var(--ease); } }
 .p-scrub-pin { top: calc(var(--cab) - 16px); height: calc(100vh - var(--cab) + 16px); height: calc(100svh - var(--cab) + 16px); transition: top .4s var(--ease); }
 .s-sum { top: var(--cab); transition: top .4s var(--ease); }
+
+/* 30/10 · Regalo de cada opción: foto + valor tachado + «Gratis» (sustituye a la franja granate) */
+.p-card-val { display: block; margin-top: 3px; font-size: 13px; color: var(--mute); }
+.p-card-val s { color: var(--mute); }
+.p-card-val strong { color: var(--acc); font-weight: 700; margin-left: 2px; }

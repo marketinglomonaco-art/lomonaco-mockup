@@ -56,12 +56,14 @@
     $('#p-base').innerHTML = BASES.map(function (b) {
       var d = b.tabla[st.medida], dis = !d;
       var diff = d && b.k !== 'solo' ? '+' + LM.eur(d.p - solo.p) : (d ? LM.eur(d.p) : 'No disponible en ' + LM.medidaTxt(st.medida));
-      // Paco, 29/10: «Solo colchón» lleva la foto de la almohada y destaca que se regalan (120 € el par)
-      var R = b.k === 'solo' && LM.REGALO_SOLO;
-      return '<label class="p-card' + (R ? ' p-card--regalo' : '') + (dis ? ' is-na' : '') + '"><input type="radio" name="base" value="' + b.k + '"' + (st.base === b.k ? ' checked' : '') + (dis ? ' disabled' : '') + '>' +
-        (R ? '<img class="p-card-img" src="' + R.img + '" alt="Almohada Lomonaco" width="240" height="180" loading="lazy">' : '') +
-        '<span><b>' + b.t + '</b><small>' + b.d + '</small></span><em>' + diff + '</em>' +
-        (R ? '<span class="p-card-gift">' + LM.ico('gift') + '<span><strong>' + R.t + '</strong> · ' + R.d + '</span></span>' : '') +
+      // Paco, 30/10: cada opción lleva la foto de sus regalos y su valor tachado («Gratis»), sin la franja granate.
+      // Solo colchón: almohadas (120 €). Packs: almohadas, edredón y protector.
+      var R = b.k === 'solo' ? LM.REGALO_SOLO : LM.REGALO_PACK;
+      var valor = '<s>' + (R.estado ? LM.mark(R, LM.eur(R.valor)) : LM.eur(R.valor)) + '</s>';
+      return '<label class="p-card p-card--regalo' + (dis ? ' is-na' : '') + '"><input type="radio" name="base" value="' + b.k + '"' + (st.base === b.k ? ' checked' : '') + (dis ? ' disabled' : '') + '>' +
+        '<img class="p-card-img" src="' + R.img + '" alt="' + R.alt + '" width="240" height="180" loading="lazy">' +
+        '<span><b>' + (b.k === 'solo' ? R.t : b.t) + '</b><small>' + b.d + '</small>' +
+        '<small class="p-card-val">Valorado en ' + valor + ' <strong>Gratis</strong></small></span><em>' + diff + '</em>' +
         '</label>';
     }).join('');
   }
