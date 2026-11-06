@@ -14,7 +14,6 @@
   function off(d) { return Math.round((1 - d.p / d.r) * 100); }
   function tabla(col, base) { return LM.PRECIOS[col + (base === 'canape' ? 'Canape' : 'Base')]; }
   function medida(col, base) { return tabla(col, base)[M] ? M : Object.keys(tabla(col, base))[0]; }
-  function maxOff(t) { var m = 0; for (var k in t) m = Math.max(m, off(t[k])); return m; }
   function red(n) { return Math.round(n * 100) / 100; }
   var CTA_HTML = $('#h4p-go').innerHTML;
 
@@ -66,7 +65,6 @@
       h = fila('Colchón ' + col.t, LM.eur(colchon.p)) + fila('Canapé abatible de madera', LM.eur(can.p)) +
         regalos(G, vReg) +
         fila('Por separado', '<s>' + LM.eur(suelto) + '</s>', 'h4p-sum');
-      $('#h4p-pill').textContent = 'Regalos valorados en ' + LM.eur(vReg);
       precio = '<p class="h4p-from">Pack para ' + LM.medidaTxt(m) + '</p><p class="h4p-now">' + LM.eur(pack.p) + '</p>' +
         (ahorro > 0 ? '<p class="h4p-save">Te ahorras ' + LM.eur(ahorro) + '</p>' : '');
     } else {
@@ -75,7 +73,6 @@
       h = fila('Colchón ' + col.t, LM.eur(colchon.p)) + fila('Base tapizada antideslizante <small>con patas de 30 cm</small>', 'Incluida') +
         (G.length ? regalos(G, vReg) : '') +
         fila('Precio del pack sin descuento', '<s>' + LM.eur(pack.r) + '</s>', 'h4p-sum');
-      $('#h4p-pill').textContent = 'Hasta -' + maxOff(tabla(st.col, st.base)) + ' % + almohadas de regalo';
       precio = '<p class="h4p-from">Pack para ' + LM.medidaTxt(m) + ' <span class="lm-price-off">-' + off(pack) + ' %</span></p><p class="h4p-now">' + LM.eur(pack.p) + '</p>' +
         '<p class="h4p-save">Te ahorras ' + LM.eur(red(pack.r - pack.p)) + '</p>';
     }
