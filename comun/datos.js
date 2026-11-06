@@ -285,9 +285,8 @@ LM.SHOWROOM = {
     gran:  { k: 'gran',  t: 'Gran Natura', donde: 'Cabecero oscuro y canapé blanco', img: '../img/showroom-7036-1400.webp' },
     almohadas: { t: 'Almohadas y edredón', donde: 'Estantería de complementos', img: '../img/almohada-latex-760.webp', url: '/almohadas/' }
   },
-  /* Paco, 06/11: sala navegable tipo Street View. Cada escena es un punto de vista (foto real) proyectado en un cilindro.
-     A: grados que abarca la foto. puntos: [cama, x %, y %] sobre la foto. enlaces: [escena, dirección en grados (0 = de frente,
-     negativo = izquierda, 180 = detrás)]. Las 4 «de cerca» son fotos de Paco (fuente/showroom-fotos-0611: 123, 156, 154 y 130) */
+  /* Paco, 06/11: escenas del visor en este orden (flechas anterior/siguiente). puntos: [cama, x %, y %] sobre la foto.
+     (A y enlaces quedaron de la prueba tipo Street View, que Paco descartó: el visor plano no los usa). Las 4 «de cerca» son fotos de Paco (fuente/showroom-fotos-0611: 123, 156, 154 y 130) */
   escenas: [
     { id: 'entrada',  t: 'Entrada', img: 'showroom-7033', w: 2400, h: 1350, A: 100, src: ['-1400', '-2400'],
       puntos: [['gold', 29, 64], ['latex', 57, 58], ['gran', 77, 57], ['almohadas', 85, 40]],

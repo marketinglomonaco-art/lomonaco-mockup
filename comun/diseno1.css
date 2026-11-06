@@ -815,42 +815,9 @@ html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color 
 .lm-dmod b { font-size: 15.5px; font-weight: 600; }
 .lm-dmod small { font-size: 13px; color: var(--mute); }
 
-/* ===== SHOWROOM LIVE · sala tipo Street View (Paco, 06/11) ===== */
-.s-sv { background: #2a221d; }
-.s-sv-view { position: absolute; inset: 0; overflow: hidden; }
-.s-pano { position: absolute; inset: 0; overflow: hidden; perspective-origin: 50% 50%; transform-origin: 50% 50%; }
-.s-cam { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; will-change: transform; }
-.s-tira { position: absolute; left: 0; top: 0; background-image: var(--img); background-repeat: no-repeat; backface-visibility: hidden; }
-/* Pasos entre puntos de vista: avanzas (la foto se acerca y aparece la siguiente) o vuelves */
-.s-pano.is-out { animation: sv-out .65s cubic-bezier(.4,0,.2,1) forwards; pointer-events: none; }
-.s-pano.is-in { animation: sv-in .65s cubic-bezier(.4,0,.2,1) both; }
-.s-pano.is-out-back { animation: sv-out-b .65s cubic-bezier(.4,0,.2,1) forwards; pointer-events: none; }
-.s-pano.is-in-back { animation: sv-in-b .65s cubic-bezier(.4,0,.2,1) both; }
-@keyframes sv-out { to { transform: scale(1.45); opacity: 0; } }
-@keyframes sv-in { from { transform: scale(.94); opacity: 0; } }
-@keyframes sv-out-b { to { transform: scale(.9); opacity: 0; } }
-@keyframes sv-in-b { from { transform: scale(1.25); opacity: 0; } }
-/* Puntos de cada cama, pegados a la foto */
-.s-cam .s-spot { position: absolute; left: 0; top: 0; width: 0; height: 0; padding: 0; display: block; backface-visibility: hidden; }
-.s-cam .s-spot i { position: absolute; left: -12px; top: -12px; width: 24px; height: 24px; }
-.s-cam .s-spot span { position: absolute; left: 22px; top: -16px; }
-/* Flechas del suelo */
-.s-ground { position: absolute; left: 50%; bottom: 92px; width: 0; height: 0; z-index: 3; }
-.s-arrow { position: absolute; left: -36px; top: -36px; width: 72px; height: 72px; padding: 0; color: #fff; cursor: pointer; }
-.s-arrow-c { display: block; width: 72px; height: 72px; filter: drop-shadow(0 3px 4px rgba(0,0,0,.55)); transition: color .2s; }
-.s-arrow-c svg { display: block; width: 100%; height: 100%; }
-.s-arrow:hover .s-arrow-c, .s-arrow:focus-visible .s-arrow-c { color: #f3d9d9; }
-.s-arrow:focus-visible { outline: none; }
-.s-arrow:focus-visible .s-arrow-c svg { outline: 2px solid #fff; outline-offset: 2px; border-radius: 8px; }
-.s-arrow.is-back { opacity: .8; }
-.s-arrow-t { position: absolute; left: 50%; top: 58px; transform: translateX(-50%); padding: 4px 10px; border-radius: 999px; background: rgba(20,14,12,.78); color: #fff; font-size: 12.5px; font-weight: 600; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .2s; }
-.s-arrow:hover .s-arrow-t, .s-arrow:focus-visible .s-arrow-t { opacity: 1; }
-/* Controles: acercar, alejar y pantalla completa */
-.s-sv-ctl { position: absolute; right: 16px; top: 16px; z-index: 4; display: grid; gap: 8px; }
-.s-sv-btn { width: 44px; height: 44px; display: grid; place-items: center; border-radius: 50%; background: rgba(255,255,255,.92); color: var(--ink); box-shadow: 0 4px 12px rgba(0,0,0,.2); }
-.s-sv-btn .lm-i { width: 20px; height: 20px; }
-.s-sv-scene, .s-sv-hint, .s-sv-cta { z-index: 4; }
+/* ===== SHOWROOM LIVE (Paco, 06/11): visor de siempre, sin plano ni zonas; selector fuera y ficha de capas ===== */
 .s-card { z-index: 5; }
+.s-sv-thumbs, .s-sv-map { display: none; }
 /* «¿Qué colchón quieres ver?», fuera del visor */
 .s-pick { display: flex; align-items: center; gap: 12px 20px; flex-wrap: wrap; margin-bottom: 16px; }
 .s-pick-k { font-size: 17px; font-weight: 700; color: var(--ink); }
@@ -886,13 +853,8 @@ html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color 
 .s-capas-n { font-size: 12px; color: var(--mute); }
 .s-card .lm-btn--line { min-height: 46px; }
 @media (max-width: 760px) {
-  .s-sv { height: 64svh; min-height: 420px; }
-  .s-ground { bottom: 132px; }
-  .s-arrow-t { opacity: 1; font-size: 11px; padding: 3px 8px; top: 42px; }
-  .s-sv-ctl { right: 12px; top: 12px; }
-  .s-sv-ctl [data-zoom] { display: none; }
-  .s-pick { gap: 10px; padding: 0 var(--pad); }
+  .s-pick { gap: 10px; }
   .s-pick-row { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; margin-right: calc(var(--pad) * -1); padding-right: var(--pad); width: 100%; }
   .s-pick-b { flex: none; }
 }
-@media (prefers-reduced-motion: reduce) { .s-pano.is-in, .s-pano.is-out, .s-pano.is-in-back, .s-pano.is-out-back { animation: none; } }
+}
