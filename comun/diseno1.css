@@ -706,14 +706,21 @@ html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color 
 /* ===== CATEGORÍAS · tanda del 06/11 (Paco) ===== */
 /* Banner de la promo del momento (fuente/home/promo.html): granate LM, foto real del colchón y el sello de la cuota */
 .c-promo { padding-top: 16px; }
-.c-promo-in { position: relative; display: grid; grid-template-columns: 1.2fr 1fr; min-height: 210px; border-radius: var(--r); background: var(--acc); color: #fff; }
+.c-promo-track { display: grid; grid-auto-flow: column; grid-auto-columns: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; border-radius: var(--r); overscroll-behavior-x: contain; }
+.c-promo-track::-webkit-scrollbar { display: none; }
+/* Paco, 06/11: Black Friday en negro */
+.c-promo-in { position: relative; display: grid; grid-template-columns: 1.2fr 1fr; min-height: 210px; border-radius: var(--r); background: #111; color: #fff; scroll-snap-align: start; scroll-snap-stop: always; }
+.c-promo-pre { align-self: center; font-size: clamp(16px, 1.5vw, 20px); font-weight: 600; }
+.c-promo-dots { display: flex; justify-content: center; gap: 8px; margin-top: 12px; }
+.c-promo-dots button { width: 8px; height: 8px; padding: 0; border-radius: 999px; background: #cfcfd4; transition: width .3s, background .3s; }
+.c-promo-dots button[aria-current="true"] { width: 26px; background: var(--acc); }
 .c-promo-txt { display: flex; flex-direction: column; justify-content: center; gap: 6px; padding: clamp(22px, 3vw, 36px) clamp(22px, 3.6vw, 52px); }
 .c-promo-k { font-size: clamp(14px, 1.3vw, 18px); font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.85); }
 .c-promo-big { display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 16px; line-height: 1; }
 .c-promo-big b { font-size: clamp(56px, 6.2vw, 92px); font-weight: 800; letter-spacing: -.045em; }
 .c-promo-big span { font-size: clamp(18px, 1.8vw, 24px); font-weight: 600; }
-.c-promo-gift { align-self: flex-start; display: inline-flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 12px; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.14); font-size: 15px; font-weight: 600; }
-.c-promo-gift .lm-i { width: 18px; height: 18px; }
+.c-promo-gift { align-self: flex-start; display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; padding: 8px 14px; border-radius: 14px; background: rgba(255,255,255,.12); max-width: 34em; line-height: 1.35; font-size: 15px; font-weight: 600; }
+.c-promo-gift .lm-i { width: 18px; height: 18px; flex: none; }
 .c-promo-gift s { font-weight: 500; color: rgba(255,255,255,.75); }
 .c-promo-gift strong { font-weight: 800; }
 .c-promo-img { position: relative; overflow: hidden; border-radius: 0 var(--r) var(--r) 0; background: #e9e6e1; }
@@ -723,8 +730,7 @@ html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color 
   .c-promo-in { grid-template-columns: 1fr; }
   .c-promo-txt { padding: 22px 20px 26px; }
   .c-promo-img { height: 150px; border-radius: 0 0 var(--r) var(--r); }
-  .c-promo .c-promo-sello { top: 16px; right: 14px; width: 92px; transform: none; }
-  .c-promo .h4-circ circle { fill: #fff; } .c-promo .h4-circ text { fill: var(--acc); }
+  .c-promo .c-promo-sello { top: auto; bottom: 14px; right: 14px; width: 92px; transform: none; } /* sobre la foto, sin tapar el texto */
   .c-promo-gift { font-size: 14px; }
 }
 
