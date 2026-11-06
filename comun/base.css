@@ -38,7 +38,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .lm-h2 { font-size: var(--h2); font-weight: var(--h-w); letter-spacing: var(--h-ls); line-height: var(--h-lh); text-transform: var(--h-tt); text-wrap: balance; }
 .lm-h2 em { font-style: normal; color: var(--mute); display: block; }
 .lm-darkbg .lm-h2 em { color: var(--mute); }
-.lm-sub { font-size: clamp(17px, 1.4vw, 20px); color: var(--mute); max-width: 36em; margin-top: 16px; }
+.lm-sub { font-size: 17px; line-height: 1.5; /* 06/11 (Paco): mismo tamaño que el resto del texto */ color: var(--mute); max-width: 36em; margin-top: 16px; }
 .lm-darkbg .lm-sub { color: var(--mute); }
 .lm-head2 { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; flex-wrap: wrap; margin-bottom: clamp(28px, 4vw, 48px); }
 .lm-note { font-size: 13px; color: var(--mute); }
