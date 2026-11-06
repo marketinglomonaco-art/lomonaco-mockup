@@ -28,8 +28,9 @@ LM.CONFIG = {
   fabricacion:  { v: 'Fabricación propia en España', estado: 'confirmar' },
   entrega:      { v: '5 a 7 días laborables', estado: 'ok' },
   entregaMontaje:{ v: '20 a 25 días laborables', estado: 'confirmar', nota: 'Página de envíos: 20 a 25 días laborables; fichas de producto: 15 a 20 días' },
-  /* Paco, 05/11: financiación de 3 a 36 meses; se destaca 12 meses sin intereses (Pepper Finance) */
-  financiacion: { v: 'de 3 a 36 meses, y a 12 meses sin intereses', corto: '12 meses sin intereses', meses: 12, factor: 1 / 12, estado: 'ok' },
+  /* Paco, 05/11: financiación de 3 a 36 meses; se destaca 12 meses sin intereses (Pepper Finance).
+     06/11: según su calculadora, los 12 meses solo son sin intereses desde 1.200 € (ver LM.FINANCIACION) */
+  financiacion: { v: 'de 3 a 36 meses, y a 12 meses sin intereses en compras desde 1.200 €', corto: '12 meses sin intereses desde 1.200 €', meses: 12, estado: 'ok' },
   financiacionLarga: { v: 'Financiación sujeta a la aprobación de Pepper Finance.', estado: 'ok' },
   /* Texto legal del asterisco (Paco, 05/11), tal cual */
   legalFinanciacion: { v: 'Sujeto a la aprobación de PEPPER FINANCE CORPORATION, S.L.U. CIF: B86961612, C/Juan Esplandiú, 13, planta, C1,-28007- Madrid; www.pepperfinance.es. Ejemplo de financiación para 730,00 € a 24 meses. Comisión de apertura financiada: 96,00 €. 24 cuotas de 34,42 €. TIN: 0,00 %. TAE: 14,11 %. Importe total crédito: 826,00 €. Importe total adeudado: 552,00 €. Precio de adquisición al contado: 730,00 €.', estado: 'ok' },
@@ -49,7 +50,7 @@ LM.CONFIG = {
   cuotaBanner:  { v: '15 €', estado: 'ok' },
   trayectoria:  { v: 'Casi 30 años', estado: 'confirmar', nota: 'Choca con «Desde 1977» (casi 50 años). La web también dice «más de 25 años»' },
   compraGarantizada: { v: 'Protección al comprador de Trusted Shops', estado: 'confirmar', nota: 'Solo si el sello Trusted Shops Guarantee está activo' },
-  financiacion36: { meses: 36, estado: 'confirmar', nota: 'Plazo máximo de 36 meses (Paco, 29/10). Falta la TAE y el coste: la cuota está calculada sin intereses, con el precio de la medida más pequeña' }
+  financiacion36: { meses: 36, estado: 'ok', nota: 'Plazo máximo de 36 meses (Paco, 29/10). Coste por plazo en LM.FINANCIACION (calculadora de Paco, 06/11)' }
 };
 
 LM.WEB = 'https://www.grupolomonaco.com';
@@ -108,6 +109,14 @@ LM.MENU = [
 LM.MENU_PACKS = { t: 'Packs colchón + canapé o base', href: 'pack-natura-gold.html' };
 
 /* Medidas en el orden de la web */
+/* Calculadora de cuotas de Lo Monaco (Paco, 06/11), columna «Normal» (coste para el cliente).
+   Cuota = importe × (1 + coste del plazo) ÷ meses. Importe de 60 a 4.500 €; 6 meses desde 120 €;
+   de 9 meses en adelante desde 200 €; 12 meses sin coste desde 1.200 €; cuotas de menos de 20 € no se ofrecen. */
+LM.FINANCIACION = {
+  min: 60, max: 4500, cuotaMin: 20, sinInteresesDesde: 1200,
+  plazos: { 3: { coste: 0, min: 60 }, 6: { coste: 0, min: 120 }, 9: { coste: 0.0538, min: 200 }, 12: { coste: 0.0745, min: 200 },
+            18: { coste: 0.1165, min: 200 }, 24: { coste: 0.1597, min: 200 }, 36: { coste: 0.2491, min: 200 } }
+};
 LM.MEDIDAS = ['90x190','90x200','105x190','105x200','135x180','135x190','140x200','150x190','150x200','160x200','180x200','200x200'];
 
 /* Precios por medida: id de variación, precio (p), precio de referencia (r), stock (s) */

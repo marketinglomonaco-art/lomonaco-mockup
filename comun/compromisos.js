@@ -61,7 +61,7 @@
       // 8 · Producto premium
       '<li class="h4c-card">' + ic('gem') + '<h3>Producto premium</h3><p>Látex, muelles ensacados y viscoelástica, capa a capa. ' + LM.pend('certificados o materiales que lo respalden') + '</p></li>',
       // 9 · Facilidades de pago
-      '<li class="h4c-card">' + ic('card') + '<h3>Facilidades de pago</h3><p>Financia tu compra de 3 a 36 meses. A 12 meses, sin intereses.' + LM.ast + '</p></li>'
+      '<li class="h4c-card">' + ic('card') + '<h3>Facilidades de pago</h3><p>Financia tu compra de 3 a 36 meses. A 12 meses, sin intereses en compras desde 1.200 €.' + LM.ast + '</p></li>'
     ];
     ct.innerHTML = cards.join('');
 

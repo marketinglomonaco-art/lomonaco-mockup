@@ -93,9 +93,23 @@
   };
 
   /* ---------- precio único [T2] ---------- */
-  LM.cuota = function (p) { return Math.round(p * C.financiacion.factor * 100) / 100; };
+  /* Cuotas con la calculadora de Paco (LM.FINANCIACION). Devuelve null si ese plazo no se ofrece para ese importe */
+  LM.sinIntereses = function (p) { return p >= LM.FINANCIACION.sinInteresesDesde; };
+  LM.cuotaPlazo = function (p, n) {
+    var F = LM.FINANCIACION, pl = F.plazos[n];
+    if (!pl || p < F.min || p > F.max || p < pl.min) return null;
+    var coste = (n === 12 && LM.sinIntereses(p)) ? 0 : pl.coste;
+    var c = Math.round(p * (1 + coste) / n * 100) / 100;
+    return c < F.cuotaMin ? null : c;
+  };
+  LM.cuota = function (p) { return LM.cuotaPlazo(p, 12); };
+  // «63,93 € al mes en 12 meses» o, desde 1.200 €, «… en 12 meses sin intereses»
+  LM.cuotaFrase = function (p) {
+    var c = LM.cuota(p); if (c == null) return '';
+    return '<b>' + LM.eur(c) + ' al mes</b> en 12 meses' + (LM.sinIntereses(p) ? ' sin intereses' : '') + LM.ast;
+  };
   LM.ast = '<a class="lm-ast" href="#lm-legal" aria-label="Ver condiciones de la financiación">*</a>';
-  LM.cuotaTxt = function (p) { return 'o <b>' + LM.eur(LM.cuota(p)) + ' al mes</b> en 12 meses sin intereses' + LM.ast; };
+  LM.cuotaTxt = function (p) { var f = LM.cuotaFrase(p); return f ? 'o ' + f : ''; };
   LM.precio = function (d, o) {
     o = o || {};
     var off = d.r > d.p ? Math.round((1 - d.p / d.r) * 100) : 0;
@@ -105,7 +119,7 @@
       '<span class="lm-price-now">' + LM.eur(d.p) + '</span>';
     if (off) h += '<s class="lm-price-ref">' + LM.mark(C.precioRef, LM.eur(d.r)) + '</s><span class="lm-price-off">-' + off + ' %</span>';
     h += '</div>';
-    if (o.cuota !== false) h += '<div class="lm-price-fee">' + LM.cuotaTxt(d.p) + '</div>';
+    if (o.cuota !== false && LM.cuota(d.p) != null) h += '<div class="lm-price-fee">' + LM.cuotaTxt(d.p) + '</div>';
     return h + '</div>';
   };
   LM.desdeTabla = function (t) {

@@ -6,7 +6,7 @@
 
   // Cuota mínima del catálogo para el antetítulo del hero
   var minP = Math.min.apply(null, LM.ORDEN.map(function (k) { return LM.desde(k).p; }));
-  $$('[data-cuota-desde]').forEach(function (el) { el.textContent = LM.eur(Math.round(LM.cuota(minP) * 100) / 100); });
+  $$('[data-cuota-desde]').forEach(function (el) { el.textContent = LM.eur(LM.cuotaPlazo(minP, 36) || 0); });
   $$('[data-stars]').forEach(function (el) { el.innerHTML = LM.stars(LM.CONFIG.valoracion.media); });
   $$('[data-rating]').forEach(function (el) { el.innerHTML = LM.rating(); });
 
