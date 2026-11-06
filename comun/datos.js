@@ -55,13 +55,13 @@ LM.CONFIG = {
 LM.WEB = 'https://www.grupolomonaco.com';
 
 /* Paco, 06/11: redes sociales y Trusted Shops con iconos en el pie. URLs sacadas de la web actual;
-   TikTok, YouTube y Pinterest no aparecen en la web: falta que Paco las pase (url: null → se marca como pendiente) */
+   TikTok, YouTube y Pinterest: las pasó Paco el 06/11 (url: null → se marca como pendiente) */
 LM.REDES = [
   { k: 'instagram', t: 'Instagram', url: 'https://www.instagram.com/lomonaco_es/' },
   { k: 'facebook', t: 'Facebook', url: 'https://www.facebook.com/GrupoLoMonaco/' },
-  { k: 'tiktok', t: 'TikTok', url: null },
-  { k: 'youtube', t: 'YouTube', url: null },
-  { k: 'pinterest', t: 'Pinterest', url: null },
+  { k: 'tiktok', t: 'TikTok', url: 'https://www.tiktok.com/@lomonaco_es' },
+  { k: 'youtube', t: 'YouTube', url: 'https://www.youtube.com/user/grupolomonacoonline' },
+  { k: 'pinterest', t: 'Pinterest', url: 'https://es.pinterest.com/lomonaco_es/_created/' },
   { k: 'trusted', t: 'Trusted Shops', url: 'https://www.trustedshops.es/evaluacion/info_XB79C2B6060E67B2236C2A21E0E3F7C7E.html' }
 ];
 
