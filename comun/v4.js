@@ -87,3 +87,22 @@
     $$('.lm-bar:not(.is-in)').forEach(function (b) { if (barras.indexOf(b) < 0) { barras.push(b); io.observe(b); } });
   }).observe(document.body, { childList: true, subtree: true });
 })();
+
+/* Paco, 06/11 · Sello OCU: al principio solo se ve el círculo con el logo. Al hacer un poco de scroll, con la etiqueta
+   ya en pantalla, se desliza y aparece entera («Colchón analizado por OCU»), y se queda así el resto de la visita. */
+(function () {
+  'use strict';
+  var $$ = LM.$$, root = document.documentElement;
+  // La clase lm-ocu-js (etiqueta cerrada) se pone al empezar, en componentes.js, para que no se vea abrirse y cerrarse al cargar
+  if (!root.classList.contains('lm-ocu-js')) return;
+  var pend = 0;
+  function mirar() {
+    pend = 0;
+    if (scrollY < 40) return;                       // hace falta «un poco de scroll»
+    $$('.lm-ocu:not(.is-open)').forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      if (r.top < innerHeight * 0.8 && r.bottom > 0 || r.bottom <= 0) el.classList.add('is-open');
+    });
+  }
+  addEventListener('scroll', function () { if (!pend) pend = requestAnimationFrame(mirar); }, { passive: true });
+})();

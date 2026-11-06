@@ -6,7 +6,9 @@
 (function () {
   'use strict';
   var C = LM.CONFIG;
-  var LOGO = 'https://www.grupolomonaco.com/wp-content/uploads/2024/04/LOMONACO-LOGO.svg';
+  // Sello OCU: empieza cerrado (solo el círculo) y se abre al hacer scroll (comun/v4.js). Sin animaciones, siempre abierto
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('lm-ocu-js');
+  var LOGO ='https://www.grupolomonaco.com/wp-content/uploads/2024/04/LOMONACO-LOGO.svg';
 
   /* ---------- utilidades ---------- */
   function $(s, r) { return (r || document).querySelector(s); }

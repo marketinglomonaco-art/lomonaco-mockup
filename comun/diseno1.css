@@ -700,3 +700,10 @@ html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color 
 .lm-ocu span { font: 700 11.5px/1 var(--font); letter-spacing: .04em; text-transform: uppercase; color: var(--ink); white-space: nowrap; }
 .h4q-cimg .lm-ocu { left: 12px; top: 46px; } /* en el cuestionario, debajo de «El más compatible» */
 .lm-ocu--ficha { left: 18px; top: 18px; }
+/* Paco, 06/11: empieza como un círculo con el logo; al hacer scroll se desliza y aparece el texto (comun/v4.js), y se queda abierta */
+.lm-ocu { transition: padding .7s cubic-bezier(.22,1,.36,1), gap .7s cubic-bezier(.22,1,.36,1); }
+.lm-ocu span { display: inline-block; max-width: 260px; overflow: hidden; transition: max-width .8s cubic-bezier(.22,1,.36,1), opacity .5s .15s, transform .8s cubic-bezier(.22,1,.36,1); }
+.lm-ocu-js .lm-ocu:not(.is-open) { gap: 0; padding: 0 3px; }
+.lm-ocu-js .lm-ocu:not(.is-open) span { max-width: 0; opacity: 0; transform: translateX(-10px); }
+.lm-ocu-js .h4q-cimg .lm-ocu { gap: 6px; padding: 0 11px 0 3px; } /* en el resultado del cuestionario ya sale abierta */
+.lm-ocu-js .h4q-cimg .lm-ocu span { max-width: 260px; opacity: 1; transform: none; }
