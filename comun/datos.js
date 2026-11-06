@@ -285,12 +285,33 @@ LM.SHOWROOM = {
     gran:  { k: 'gran',  t: 'Gran Natura', donde: 'Cabecero oscuro y canapé blanco', img: '../img/showroom-7036-1400.webp' },
     almohadas: { t: 'Almohadas y edredón', donde: 'Estantería de complementos', img: '../img/almohada-latex-760.webp', url: '/almohadas/' }
   },
+  /* Paco, 06/11: sala navegable tipo Street View. Cada escena es un punto de vista (foto real) proyectado en un cilindro.
+     A: grados que abarca la foto. puntos: [cama, x %, y %] sobre la foto. enlaces: [escena, dirección en grados (0 = de frente,
+     negativo = izquierda, 180 = detrás)]. Las 4 «de cerca» son fotos de Paco (fuente/showroom-fotos-0611: 123, 156, 154 y 130) */
   escenas: [
-    { id: 7033, t: 'Entrada', mapa: [18, 88, -35], puntos: [['gold', 29, 64], ['latex', 57, 58], ['gran', 77, 57], ['almohadas', 85, 40]] },
-    { id: 7034, t: 'Junto al Natura Gold', mapa: [26, 70, -40], puntos: [['gold', 33, 66], ['latex', 67, 53], ['gran', 82, 50], ['almohadas', 81, 30]] },
-    { id: 7035, t: 'De frente', mapa: [50, 86, 0], puntos: [['gold', 15, 62], ['latex', 56, 62], ['gran', 89, 62]] },
-    { id: 7036, t: 'Zona Gran Natura', mapa: [68, 78, 5], puntos: [['latex', 12, 63], ['gran', 54, 68], ['almohadas', 82, 48]] },
-    { id: 7037, t: 'Desde el rincón', mapa: [90, 70, 40], puntos: [['gran', 63, 78], ['latex', 32, 53], ['gold', 18, 44]] }
+    { id: 'entrada',  t: 'Entrada', img: 'showroom-7033', w: 2400, h: 1350, A: 100, src: ['-1400', '-2400'],
+      puntos: [['gold', 29, 64], ['latex', 57, 58], ['gran', 77, 57], ['almohadas', 85, 40]],
+      enlaces: [['goldlado', 6]] },
+    { id: 'goldlado', t: 'Junto al Natura Gold', img: 'showroom-7034', w: 2400, h: 1350, A: 100, src: ['-1400', '-2400'],
+      puntos: [['gold', 33, 66], ['latex', 67, 53], ['gran', 82, 50], ['almohadas', 81, 30]],
+      enlaces: [['frente', 12], ['gold-cerca', -17], ['entrada', 180]] },
+    { id: 'frente',   t: 'De frente', img: 'showroom-7035', w: 2400, h: 1350, A: 100, src: ['-1400', '-2400'],
+      puntos: [['gold', 15, 62], ['latex', 56, 62], ['gran', 89, 62]],
+      enlaces: [['gold-cerca', -35], ['latex-cerca', 6], ['gran-cerca', 39], ['granzona', 78], ['goldlado', 180]] },
+    { id: 'granzona', t: 'Zona Gran Natura', img: 'showroom-7036', w: 2400, h: 1350, A: 100, src: ['-1400', '-2400'],
+      puntos: [['latex', 12, 63], ['gran', 54, 68], ['almohadas', 82, 48]],
+      enlaces: [['gran-cerca', 4], ['almohadas-cerca', 32], ['rincon', -60], ['frente', 180]] },
+    { id: 'rincon',   t: 'Desde el rincón', img: 'showroom-7037', w: 2400, h: 1350, A: 100, src: ['-1400', '-2400'],
+      puntos: [['gran', 63, 78], ['latex', 32, 53], ['gold', 18, 44]],
+      enlaces: [['entrada', -70], ['granzona', 180]] },
+    { id: 'gold-cerca',  t: 'Natura Gold, de cerca', cama: 'gold', img: 'sr-gold', w: 2000, h: 1333, A: 90, src: ['-1200', '-2000'],
+      puntos: [['gold', 50, 60]], enlaces: [['latex-cerca', 70], ['frente', 180]] },
+    { id: 'latex-cerca', t: 'Natura Látex, de cerca', cama: 'latex', img: 'sr-latex', w: 2000, h: 1333, A: 90, src: ['-1200', '-2000'],
+      puntos: [['latex', 52, 54]], enlaces: [['gold-cerca', -70], ['gran-cerca', 70], ['frente', 180]] },
+    { id: 'gran-cerca',  t: 'Gran Natura, de cerca', cama: 'gran', img: 'sr-gran', w: 2000, h: 1333, A: 90, src: ['-1200', '-2000'],
+      puntos: [['gran', 57, 56]], enlaces: [['latex-cerca', -70], ['almohadas-cerca', 70], ['frente', 180]] },
+    { id: 'almohadas-cerca', t: 'Almohadas y edredón', cama: 'almohadas', img: 'sr-almohadas', w: 2000, h: 1333, A: 90, src: ['-1200', '-2000'],
+      puntos: [['almohadas', 60, 45]], enlaces: [['gran-cerca', -70], ['granzona', 180]] }
   ],
   detalles: [
     [7031, 'La etiqueta del Natura Látex'], [7022, 'El acolchado, de cerca'], [7027, 'El lateral y su etiqueta'],
