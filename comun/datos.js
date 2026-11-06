@@ -53,6 +53,8 @@ LM.CONFIG = {
 };
 
 LM.WEB = 'https://www.grupolomonaco.com';
+/* Sello OCU (logo blanco de Paco, fuente/sellos/logo-ocu-white.webp): va sobre un círculo granate para leerse sobre fotos claras */
+LM.SELLO_OCU = { img: '../img/sello-ocu-200.webp', alt: 'Sello OCU' };
 
 /* Paco, 06/11: redes sociales y Trusted Shops con iconos en el pie. URLs sacadas de la web actual;
    TikTok, YouTube y Pinterest: las pasó Paco el 06/11 (url: null → se marca como pendiente) */
@@ -127,7 +129,7 @@ LM.PRODUCTOS = {
     durTxt: 'El núcleo HR es un soporte firme pensado para mantener su forma.',
     id: 41676, nombre: 'Natura Visco', titulo: 'Colchón Natura Visco', url: 'colchon-natura-visco.html',
     img: '../img/natura-visco-nueva-560.webp', foto: 'nueva', fotoNueva: '../img/natura-visco-nueva', imgDetalle: '../img/natura-latex-06-560.webp', 
-    etiqueta: '', nucleo: 'Viscoelástica', tipo: 'visco', altura: '28 cm',
+    etiqueta: '', ocu: true, /* Paco, 06/11: sello OCU siempre en el Natura Visco */ nucleo: 'Viscoelástica', tipo: 'visco', altura: '28 cm',
     firmeza: 85, adaptabilidad: 70, sensacion: 'firme',
     sensacionTxt: 'Firme y estable. Notas que el colchón te sujeta.',
     diferencia: 'Soporte firme y silencioso, y el precio más bajo de la gama.',

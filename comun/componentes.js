@@ -131,6 +131,10 @@
   /* ---------- tarjeta estándar de colchón (Paco, 05/11) ----------
      La de la home es la estándar del ecommerce: home, categoría y cualquier página que liste colchones.
      Precio para la medida elegida (por defecto 150 × 190), cuota a 12 meses y almohadas de regalo bajo el botón. */
+  LM.selloOcu = function (k, cls) {
+    var p = LM.PRODUCTOS[k]; if (!p || !p.ocu) return '';
+    return '<span class="lm-ocu' + (cls ? ' ' + cls : '') + '"><img src="' + LM.SELLO_OCU.img + '" alt="' + LM.SELLO_OCU.alt + '" width="200" height="200" loading="lazy"></span>';
+  };
   LM.tarjeta = function (k, o) {
     o = o || {};
     var p = LM.PRODUCTOS[k], m = o.medida || LM.medidaInicial(), d = LM.PRECIOS[k][m], href = LM.href(p.url);
@@ -138,7 +142,7 @@
     return '<article class="lm-card h-pc' + (o.cls ? ' ' + o.cls : '') + '" data-testid="product-card-' + k + '">' +
       '<div class="lm-card-img"><img src="' + f + '-760.webp" srcset="' + f + '-480.webp 480w, ' + f + '-760.webp 760w" sizes="(max-width: 600px) 100vw, 25vw" alt="Colchón ' + p.nombre + '" width="760" height="760" loading="lazy">' +
         '<img class="lm-detalle" src="../img/colchon-card-hover-760.webp" srcset="../img/colchon-card-hover-480.webp 480w, ../img/colchon-card-hover-760.webp 760w" sizes="(max-width: 600px) 100vw, 25vw" alt="" width="760" height="760" loading="lazy">' +
-        (p.etiqueta ? '<span class="lm-pill">' + p.etiqueta + '</span>' : '') + '</div>' +
+        (p.etiqueta ? '<span class="lm-pill">' + p.etiqueta + '</span>' : '') + LM.selloOcu(k) + '</div>' +
       '<div class="lm-card-b"><p class="lm-card-k">' + p.nucleo + ' · ' + p.altura + '</p>' +
         '<h3><a class="lm-stretch" href="' + href + '" data-select="' + p.id + '">' + p.titulo + '</a></h3>' +
         '<p class="lm-card-d">' + p.diferencia + '</p>' + LM.firmeza(p, { txt: false }) +

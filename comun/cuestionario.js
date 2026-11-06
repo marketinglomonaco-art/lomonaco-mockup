@@ -112,7 +112,7 @@
     var pack = LM.href(p.url.replace('colchon-', 'pack-')) + '?base=canape';
     return '<article class="h4q-card' + (n ? '' : ' is-top') + '" data-testid="quiz-result-' + k + '">' +
       '<div class="h4q-cimg"><img src="' + f + '-480.webp" alt="Colchón ' + p.nombre + '" width="480" height="480" loading="lazy">' +
-        '<span class="lm-pill">' + (n ? 'Alternativa' : 'El más compatible') + '</span></div>' +
+        '<span class="lm-pill">' + (n ? 'Alternativa' : 'El más compatible') + '</span>' + LM.selloOcu(k) + '</div>' +
       '<div class="h4q-cb">' +
         '<div class="h4q-pct"><b>' + x.pct + ' %</b><span>compatible contigo</span><i aria-hidden="true"><i style="width:' + x.pct + '%"></i></i></div>' +
         '<p class="lm-card-k">' + p.nucleo + ' · ' + p.altura + '</p><h3>' + p.titulo + '</h3>' +

@@ -17,7 +17,8 @@
 
   if (!PACK) {
   /* Cabecera de la compra [F1, F3] */
-  $('#p-tag').textContent = P.etiqueta; $('#p-tag').hidden = !P.etiqueta; // Paco, 05/11: solo Gran Natura y Natura Gold llevan etiqueta
+  $('#p-tag').textContent = P.etiqueta; $('#p-tag').hidden = !P.etiqueta;
+  if (P.ocu) $('.p-gal').insertAdjacentHTML('beforeend', LM.selloOcu(K, 'lm-ocu--ficha')); // Paco, 06/11: sello OCU en el Natura Visco // Paco, 05/11: solo Gran Natura y Natura Gold llevan etiqueta
   $('#p-vp').textContent = P.vp;
   $('#p-facts').innerHTML = [P.altura + ' de alto', 'Firmeza ' + P.firmeza + '%', P.nucleo].map(function (f) { return '<li>' + f + '</li>'; }).join('');
 
