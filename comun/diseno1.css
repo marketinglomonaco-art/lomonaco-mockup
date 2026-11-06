@@ -775,3 +775,8 @@ html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color 
   .h4p--mini .h4p-foot { flex-direction: column; align-items: stretch; }
   .h4p--mini .h4p-go { width: 100%; }
 }
+/* Paco, 06/11: siempre que se habla de regalos, con las fotos de los regalos */
+.c-promo-gimgs { display: flex; gap: 6px; flex: none; }
+.c-promo-gimgs img { width: 52px; height: 52px; border-radius: 10px; object-fit: cover; background: #fff; }
+.c-promo-gift { gap: 12px; padding: 8px 16px 8px 8px; }
+@media (max-width: 700px) { .c-promo-gimgs img { width: 48px; height: 48px; } .c-promo-gift { flex-direction: column; align-items: flex-start; gap: 8px; padding: 10px 14px 12px 10px; } }

@@ -115,7 +115,7 @@
     seo.appendChild(head); seo.appendChild(acc);
   })();
 
-  /* Paco, 06/11 · Banner de la promo en carrusel: se desliza con el dedo, con los puntos o solo cada 6 s.
+  /* Paco, 06/11 · Banner de la promo en carrusel: se desliza con el dedo, con los puntos o solo cada 4 s (Paco, 06/11).
      Se para al pasar el ratón, al tocarlo o con el foco; sin paso automático si el usuario reduce el movimiento */
   (function () {
     var tr = $('#c-promo-track'), dots = $('#c-promo-dots'); if (!tr || !dots) return;
@@ -137,7 +137,7 @@
     caja.addEventListener('focusin', function () { pausa = true; }); caja.addEventListener('focusout', function () { pausa = false; });
     tr.addEventListener('touchstart', function () { toc = true; }, { passive: true });
     marcar(0);
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(function () { if (!pausa && !toc && !document.hidden) ir((cur + 1) % sl.length); }, 6000);
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(function () { if (!pausa && !toc && !document.hidden) ir((cur + 1) % sl.length); }, 4000);
   })();
 
   var f = LM.faqs(); $('#c-faq').innerHTML = LM.faqHTML([f[6], f[0], f[3], f[5], f[1]]);
