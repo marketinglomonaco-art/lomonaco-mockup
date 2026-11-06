@@ -2,7 +2,7 @@
    Paco, 05/11: solo los packs que existen en la tienda.
    - Canapé + Gran Natura, Natura Látex o Natura Gold: almohadas, edredón y protector de regalo.
    - Canapé + Natura Visco: almohadas y protector de regalo.
-   - Base tapizada antideslizante + colchón: descuento sobre el precio, sin regalos.
+   - Base tapizada antideslizante + colchón: descuento sobre el precio y almohadas de regalo (Paco, 06/11).
    Se ve el precio de cada producto por separado y lo que te ahorras con el pack (precios para 150 × 190). */
 (function () {
   'use strict';
@@ -23,6 +23,15 @@
   colB.innerHTML = PC.colchones.map(function (c) { return '<button type="button" role="radio" data-col="' + c.k + '"><b>' + c.t + '</b><small>' + c.d + '</small></button>'; }).join('');
   var img = $('#h4p-img'), ultimaFoto = 'canape';
 
+  // Paco, 06/11: los regalos, con más protagonismo: bloque propio con las fotos grandes, valor tachado y «Gratis»
+  function regalos(G, v) {
+    return '<li class="h4p-gifts' + (G.length === 1 ? ' h4p-gifts--1' : '') + '"><p class="h4p-gifts-k">' + LM.ico('gift') + '<span>De regalo con tu pack</span>' +
+      '<em>Valorado en <s>' + LM.eur(v) + '</s> <strong>Gratis</strong></em></p><div class="h4p-gifts-g">' +
+      G.map(function (r) {
+        return '<figure><img src="' + r[3] + '" alt="' + r[0] + ' de regalo" width="320" height="320" loading="lazy">' +
+          '<figcaption><b>' + r[0] + '</b><span><s>' + LM.eur(r[4]) + '</s> <strong>Gratis</strong></span></figcaption></figure>';
+      }).join('') + '</div></li>';
+  }
   function fila(nombre, precio, cls) { return '<li' + (cls ? ' class="' + cls + '"' : '') + '><span>' + nombre + '</span><b>' + precio + '</b></li>'; }
 
   function pintarPack() {
@@ -41,20 +50,18 @@
       if (Math.abs(dif) < 1) dif = 0;
       var suelto = red(pack.p + dif + vReg), ahorro = red(suelto - pack.p);
       h = fila('Colchón ' + col.t, LM.eur(colchon.p)) + fila('Canapé abatible de madera', LM.eur(can.p)) +
-        G.map(function (r) {
-          return '<li class="h4p-gift"><img src="' + r[3] + '" alt="" width="160" height="160" loading="lazy"><span>' + r[0] + ' <small>de regalo</small></span>' +
-            '<b><s>' + LM.eur(r[4]) + '</s><strong>Gratis</strong></b></li>';
-        }).join('') +
+        regalos(G, vReg) +
         fila('Por separado', '<s>' + LM.eur(suelto) + '</s>', 'h4p-sum');
       $('#h4p-pill').textContent = 'Regalos valorados en ' + LM.eur(vReg);
       precio = '<p class="h4p-from">Pack para ' + LM.medidaTxt(m) + '</p><p class="h4p-now">' + LM.eur(pack.p) + '</p>' +
         (ahorro > 0 ? '<p class="h4p-save">Te ahorras ' + LM.eur(ahorro) + '</p>' : '');
     } else {
-      // Base antideslizante: no se vende suelta. El pack lleva el descuento en el precio, sin regalos
-      h = fila('Colchón ' + col.t, LM.eur(colchon.p)) + fila('Base tapizada antideslizante', 'Incluida') +
-        '<li class="h4p-note">Con patas de 30 cm. Este pack no lleva regalos: el ahorro va en el precio.</li>' +
-        fila('Precio sin descuento', '<s>' + LM.eur(pack.r) + '</s>', 'h4p-sum');
-      $('#h4p-pill').textContent = 'Hasta -' + maxOff(tabla(st.col, st.base)) + ' % · con base';
+      // Base antideslizante: no se vende suelta. El pack lleva el descuento en el precio y las almohadas de regalo
+      // Paco, 06/11: con base también se regalan las almohadas
+      h = fila('Colchón ' + col.t, LM.eur(colchon.p)) + fila('Base tapizada antideslizante <small>con patas de 30 cm</small>', 'Incluida') +
+        (G.length ? regalos(G, vReg) : '') +
+        fila('Precio del pack sin descuento', '<s>' + LM.eur(pack.r) + '</s>', 'h4p-sum');
+      $('#h4p-pill').textContent = 'Hasta -' + maxOff(tabla(st.col, st.base)) + ' % + almohadas de regalo';
       precio = '<p class="h4p-from">Pack para ' + LM.medidaTxt(m) + ' <span class="lm-price-off">-' + off(pack) + ' %</span></p><p class="h4p-now">' + LM.eur(pack.p) + '</p>' +
         '<p class="h4p-save">Te ahorras ' + LM.eur(red(pack.r - pack.p)) + '</p>';
     }
