@@ -691,3 +691,7 @@ html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color 
 .h4p-seg button:not([aria-checked="true"]):hover { color: var(--acc); }
 .h4p-seg button:focus:not(:focus-visible) { outline: none; }
 @media (prefers-reduced-motion: reduce) { .h4p-seg-ind { transition: none; } }
+
+/* Paco, 06/11: parallax de las fotos dentro de su marco (comun/animaciones.js). La foto va algo ampliada para que no se vean los bordes */
+.lm-plx { overflow: hidden; }
+.lm-plx img { scale: 1.16; will-change: translate; }

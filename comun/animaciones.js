@@ -21,6 +21,9 @@
     ['.lm-faqs > *', 'up', 1],
     ['.h-alm-img, .h-call-img, .h-trial-hero, .h4p-img', 'img'],
     ['.h4p-box, .h4p-head .lm-sub', 'up'],
+    // 06/11: el cuestionario entra igual que el resto de bloques
+    ['.h4q-pts > li', 'up', 1],
+    ['.h4q-box', 'up'],
     ['.c-table-wrap, .p-firm-box, .p-dura-q, .c-seo-in, .lm-foot-help', 'up'],
     ['.lm-foot-cols > *', 'up', 1]
   ];
@@ -75,5 +78,33 @@
     requestAnimationFrame(function () { requestAnimationFrame(listo); });
     setTimeout(listo, 120); // respaldo: nunca dejar el hero sin texto
   }
+  /* Paco, 06/11 · Parallax en puntos concretos (no en todo):
+     - el sello «Desde 15 €/mes» sube algo más rápido que la página, sobre la foto del hero (que ya baja más despacio);
+     - la foto de los packs y la de la chica de compromisos se desplazan dentro de su marco.
+     Se usa la propiedad «translate», aparte de «transform», para no pisar las animaciones de entrada. */
+  var PLX = [];
+  $$('.h4-sello').forEach(function (el) { PLX.push({ el: el, sello: true }); });
+  $$('.h4p-img img, .h4c-card--img img').forEach(function (el) {
+    el.parentNode.classList.add('lm-plx');
+    PLX.push({ el: el, caja: el.parentNode, v: 0.14 });
+  });
+  if (PLX.length) {
+    var plxPend = 0;
+    var plx = function () {
+      plxPend = 0;
+      var vh = innerHeight;
+      PLX.forEach(function (p) {
+        if (p.sello) { if (scrollY < vh * 1.2) p.el.style.translate = '0 ' + (-scrollY * 0.16).toFixed(1) + 'px'; return; }
+        var r = p.caja.getBoundingClientRect();
+        if (r.bottom < -100 || r.top > vh + 100) return;
+        var d = (r.top + r.height / 2 - vh / 2) * p.v, max = r.height * 0.07;
+        p.el.style.translate = '0 ' + Math.max(-max, Math.min(max, d)).toFixed(1) + 'px';
+      });
+    };
+    addEventListener('scroll', function () { if (!plxPend) plxPend = requestAnimationFrame(plx); }, { passive: true });
+    addEventListener('resize', plx);
+    plx();
+  }
+
   document.documentElement.classList.add('lm-anim');
 })();
