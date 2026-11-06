@@ -680,3 +680,14 @@ a.h4-sello { display: block; color: inherit; text-decoration: none; }
 .lm-foot-soc img { width: 22px; height: 22px; object-fit: contain; filter: none; opacity: 1; }
 .lm-foot-soc a.is-pend { border-style: dashed; }
 @media (max-width: 600px) { .lm-foot-soc { flex-basis: 100%; margin: 2px 0 6px; } }
+
+/* Paco, 06/11: selector canapé / base con la pastilla granate deslizándose de una opción a otra */
+.h4p-seg { position: relative; isolation: isolate; }
+.h4p-seg-ind { position: absolute; left: 0; top: 0; z-index: -1; border-radius: 999px; background: var(--acc); box-shadow: 0 4px 14px rgba(0,0,0,.18);
+  transition: transform .55s cubic-bezier(.68,-.35,.27,1.35), width .45s cubic-bezier(.65,0,.35,1), height .45s cubic-bezier(.65,0,.35,1); will-change: transform; }
+.h4p-seg.is-sin .h4p-seg-ind { transition: none; }
+html body .h4p-seg button, html body .h4p-seg button[aria-checked="true"] { background: transparent; transition: color .12s; }
+html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color .3s .18s; }
+.h4p-seg button:not([aria-checked="true"]):hover { color: var(--acc); }
+.h4p-seg button:focus:not(:focus-visible) { outline: none; }
+@media (prefers-reduced-motion: reduce) { .h4p-seg-ind { transition: none; } }

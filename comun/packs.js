@@ -19,7 +19,20 @@
   var CTA_HTML = $('#h4p-go').innerHTML;
 
   var segB = $('#h4p-base'), colB = $('#h4p-col');
-  segB.innerHTML = PC.orden.map(function (b) { return '<button type="button" role="radio" data-base="' + b + '">' + PC.bases[b].t + '</button>'; }).join('');
+  // Paco, 06/11: la pastilla granate se desliza de una opción a la otra (h4p-seg-ind)
+  segB.innerHTML = '<span class="h4p-seg-ind" aria-hidden="true"></span>' +
+    PC.orden.map(function (b) { return '<button type="button" role="radio" data-base="' + b + '">' + PC.bases[b].t + '</button>'; }).join('');
+  var ind = $('.h4p-seg-ind', segB);
+  function deslizar() {
+    var b = $('[data-base="' + st.base + '"]', segB); if (!b || !b.offsetWidth) return;
+    ind.style.width = b.offsetWidth + 'px'; ind.style.height = b.offsetHeight + 'px';
+    ind.style.borderRadius = getComputedStyle(b).borderRadius;
+    ind.style.transform = 'translate(' + b.offsetLeft + 'px,' + b.offsetTop + 'px)';
+  }
+  // Al cambiar el tamaño de la ventana (o al cargar las fuentes) se recoloca sin animación
+  function recolocar() { segB.classList.add('is-sin'); deslizar(); requestAnimationFrame(function () { segB.classList.toggle('is-sin', false); }); }
+  addEventListener('resize', recolocar);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(recolocar);
   colB.innerHTML = PC.colchones.map(function (c) { return '<button type="button" role="radio" data-col="' + c.k + '"><b>' + c.t + '</b><small>' + c.d + '</small></button>'; }).join('');
   var img = $('#h4p-img'), ultimaFoto = 'canape';
 
@@ -37,6 +50,7 @@
   function pintarPack() {
     var col = PC.colchones.filter(function (c) { return c.k === st.col; })[0];
     $$('[data-base]', segB).forEach(function (b) { var on = b.getAttribute('data-base') === st.base; b.setAttribute('aria-checked', on); b.tabIndex = on ? 0 : -1; });
+    deslizar();
     $$('[data-col]', colB).forEach(function (b) { var on = b.getAttribute('data-col') === st.col; b.setAttribute('aria-checked', on); b.tabIndex = on ? 0 : -1; });
     foto();
     var m = medida(st.col, st.base), pack = tabla(st.col, st.base)[m], colchon = LM.PRECIOS[st.col][m];
