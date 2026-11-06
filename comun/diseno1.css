@@ -560,6 +560,9 @@ a.h4-sello { display: block; color: inherit; text-decoration: none; }
 
 /* 12 · Compromisos: todas las tarjetas con el mismo formato; la foto va sola en la primera */
 .h4c-card { min-height: 300px; }
+/* Paco, 06/11: la sombra rosada del hover se cortaba abajo (el carrusel recorta lo que sobresale).
+   Más aire arriba y abajo dentro del carrusel, compensado con margen negativo para no mover nada */
+.h4c-track { padding-top: 28px; padding-bottom: 64px; margin-top: -22px; margin-bottom: -46px; }
 .h4c-card--img { padding: 0; overflow: hidden; border: 0; }
 .h4c-card--img img { width: 100%; height: 100%; object-fit: cover; }
 .h4c-more + .h4c-more { margin-top: 0; padding-top: 0; }
