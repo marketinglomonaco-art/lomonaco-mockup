@@ -94,7 +94,8 @@
 
   /* ---------- precio único [T2] ---------- */
   LM.cuota = function (p) { return Math.round(p * C.financiacion.factor * 100) / 100; };
-  LM.cuotaTxt = function (p) { return LM.mark(C.financiacion, 'o en 3 pagos de ' + LM.eur(LM.cuota(p)) + ' sin intereses'); };
+  LM.ast = '<a class="lm-ast" href="#lm-legal" aria-label="Ver condiciones de la financiación">*</a>';
+  LM.cuotaTxt = function (p) { return 'o <b>' + LM.eur(LM.cuota(p)) + ' al mes</b> en 12 meses sin intereses' + LM.ast; };
   LM.precio = function (d, o) {
     o = o || {};
     var off = d.r > d.p ? Math.round((1 - d.p / d.r) * 100) : 0;
@@ -113,6 +114,37 @@
     return best;
   };
   LM.desde = function (k) { return LM.desdeTabla(LM.PRECIOS[k]); };
+
+  /* ---------- regalos (Paco, 05/11) ---------- */
+  // Los colchones siempre llevan las almohadas de regalo: valor tachado para que se vea lo que valen
+  LM.regaloAlmohadas = function (cls) {
+    var R = LM.REGALO_SOLO;
+    return '<p class="lm-gift-line' + (cls ? ' ' + cls : '') + '"><img src="' + R.img + '" alt="" width="240" height="180" loading="lazy">' +
+      '<span><b>Almohadas de regalo</b><small>Valoradas en <s>' + LM.eur(R.valor) + '</s> <strong>Gratis</strong></small></span></p>';
+  };
+  // Regalos reales de cada pack: [nombre, frase, icono, foto, valor]. Base antideslizante: sin regalos
+  LM.regalosPack = function (col, base) {
+    var pk = LM.PACK_CONF.packs[col + (base === 'canape' ? 'Canape' : 'Base')], q = (pk && pk.regalos) || [];
+    return LM.REGALOS.filter(function (r) { return q.indexOf(r[2]) > -1; });
+  };
+
+  /* ---------- tarjeta estándar de colchón (Paco, 05/11) ----------
+     La de la home es la estándar del ecommerce: home, categoría y cualquier página que liste colchones.
+     Precio para la medida elegida (por defecto 150 × 190), cuota a 12 meses y almohadas de regalo bajo el botón. */
+  LM.tarjeta = function (k, o) {
+    o = o || {};
+    var p = LM.PRODUCTOS[k], m = o.medida || LM.medidaInicial(), d = LM.PRECIOS[k][m], href = LM.href(p.url);
+    var f = '../img/' + LM.FOTO_HOME[k];
+    return '<article class="lm-card h-pc' + (o.cls ? ' ' + o.cls : '') + '" data-testid="product-card-' + k + '">' +
+      '<div class="lm-card-img"><img src="' + f + '-760.webp" srcset="' + f + '-480.webp 480w, ' + f + '-760.webp 760w" sizes="(max-width: 600px) 100vw, 25vw" alt="Colchón ' + p.nombre + '" width="760" height="760" loading="lazy">' +
+        '<img class="lm-detalle" src="../img/colchon-card-hover-760.webp" srcset="../img/colchon-card-hover-480.webp 480w, ../img/colchon-card-hover-760.webp 760w" sizes="(max-width: 600px) 100vw, 25vw" alt="" width="760" height="760" loading="lazy">' +
+        (p.etiqueta ? '<span class="lm-pill">' + p.etiqueta + '</span>' : '') + '</div>' +
+      '<div class="lm-card-b"><p class="lm-card-k">' + p.nucleo + ' · ' + p.altura + '</p>' +
+        '<h3><a class="lm-stretch" href="' + href + '" data-select="' + p.id + '">' + p.titulo + '</a></h3>' +
+        '<p class="lm-card-d">' + p.diferencia + '</p>' + LM.firmeza(p, { txt: false }) +
+        '<div class="lm-card-f">' + (d ? LM.precio(d, { medida: m }) : '<p class="c-na">No lo fabricamos en ' + LM.medidaTxt(m) + '.</p>') +
+        '<span class="lm-btn lm-btn--full" aria-hidden="true">Ver colchón</span>' + LM.regaloAlmohadas() + '</div></div></article>';
+  };
 
   /* ---------- valoración [C3, F17] ---------- */
   LM.rating = function (cls) {
@@ -280,7 +312,7 @@
         '<a class="lm-logo" href="index.html"><img src="' + LOGO + '" alt="LOMONACO" width="128" height="19"></a>' +
         '<nav class="lm-nav" aria-label="Menú principal"><ul>' + nav +
           '<li class="lm-ni' + (active === 'Showroom Live' ? ' is-active' : '') + '"><a class="lm-nl lm-live" href="showroom-live.html"><i class="lm-live-dot" aria-hidden="true"></i>Showroom Live</a></li>' +
-          '<li class="lm-ni"><a class="lm-packs" href="' + LM.href(LM.MENU_PACKS.href) + '">' + esc(LM.MENU_PACKS.t) + '</a></li></ul></nav>' +
+          '</ul></nav>' + // Paco, 05/11: fuera el botón «Packs colchón + canapé o base»
         '<div class="lm-head-r">' +
           '<a class="lm-head-tel" href="tel:' + C.telefono.tel + '" data-lead="header">' + LM.ico('phone') + '<span><b>' + tel + '</b><small>' + esc(C.horario.corto) + '</small></span></a>' +
           '<a class="lm-ico lm-acc" href="' + LM.WEB + '/mi-cuenta/" aria-label="Mi cuenta">' + LM.ico('user') + '</a>' +
@@ -293,7 +325,6 @@
             '</details>';
         }).join('') +
         '<a class="lm-dlive" href="showroom-live.html"><i class="lm-live-dot" aria-hidden="true"></i><span><b>Showroom Live</b><small>Visita la tienda por videollamada</small></span></a>' +
-        '<a class="lm-dpacks" href="' + LM.href(LM.MENU_PACKS.href) + '">' + esc(LM.MENU_PACKS.t) + '</a>' +
         LM.llamar('menu', { label: 'Te ayudamos a elegir' }) +
       '</div></div>';
 
@@ -385,7 +416,7 @@
         '<li><a href="tel:+34858225189">Atención al cliente: 858 22 51 89</a></li>' +
         '<li><a href="https://wa.me/+34650282094" data-lead="whatsapp">WhatsApp</a></li></ul>' +
         '<a class="lm-foot-ts" href="https://www.trustedshops.es/" target="_blank" rel="noopener">Protección al Comprador y Valoraciones reales · Trusted Shops</a></div>' +
-      '</div><div class="lm-foot-legal"><img src="' + LOGO + '" alt="LOMONACO" width="120" height="16" loading="lazy">' +
+      '</div><p class="lm-foot-fin" id="lm-legal">* ' + esc(C.legalFinanciacion.v) + '</p><div class="lm-foot-legal"><img src="' + LOGO + '" alt="LOMONACO" width="120" height="16" loading="lazy">' +
       '<span>© LM DESCANSO SL</span>' +
       '<a href="' + LM.WEB + '/aviso-legal/">Aviso legal</a><a href="' + LM.WEB + '/politica-de-privacidad/">Política privacidad</a><a href="' + LM.WEB + '/politica-de-cookies/">Política cookies</a></div>' +
       '</div></footer>';
@@ -406,7 +437,7 @@
       ['¿Quién recoge el colchón y quién paga la recogida?', 'Lo recogemos nosotros, en la misma dirección donde te lo entregamos. Se pueden descontar los gastos de envío y recogida cuando la ley lo permite. Si el colchón llegó dañado o equivocado, te devolvemos todo, sin descontar nada.'],
       ['¿Cuánto tardará en llegar a mi casa?', 'Normalmente ' + (p && p.entrega ? LM.mark({ estado: 'confirmar', nota: 'Plazo de este modelo' }, p.entrega) : LM.c('entrega')) + '. Si pides montaje, ' + LM.c('entregaMontaje') + '.'],
       ['¿Qué cubre la garantía y qué no?', 'Tu colchón tiene ' + LM.c('garantia') + ' de garantía. ' + LM.c('garantiaCubre')],
-      ['¿Puedo pagarlo a plazos?', 'Sí. Puedes pagarlo en ' + LM.c('financiacion') + '. También en 4, 6, 12 o 18 meses, con un pequeño coste fijo al mes (18 meses, en pedidos desde 390 €). Solo necesitas tu DNI, tu móvil y una tarjeta. ' + LM.c('financiacionLarga')],
+      ['¿Puedo pagarlo a plazos?', 'Sí. Puedes financiarlo ' + LM.c('financiacion') + '. ' + LM.c('financiacionLarga')],
       ['¿Qué necesito para elegir la medida correcta?', 'Mide por dentro tu cama o tu canapé: el ancho y el largo. Tu colchón debe tener esa misma medida. Si dudas, llámanos al ' + tel + ' y te ayudamos.'],
       ['¿Lo puedo probar en una tienda?', LM.c('tiendas'), true]
     ];

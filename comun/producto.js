@@ -17,7 +17,7 @@
 
   if (!PACK) {
   /* Cabecera de la compra [F1, F3] */
-  $('#p-tag').textContent = P.etiqueta;
+  $('#p-tag').textContent = P.etiqueta; $('#p-tag').hidden = !P.etiqueta; // Paco, 05/11: solo Gran Natura y Natura Gold llevan etiqueta
   $('#p-vp').textContent = P.vp;
   $('#p-facts').innerHTML = [P.altura + ' de alto', 'Firmeza ' + P.firmeza + '%', P.nucleo].map(function (f) { return '<li>' + f + '</li>'; }).join('');
 
@@ -58,14 +58,14 @@
       var diff = d && b.k !== 'solo' ? '+' + LM.eur(d.p - solo.p) : (d ? LM.eur(d.p) : 'No disponible en ' + LM.medidaTxt(st.medida));
       // Paco, 30/10: cada opción lleva la foto de sus regalos y su valor tachado («Gratis»), sin la franja granate.
       // Solo colchón: almohadas (120 €). Packs: almohadas, edredón y protector.
-      var R = b.k === 'solo' ? LM.REGALO_SOLO : LM.REGALO_PACK;
-      var valor = '<s>' + (R.estado ? LM.mark(R, LM.eur(R.valor)) : LM.eur(R.valor)) + '</s>';
-      return '<label class="p-card p-card--regalo' + (dis ? ' is-na' : '') + '"><input type="radio" name="base" value="' + b.k + '"' + (st.base === b.k ? ' checked' : '') + (dis ? ' disabled' : '') + '>' +
-        // Paco, 30/10: en los packs, las fotos de los regalos una al lado de la otra
-        (R.imgs ? '<span class="p-card-imgs">' + R.imgs.map(function (x) { return '<img src="' + x[0] + '" alt="' + x[1] + ' de regalo" width="160" height="160" loading="lazy">'; }).join('<b class="p-card-plus" aria-hidden="true">+</b>') + '</span>'
-          : '<img class="p-card-img" src="' + R.img + '" alt="' + R.alt + '" width="240" height="180" loading="lazy">') +
+      // Paco, 05/11: cada pack con sus regalos reales. Canapé: almohadas, edredón y protector (Visco: sin edredón). Base: sin regalos
+      var R = LM.REGALO_SOLO, G = b.k === 'solo' ? null : LM.regalosPack(K, b.k);
+      var v = G ? G.reduce(function (s, r) { return s + r[4]; }, 0) : R.valor, conRegalo = !G || G.length;
+      var foto = !G ? '<img class="p-card-img" src="' + R.img + '" alt="' + R.alt + '" width="240" height="180" loading="lazy">'
+        : G.length ? '<span class="p-card-imgs">' + G.map(function (x) { return '<img src="' + x[3] + '" alt="' + x[0] + ' de regalo" width="160" height="160" loading="lazy">'; }).join('<b class="p-card-plus" aria-hidden="true">+</b>') + '</span>' : '';
+      return '<label class="p-card' + (conRegalo ? ' p-card--regalo' : '') + (dis ? ' is-na' : '') + '"><input type="radio" name="base" value="' + b.k + '"' + (st.base === b.k ? ' checked' : '') + (dis ? ' disabled' : '') + '>' + foto +
         '<span><b>' + (b.k === 'solo' ? R.t : b.t) + '</b><small>' + b.d + '</small>' +
-        '<small class="p-card-val">Valorado en ' + valor + ' <strong>Gratis</strong></small></span><em>' + diff + '</em>' +
+        (conRegalo ? '<small class="p-card-val">Valorado en <s>' + LM.eur(v) + '</s> <strong>Gratis</strong></small>' : '') + '</span><em>' + diff + '</em>' +
         '</label>';
     }).join('');
   }
@@ -148,7 +148,7 @@
 
   $('#p-reco').innerHTML = LM.ORDEN.filter(function (k) { return k !== K; }).map(function (k) {
     var p = LM.PRODUCTOS[k], d = LM.PRECIOS[k][st.medida] || LM.desde(k);
-    return '<a class="p-reco-c" href="' + LM.href(p.url) + '"><img src="' + p.img + '" alt="" width="160" height="160" loading="lazy"><span><small>' + p.etiqueta + '</small><b>' + p.titulo + '</b><span>' + p.sensacionTxt + '</span>' + LM.precio(d, { cuota: false }) + '</span></a>';
+    return '<a class="p-reco-c" href="' + LM.href(p.url) + '"><img src="' + p.img + '" alt="" width="160" height="160" loading="lazy"><span>' + (p.etiqueta ? '<small>' + p.etiqueta + '</small>' : '') + '<b>' + p.titulo + '</b><span>' + p.sensacionTxt + '</span>' + LM.precio(d, { cuota: false }) + '</span></a>';
   }).join('');
   var F = LM.FICHAS;
   if ($('#p-xsell')) $('#p-xsell').innerHTML = [

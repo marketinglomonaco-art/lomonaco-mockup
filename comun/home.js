@@ -45,34 +45,14 @@
   // Los 4 colchones [C3]
   var g = $('#h-productos');
   if (g) {
-    g.innerHTML = LM.ORDEN.map(function (k, i) {
-      var p = LM.PRODUCTOS[k], d = LM.desde(k), href = LM.href(p.url);
-      return '<article class="lm-card h-pc" data-testid="product-card-' + k + '">' +
-        // V4 · Cambio 10: la misma foto en las 4 tarjetas y su foto «hover» (Photoshop de Paco)
-        // Paco, 29/10: cada tarjeta lleva la foto nueva de su modelo
-        '<div class="lm-card-img"><img src="../img/' + LM.FOTO_HOME[k] + '-760.webp" srcset="../img/' + LM.FOTO_HOME[k] + '-480.webp 480w, ../img/' + LM.FOTO_HOME[k] + '-760.webp 760w" sizes="(max-width: 600px) 100vw, 25vw" alt="Colchón ' + p.nombre + '" width="760" height="760" loading="lazy">' +
-        '<img class="lm-detalle" src="../img/colchon-card-hover-760.webp" srcset="../img/colchon-card-hover-480.webp 480w, ../img/colchon-card-hover-760.webp 760w" sizes="(max-width: 600px) 100vw, 25vw" alt="" width="760" height="760" loading="lazy"><span class="lm-pill">' + p.etiqueta + '</span></div>' +
-        '<div class="lm-card-b"><p class="lm-card-k">' + p.nucleo + ' · ' + p.altura + '</p>' +
-        '<h3><a class="lm-stretch" href="' + href + '" data-select="' + p.id + '">' + p.titulo + '</a></h3>' +
-        '<p class="lm-card-d">' + p.diferencia + '</p>' +
-        LM.firmeza(p, { txt: false }) +
-        '<div class="lm-card-f">' + LM.precio(d, { desde: true }) +
-        '<span class="lm-btn lm-btn--full" aria-hidden="true">Ver colchón</span></div></div></article>';
-    }).join('');
+    // Paco, 05/11: la tarjeta estándar del ecommerce (comun/componentes.js · LM.tarjeta), con precio para 150 × 190
+    g.innerHTML = LM.ORDEN.map(function (k) { return LM.tarjeta(k); }).join('');
     g.addEventListener('click', function (e) {
       var a = e.target.closest('a[href]'); if (!a) return;
       var c = e.target.closest('[data-testid^="product-card-"]');
       if (c) LM.track('select_item', { item_list_name: 'home', item_id: LM.PRODUCTOS[c.getAttribute('data-testid').replace('product-card-', '')].id });
     });
   }
-
-  // Almohadas
-  var al = $('#h-almohadas');
-  if (al) al.innerHTML = ['almLatex', 'almVisco'].map(function (k) {
-    var f = LM.FICHAS[k];
-    return '<a class="h-ac" href="' + LM.href(f.url) + '"><img src="' + f.img + '" alt="" width="760" height="435" loading="lazy">' +
-      '<span><b>' + f.n + '</b><small>' + f.d + '</small>' + LM.precio({ p: f.p, r: f.r }, { desde: true, cuota: false }) + '</span></a>';
-  }).join('');
 
   var fc = $('#h-faq-call');
   if (fc) fc.innerHTML = '<p class="lm-sub">¿Tienes otra duda? Te respondemos por teléfono.</p>' + LM.llamar('home-faq');

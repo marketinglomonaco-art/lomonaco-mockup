@@ -31,31 +31,8 @@
     };
   }
 
-  // Pago aplazado (comentario 4): siempre desde el precio más bajo (la medida más pequeña) a 36 meses
-  function cuota36(k) {
-    var F = LM.CONFIG.financiacion36, min = LM.desde(k).p, c = Math.round(min / F.meses * 100) / 100;
-    return '<div class="lm-price-fee">' + LM.mark(F, 'o desde ' + LM.eur(c) + ' al mes, en ' + F.meses + ' meses') + '</div>';
-  }
-  var B = document.body.getAttribute('data-variante') === 'b';
-
-  function card(k) {
-    var p = P[k], d = precio(k), href = LM.href(p.url), X = LM.CAT_EXTRA[k];
-    return '<article class="lm-card c-card" data-testid="product-card-' + k + '">' +
-      '<div class="lm-card-img"><img src="' + p.img + '" alt="" width="760" height="806" loading="lazy">' +
-        (p.imgDetalle ? '<img class="lm-detalle" src="' + p.imgDetalle + '" alt="" width="560" height="560" loading="lazy">' : '') + '<span class="lm-pill">' + p.etiqueta + '</span></div>' +
-      '<div class="lm-card-b"><p class="lm-card-k">' + p.nucleo + ' · ' + p.altura + '</p>' +
-      '<h3><a class="lm-stretch" href="' + href + '">' + p.titulo + '</a></h3>' +
-      '<p class="c-diffline"><b>Qué lo diferencia:</b> ' + p.diferencia + '</p>' +
-      // Comentario 4 (29/10): fuera los textos bajo los porcentajes; en su lugar, palabras clave en globos LM
-      LM.firmeza(p, { txt: false }) +
-      // Opción B (29/10): sin los globos de palabras clave; se quedan los pictogramas
-      (B ? '' : '<ul class="c-keys" aria-label="Claves">' + X.claves.map(function (c) { return '<li>' + c + '</li>'; }).join('') + '</ul>') +
-      // Opción B: además, pictogramas de materiales y beneficios
-      (B ? '<ul class="c-pictos">' + X.pictos.map(function (q) { return '<li>' + LM.ico(q[0]) + '<span>' + q[1] + '</span></li>'; }).join('') + '</ul>' : '') +
-      LM.rating('c-rate') +
-      '<div class="lm-card-f">' + (d ? LM.precio(d, { medida: state.medida, cuota: false }) + cuota36(k) : '<p class="c-na">No lo fabricamos en ' + LM.medidaTxt(state.medida) + '.</p>') +
-      '<span class="lm-btn lm-btn--full" aria-hidden="true">Ver colchón</span></div></div></article>';
-  }
+  // Paco, 05/11: toda página que liste colchones usa la tarjeta estándar de la home (LM.tarjeta)
+  function card(k) { return LM.tarjeta(k, { medida: state.medida }); }
 
   function render() {
     var B = document.body.getAttribute('data-variante') === 'b';

@@ -15,21 +15,24 @@ window.LM = window.LM || {};
 LM.CONFIG = {
   telefono:     { v: '868 28 67 52', tel: '+34868286752', estado: 'ok' },
   horario:      { v: 'Lunes a viernes de 9:00 a 18:00', corto: 'L–V de 9:00 a 18:00', estado: 'ok' },
-  prueba:       { v: '14 noches', estado: 'ok' },
+  prueba:       { v: '150 noches', estado: 'ok' }, /* Paco, 05/11: 150 noches de prueba */
   /* Garantía, devolución, envío y pago: textos de /devoluciones/, /envios/ y /metodos-de-pago/ (28/10/2026) */
   garantia:     { v: '10 años', estado: 'ok' },
   garantiaCubre:{ v: 'Cubre los defectos de fabricación y el núcleo del colchón (espuma, muelles o látex). No cubre manchas, humedad, golpes, mal uso, usarlo sin una base adecuada ni el asentamiento normal de las capas (hasta 2 cm).', estado: 'ok' },
   envio:        { v: 'Envío y montaje gratis en la península', estado: 'ok' },
   envioDevolucion: { v: 'Envío y montaje gratis', estado: 'ok' },
   devolucion:   { v: 'Lo recogemos en tu casa', estado: 'ok' },
-  devolucionCond:{ v: 'Puedes devolverlo durante las 14 noches de prueba, desde que lo recibes. Debe estar en perfecto estado y con su embalaje original o uno parecido. Te devolvemos el dinero por transferencia en 10 días hábiles desde que llega a nuestro almacén. Se pueden descontar los gastos de envío y recogida cuando la ley lo permite.', estado: 'ok' },
+  devolucionCond:{ v: 'Puedes devolverlo durante las 150 noches de prueba, desde que lo recibes. Debe estar en perfecto estado y con su embalaje original o uno parecido. Te devolvemos el dinero por transferencia en 10 días hábiles desde que llega a nuestro almacén. Se pueden descontar los gastos de envío y recogida cuando la ley lo permite.', estado: 'ok' },
   clientes:     { v: '750.000', estado: 'ok' },
   fundacion:    { v: '1977', estado: 'confirmar', nota: 'La web dice «desde 1977» y «más de 25 años»' },
   fabricacion:  { v: 'Fabricación propia en España', estado: 'confirmar' },
   entrega:      { v: '5 a 7 días laborables', estado: 'ok' },
   entregaMontaje:{ v: '20 a 25 días laborables', estado: 'confirmar', nota: 'Página de envíos: 20 a 25 días laborables; fichas de producto: 15 a 20 días' },
-  financiacion: { v: '3 pagos sin intereses con SeQura', corto: '3 pagos sin intereses', meses: 3, factor: 1 / 3, estado: 'ok' },
-  financiacionLarga: { v: null, estado: 'pendiente', nota: 'TAE y coste de cada plazo (4 a 18 meses)' },
+  /* Paco, 05/11: financiación de 3 a 36 meses; se destaca 12 meses sin intereses (Pepper Finance) */
+  financiacion: { v: 'de 3 a 36 meses, y a 12 meses sin intereses', corto: '12 meses sin intereses', meses: 12, factor: 1 / 12, estado: 'ok' },
+  financiacionLarga: { v: 'Financiación sujeta a la aprobación de Pepper Finance.', estado: 'ok' },
+  /* Texto legal del asterisco (Paco, 05/11), tal cual */
+  legalFinanciacion: { v: 'Sujeto a la aprobación de PEPPER FINANCE CORPORATION, S.L.U. CIF: B86961612, C/Juan Esplandiú, 13, planta, C1,-28007- Madrid; www.pepperfinance.es. Ejemplo de financiación para 730,00 € a 24 meses. Comisión de apertura financiada: 96,00 €. 24 cuotas de 34,42 €. TIN: 0,00 %. TAE: 14,11 %. Importe total crédito: 826,00 €. Importe total adeudado: 552,00 €. Precio de adquisición al contado: 730,00 €.', estado: 'ok' },
   valoracion:   { media: '4,39', texto: 'Bueno', total: null, plataforma: 'Trusted Shops',
                   url: 'https://www.trustedshops.es/evaluacion/grupolomonaco-com', estado: 'confirmar',
                   nota: 'Nota de tu banner. Sustituir por el widget oficial de Trusted Shops (dinámico)' },
@@ -43,7 +46,7 @@ LM.CONFIG = {
   agenda:       { v: null, estado: 'pendiente', nota: 'conectar con la agenda real del call center' },
   showroomDir:  { v: null, estado: 'pendiente', nota: 'dirección del showroom, si se puede visitar' },
   /* V4 · cambios de la home del 29/10 */
-  cuotaBanner:  { v: '15 €', estado: 'confirmar', nota: 'Cuota del banner de Paco: falta la TAE y las condiciones (obligatorias en publicidad de financiación). La cuota confirmada es 3 pagos sin intereses' },
+  cuotaBanner:  { v: '15 €', estado: 'ok' },
   trayectoria:  { v: 'Casi 30 años', estado: 'confirmar', nota: 'Choca con «Desde 1977» (casi 50 años). La web también dice «más de 25 años»' },
   compraGarantizada: { v: 'Protección al comprador de Trusted Shops', estado: 'confirmar', nota: 'Solo si el sello Trusted Shops Guarantee está activo' },
   financiacion36: { meses: 36, estado: 'confirmar', nota: 'Plazo máximo de 36 meses (Paco, 29/10). Falta la TAE y el coste: la cuota está calculada sin intereses, con el precio de la medida más pequeña' }
@@ -102,8 +105,8 @@ LM.PRECIOS = {"visco":{"90x190":{"id":41677,"p":449.49,"r":749.15,"s":true},"90x
 LM.PRODUCTOS = {
   visco: {
     pagina: 'colchon-natura-visco.html',
-    packs: { canape: { pid: 73610, tabla: 'viscoCanape', d: 'Canapé abatible + almohadas, edredón y protector de regalo', img: '../img/pack-visco-canape-760.webp' },
-             base: { pid: 73467, tabla: 'viscoBase', d: 'Base tapizada + almohadas, edredón y protector de regalo', img: '../img/base-3d-760.webp' } },
+    packs: { canape: { pid: 73610, tabla: 'viscoCanape', d: 'Canapé abatible + almohadas y protector de regalo', img: '../img/pack-visco-canape-760.webp' },
+             base: { pid: 73467, tabla: 'viscoBase', d: 'Base tapizada antideslizante, con descuento', img: '../img/base-3d-760.webp' } },
     vp: 'Viscoelástica con un núcleo firme. Se adapta a la forma de tu cuerpo y te da un soporte firme y silencioso.',
     beneficios: [['shield', 'Soporte firme', 'El núcleo HR reparte tu peso y cuida tu postura.'],
                  ['body', 'Se adapta a ti', 'La visco se amolda a tu forma y alivia la presión.'],
@@ -113,7 +116,7 @@ LM.PRODUCTOS = {
     durTxt: 'El núcleo HR es un soporte firme pensado para mantener su forma.',
     id: 41676, nombre: 'Natura Visco', titulo: 'Colchón Natura Visco', url: 'colchon-natura-visco.html',
     img: '../img/natura-visco-nueva-560.webp', foto: 'nueva', fotoNueva: '../img/natura-visco-nueva', imgDetalle: '../img/natura-latex-06-560.webp', 
-    etiqueta: 'Gran soporte', nucleo: 'Viscoelástica', tipo: 'visco', altura: '28 cm',
+    etiqueta: '', nucleo: 'Viscoelástica', tipo: 'visco', altura: '28 cm',
     firmeza: 85, adaptabilidad: 70, sensacion: 'firme',
     sensacionTxt: 'Firme y estable. Notas que el colchón te sujeta.',
     diferencia: 'Soporte firme y silencioso, y el precio más bajo de la gama.',
@@ -126,7 +129,7 @@ LM.PRODUCTOS = {
   gold: {
     pagina: 'colchon-natura-gold.html',
     packs: { canape: { pid: 73488, tabla: 'goldCanape', d: 'Canapé abatible + almohadas, edredón y protector de regalo', img: '../img/pack-gold-canape-760.webp' },
-             base: { pid: 73446, tabla: 'goldBase', d: 'Base tapizada + almohadas, edredón y protector de regalo', img: '../img/base-3d-760.webp' } },
+             base: { pid: 73446, tabla: 'goldBase', d: 'Base tapizada antideslizante, con descuento', img: '../img/base-3d-760.webp' } },
     vp: 'Muelles ensacados con visco. Firmeza media: te acoge, te sujeta y apenas notas a tu pareja.',
     beneficios: [['couple', 'No notas a tu pareja', 'Cada muelle trabaja solo y reduce los movimientos.'],
                  ['body', 'Te acoge', 'La visco alivia la presión en hombros y caderas.'],
@@ -149,7 +152,7 @@ LM.PRODUCTOS = {
   latex: {
     pagina: 'colchon-natura-latex.html',
     packs: { canape: { pid: 64601, tabla: 'latexCanape', d: 'Canapé abatible + almohadas, edredón y protector de regalo', img: '../img/pack-latex-canape-760.webp' },
-             base: { pid: 73424, tabla: 'latexBase', d: 'Base tapizada + almohadas, edredón y protector de regalo', img: '../img/pack-latex-base-760.webp' } },
+             base: { pid: 73424, tabla: 'latexBase', d: 'Base tapizada antideslizante, con descuento', img: '../img/pack-latex-base-760.webp' } },
     fotosPropias: true,
     vp: 'Látex natural sobre muelles ensacados. Te recibe suave, te sujeta bien y no pasas calor.',
     beneficios: [['waves', 'No pasas calor', 'El tejido y el látex dejan pasar el aire. La superficie se mantiene fresca.'],
@@ -160,7 +163,7 @@ LM.PRODUCTOS = {
     durTxt: 'El látex recupera su forma después de cada noche: así evitas que se hunda donde duermes.',
     id: 41658, nombre: 'Natura Látex', titulo: 'Colchón Natura Látex', url: 'colchon-natura-latex.html',
     img: '../img/natura-latex-01-560.webp', imgDetalle: '../img/natura-latex-02-560.webp', foto: 'nueva',
-    etiqueta: 'Efecto nube', nucleo: 'Muelles ensacados + látex', tipo: 'latex', altura: '32 cm',
+    etiqueta: '', nucleo: 'Muelles ensacados + látex', tipo: 'latex', altura: '32 cm',
     firmeza: 75, adaptabilidad: 85, sensacion: 'acogedora',
     sensacionTxt: 'La más acogedora de la gama. Te recibe suave y te sujeta bien.',
     diferencia: 'Látex natural sobre muelles ensacados: fresco, suave y con soporte.',
@@ -173,7 +176,7 @@ LM.PRODUCTOS = {
   gran: {
     pagina: 'colchon-gran-natura.html',
     packs: { canape: { pid: 69133, tabla: 'granCanape', d: 'Canapé abatible + almohadas, edredón y protector de regalo', img: '../img/pack-gran-natura-canape-760.webp' },
-             base: { pid: 72445, tabla: 'granBase', d: 'Base tapizada + almohadas, edredón y protector de regalo', img: '../img/base-3d-760.webp' } },
+             base: { pid: 72445, tabla: 'granBase', d: 'Base tapizada antideslizante, con descuento', img: '../img/base-3d-760.webp' } },
     vp: 'Núcleo 100% látex. Se adapta a todo tu cuerpo y reduce la presión en hombros, espalda y cadera.',
     beneficios: [['body', '100% adaptable', 'El látex reduce la presión en hombros, espalda y cadera.'],
                  ['couple', 'No notas a tu pareja', 'Si tu pareja se gira o se levanta, tu lado sigue quieto.'],
@@ -183,7 +186,7 @@ LM.PRODUCTOS = {
     durTxt: 'El látex recupera su forma después de cada noche: así evitas que se hunda donde duermes.',
     id: 68498, nombre: 'Gran Natura', titulo: 'Colchón Gran Natura', url: 'colchon-gran-natura.html',
     img: '../img/gran-natura-nueva-560.webp', foto: 'nueva', fotoNueva: '../img/gran-natura-nueva', imgDetalle: '../img/natura-latex-06-560.webp', 
-    etiqueta: '100% adaptable', nucleo: '100% látex', tipo: 'latex', altura: '25 cm', /* Paco, 29/10: 25 cm (antes 26–30) */
+    etiqueta: 'El mejor valorado', nucleo: '100% látex', tipo: 'latex', altura: '25 cm', /* Paco, 29/10: 25 cm (antes 26–30) */
     firmeza: 85, adaptabilidad: 100, sensacion: 'firme',
     sensacionTxt: 'Firme pero se adapta a todo tu cuerpo.',
     diferencia: 'Núcleo 100% látex: el más adaptable de la gama.',
@@ -201,11 +204,11 @@ LM.FOTO_HOME = { visco: 'natura-visco-home', gold: 'natura-gold-home', latex: 'n
 
 /* Packs (categoría /packs/ de la web actual) */
 LM.PACKS = [
-  { n: 'Pack Natura Visco + canapé', inc: 'Colchón, canapé, almohadas y bajera', p: 984, r: 1936.92, img: '../img/pack-visco-canape-760.webp', url: '/pack-colchon-natura-visco-canape-almohadas-bajera/' },
-  { n: 'Pack Natura Gold + canapé', inc: 'Colchón, canapé, almohadas, bajera y edredón', p: 1094, r: 2620.58, img: '../img/pack-gold-canape-760.webp', url: '/pack-colchon-natura-gold-y-canape-almohadas-bajera-edredon/' },
-  { n: 'Pack Natura Látex + canapé', inc: 'Colchón, canapé, almohadas, bajera y edredón', p: 1299, r: 3456.99, img: '../img/pack-latex-canape-760.webp', url: '/pack-colchon-y-canape-almohadas-bajera-edredon/' },
-  { n: 'Pack Gran Natura + canapé', inc: 'Colchón, canapé, almohadas, bajera y edredón', p: 1501.01, r: 3440.01, img: '../img/pack-gran-natura-canape-760.webp', url: '/pack-colchon-gran-natura-y-canape-almohadas-bajera-edredon/' },
-  { n: 'Pack Natura Látex + base', inc: 'Colchón y base tapizada antideslizante', p: 1050, r: 3012.33, img: '../img/pack-latex-base-760.webp', url: '/pack-colchon-natura-latex-base-tapizada-antideslizante/' }
+  { n: 'Pack Natura Visco + canapé', inc: 'Colchón, canapé, almohadas y protector', p: 984, r: 1936.92, img: '../img/pack-visco-canape-760.webp', url: '/pack-colchon-natura-visco-canape-almohadas-bajera/' },
+  { n: 'Pack Natura Gold + canapé', inc: 'Colchón, canapé, almohadas, edredón y protector', p: 1094, r: 2620.58, img: '../img/pack-gold-canape-760.webp', url: '/pack-colchon-natura-gold-y-canape-almohadas-bajera-edredon/' },
+  { n: 'Pack Natura Látex + canapé', inc: 'Colchón, canapé, almohadas, edredón y protector', p: 1299, r: 3456.99, img: '../img/pack-latex-canape-760.webp', url: '/pack-colchon-y-canape-almohadas-bajera-edredon/' },
+  { n: 'Pack Gran Natura + canapé', inc: 'Colchón, canapé, almohadas, edredón y protector', p: 1501.01, r: 3440.01, img: '../img/pack-gran-natura-canape-760.webp', url: '/pack-colchon-gran-natura-y-canape-almohadas-bajera-edredon/' },
+  { n: 'Pack Natura Látex + base', inc: 'Colchón y base tapizada antideslizante, con descuento', p: 1050, r: 3012.33, img: '../img/pack-latex-base-760.webp', url: '/pack-colchon-natura-latex-base-tapizada-antideslizante/' }
 ];
 
 /* Fichas cortas del menú y de venta cruzada */
@@ -284,15 +287,20 @@ LM.HERO_RESENAS = [
 /* V4 · Configurador de packs: los 8 packs reales de la tienda (colchón × canapé o base).
    Contenido según el NOMBRE de cada pack en la tienda; la descripción de la tienda promete
    almohadas, protector y edredón en todos: pendiente de confirmar. */
+/* Paco, 05/11: packs reales. Canapé + Gran Natura, Látex o Gold: almohadas, edredón y protector de regalo.
+   Canapé + Natura Visco: almohadas y protector. Base tapizada antideslizante + colchón: descuento, sin regalos.
+   Precio del canapé abatible suelto por medida (Store API de la tienda, 06/11/2026; los 4 colores cuestan lo mismo).
+   En la tienda, pack con canapé = colchón + canapé: el ahorro son los regalos (salvo Visco 90×190, 77,51 € más caro). */
+LM.PRECIO_CANAPE = { '90x190': { p: 457, r: 914 }, '90x200': { p: 479, r: 958.01 }, '105x190': { p: 483, r: 966 }, '105x200': { p: 501, r: 1002 },
+  '135x180': { p: 560, r: 1120 }, '135x190': { p: 545, r: 1090 }, '150x190': { p: 567.01, r: 1134 }, '150x200': { p: 589, r: 1178 },
+  '160x200': { p: 655, r: 1309.99 }, '180x200': { p: 967, r: 1934 }, '200x200': { p: 1088, r: 2176 } };
 LM.PACK_CONF = {
   bases: {
-    canape: { t: 'Con canapé', img: '../img/pack-conf-canape', alt: 'Colchón Lomonaco sobre canapé abatible de madera, con almohadas, bajera y edredón' },
-    /* Base tapizada de tela (16379): en la tienda NO hay pack con ella → sin precio inventado */
-    tela:   { t: 'Con base tapizada', img: '../img/pack-conf-base', alt: 'Colchón Lomonaco sobre base tapizada de tela, con almohadas y bajera', sinPack: true },
+    canape: { t: 'Con canapé', img: '../img/pack-conf-canape', alt: 'Colchón Lomonaco sobre canapé abatible de madera' },
     /* Los 4 packs «+ Base tapizada antideslizante» de la tienda son esta base, con patas (30 cm según Paco) */
     base:   { t: 'Con base antideslizante', img: '../img/pack-conf-patas', alt: 'Colchón Lomonaco sobre base tapizada antideslizante con patas' }
   },
-  orden: ['canape', 'tela', 'base'],
+  orden: ['canape', 'base'], /* Paco, 05/11: fuera la base de tela (no hay pack con ella) */
   colchones: [
     { k: 'gran',   t: 'Gran Natura',  d: '100% látex' },
     { k: 'latex',  t: 'Natura Látex', d: 'Muelles + látex' },
@@ -300,14 +308,14 @@ LM.PACK_CONF = {
     { k: 'visco',  t: 'Natura Visco', d: 'Viscoelástica' }
   ],
   packs: {
-    granCanape:  { pid: 69133, inc: ['Canapé abatible de madera', 'Almohadas de regalo', 'Edredón de regalo', 'Protector de colchón de regalo'], url: '/pack-colchon-gran-natura-y-canape-almohadas-bajera-edredon/' },
-    latexCanape: { pid: 64601, inc: ['Canapé abatible de madera', 'Almohadas de regalo', 'Edredón de regalo', 'Protector de colchón de regalo'], url: '/pack-colchon-y-canape-almohadas-bajera-edredon/' },
-    goldCanape:  { pid: 73488, inc: ['Canapé abatible de madera', 'Almohadas de regalo', 'Edredón de regalo', 'Protector de colchón de regalo'], url: '/pack-colchon-natura-gold-y-canape-almohadas-bajera-edredon/' },
-    viscoCanape: { pid: 73610, inc: ['Canapé abatible de madera', 'Almohadas de regalo', 'Edredón de regalo', 'Protector de colchón de regalo'], url: '/pack-colchon-natura-visco-canape-almohadas-bajera/' },
-    granBase:    { pid: 72445, inc: ['Base tapizada antideslizante con patas de 30 cm', 'Almohadas de regalo', 'Edredón de regalo', 'Protector de colchón de regalo'], url: '/pack-colchon-gran-natura-y-base-tapizada-antideslizante/' },
-    latexBase:   { pid: 73424, inc: ['Base tapizada antideslizante con patas de 30 cm', 'Almohadas de regalo', 'Edredón de regalo', 'Protector de colchón de regalo'], url: '/pack-colchon-natura-latex-base-tapizada-antideslizante/' },
-    goldBase:    { pid: 73446, inc: ['Base tapizada antideslizante con patas de 30 cm', 'Almohadas de regalo', 'Edredón de regalo', 'Protector de colchón de regalo'], url: '/pack-colchon-natura-gold-base-tapizada-antideslizante/' },
-    viscoBase:   { pid: 73467, inc: ['Base tapizada antideslizante con patas de 30 cm', 'Almohadas de regalo', 'Edredón de regalo', 'Protector de colchón de regalo'], url: '/pack-colchon-natura-visco-base-tapizada-antideslizante/' }
+    granCanape:  { pid: 69133, inc: ['Canapé abatible de madera'], regalos: ['almohada', 'edredon', 'protector'], url: '/pack-colchon-gran-natura-y-canape-almohadas-bajera-edredon/' },
+    latexCanape: { pid: 64601, inc: ['Canapé abatible de madera'], regalos: ['almohada', 'edredon', 'protector'], url: '/pack-colchon-y-canape-almohadas-bajera-edredon/' },
+    goldCanape:  { pid: 73488, inc: ['Canapé abatible de madera'], regalos: ['almohada', 'edredon', 'protector'], url: '/pack-colchon-natura-gold-y-canape-almohadas-bajera-edredon/' },
+    viscoCanape: { pid: 73610, inc: ['Canapé abatible de madera'], regalos: ['almohada', 'protector'], url: '/pack-colchon-natura-visco-canape-almohadas-bajera/' },
+    granBase:    { pid: 72445, inc: ['Base tapizada antideslizante con patas de 30 cm'], regalos: [], url: '/pack-colchon-gran-natura-y-base-tapizada-antideslizante/' },
+    latexBase:   { pid: 73424, inc: ['Base tapizada antideslizante con patas de 30 cm'], regalos: [], url: '/pack-colchon-natura-latex-base-tapizada-antideslizante/' },
+    goldBase:    { pid: 73446, inc: ['Base tapizada antideslizante con patas de 30 cm'], regalos: [], url: '/pack-colchon-natura-gold-base-tapizada-antideslizante/' },
+    viscoBase:   { pid: 73467, inc: ['Base tapizada antideslizante con patas de 30 cm'], regalos: [], url: '/pack-colchon-natura-visco-base-tapizada-antideslizante/' }
   }
 };
 
