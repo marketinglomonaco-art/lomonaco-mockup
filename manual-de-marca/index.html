@@ -1,0 +1,970 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LOMONACO · Manual de marca</title>
+<meta name="description" content="Manual de marca de Lo Monaco: logotipo, color, tipografía, tono y fotografía.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,400;1,500&display=swap">
+<style>
+  :root {
+    --lm: #7c1919; --lm-d: #5e1212; --ink: #1d1d1f; --mute: #5f5f66; --line: #d9d9de; --bg: #f6f6f6; --bg2: #fff; /* 06/11: el fondo es siempre gris claro, nunca blanco */
+    --pad: clamp(16px, 4vw, 56px); --sec: clamp(64px, 9vw, 140px); --r: 24px; --r-sm: 14px;
+    --font: 'Albert Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+    --serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    --velo: rgba(0,0,0,.1); /* capa negra al 10 % sobre fotos con texto o logo */
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+  body { margin: 0; font: 400 17px/1.5 var(--font); color: var(--ink); background: var(--bg); -webkit-font-smoothing: antialiased; }
+  img { display: block; max-width: 100%; }
+  h1, h2, h3, h4, p { margin: 0; }
+  a { color: inherit; }
+  .logo { display: block; color: var(--lm); }
+  .logo svg { display: block; width: 100%; height: auto; fill: currentColor; }
+
+  /* Cabecera */
+  .top { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 24px; height: 56px; padding: 0 var(--pad); background: rgba(246,246,246,.94); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .top .logo { width: 116px; flex: none; }
+  .top nav { display: flex; gap: 4px; margin-left: auto; overflow-x: auto; scrollbar-width: none; }
+  .top nav::-webkit-scrollbar { display: none; }
+  .top nav a { padding: 6px 10px; border-radius: 999px; font-size: 13px; font-weight: 500; text-decoration: none; color: var(--mute); white-space: nowrap; }
+  .top nav a b { color: var(--ink); font-weight: 700; margin-right: 4px; }
+  .top nav a:hover { background: var(--bg2); color: var(--ink); }
+
+  /* Apertura emocional y vídeo */
+  .abre { position: relative; height: calc(100svh - 56px); min-height: 520px; overflow: hidden; color: #fff; background: #222; }
+  .abre img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; }
+  .abre::after { content: ''; position: absolute; inset: 0; background: var(--velo); }
+  .abre-t { position: absolute; z-index: 1; left: var(--pad); right: var(--pad); bottom: clamp(32px, 6vw, 80px); display: flex; justify-content: space-between; align-items: end; gap: 24px; }
+  .abre h2 { font-size: clamp(48px, 7.4vw, 124px); font-weight: 600; letter-spacing: -.01em; line-height: 1; }
+  .abre h2 em { display: block; font: italic 400 1.08em/1.02 var(--serif); }
+  .abre .logo { position: absolute; z-index: 1; top: clamp(24px, 4vw, 48px); left: var(--pad); width: clamp(150px, 16vw, 230px); color: #fff; }
+  .abre .vbtn { flex: none; display: inline-flex; cursor: pointer; background: transparent; border: 0; font-family: inherit; align-items: center; gap: 10px; color: #fff; font-size: 15px; font-weight: 600; text-decoration: none; padding: 12px 18px; border-radius: 999px; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.9); }
+  .abre .vbtn:hover { background: #fff; color: var(--lm); }
+  .abre .vbtn span { font-size: 12px; }
+  .vplayer { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; background: #000; }
+  .vplayer[hidden] { display: none; }
+  .vplayer video { width: 100%; height: 100%; object-fit: contain; background: #000; }
+  .vplayer .vclose { position: absolute; top: 16px; right: 16px; z-index: 1; width: 44px; height: 44px; border-radius: 50%; border: 0; background: rgba(255,255,255,.92); color: var(--ink); font-size: 22px; cursor: pointer; }
+
+  /* Portada */
+  .cover { display: grid; grid-template-columns: 1.1fr .9fr; min-height: calc(100svh - 56px); }
+  .cover-t { display: flex; flex-direction: column; justify-content: space-between; gap: 48px; padding: clamp(32px, 6vw, 88px) var(--pad); }
+  .cover .logo { width: min(520px, 100%); }
+  .cover h1 { font-size: clamp(56px, 9vw, 148px); font-weight: 700; letter-spacing: -.045em; line-height: .92; }
+  .cover h1 span { color: var(--lm); }
+  .meta { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 8px 48px; font-size: 13px; color: var(--mute); }
+  .meta b { display: block; color: var(--ink); font-weight: 600; }
+  .cover-f { position: relative; background: var(--bg2); }
+  .cover-f img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+  /* Secciones */
+  .s { display: grid; grid-template-columns: minmax(180px, 3fr) 9fr; gap: 32px clamp(24px, 4vw, 64px); padding: var(--sec) var(--pad); border-top: 1px solid var(--line); }
+  .s-h { align-self: start; position: sticky; top: 88px; }
+  .s-n { display: block; font-size: 13px; font-weight: 700; color: var(--lm); letter-spacing: .08em; margin-bottom: 10px; }
+  .s-h h2 { font-size: clamp(30px, 3.4vw, 46px); font-weight: 700; letter-spacing: -.03em; line-height: 1.02; }
+  .s-b { display: grid; gap: clamp(48px, 6vw, 88px); min-width: 0; }
+  .lead { font-size: clamp(24px, 2.6vw, 38px); font-weight: 500; letter-spacing: -.02em; line-height: 1.2; max-width: 24em; }
+  .lead em { font-style: normal; color: var(--lm); }
+  .k { display: block; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); margin-bottom: 16px; }
+  .txt { max-width: 38em; color: var(--mute); }
+  .txt b { color: var(--ink); font-weight: 600; }
+  .bloque { display: grid; gap: 20px; }
+  .rule { border-top: 1px solid var(--line); padding-top: 20px; }
+  .nota { padding: 16px 20px; border-radius: var(--r-sm); background: var(--bg2); font-size: 15px; color: var(--mute); max-width: 46em; }
+  .nota b { color: var(--ink); }
+
+  /* 01 Marca */
+  .cifras { display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--ink); }
+  .cifras div { padding: 20px 20px 0 0; }
+  .cifras b { display: block; font-size: clamp(32px, 3.6vw, 52px); font-weight: 700; letter-spacing: -.03em; line-height: 1; }
+  .cifras span { display: block; margin-top: 8px; font-size: 14px; color: var(--mute); }
+  .valores { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+  .valores h3 { font-size: 22px; font-weight: 700; letter-spacing: -.02em; margin-bottom: 8px; }
+  .valores p { color: var(--mute); font-size: 16px; }
+  .valores i { display: block; font-style: normal; font-size: 13px; font-weight: 700; color: var(--lm); margin-bottom: 14px; }
+
+  /* Foto a sangre */
+  .sangre { position: relative; height: clamp(320px, 62vw, 860px); overflow: hidden; }
+  .sangre img { width: 100%; height: 100%; object-fit: cover; }
+  .sangre::after { content: ''; position: absolute; inset: 0; background: var(--velo); }
+  .sangre p { position: absolute; left: var(--pad); bottom: var(--pad); max-width: 15em; color: #fff; font-size: clamp(26px, 3.6vw, 54px); font-weight: 700; letter-spacing: -.03em; line-height: 1.02; z-index: 1; }
+
+  /* 02 Logotipo */
+  .logo-hero { display: grid; place-items: center; padding: clamp(56px, 9vw, 140px) clamp(24px, 6vw, 96px); border-radius: var(--r); background: var(--bg2); }
+  .logo-hero .logo { width: min(640px, 100%); }
+  .versiones { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .ver { display: grid; gap: 10px; }
+  .ver div { display: grid; place-items: center; aspect-ratio: 4/3; border-radius: var(--r-sm); padding: 18%; }
+  .ver div .logo { width: 100%; }
+  .ver small { font-size: 13px; color: var(--mute); }
+  .ver small b { color: var(--ink); font-weight: 600; display: block; }
+  .ver-foto div { background: linear-gradient(var(--velo), var(--velo)), url(img/vida-zapatillas.webp) center 40%/cover; }
+  .const { display: grid; grid-template-columns: 1.4fr 1fr; gap: 12px; }
+  .respeto { position: relative; display: grid; place-items: center; padding: clamp(28px, 4vw, 48px); border-radius: var(--r-sm); background: var(--bg2); }
+  .respeto .caja { position: relative; padding: clamp(18px, 3vw, 34px); outline: 1.5px dashed rgba(124,25,25,.5); width: 100%; max-width: 440px; }
+  .respeto .caja .logo { width: 100%; }
+  .respeto .x { position: absolute; font-size: 12px; font-weight: 700; color: var(--lm); }
+  .respeto .x1 { top: 2px; left: 50%; transform: translateX(-50%); }
+  .respeto .x2 { left: 6px; top: 50%; transform: translateY(-50%); }
+  .mono { display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center; padding: clamp(24px, 4vw, 40px); border-radius: var(--r-sm); background: var(--lm); color: #fff; }
+  .mono svg { width: clamp(64px, 8vw, 96px); height: auto; fill: #fff; }
+  .mono p { font-size: 15px; opacity: .85; }
+  .mono b { display: block; font-size: 18px; opacity: 1; margin-bottom: 4px; }
+  .mal { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .mal figure { margin: 0; display: grid; gap: 10px; }
+  .mal figure > div { position: relative; display: grid; place-items: center; aspect-ratio: 4/3; border-radius: var(--r-sm); background: var(--bg2); padding: 16%; overflow: hidden; }
+  .mal figure > div::after { content: ''; position: absolute; top: 10px; right: 10px; width: 22px; height: 22px; border-radius: 50%; background: var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round'%3E%3Cpath d='M7 7l10 10M17 7 7 17'/%3E%3C/svg%3E") center/12px no-repeat; }
+  .mal .logo { width: 100%; }
+  .mal figcaption { font-size: 13px; color: var(--mute); }
+
+  /* 03 Color */
+  .prim { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 12px; }
+  .sw { display: grid; grid-template-rows: 1fr auto; min-height: clamp(260px, 30vw, 420px); border-radius: var(--r-sm); overflow: hidden; border: 1px solid var(--line); cursor: copy; text-align: left; padding: 0; font: inherit; color: inherit; background: none; }
+  .sw .chip { display: flex; align-items: flex-end; padding: 18px; font-size: clamp(18px, 1.8vw, 24px); font-weight: 700; letter-spacing: -.02em; }
+  .sw .dat { display: grid; gap: 2px; padding: 14px 18px 16px; background: #fff; font-size: 13px; color: var(--mute); border-top: 1px solid var(--line); }
+  .sw .dat b { color: var(--ink); font-weight: 600; }
+  .sw .ok { margin-top: 6px; font-size: 12px; font-weight: 700; color: var(--ink); }
+  .sec2 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .sec2 .sw { min-height: 200px; }
+  .prop { display: flex; height: 64px; border-radius: var(--r-sm); overflow: hidden; border: 1px solid var(--line); }
+  .prop span { display: flex; align-items: flex-end; padding: 10px 12px; font-size: 12px; font-weight: 700; }
+  .uso { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .uso > div { padding: 24px; border-radius: var(--r-sm); background: var(--bg2); }
+  .uso ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; font-size: 15px; }
+  .uso li { display: grid; grid-template-columns: 20px 1fr; gap: 10px; }
+  .uso li::before { content: '✓'; font-weight: 800; color: var(--lm); }
+  .uso .no li::before { content: '✕'; color: var(--ink); }
+  .uso h3 { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+  .granate-foto { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: stretch; }
+  .granate-foto img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: var(--r-sm); }
+  .fotopal { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+  .fotopal div { aspect-ratio: 1; border-radius: 50%; }
+  .fotopal small { display: block; margin-top: 8px; font-size: 12px; color: var(--mute); text-align: center; }
+  .fotopal small b { display: block; color: var(--ink); font-weight: 600; }
+
+  /* 04 Tipografía */
+  .espec { display: grid; grid-template-columns: auto 1fr; gap: clamp(24px, 4vw, 64px); align-items: end; padding: clamp(28px, 4vw, 56px); border-radius: var(--r); background: var(--bg2); }
+  .espec .aa { font-size: clamp(110px, 13vw, 240px); font-weight: 700; letter-spacing: -.06em; line-height: .8; }
+  .espec .abc { font-size: clamp(16px, 1.55vw, 24px); font-weight: 500; line-height: 1.35; letter-spacing: -.01em; overflow-wrap: anywhere; }
+  .espec .abc span { display: block; color: var(--mute); font-size: 15px; font-weight: 400; margin-top: 16px; }
+  .pesos { display: grid; }
+  .peso { display: grid; grid-template-columns: 150px 1fr 220px; gap: 24px; align-items: baseline; padding: 18px 0; border-top: 1px solid var(--line); }
+  .peso:last-child { border-bottom: 1px solid var(--line); }
+  .peso small { font-size: 13px; color: var(--mute); }
+  .peso small b { display: block; color: var(--ink); font-weight: 600; font-size: 15px; }
+  .peso p { font-size: clamp(24px, 3vw, 40px); letter-spacing: -.02em; line-height: 1.1; }
+  .escala { display: grid; }
+  .esc { display: grid; grid-template-columns: 150px 1fr; gap: 24px; align-items: baseline; padding: 22px 0; border-top: 1px solid var(--line); }
+  .esc small { font-size: 12px; color: var(--mute); line-height: 1.5; }
+  .esc small b { display: block; color: var(--ink); font-size: 14px; font-weight: 600; }
+  .t-display { font-size: clamp(44px, 6vw, 88px); font-weight: 700; letter-spacing: -.03em; line-height: 1; }
+  .t-h1 { font-size: clamp(36px, 4.4vw, 64px); font-weight: 700; letter-spacing: -.02em; line-height: 1.05; color: var(--lm); }
+  .t-h2 { font-size: clamp(30px, 3.6vw, 48px); font-weight: 700; letter-spacing: -.02em; line-height: 1.05; }
+  .t-h3 { font-size: clamp(22px, 2.2vw, 28px); font-weight: 800; letter-spacing: -.02em; line-height: 1.15; }
+  .t-eye { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .t-body { font-size: 17px; line-height: 1.5; max-width: 34em; }
+  .t-small { font-size: 14px; line-height: 1.4; color: var(--mute); }
+  .t-price { font-size: clamp(32px, 3.4vw, 46px); font-weight: 700; letter-spacing: -.03em; line-height: 1; }
+  .t-price s { font-size: .45em; font-weight: 400; color: var(--mute); margin-left: 10px; letter-spacing: 0; }
+
+  /* 05 Tono */
+  .princ { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .princ div { padding: 22px; border-radius: var(--r-sm); background: var(--bg2); }
+  .princ b { display: block; font-size: 19px; font-weight: 700; letter-spacing: -.01em; margin-bottom: 8px; }
+  .princ p { font-size: 15px; color: var(--mute); }
+  .glos { width: 100%; border-collapse: collapse; font-size: 16px; }
+  .glos th { text-align: left; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 0 16px 12px 0; }
+  .glos td { padding: 16px 16px 16px 0; border-top: 1px solid var(--line); vertical-align: top; }
+  .glos td:first-child { color: var(--mute); width: 22%; }
+  .glos td:nth-child(2) { font-weight: 600; }
+  .glos td:nth-child(3) { color: var(--mute); text-decoration: line-through; text-decoration-color: var(--lm); }
+  .frases { display: grid; gap: 0; }
+  .frases p { padding: 20px 0; border-top: 1px solid var(--line); font-size: clamp(22px, 2.4vw, 32px); font-weight: 700; letter-spacing: -.02em; line-height: 1.15; }
+  .frases p small { display: block; margin-top: 6px; font-size: 13px; font-weight: 400; letter-spacing: 0; color: var(--mute); }
+
+  /* 06 Fotografía */
+  .fam { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .fam a { display: grid; gap: 6px; padding: 20px; border-radius: var(--r-sm); background: var(--bg2); text-decoration: none; }
+  .fam a b { font-size: 13px; font-weight: 700; color: var(--lm); letter-spacing: .08em; }
+  .fam a span { font-size: 20px; font-weight: 700; letter-spacing: -.02em; }
+  .fam a small { font-size: 14px; color: var(--mute); }
+  .gal { display: grid; grid-template-columns: repeat(12, 1fr); gap: 8px; }
+  .gal figure { position: relative; margin: 0; overflow: hidden; border-radius: var(--r-sm); background: var(--bg2); cursor: zoom-in; }
+  .gal figure img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .gal figcaption { position: absolute; left: 10px; bottom: 10px; padding: 5px 10px; border-radius: 999px; background: rgba(255,255,255,.94); font-size: 12px; font-weight: 500; color: var(--ink); }
+  .gal figcaption b { font-weight: 700; margin-right: 6px; }
+  .gal .revisar::after { content: 'Revisar texto del logo'; position: absolute; top: 10px; left: 10px; padding: 5px 10px; border-radius: 999px; background: var(--ink); color: #fff; font-size: 12px; font-weight: 600; }
+  .c3 { grid-column: span 3; } .c4 { grid-column: span 4; } .c6 { grid-column: span 6; } .c8 { grid-column: span 8; } .c12 { grid-column: span 12; }
+  .r-sq { aspect-ratio: 1; } .r-w { aspect-ratio: 1646/1042; } .r-gn { aspect-ratio: 1; }
+  .fill { aspect-ratio: auto; }
+  .gn-2x2 { grid-row: span 2; }
+  .reglas { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 48px; counter-reset: r; }
+  .reglas p { display: grid; grid-template-columns: 40px 1fr; padding: 16px 0; border-top: 1px solid var(--line); font-size: 16px; color: var(--mute); }
+  .reglas p b { display: block; color: var(--ink); font-weight: 600; }
+  .reglas p::before { counter-increment: r; content: counter(r, decimal-leading-zero); font-size: 13px; font-weight: 700; color: var(--lm); padding-top: 2px; }
+
+  /* 07 Elementos */
+  .elems { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .el { display: grid; gap: 20px; align-content: start; padding: 28px; border-radius: var(--r-sm); background: var(--bg2); }
+  .el .k { margin: 0; }
+  .el small { font-size: 13px; color: var(--mute); }
+  .fila { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 52px; padding: 0 28px; border-radius: 999px; border: 0; background: var(--lm); color: #fff; font: 600 16px var(--font); text-decoration: none; cursor: pointer; }
+  .btn:hover { background: var(--lm-d); }
+  .btn--line { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
+  .btn--line:hover { background: var(--ink); color: #fff; }
+  .dto { display: inline-flex; align-items: center; height: 30px; padding: 0 12px; border-radius: 999px; background: var(--lm); color: #fff; font-size: 14px; font-weight: 800; }
+  .gratis { display: inline-flex; align-items: center; height: 30px; padding: 0 12px; border-radius: 999px; background: #fff; color: var(--lm); box-shadow: inset 0 0 0 1.5px var(--lm); font-size: 14px; font-weight: 800; }
+  .franja { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+  .franja div { display: grid; gap: 10px; justify-items: start; padding: 16px; border-radius: 12px; background: var(--bg); font-size: 14px; font-weight: 600; line-height: 1.25; }
+  .franja svg, .ic svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .ic { display: flex; gap: 18px; flex-wrap: wrap; }
+  .radios { display: flex; gap: 12px; align-items: end; }
+  .radios div { display: grid; place-items: center; width: 84px; height: 84px; background: var(--bg); border: 1.5px solid var(--ink); font-size: 12px; font-weight: 700; }
+  .esp { display: grid; gap: 8px; }
+  .esp div { display: flex; align-items: center; gap: 12px; font-size: 13px; color: var(--mute); }
+  .esp span { height: 14px; background: var(--lm); border-radius: 3px; }
+  .card { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: var(--r); overflow: hidden; background: #fff; border: 1px solid var(--line); }
+  .card img { width: 100%; height: 100%; object-fit: cover; min-height: 280px; }
+  .card > div { display: grid; gap: 14px; align-content: center; padding: clamp(24px, 4vw, 48px); }
+  .card .t-h2 { color: var(--lm); }
+
+
+  /* Acento serif: una palabra o remate en Playfair Display cursiva */
+  em.sf, .sf { font: italic 400 1.08em/1.02 var(--serif); letter-spacing: -.01em; }
+  em.sf, .sf, .cx-t em, .manif em, .prueba em, .sangre em, .cover h1 em { font-variant-numeric: lining-nums; }
+  .cover h1 em { font: italic 400 1.04em/.9 var(--serif); letter-spacing: -.02em; color: var(--lm); }
+  .sangre p em { display: block; font: italic 400 1.1em/1 var(--serif); letter-spacing: -.01em; }
+  .espec--serif { background: var(--bg); border: 1px solid var(--line); }
+  .espec--serif .aa { font: italic 400 clamp(120px, 14vw, 250px)/.8 var(--serif); letter-spacing: -.03em; color: var(--lm); }
+  .espec--serif .abc { font-family: var(--serif); font-style: italic; font-weight: 400; }
+  .pareja { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .pareja > div { display: grid; gap: 8px; align-content: start; padding: 24px; border-radius: var(--r-sm); background: var(--bg2); }
+  .pareja b { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+  .pareja p { font-size: 15px; color: var(--mute); }
+  .pareja .muestra { font-size: 30px; line-height: 1.1; color: var(--ink); margin: 8px 0 4px; }
+
+  /* Composición de titulares */
+  .comp { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .cx { display: grid; gap: 14px; }
+  .cx-l { position: relative; display: grid; align-content: center; gap: 0; min-height: 300px; padding: clamp(24px, 4vw, 48px); border-radius: var(--r-sm); background: var(--bg); border: 1px solid var(--line); overflow: hidden; }
+  .cx-l > * { position: relative; }
+  .cx-eye { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 12px; }
+  .cx-t { font-size: clamp(32px, 3.6vw, 52px); font-weight: 700; letter-spacing: -.02em; line-height: 1.05; }
+  .cx-t em { font: italic 400 1.08em/1 var(--serif); letter-spacing: -.01em; }
+  .cx-s { margin-top: 16px; font-size: clamp(17px, 1.5vw, 20px); color: var(--mute); max-width: 26em; }
+  .cx-b { margin-top: 28px; }
+  .cx-spec { font-size: 13px; color: var(--mute); }
+  .cx-spec b { color: var(--ink); font-weight: 600; }
+  .cx--foto { grid-column: 1 / -1; }
+  .cx--foto .cx-l { min-height: clamp(380px, 46vw, 620px); align-content: end; color: #fff; background: #222; }
+  .cx--foto .cx-l img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .cx--foto .cx-l::before { content: ''; position: absolute; inset: 0; background: var(--velo); z-index: 1; }
+  .cx--foto .cx-l > div { position: relative; z-index: 2; }
+  .cx--foto .cx-t { font-size: clamp(40px, 5.6vw, 92px); font-weight: 600; letter-spacing: -.005em; line-height: 1.02; }
+  .cx--foto .cx-s { color: rgba(255,255,255,.9); }
+  .cx--centro .cx-l { justify-items: center; text-align: center; }
+  .cx--centro .cx-t em { color: var(--lm); }
+  .cx--lm .cx-l { background: var(--lm); color: #fff; }
+  .cx--lm .cx-s { color: rgba(255,255,255,.85); }
+  .btn--white { background: #fff; color: var(--lm); }
+  .btn--white:hover { background: #f1f1f1; }
+  .medidas { display: flex; flex-wrap: wrap; gap: 8px; }
+  .medidas span { padding: 8px 12px; border-radius: 999px; background: var(--bg2); font-size: 13px; color: var(--mute); }
+  .medidas b { color: var(--ink); font-weight: 600; }
+
+  /* Iconografía */
+  .ico svg, .rej svg, .ilib svg, .ifr svg, .iop svg, .icard svg { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; display: block; }
+  .ianat { display: grid; grid-template-columns: auto 1fr; gap: clamp(24px, 4vw, 56px); align-items: center; padding: clamp(24px, 4vw, 48px); border-radius: var(--r); background: var(--bg2); }
+  .ianat .rej { position: relative; width: clamp(160px, 20vw, 240px); aspect-ratio: 1; background: var(--bg); background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: calc(100% / 24) calc(100% / 24); border: 1px solid var(--line); color: var(--lm); }
+  .ianat .rej::after { content: ''; position: absolute; inset: calc(100% / 12); border: 1px dashed rgba(124,25,25,.45); }
+  .ianat .rej svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .ianat ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; font-size: 15px; color: var(--mute); }
+  .ianat li b { color: var(--ink); font-weight: 600; }
+  .ilib { display: grid; grid-template-columns: repeat(8, 1fr); gap: 8px; }
+  .ilib div { display: grid; justify-items: center; gap: 10px; padding: 18px 6px 12px; border-radius: 12px; background: var(--bg2); color: var(--ink); }
+  .ilib svg { width: 28px; height: 28px; }
+  .ilib small { font-size: 11px; color: var(--mute); text-align: center; line-height: 1.2; }
+  .ifr { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 24px; padding: 28px clamp(20px, 3vw, 40px); border-radius: var(--r-sm); background: var(--lm); color: #fff; }
+  .ifr div { display: grid; grid-template-columns: 56px 1fr; gap: 14px; align-items: center; }
+  .ifr i { display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; border: 1.5px solid #fff; }
+  .ifr svg { width: 26px; height: 26px; }
+  .ifr b { display: block; font-size: 16px; font-weight: 600; line-height: 1.2; }
+  .ifr span { font-size: 14px; opacity: .85; }
+  .iuso { display: grid; grid-template-columns: 1fr; gap: 48px; }
+  .iop { grid-template-columns: 1fr 1fr; }
+  .iop { display: grid; gap: 10px; align-content: start; padding: 24px; border-radius: var(--r-sm); background: var(--bg2); }
+  .iop label { display: flex; align-items: center; gap: 14px; height: 60px; padding: 0 20px; border-radius: var(--r-sm); background: var(--bg); border: 1.5px solid var(--line); font-weight: 600; font-size: 17px; }
+  .iop label.on { border-color: var(--lm); }
+  .iop svg { width: 24px; height: 24px; color: var(--lm); }
+  .icards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 24px; border-radius: var(--r-sm); background: var(--bg2); }
+  .icard { display: grid; gap: 12px; align-content: start; padding: 24px; border-radius: var(--r-sm); background: var(--bg); }
+  .icard svg { width: 40px; height: 40px; color: var(--lm); }
+  .icard h4 { font-size: 20px; font-weight: 700; letter-spacing: -.02em; line-height: 1.15; }
+  .icard p { font-size: 15px; color: var(--mute); }
+  .itam { display: flex; flex-wrap: wrap; gap: 28px; align-items: end; color: var(--ink); }
+  .itam div { display: grid; justify-items: center; gap: 10px; font-size: 12px; color: var(--mute); }
+  .imal { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .imal figure { margin: 0; display: grid; gap: 10px; }
+  .imal figure > div { position: relative; display: grid; place-items: center; aspect-ratio: 4/3; border-radius: var(--r-sm); background: var(--bg2); }
+  .imal figure > div::after { content: ''; position: absolute; top: 10px; right: 10px; width: 22px; height: 22px; border-radius: 50%; background: var(--ink) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23fff' stroke-width='2.6' stroke-linecap='round'%3E%3Cpath d='M7 7l10 10M17 7 7 17'/%3E%3C/svg%3E") center/12px no-repeat; }
+  .imal svg { width: 48px; height: 48px; }
+  .imal figcaption { font-size: 13px; color: var(--mute); }
+
+  /* Fotografía: manifiesto */
+  .manif { margin: 0; padding: clamp(32px, 5vw, 72px) 0 0; border-top: 1px solid var(--ink); }
+  .manif p { font-size: clamp(36px, 5vw, 76px); font-weight: 700; letter-spacing: -.03em; line-height: 1.02; }
+  .manif p em { display: block; font: italic 400 1.08em/1.05 var(--serif); letter-spacing: -.01em; color: var(--lm); }
+  .manif footer { margin-top: 24px; max-width: 40em; font-size: clamp(17px, 1.5vw, 20px); color: var(--mute); }
+  .manif footer b { color: var(--ink); font-weight: 600; }
+  .prueba { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r-sm); overflow: hidden; }
+  .prueba div { padding: 28px; background: #fff; }
+  .prueba b { display: block; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; }
+  .prueba p { font-size: clamp(22px, 2.2vw, 30px); font-weight: 700; letter-spacing: -.02em; line-height: 1.15; }
+  .prueba p em { font: italic 400 1.08em/1 var(--serif); }
+  .prueba div:first-child b { color: var(--mute); }
+  .prueba div:last-child { background: var(--lm); color: #fff; }
+
+  /* 08 Resumen */
+  .resumen { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r-sm); overflow: hidden; }
+  .resumen div { padding: 24px; background: #fff; }
+  .resumen b { display: block; font-size: 13px; font-weight: 700; color: var(--lm); letter-spacing: .08em; margin-bottom: 10px; }
+  .resumen p { font-size: 16px; }
+
+  .pie { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px 32px; align-items: end; padding: 48px var(--pad); background: var(--lm); color: #fff; font-size: 13px; }
+  .pie .logo { width: 180px; color: #fff; }
+  .pie p { opacity: .8; }
+
+  /* Visor de fotos */
+  dialog { max-width: min(96vw, 1600px); max-height: 94vh; padding: 0; border: 0; border-radius: var(--r-sm); background: #111; }
+  dialog::backdrop { background: rgba(0,0,0,.82); }
+  dialog img { max-width: 100%; max-height: 94vh; object-fit: contain; }
+  dialog button { position: absolute; top: 10px; right: 10px; width: 40px; height: 40px; border-radius: 50%; border: 0; background: #fff; color: var(--ink); font-size: 20px; cursor: pointer; }
+  .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); padding: 10px 16px; border-radius: 999px; background: var(--ink); color: #fff; font-size: 14px; font-weight: 600; opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 30; }
+  .toast.on { opacity: 1; }
+
+  @media (max-width: 1000px) {
+    .prim { grid-template-columns: 1fr 1fr; }
+    .versiones, .mal { grid-template-columns: 1fr 1fr; }
+    .princ { grid-template-columns: 1fr 1fr; }
+    .peso { grid-template-columns: 120px 1fr; } .peso > small:last-child { grid-column: 2; }
+    .ilib { grid-template-columns: repeat(6, 1fr); }
+  }
+  @media (max-width: 760px) {
+    html { scroll-padding-top: 56px; }
+    .top { gap: 12px; } .top .logo { width: 96px; }
+    .cover { grid-template-columns: 1fr; min-height: 0; }
+    .abre { height: 82svh; }
+    .abre-t { flex-direction: column; align-items: start; }
+      .cover-f { aspect-ratio: 4/5; }
+    .meta { grid-template-columns: 1fr 1fr; }
+    .s { grid-template-columns: 1fr; }
+    .s-h { position: static; }
+    .cifras { grid-template-columns: 1fr 1fr; } .cifras div { padding-bottom: 20px; }
+    .valores, .const, .uso, .granate-foto, .elems, .card, .resumen, .fam, .reglas { grid-template-columns: 1fr; }
+    .sec2 { grid-template-columns: 1fr; }
+    .fotopal { grid-template-columns: repeat(3, 1fr); }
+    .franja { grid-template-columns: 1fr 1fr; }
+    .espec { grid-template-columns: 1fr; }
+    .peso, .esc { grid-template-columns: 1fr; gap: 6px; } .peso > small:last-child { grid-column: auto; }
+    .princ { grid-template-columns: 1fr; }
+    .gal { grid-template-columns: 1fr 1fr; }
+    .gal figure { grid-column: span 2; grid-row: auto; }
+    .gal .r-sq.c3 { grid-column: span 1; }
+    .gal .fill { aspect-ratio: 1646/1042; }
+    .gal .gn-2x2 { aspect-ratio: 1; }
+    .glos td:first-child { width: auto; }
+    .glos, .glos tbody, .glos tr, .glos td { display: block; } .glos thead { display: none; }
+    .glos tr { padding: 14px 0; border-top: 1px solid var(--line); } .glos td { border: 0; padding: 2px 0; }
+    .mono { grid-template-columns: 1fr; }
+    .pareja, .comp, .iuso, .icards, .prueba, .ianat { grid-template-columns: 1fr; }
+    .cx--foto .cx-l { align-content: start; min-height: 560px; }
+    .cx--foto .cx-l img { object-position: 30% 100%; }
+    .ilib { grid-template-columns: repeat(4, 1fr); }
+    .ifr { grid-template-columns: 1fr; }
+    .iop { grid-template-columns: 1fr; }
+    .imal { grid-template-columns: 1fr 1fr; }
+    .ianat .rej { justify-self: center; }
+  }
+  @media print {
+    .top, dialog, .toast { display: none !important; }
+    .s, .sangre { break-before: page; }
+    .s-h { position: static; }
+    .cover { min-height: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Logo oficial (LOMONACO-LOGO.svg de grupolomonaco.com), con el color controlado por CSS -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="logo" viewBox="0 0 2931.33 426.24">
+    <polygon points="207.55 234.14 207.55 288.59 4.57 288.59 4.57 288.03 0 288.03 0 11.79 66.27 11.79 66.27 234.13 207.55 234.14"/><path d="M2167.23,180.65l-.39-1.04-74.71-167.5-69.11-.39-122.6,276.31h66.63l25.9-59.09,129.24-.39,26.29,59.48h66.51l-47.76-107.37ZM2014.95,180l42.82-96.7,42.43,96.31-85.25.39Z"/><polygon points="1805.31 11.79 1805.31 288.08 1740.17 288.08 1740.17 287.11 1613.74 130.47 1613.74 288.08 1547.47 288.08 1547.47 11.79 1613.74 11.79 1740.17 174.44 1740.17 11.79 1805.31 11.79"/><polygon points="1020.12 11.79 1020.12 288.08 953.85 288.08 953.85 130.77 874.37 257.82 840.93 257.82 764.43 135.44 764.43 288.07 698.16 288.07 698.16 11.79 764.43 11.79 857.88 178.96 953.85 11.79 1020.12 11.79"/><rect x="831.6" y="241.88" width="54.36" height="314.36" transform="translate(1257.85 -459.72) rotate(90)"/><path d="M435.33.39c-85.38-.39-154.75,66.9-154.75,149.8s69.37,149.54,154.75,149.15c85.38.39,154.88-66.9,154.88-149.15S520.71,0,435.33.39ZM435.33,240.52c-51.67,0-93.84-40.74-93.84-90.32s42.17-90.97,93.84-90.97,93.97,40.74,93.58,90.71c.39,49.85-41.78,90.58-93.58,90.58Z"/><path d="M1283.38.39c-85.77,0-154.75,67.03-155.14,149.54.39,82.52,69.76,149.8,154.75,149.8s155.14-67.29,154.88-149.8c.39-82.51-69.11-149.93-154.49-149.54ZM1283.38,240.52c-51.67,0-93.84-40.74-93.84-90.32s42.17-90.97,93.84-90.97,93.84,40.74,93.58,90.71c.26,49.85-41.78,90.58-93.58,90.58Z"/><path d="M2776.45,0c-85.38.39-154.75,67.03-154.75,149.93s69.37,149.41,154.75,149.8c85.77,0,154.88-66.9,154.88-149.8S2861.83.39,2776.45,0ZM2776.45,240.91c-51.67,0-93.84-40.74-93.84-90.97s41.78-90.71,94.23-90.71,93.58,40.35,93.58,90.71c-.13,50.24-41.91,90.58-93.97,90.97Z"/><path d="M2547.09,245.45c-28.41,33.14-71.26,54.2-119.19,54.2-85.49,0-154.79-67.04-154.79-149.7,0-82.71,69.3-149.7,154.79-149.7,47.47,0,89.9,20.65,118.31,53.17l-45.57,39.25c-17.21-20.4-43.41-33.44-72.74-33.44-51.84,0-93.81,40.58-93.81,90.72,0,50.09,41.97,90.73,93.81,90.73,29.28,0,55.43-13,72.59-33.29l46.6,38.07Z"/>
+  </symbol>
+  <symbol id="mono" viewBox="672 0 376 440">
+    <polygon points="1020.12 11.79 1020.12 288.08 953.85 288.08 953.85 130.77 874.37 257.82 840.93 257.82 764.43 135.44 764.43 288.07 698.16 288.07 698.16 11.79 764.43 11.79 857.88 178.96 953.85 11.79 1020.12 11.79"/>
+    <rect x="831.6" y="241.88" width="54.36" height="314.36" transform="translate(1257.85 -459.72) rotate(90)"/>
+  </symbol>
+</svg>
+
+<header class="top">
+  <a class="logo" href="#portada" aria-label="LOMONACO · inicio del manual"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></a>
+  <nav aria-label="Secciones">
+    <a href="#marca"><b>01</b>Marca</a><a href="#logotipo"><b>02</b>Logotipo</a><a href="#color"><b>03</b>Color</a><a href="#tipografia"><b>04</b>Tipografía</a>
+    <a href="#iconos"><b>05</b>Iconos</a><a href="#tono"><b>06</b>Tono</a><a href="#fotografia"><b>07</b>Fotografía</a><a href="#elementos"><b>08</b>Elementos</a><a href="#resumen"><b>09</b>Resumen</a>
+  </nav>
+</header>
+
+<main>
+  <!-- Apertura: emoción, después el vídeo y después el manual -->
+  <section class="abre" id="inicio" aria-label="Lo Monaco">
+    <img src="img/vida-embarazo.webp" alt="Pareja esperando un bebé en su dormitorio, junto a un colchón LOMONACO" fetchpriority="high">
+    <span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span>
+    <div class="abre-t">
+      <h2>La marca de<em>toda la vida</em></h2>
+      <button type="button" class="vbtn" id="verVideo"><span aria-hidden="true">▶</span> Ver el vídeo</button>
+    </div>
+  </section>
+
+  <section class="cover" id="portada">
+    <div class="cover-t">
+      <span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span>
+      <h1>Manual<br>de <em>marca</em></h1>
+      <div class="meta">
+        <span><b>Edición</b>01</span><span><b>Fecha</b>Noviembre 2026</span><span><b>Para</b>Web, redes y piezas</span>
+      </div>
+    </div>
+    <div class="cover-f"><img src="img/vida-vertical.webp" alt="Pareja en su dormitorio sobre un colchón LOMONACO" fetchpriority="high"></div>
+  </section>
+
+  <!-- 01 MARCA -->
+  <section class="s" id="marca">
+    <div class="s-h"><span class="s-n">01</span><h2>Marca</h2></div>
+    <div class="s-b">
+      <p class="lead">«La marca de toda la vida». Colchones, canapés y almohadas para <em>dormir bien muchos años</em>, con la cercanía de la tienda de siempre.</p>
+      <div class="cifras">
+        <div><b>750.000</b><span>clientes</span></div>
+        <div><b>150 noches</b><span>de prueba en tu cama</span></div>
+        <div><b>10 años</b><span>de garantía</span></div>
+        <div><b>Gratis</b><span>envío y montaje · península</span></div>
+      </div>
+      <div class="valores">
+        <div><i>Cercana</i><h3>Hablamos de tú</h3><p>Como en la tienda de barrio: sin tecnicismos, con un teléfono al otro lado y una persona que te ayuda a elegir.</p></div>
+        <div><i>Honesta</i><h3>Solo cifras reales</h3><p>Precios, plazos y garantías tal y como son. Si un dato no está confirmado, no se publica.</p></div>
+        <div><i>Duradera</i><h3>Pensada para años</h3><p>El producto y el mensaje se piensan para durar, no para una temporada. Nada de modas pasajeras.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sangre"><img src="img/vida-almohadazos.webp" alt="Pareja jugando con una almohada sobre un colchón LOMONACO" loading="lazy"><p>Casas de verdad. <em>Gente de verdad.</em></p></div>
+
+  <!-- 02 LOGOTIPO -->
+  <section class="s" id="logotipo">
+    <div class="s-h"><span class="s-n">02</span><h2>Logotipo</h2></div>
+    <div class="s-b">
+      <div class="bloque">
+        <div class="logo-hero"><span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span></div>
+        <p class="txt"><b>LOMONACO en una sola palabra, en mayúsculas y con la M subrayada.</b> La barra bajo la M forma parte del logo: nunca se separa, se mueve ni se quita. El logo se usa siempre desde el archivo original, nunca se reescribe con una tipografía.</p>
+      </div>
+
+      <div class="bloque">
+        <span class="k">Versiones de color</span>
+        <div class="versiones">
+          <div class="ver"><div style="background:#f6f6f6;border:1px solid var(--line)"><span class="logo"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span></div><small><b>Principal</b>Granate sobre gris claro</small></div>
+          <div class="ver"><div style="background:var(--lm)"><span class="logo" style="color:#fff"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span></div><small><b>Invertida</b>Blanco sobre granate</small></div>
+          <div class="ver"><div style="background:var(--ink)"><span class="logo" style="color:#fff"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span></div><small><b>Monocolor</b>Blanco sobre negro, o negro sobre gris claro</small></div>
+          <div class="ver ver-foto"><div><span class="logo" style="color:#fff"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span></div><small><b>Sobre foto</b>Siempre en blanco, con la capa negra al 10 %</small></div>
+        </div>
+      </div>
+
+      <div class="const">
+        <div class="bloque">
+          <span class="k">Área de respeto</span>
+          <div class="respeto"><div class="caja"><span class="x x1">x</span><span class="x x2">x</span><span class="logo"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span></div></div>
+          <p class="txt">Deja libre alrededor del logo, como mínimo, <b>x = la altura de las letras</b>. Ningún texto, foto o borde entra en ese espacio.</p>
+        </div>
+        <div class="bloque">
+          <span class="k">Tamaño mínimo</span>
+          <div class="respeto" style="align-content:center;gap:28px">
+            <span class="logo" style="width:140px"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span>
+            <span class="logo" style="width:100px"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span>
+          </div>
+          <p class="txt"><b>100 px de ancho en pantalla · 25 mm en impresión.</b> Por debajo, usa el monograma.</p>
+        </div>
+      </div>
+
+      <div class="mono">
+        <svg viewBox="0 0 376 440" role="img" aria-label="Monograma M"><use href="#mono"/></svg>
+        <p><b>Monograma M</b>La M subrayada sola. Es la que ya llevan las asas del colchón y las etiquetas de las almohadas. Úsala en icono de la web, perfil de redes y espacios pequeños.</p>
+      </div>
+
+      <div class="bloque">
+        <span class="k">Usos incorrectos</span>
+        <div class="mal">
+          <figure><div><span class="logo" style="transform:scaleX(1.45)"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span></div><figcaption>No deformar ni estirar</figcaption></figure>
+          <figure><div><span class="logo" style="color:#d9762b"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span></div><figcaption>No cambiar de color</figcaption></figure>
+          <figure><div><span class="logo" style="transform:rotate(-12deg);filter:drop-shadow(0 8px 6px rgba(0,0,0,.35))"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span></div><figcaption>No girar ni añadir sombras</figcaption></figure>
+          <figure><div style="background:url(img/producto-acolchado.webp) center/cover"><span class="logo" style="color:var(--lm)"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span></div><figcaption>No usar el logo en granate sobre una foto</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <span class="k">Archivos del logo</span>
+        <div class="fila">
+          <a class="btn btn--line" href="logos/lomonaco-logo-granate.svg" download>Logo granate</a>
+          <a class="btn btn--line" href="logos/lomonaco-logo-blanco.svg" download>Logo blanco</a>
+          <a class="btn btn--line" href="logos/lomonaco-logo-negro.svg" download>Logo negro</a>
+          <a class="btn btn--line" href="logos/lomonaco-monograma-granate.svg" download>Monograma granate</a>
+          <a class="btn btn--line" href="logos/lomonaco-monograma-blanco.svg" download>Monograma blanco</a>
+        </div>
+        <p class="nota"><b>Granate oficial: #7C1919</b> (confirmado el 06/11/2026). El logo que usa hoy la web (LOMONACO-LOGO.svg) está en #8C1818, un granate algo más vivo: hay que sustituirlo por estos archivos, que ya llevan #7C1919.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 COLOR -->
+  <section class="s" id="color">
+    <div class="s-h"><span class="s-n">03</span><h2>Color</h2></div>
+    <div class="s-b">
+      <p class="lead">Fondo gris claro, blanco y negro. El <em>granate LM</em> es el acento: poco y en el sitio justo.</p>
+
+      <div class="bloque">
+        <span class="k">Principales · pulsa para copiar el código</span>
+        <div class="prim">
+          <button class="sw" data-hex="#7C1919" data-n="Granate LM" data-uso="Color oficial de marca" type="button"></button>
+          <button class="sw" data-hex="#1D1D1F" data-n="Negro" type="button"></button>
+          <button class="sw" data-hex="#FFFFFF" data-n="Blanco" data-uso="Tarjetas, texto sobre oscuro y logo sobre foto" type="button"></button>
+          <button class="sw" data-hex="#F6F6F6" data-n="Gris claro" data-uso="Fondo de página y de escena, siempre" type="button"></button>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <span class="k">De apoyo</span>
+        <div class="sec2">
+          <button class="sw" data-hex="#5E1212" data-n="Granate oscuro" data-uso="Botón al pasar el ratón o pulsado" type="button"></button>
+          <button class="sw" data-hex="#5F5F66" data-n="Gris texto" data-uso="Textos secundarios" type="button"></button>
+          <button class="sw" data-hex="#D9D9DE" data-n="Gris línea" data-uso="Líneas y bordes" type="button"></button>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <span class="k">Proporción en una página</span>
+        <div class="prop">
+          <span style="flex:60;background:#f6f6f6">Gris claro · fondo 60 %</span>
+          <span style="flex:22;background:#fff">Blanco 22 %</span>
+          <span style="flex:13;background:#1d1d1f;color:#fff">Negro 13 %</span>
+          <span style="flex:5;background:#7c1919;color:#fff">LM</span>
+        </div>
+      </div>
+
+      <div class="uso">
+        <div><h3>El granate va en</h3><ul><li>Botones de compra y descuentos</li><li>Titulares y enlaces</li><li>La franja superior y las bandas de aviso, con texto blanco</li><li>La opción seleccionada (medida, modelo…)</li></ul></div>
+        <div class="no"><h3>Nunca</h3><ul><li>Naranja, rosa ni otros rojos</li><li>Fondos blancos: el fondo es siempre gris claro #F6F6F6</li><li>Fondos beige o cálidos</li><li>Degradados de color</li><li>Granate en textos largos o en antetítulos (van en negro)</li><li>Logo o texto granate sobre una foto: sobre foto, siempre blanco</li></ul></div>
+      </div>
+
+      <div class="granate-foto">
+        <img src="img/producto-etiqueta.webp" alt="Etiqueta granate cosida en el lateral del colchón" loading="lazy">
+        <div class="bloque" style="align-content:center">
+          <span class="k">El granate en el producto</span>
+          <p class="txt">En las fotos, el granate no se añade: <b>lo pone el propio colchón</b>. La etiqueta del lateral, la cinta y el vivo del Gran Natura son el único toque de color de la imagen.</p>
+          <div class="bloque rule">
+            <span class="k">Paleta que sale de las fotos</span>
+            <div class="fotopal" id="fotopal"></div>
+            <p class="txt" style="font-size:14px">Solo como referencia para la fotografía y el retoque. No se usan en la web.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 TIPOGRAFÍA -->
+  <section class="s" id="tipografia">
+    <div class="s-h"><span class="s-n">04</span><h2>Tipografía</h2></div>
+    <div class="s-b">
+      <div class="espec">
+        <span class="aa">Aa</span>
+        <p class="abc">Albert Sans<br>ABCDEFGHIJKLMNÑOPQRSTUVWXYZ<br>abcdefghijklmnñopqrstuvwxyz<br>0123456789 € % ¿? ¡! · áéíóú<span><b style="color:var(--ink)">Principal · la voz de la marca.</b> Para todo: titulares, textos, precios, botones. Gratuita en Google Fonts, con licencia libre (OFL).</span></p>
+      </div>
+      <div class="espec espec--serif">
+        <span class="aa">Aa</span>
+        <p class="abc">Playfair Display · cursiva<br>ABCDEFGHIJKLMNÑOPQRSTUVWXYZ<br>abcdefghijklmnñopqrstuvwxyz<br>0123456789 · áéíóú<span style="font-family:var(--font);font-style:normal"><b style="color:var(--ink)">Secundaria · el acento emocional.</b> Solo en cursiva, peso 400 (500 en tamaños pequeños). Va dentro de un titular de Albert Sans, nunca sola. También gratuita en Google Fonts (OFL).</span></p>
+      </div>
+      <div class="pareja">
+        <div><b>Albert Sans</b><p class="muestra" style="font-weight:700">Cuenta</p><p>Lo que es: producto, precio, condiciones. Clara y directa.</p></div>
+        <div><b>Playfair Display cursiva</b><p class="muestra"><em class="sf" style="font-size:34px">Emociona</em></p><p>Lo que se siente: la palabra o el remate que conecta. Una vez por titular.</p></div>
+      </div>
+
+      <div class="bloque">
+        <span class="k">Pesos</span>
+        <div class="pesos">
+          <div class="peso"><small><b>400 Regular</b></small><p style="font-weight:400">Duerme bien muchos años</p><small>Texto corrido y descripciones</small></div>
+          <div class="peso"><small><b>500 Medium</b></small><p style="font-weight:500">Duerme bien muchos años</p><small>Menú, etiquetas y textos destacados</small></div>
+          <div class="peso"><small><b>600 SemiBold</b></small><p style="font-weight:600">Duerme bien muchos años</p><small>Botones y elementos de la web</small></div>
+          <div class="peso"><small><b>700 Bold</b></small><p style="font-weight:700">Duerme bien muchos años</p><small>Titulares, precios y antetítulos</small></div>
+          <div class="peso"><small><b>800 ExtraBold</b></small><p style="font-weight:800">Duerme bien muchos años</p><small>Descuentos, «Gratis» y cifras clave</small></div>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <span class="k">Escala para la web</span>
+        <div class="escala">
+          <div class="esc"><small><b>Portada</b>44–88 px · 700<br>espaciado −3 % · interlínea 1</small><p class="t-display">La marca de toda la vida</p></div>
+          <div class="esc"><small><b>Titular con acento</b>Albert Sans 600 + Playfair cursiva 400<br>la cursiva al 108 % del titular</small><p class="t-display" style="font-weight:600;letter-spacing:-.005em">La marca de <em class="sf">toda la vida</em></p></div>
+          <div class="esc"><small><b>Titular H1</b>36–64 px · 700 · granate<br>espaciado −2 % · interlínea 1,05</small><p class="t-h1">Colchones</p></div>
+          <div class="esc"><small><b>Titular H2</b>30–48 px · 700<br>espaciado −2 % · interlínea 1,05</small><p class="t-h2">Elige tu colchón</p></div>
+          <div class="esc"><small><b>Titular H3</b>22–28 px · 800<br>espaciado −2 % · interlínea 1,15</small><p class="t-h3">Pruébalo 150 noches en tu cama</p></div>
+          <div class="esc"><small><b>Antetítulo</b>13 px · 700 · negro<br>mayúsculas · espaciado +8 %</small><p class="t-eye">Natura Látex</p></div>
+          <div class="esc"><small><b>Texto</b>17 px · 400<br>interlínea 1,5</small><p class="t-body">Un colchón firme y transpirable, con núcleo de látex, para quien busca un descanso estable noche tras noche.</p></div>
+          <div class="esc"><small><b>Pequeño</b>14 px · 400 · gris<br>interlínea 1,4</small><p class="t-small">Envío gratis con montaje en península. Lunes a viernes de 9:00 a 18:00.</p></div>
+          <div class="esc"><small><b>Precio</b>32–46 px · 700<br>tachado 400 · gris</small><p class="t-price">449 €<s>749 €</s></p></div>
+        </div>
+      </div>
+
+
+      <div class="bloque">
+        <span class="k">Cómo componer títulos y subtítulos</span>
+        <div class="comp">
+          <div class="cx cx--foto">
+            <div class="cx-l"><img src="img/vida-zapatillas.webp" alt="" loading="lazy"><div>
+              <p class="cx-t">La marca de<br><em>toda la vida</em></p>
+              <p class="cx-s">Colchones pensados para dormir bien muchos años.</p>
+              <div class="cx-b"><a class="btn btn--white" href="#tipografia">Ver colchones</a></div>
+            </div></div>
+            <p class="cx-spec"><b>1 · Portada sobre foto.</b> Titular en blanco, Albert Sans 600, con el remate en Playfair cursiva en una segunda línea. Subtítulo de una línea. Texto siempre en blanco sobre la zona más tranquila de la foto, con la capa negra al 10 % y <b>sin sombras</b>.</p>
+          </div>
+          <div class="cx">
+            <div class="cx-l"><span class="cx-eye">Colchones</span><p class="cx-t">Elige tu colchón</p><p class="cx-s">Cuatro modelos, una misma forma de hacer las cosas.</p></div>
+            <p class="cx-spec"><b>2 · Sección.</b> Antetítulo en negro + titular + subtítulo gris. Sin cursiva: la información manda.</p>
+          </div>
+          <div class="cx cx--centro">
+            <div class="cx-l"><span class="cx-eye">Prueba en casa</span><p class="cx-t">Pruébalo <em>150 noches</em><br>en tu cama</p><p class="cx-s">Si no es para ti, lo recogemos en tu casa.</p></div>
+            <p class="cx-spec"><b>3 · Mensaje clave.</b> La cursiva, en granate, destaca la idea que emociona o convence. Centrado solo en bloques cortos.</p>
+          </div>
+          <div class="cx cx--lm" style="grid-column:1/-1">
+            <div class="cx-l" style="min-height:0"><p class="cx-t">¿Dudas? <em>Te ayudamos a elegir</em></p><p class="cx-s">Llámanos al 868 28 67 52 · lunes a viernes de 9:00 a 18:00</p><div class="cx-b"><a class="btn btn--white" href="tel:+34868286752">Llamar ahora</a></div></div>
+            <p class="cx-spec"><b>4 · Banda granate.</b> Todo en blanco, botón blanco con texto granate. Una banda así por página, como mucho.</p>
+          </div>
+        </div>
+        <div class="medidas"><span><b>Antetítulo → titular</b> 12 px</span><span><b>Titular → subtítulo</b> 16 px</span><span><b>Subtítulo → botón</b> 28 px</span><span><b>Subtítulo</b> 17–20 px · 400 · máx. 2 líneas</span></div>
+      </div>
+      <div class="uso">
+        <div><h3>Así sí</h3><ul><li>Titulares en minúscula, con la primera en mayúscula</li><li>Texto alineado a la izquierda</li><li>Máximo dos pesos por bloque</li><li>Una sola cursiva Playfair por titular, al final o en la segunda línea</li><li>Líneas de 60 a 70 caracteres</li></ul></div>
+        <div class="no"><h3>Así no</h3><ul><li>Titulares enteros en MAYÚSCULAS (solo antetítulos cortos)</li><li>Otras tipografías, o Playfair en recta (sin cursiva)</li><li>Playfair en párrafos, precios, botones o etiquetas</li><li>Texto justificado o centrado en párrafos largos</li><li>Cursivas decorativas</li></ul></div>
+      </div>
+      <p class="nota">Los precios de la escala son un <b>ejemplo de formato</b>, no precios reales.</p>
+    </div>
+  </section>
+
+  <!-- 05 ICONOGRAFÍA -->
+  <section class="s" id="iconos">
+    <div class="s-h"><span class="s-n">05</span><h2>Iconos</h2></div>
+    <div class="s-b">
+      <p class="lead">Iconos de línea, finos y redondeados. <em>Acompañan</em> al texto, nunca lo sustituyen.</p>
+
+      <div class="ianat">
+        <div class="rej"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/><path d="M17 3.5v3M15.5 5h3M21 8.5v2M20 9.5h2"/></svg></div>
+        <ul>
+          <li><b>Rejilla de 24 × 24</b> con 2 px de margen interior.</li>
+          <li><b>Trazo de 1,6</b> en la rejilla. El mismo grosor en todos.</li>
+          <li><b>Extremos y esquinas redondeados.</b> Sin rellenos.</li>
+          <li><b>Formas simples</b>, con los detalles justos para reconocerse.</li>
+          <li><b>Un solo color:</b> granate, blanco o negro.</li>
+        </ul>
+      </div>
+
+      <div class="bloque">
+        <span class="k">Biblioteca</span>
+        <div class="ilib"><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/><path d="M15 3.5a6 6 0 0 1 5.5 5.5M15 7a2.6 2.6 0 0 1 2 2"/></svg><small>Llamar</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3.5 3.5v2.5h-7.5"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><small>Envío</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/><path d="M17 3.5v3M15.5 5h3M21 8.5v2M20 9.5h2"/></svg><small>Prueba</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg><small>Garantía</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.2A5 5 0 0 1 21 19"/></svg><small>Clientes</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg><small>Devolución</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M2.5 9.5h19M6 15h4"/></svg><small>Pago</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 3.5h11l4 5.5L12 21 2.5 9z"/><path d="M2.5 9h19M9 3.5 12 9l3-5.5M12 9v12"/></svg><small>Calidad</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18c2-6 5-9 8-9s6 3 8 9"/><path d="M2 18h20"/></svg><small>Para mí</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 20a6 6 0 0 1 12 0M10 20a6 6 0 0 1 12 0"/></svg><small>En pareja</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8c0-1.5 1-2.5 2.5-2.5h11C19 5.5 20 6.5 20 8v8c0 1.5-1 2.5-2.5 2.5h-11C5 18.5 4 17.5 4 16z"/><path d="M4 8c2 1 2 7 0 8M20 8c-2 1-2 7 0 8"/></svg><small>Almohada</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7h18v10H3z"/><path d="M3 12h18M9 7v10M15 7v10"/></svg><small>Edredón</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 15h18v4H3z"/><path d="M12 3 7 5v3.5c0 2.6 2 4.4 5 5 3-.6 5-2.4 5-5V5z"/><path d="m9.8 8.3 1.6 1.6 3-3"/></svg><small>Protector</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11h16v9H4zM3 7h18v4H3zM12 7v13M12 7c-1.5-3-5-3.5-5-1s3 1 5 1c2 0 5 1.5 5-1s-3.5-2-5 1"/></svg><small>Regalo</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 20.5V10l5 3.5V10l5 3.5V10l5 3.5V4.5h3v16z"/><path d="M2 20.5h20M7 17h2M12 17h2M17 17h1"/></svg><small>Fábrica</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/></svg><small>Casa</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 17 17 3l4 4L7 21z"/><path d="m7 13 2 2M10 10l2 2M13 7l2 2"/></svg><small>Medida</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 14.8V5a2 2 0 0 0-4 0v9.8a4 4 0 1 0 4 0z"/><path d="M12 10v7"/></svg><small>Temperatura</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7c3-4 6-4 9 0s6 4 9 0"/><path d="M3 12c3-4 6-4 9 0s6 4 9 0"/><path d="M3 17c3-4 6-4 9 0s6 4 9 0"/></svg><small>Transpirable</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16v11H8l-4 4z"/></svg><small>Ayuda</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.4 11h10.2L20 8H6.2"/><circle cx="9" cy="19.5" r="1.4"/><circle cx="17" cy="19.5" r="1.4"/></svg><small>Carrito</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><small>Cuenta</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 19c0-9 6-14 15-14 0 9-5 15-14 15"/><path d="M5 19 13 11"/></svg><small>Natural</small></div><div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg><small>Valoración</small></div></div>
+      </div>
+
+      <div class="bloque">
+        <span class="k">Sobre granate · franja de valores</span>
+        <div class="ifr">
+          <div><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3.5 3.5v2.5h-7.5"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></i><p><b>Envío y montaje gratis</b><span>En la península</span></p></div>
+          <div><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/><path d="M17 3.5v3M15.5 5h3M21 8.5v2M20 9.5h2"/></svg></i><p><b>150 noches de prueba</b><span>Pruébalo en tu cama</span></p></div>
+          <div><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></i><p><b>10 años de garantía</b><span>En todos los colchones</span></p></div>
+          <div><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20a6 6 0 0 1 12 0"/><circle cx="17" cy="9" r="2.6"/><path d="M15.5 14.2A5 5 0 0 1 21 19"/></svg></i><p><b>750.000 clientes</b><span>Ya duermen con nosotros</span></p></div>
+        </div>
+        <p class="cx-spec"><b>Blanco dentro de un círculo de línea</b> de 56 px y 1,5 px de borde. Icono de 26 px. Al lado, título 600 y subtítulo 400.</p>
+      </div>
+
+      <div class="iuso">
+        <div class="bloque">
+          <span class="k">Sobre fondo claro · opciones</span>
+          <div class="iop">
+            <label class="on"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 18c2-6 5-9 8-9s6 3 8 9"/><path d="M2 18h20"/></svg>Para mí</label>
+            <label><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 20a6 6 0 0 1 12 0M10 20a6 6 0 0 1 12 0"/></svg>Para dormir en pareja</label>
+          </div>
+          <p class="cx-spec"><b>Granate, 24 px</b>, a la izquierda del texto. La opción elegida lleva el borde en granate.</p>
+        </div>
+        <div class="bloque">
+          <span class="k">Sobre fondo claro · tarjetas</span>
+          <div class="icards">
+            <div class="icard"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/><path d="M15 3.5a6 6 0 0 1 5.5 5.5M15 7a2.6 2.6 0 0 1 2 2"/></svg><h4>Te ayudamos a elegir</h4><p>Cuéntanos cómo duermes y te recomendamos el colchón que encaja contigo.</p></div>
+            <div class="icard"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3.5 3.5v2.5h-7.5"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg><h4>Te lo llevamos y montamos</h4><p>Envío y montaje gratis en la península.</p></div>
+          </div>
+          <p class="cx-spec"><b>Granate, 40 px</b>, arriba a la izquierda. Debajo, titular 700 y texto gris.</p>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <span class="k">Tamaños</span>
+        <div class="itam">
+          <div><span class="ico" style="width:20px"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span>20 px · botones</div>
+          <div><span class="ico" style="width:24px"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span>24 px · listas y opciones</div>
+          <div><span class="ico" style="width:26px"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span>26 px · franja</div>
+          <div><span class="ico" style="width:40px;color:var(--lm)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span>40 px · tarjetas</div>
+          <div><span class="ico" style="width:64px;color:var(--lm)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></span>64 px · máximo</div>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <span class="k">Usos incorrectos</span>
+        <div class="imal">
+          <figure><div><svg viewBox="0 0 24 24" style="fill:var(--ink);stroke:none"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/></svg></div><figcaption>Iconos rellenos</figcaption></figure>
+          <figure><div><svg viewBox="0 0 24 24" style="fill:none;stroke:#2f80ed;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/><path d="M17 3.5v3M15.5 5h3M21 8.5v2M20 9.5h2"/></svg></div><figcaption>Colores fuera de la marca</figcaption></figure>
+          <figure><div><svg viewBox="0 0 24 24" style="fill:none;stroke:var(--ink);stroke-width:3;stroke-linecap:square;stroke-linejoin:miter"><path d="M2.5 6.5h11v9h-11zM13.5 9.5h4l3.5 3.5v2.5h-7.5"/><circle cx="6.5" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></div><figcaption>Otros grosores o esquinas rectas</figcaption></figure>
+          <figure><div><span style="font-size:44px;line-height:1">🛏️</span></div><figcaption>Emojis, 3D o dibujos con sombra</figcaption></figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 TONO -->
+  <section class="s" id="tono">
+    <div class="s-h"><span class="s-n">06</span><h2>Tono de voz</h2></div>
+    <div class="s-b">
+      <p class="lead">Escribimos como hablaríamos en la tienda: <em>de tú, claro y sin rodeos.</em></p>
+      <div class="princ">
+        <div><b>De tú</b><p>Cercanos, nunca coloquiales en exceso.</p></div>
+        <div><b>Corto</b><p>Una idea por frase. Si sobra una palabra, fuera.</p></div>
+        <div><b>Primero el beneficio</b><p>Qué ganas tú, y después cómo está hecho.</p></div>
+        <div><b>Cifras reales</b><p>Nada inventado. Sin dato confirmado, no se publica.</p></div>
+      </div>
+
+      <div class="bloque">
+        <span class="k">Así lo decimos</span>
+        <table class="glos">
+          <thead><tr><th>Tema</th><th>Sí</th><th>No</th></tr></thead>
+          <tbody>
+            <tr><td>Prueba</td><td>150 noches de prueba</td><td>150 días · 5 meses</td></tr>
+            <tr><td>Gran Natura</td><td>100 % látex</td><td>Látex natural</td></tr>
+            <tr><td>Clientes</td><td>750.000 clientes</td><td>750K · miles de clientes</td></tr>
+            <tr><td>Envío</td><td>Envío y montaje gratis en la península</td><td>Envío gratis a toda España</td></tr>
+            <tr><td>Teléfono</td><td>868 28 67 52 · L–V 9:00–18:00</td><td>Otros números de contacto</td></tr>
+            <tr><td>Precios</td><td>1.299 € · 449 €</td><td>1299€ · 449,00 €</td></tr>
+            <tr><td>Marca</td><td>LOMONACO (logo) · Lo Monaco (en texto)</td><td>Lomonaco · LoMonaco · LM en textos al cliente</td></tr>
+            <tr><td>Competencia</td><td>Hablamos de lo nuestro</td><td>Nombrar o comparar con otras marcas</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="bloque">
+        <span class="k">Ejemplos de titulares</span>
+        <div class="frases">
+          <p>Descubre un colchón pensado <em class="sf" style="color:var(--lm)">para durar</em>.<small>Titular de portada</small></p>
+          <p>Pruébalo <em class="sf" style="color:var(--lm)">150 noches</em> en tu cama.<small>Banner de prueba</small></p>
+          <p>¿Dudas? Te ayudamos a elegir: 868 28 67 52.<small>Bloque de llamada</small></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 FOTOGRAFÍA -->
+  <section class="s" id="fotografia">
+    <div class="s-h"><span class="s-n">07</span><h2>Fotografía</h2></div>
+    <div class="s-b">
+      <blockquote class="manif">
+        <p>No buscamos la foto perfecta.<em>Buscamos la que emociona.</em></p>
+        <footer>Natural, sin filtros y lejos de la perfección que hoy cualquier marca puede fabricar con IA. <b>Robamos momentos íntimos</b>, los que pasan cuando se cierra la puerta del dormitorio. El objetivo: <b>conectar la marca con la emoción.</b></footer>
+      </blockquote>
+
+      <div class="bloque">
+        <div class="reglas">
+          <p><span><b>Natural, sin filtros</b>El color tal y como es. Sin filtros, sin viñetas, sin pieles retocadas.</span></p>
+          <p><span><b>Imperfecta a propósito</b>Algo de movimiento, un desenfoque, la cama sin hacer. Lo perfecto parece IA; lo real se cree.</span></p>
+          <p><span><b>Momentos robados</b>Como si la cámara no estuviera. Nadie posa ni mira al objetivo.</span></p>
+          <p><span><b>Íntima y cercana</b>Pijamas, despertares, abrazos, un bebé que llega. Cerca y a la altura de la cama.</span></p>
+          <p><span><b>Primero la emoción</b>La foto cuenta algo. El colchón está y se reconoce, pero no posa.</span></p>
+          <p><span><b>La luz que ya había</b>La de la ventana o la de la lámpara de la mesilla. Nada de flash ni focos.</span></p>
+        </div>
+      </div>
+
+      <p class="nota"><b>Texto o logo encima de una foto:</b> siempre en blanco, con una capa negra al 10 % sobre toda la foto. Así se lee sin sombras paralelas ni brillos, y la foto sigue viéndose natural.</p>
+
+      <div class="prueba">
+        <div><b>Si parece un anuncio</b><p>No vale.</p></div>
+        <div><b>Si podría estar en el álbum de una familia</b><p>Es <em>Lo Monaco</em>.</p></div>
+      </div>
+
+      <div class="bloque" id="f-vida">
+        <span class="k">A · Momentos · la imagen principal de la marca</span>
+        <div class="gal">
+          <figure class="c8 r-w"><img src="img/vida-nino-gato.webp" alt="Niño saltando sobre el colchón mientras sus padres ríen" loading="lazy"><figcaption><b>A-01</b>Saltar</figcaption></figure>
+          <figure class="c4 r-w fill"><img src="img/vida-embarazo.webp" alt="Pareja esperando un bebé en su dormitorio" loading="lazy"><figcaption><b>A-02</b>Esperar</figcaption></figure>
+          <figure class="c4 r-w fill"><img src="img/vida-perro.webp" alt="Hombre dormido y su perro sobre el colchón" loading="lazy"><figcaption><b>A-03</b>Despertar</figcaption></figure>
+          <figure class="c8 r-w"><img src="img/vida-lectura.webp" alt="Pareja leyendo y riendo en la cama" loading="lazy"><figcaption><b>A-04</b>Leer</figcaption></figure>
+          <figure class="c6 r-w"><img src="img/vida-zapatillas.webp" alt="Pareja mayor; él se pone las zapatillas, ella lee" loading="lazy"><figcaption><b>A-05</b>Mañana</figcaption></figure>
+          <figure class="c6 r-w"><img src="img/vida-abrazo.webp" alt="Pareja abrazándose junto a la cama" loading="lazy"><figcaption><b>A-06</b>Abrazo</figcaption></figure>
+          <figure class="c8 r-w"><img src="img/vida-despertar.webp" alt="Persona estirándose al despertar" loading="lazy"><figcaption><b>A-07</b>Estirarse</figcaption></figure>
+          <figure class="c4 r-w fill"><img src="img/vida-bebe.webp" alt="Familia con un bebé tumbada en el colchón" loading="lazy"><figcaption><b>A-08</b>Familia</figcaption></figure>
+          <figure class="c4 r-w fill"><img src="img/vida-biberon.webp" alt="Madre dando el biberón junto a la cama" loading="lazy"><figcaption><b>A-09</b>Noche</figcaption></figure>
+          <figure class="c8 r-w"><img src="img/vida-nino-manta.webp" alt="Niño jugando con el edredón sobre el colchón" loading="lazy"><figcaption><b>A-10</b>Jugar</figcaption></figure>
+        </div>
+        <p class="txt">Momentos de verdad, con movimiento y algo de desorden: risas, abrazos, despertares, niños y mascotas. <b>Si hay grano, que sea el de la cámara con poca luz, nunca un filtro añadido.</b> El logo LOMONACO se lee en el lateral cuando la escena lo permite, sin forzarlo.</p>
+      </div>
+
+      <div class="bloque" id="f-producto">
+        <span class="k">B · Producto · el detalle, con la misma naturalidad</span>
+        <div class="gal">
+          <figure class="c6 r-gn gn-2x2"><img src="img/producto-gran-natura.webp" alt="Gran Natura sobre canapé de nogal con dos almohadas" loading="lazy"><figcaption><b>B-01</b>Gran Natura</figcaption></figure>
+          <figure class="c3 r-sq"><img src="img/producto-esquina.webp" alt="Esquina del Natura Látex sobre canapé" loading="lazy"><figcaption><b>B-02</b>Esquina</figcaption></figure>
+          <figure class="c3 r-sq"><img src="img/producto-asa.webp" alt="Asa del colchón con el monograma M" loading="lazy"><figcaption><b>B-03</b>Asa M</figcaption></figure>
+          <figure class="c3 r-sq"><img src="img/producto-acolchado.webp" alt="Detalle del acolchado del colchón" loading="lazy"><figcaption><b>B-04</b>Acolchado</figcaption></figure>
+          <figure class="c3 r-sq revisar"><img src="img/producto-cinta.webp" alt="Colchón con cinta granate LOMONACO" loading="lazy"><figcaption><b>B-05</b>Cinta</figcaption></figure>
+        </div>
+        <p class="txt">En un dormitorio real, no en un estudio: luz de ventana, pared clara y suelo de madera. Primeros planos del acolchado, el asa con la M y la etiqueta o la cinta granate.</p>
+      </div>
+
+      <div class="bloque" id="f-ambiente">
+        <span class="k">C · Ambiente · producto en su casa</span>
+        <div class="gal">
+          <figure class="c6 r-sq revisar"><img src="img/ambiente-noche.webp" alt="Pareja de noche: ella duerme, él lee con la lámpara encendida" loading="lazy"><figcaption><b>C-01</b>Noche</figcaption></figure>
+          <figure class="c6 r-sq"><img src="img/ambiente-familia.webp" alt="Niña saltando en la cama con sus padres a pleno sol" loading="lazy"><figcaption><b>C-02</b>Mañana de sol</figcaption></figure>
+        </div>
+        <p class="txt">El Gran Natura en un dormitorio completo, con gente viviendo en él. Sol de ventana o lámpara de noche, ropa de cama de lino arrugada.</p>
+      </div>
+
+      <div class="uso">
+        <div><h3>Buscamos</h3><ul><li>Momentos que emocionan: llegar, abrazar, despertar, jugar</li><li>Gente que no posa ni mira a cámara</li><li>Camas deshechas, pijamas, casas vividas</li><li>Luz natural o de lámpara, color sin tocar</li></ul></div>
+        <div class="no"><h3>Evitamos</h3><ul><li>La perfección de la IA: pieles de plástico, camas impecables, sonrisas a cámara</li><li>Filtros, viñetas y colores de moda</li><li>Fotos de banco de imágenes y modelos posando</li><li>Flash, luz de estudio y fondos vacíos</li></ul></div>
+      </div>
+      <p class="nota"><b>Si una imagen se genera o se retoca con IA:</b> que no se note, y revisa que el logo y el nombre del modelo estén bien escritos. En C-01 se lee «GRAND NATURE» en lugar de «Gran Natura», y en B-05 el logo del lateral está mal formado. Están marcadas como <b>Revisar texto del logo</b>.</p>
+    </div>
+  </section>
+
+  <!-- 07 ELEMENTOS -->
+  <section class="s" id="elementos">
+    <div class="s-h"><span class="s-n">08</span><h2>Elementos</h2></div>
+    <div class="s-b">
+      <div class="elems">
+        <div class="el"><span class="k">Botones</span><div class="fila"><a class="btn" href="#elementos">Comprar</a><a class="btn btn--line" href="#elementos">Ver colchones</a></div><small>Forma de píldora · 52 px de alto · 600 · el principal siempre en granate</small></div>
+        <div class="el"><span class="k">Etiquetas</span><div class="fila"><span class="dto">−40 %</span><span class="gratis">Gratis</span><span class="t-price" style="font-size:28px">449 €<s>749 €</s></span></div><small>Descuento con fondo granate · «Gratis» con borde granate · 800</small></div>
+        <div class="el"><span class="k">Esquinas</span><div class="radios"><div style="border-radius:24px">24 px</div><div style="border-radius:14px">14 px</div><div style="border-radius:999px;width:120px;height:52px">píldora</div></div><small>24 px fotos y tarjetas grandes · 14 px elementos pequeños · píldora en botones y etiquetas</small></div>
+        <div class="el"><span class="k">Espaciado</span><div class="esp"><div><span style="width:8px"></span>8 px · unidad base</div><div><span style="width:16px"></span>16 px · margen lateral en móvil</div><div><span style="width:56px"></span>56 px · margen lateral en escritorio</div><div><span style="width:96px"></span>48–96 px · entre secciones</div></div><small>Todas las medidas son múltiplos de 8</small></div>
+      </div>
+
+      <div class="bloque">
+        <span class="k">Todo junto</span>
+        <div class="card">
+          <img src="img/ambiente-familia.webp" alt="Familia en la cama con el Gran Natura" loading="lazy">
+          <div><span class="t-eye">Gran Natura · 100 % látex</span><p class="t-h2">La marca de <em class="sf">toda la vida</em></p><p class="t-small">150 noches de prueba en tu cama · 10 años de garantía</p><div class="fila"><a class="btn" href="#elementos">Ver colchón</a><span class="dto">−40 %</span></div></div>
+        </div>
+        <p class="nota">Pieza de ejemplo para ver los elementos combinados; el descuento no es una oferta real.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 RESUMEN -->
+  <section class="s" id="resumen">
+    <div class="s-h"><span class="s-n">09</span><h2>En una página</h2></div>
+    <div class="s-b">
+      <div class="resumen">
+        <div><b>LOGO</b><p>LOMONACO con la M subrayada. Granate sobre blanco; sobre foto, siempre blanco. Mínimo 100 px.</p></div>
+        <div><b>COLOR</b><p>Fondo siempre gris #F6F6F6, nunca blanco. Negro #1D1D1F. Acento granate #7C1919.</p></div>
+        <div><b>TIPOGRAFÍA</b><p>Albert Sans para todo. Playfair Display cursiva solo para la palabra que emociona.</p></div>
+        <div><b>TONO</b><p>De tú, corto y con cifras reales. «150 noches», nunca «150 días».</p></div>
+        <div><b>FOTOGRAFÍA</b><p>Natural y sin filtros. Momentos íntimos robados que emocionan.</p></div>
+        <div><b>ICONOS Y ELEMENTOS</b><p>Iconos de línea 1,6 en granate o blanco. Botones píldora y esquinas de 24 px.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pie">
+  <span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span>
+  <p>Manual de marca · Edición 01 · Noviembre 2026<br>Lo Monaco · LM Descanso SL</p>
+</footer>
+
+<div class="vplayer" id="vplayer" hidden>
+  <video id="vid" controls playsinline preload="auto" poster="video/poster.jpg"><source src="video/lomonaco-sistema-de-marca.mp4" type="video/mp4"></video>
+  <button type="button" class="vclose" id="vclose" aria-label="Cerrar el vídeo">×</button>
+</div>
+
+<dialog id="visor" aria-label="Foto ampliada"><button type="button" aria-label="Cerrar">×</button><img alt=""></dialog>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+  // Luminancia y contraste (WCAG) para las muestras de color
+  function rgb(h) { h = h.replace('#', ''); return [0, 2, 4].map(function (i) { return parseInt(h.substr(i, 2), 16); }); }
+  function lum(c) { return c.map(function (v) { v /= 255; return v <= .03928 ? v / 12.92 : Math.pow((v + .055) / 1.055, 2.4); }).reduce(function (a, v, i) { return a + v * [.2126, .7152, .0722][i]; }, 0); }
+  function ratio(a, b) { var x = lum(rgb(a)), y = lum(rgb(b)); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); }
+  function cmyk(c) { var r = c[0] / 255, g = c[1] / 255, b = c[2] / 255, k = 1 - Math.max(r, g, b); if (k >= 1) return '0 0 0 100'; return [r, g, b].map(function (v) { return Math.round((1 - v - k) / (1 - k) * 100); }).join(' ') + ' ' + Math.round(k * 100); }
+  function nivel(r) { return r >= 7 ? 'AAA' : r >= 4.5 ? 'AA' : r >= 3 ? 'AA grande' : 'no apto'; }
+  function fmt(r) { return r.toFixed(1).replace('.', ','); }
+
+  document.querySelectorAll('.sw').forEach(function (b) {
+    var hex = b.dataset.hex, c = rgb(hex), oscuro = lum(c) < .25, tinta = oscuro ? '#FFFFFF' : '#1D1D1F', r = ratio(hex, tinta);
+    b.innerHTML = '<span class="chip" style="background:' + hex + ';color:' + tinta + '">' + b.dataset.n + '</span>' +
+      '<span class="dat"><b>' + hex + '</b><span>RGB ' + c.join(' ') + '</span><span>CMYK ' + cmyk(c) + ' <i style="font-style:normal">(aprox.)</i></span>' +
+      (b.dataset.uso ? '<span>' + b.dataset.uso + '</span>' : '') +
+      '<span class="ok">Texto ' + (oscuro ? 'blanco' : 'negro') + ' encima · ' + fmt(r) + ':1 ' + nivel(r) + '</span></span>';
+    b.setAttribute('aria-label', 'Copiar ' + b.dataset.n + ' ' + hex);
+    b.addEventListener('click', function () { copiar(hex); });
+  });
+
+  // Paleta medida sobre las fotos (colores dominantes)
+  var pal = [['Marfil', '#E8E5DE'], ['Lino', '#D5D0C8'], ['Piedra', '#B9B1A2'], ['Arena', '#A5957E'], ['Nogal', '#78624A'], ['Café', '#403328']];
+  document.getElementById('fotopal').innerHTML = pal.map(function (p) { return '<span><div style="background:' + p[1] + '"></div><small><b>' + p[0] + '</b>' + p[1] + '</small></span>'; }).join('');
+
+  var toast = document.getElementById('toast'), t;
+  function aviso(m) { toast.textContent = m; toast.classList.add('on'); clearTimeout(t); t = setTimeout(function () { toast.classList.remove('on'); }, 1600); }
+  function copiar(txt) {
+    try { navigator.clipboard.writeText(txt).then(function () { aviso(txt + ' copiado'); }, function () { aviso(txt); }); }
+    catch (e) { aviso(txt); }
+  }
+
+
+  // Vídeo de la apertura: el botón lo abre a pantalla completa; al terminar, vuelve y baja al manual
+  var vp = document.getElementById('vplayer'), vid = document.getElementById('vid');
+  function fsEl() { return document.fullscreenElement || document.webkitFullscreenElement; }
+  function abrir() {
+    vp.hidden = false;
+    try { vid.currentTime = 0; } catch (e) {}
+    var p = vid.play(); if (p && p.catch) p.catch(function () {});
+    if (vp.requestFullscreen) vp.requestFullscreen().catch(function () {});
+    else if (vp.webkitRequestFullscreen) vp.webkitRequestFullscreen();
+    else if (vid.webkitEnterFullscreen) vid.webkitEnterFullscreen();   // iPhone
+  }
+  function cerrar(bajar) {
+    vid.pause();
+    if (fsEl()) { (document.exitFullscreen || document.webkitExitFullscreen).call(document); }
+    vp.hidden = true;
+    if (bajar) document.getElementById('portada').scrollIntoView({ behavior: 'smooth' });
+  }
+  document.getElementById('verVideo').addEventListener('click', abrir);
+  document.getElementById('vclose').addEventListener('click', function () { cerrar(false); });
+  vid.addEventListener('ended', function () { cerrar(true); });
+  vid.addEventListener('webkitendfullscreen', function () { cerrar(false); });
+  ['fullscreenchange', 'webkitfullscreenchange'].forEach(function (ev) {
+    document.addEventListener(ev, function () { if (!fsEl() && !vp.hidden && !vid.ended) cerrar(false); });
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !vp.hidden) cerrar(false); });
+
+  // Visor de fotos
+  var visor = document.getElementById('visor'), vimg = visor.querySelector('img');
+  document.querySelectorAll('.gal figure, .cover-f').forEach(function (f) {
+    f.addEventListener('click', function () { var i = f.querySelector('img'); vimg.src = i.src; vimg.alt = i.alt; visor.showModal(); });
+  });
+  visor.addEventListener('click', function () { visor.close(); });
+})();
+</script>
+</body>
+</html>
