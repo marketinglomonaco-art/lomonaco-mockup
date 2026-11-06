@@ -582,7 +582,7 @@ a.h4-sello { display: block; color: inherit; text-decoration: none; }
 .h4p-gift strong { color: var(--acc); font-weight: 800; }
 /* Paco, 06/11: regalos con más protagonismo (bloque propio, fotos grandes) */
 .h4p-det li > span small { color: var(--mute); font-size: 13.5px; }
-.h4p-det .h4p-gifts { display: block; margin: 10px 0 4px; padding: 14px; border: 0; border-radius: 14px; background: #f7efef; }
+.h4p-det .h4p-gifts { display: block; margin: 10px 0 4px; padding: 14px; border: 0; border-radius: 14px; background: var(--bg2); } /* Paco, 06/11: menos rosa; gris neutro */
 .h4p-gifts-k { display: flex; align-items: center; flex-wrap: wrap; gap: 4px 8px; margin-bottom: 12px; font-size: 15.5px; font-weight: 700; color: var(--ink); }
 .h4p-gifts-k .lm-i { width: 20px; height: 20px; color: var(--acc); }
 .h4p-gifts-k span { flex: 1; }
@@ -670,3 +670,13 @@ a.h4-sello { display: block; color: inherit; text-decoration: none; }
 @media (max-width: 1100px) { .h4q-card { grid-template-columns: 1fr; } .h4q-cimg { aspect-ratio: 16 / 9; } }
 @media (max-width: 900px) { .h4q-in, .h4q-cards { grid-template-columns: 1fr; } }
 @media (max-width: 480px) { .h4q-ops--4 { grid-template-columns: 1fr; } .h4q-op { min-height: 56px; } }
+
+/* Paco, 06/11: redes sociales y Trusted Shops con iconos, al lado del logo del pie */
+.lm-foot-legal img { margin-right: 0; }
+.lm-foot-soc { display: flex; flex-wrap: wrap; gap: 8px; margin-right: auto; }
+.lm-foot .lm-foot-soc a { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; background: #fff; border: 1px solid var(--line); color: var(--ink); opacity: 1; transition: background .2s, color .2s, border-color .2s; }
+.lm-foot .lm-foot-soc a:hover { background: var(--acc); border-color: var(--acc); color: #fff; text-decoration: none; }
+.lm-foot-soc svg { width: 18px; height: 18px; }
+.lm-foot-soc img { width: 22px; height: 22px; object-fit: contain; filter: none; opacity: 1; }
+.lm-foot-soc a.is-pend { border-style: dashed; }
+@media (max-width: 600px) { .lm-foot-soc { flex-basis: 100%; margin: 2px 0 6px; } }

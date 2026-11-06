@@ -390,6 +390,22 @@
   };
 
   /* ---------- pie (enlaces de la web actual) ---------- */
+  /* Redes sociales y Trusted Shops con iconos (Paco, 06/11) */
+  var RED_IC = {
+    instagram: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r=".6" fill="currentColor"/></svg>',
+    facebook: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 21v-7.5h2.6l.4-3h-3V8.6c0-.9.3-1.5 1.5-1.5h1.6V4.4A21 21 0 0 0 14.3 4c-2.3 0-3.9 1.4-3.9 4v2.5H7.8v3h2.6V21z"/></svg>',
+    tiktok: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 3c.4 2.1 1.7 3.5 3.9 3.8v3.1a7 7 0 0 1-3.9-1.2v6.2A5.7 5.7 0 1 1 11 9.3v3.2a2.6 2.6 0 1 0 2.4 2.6V3z"/></svg>',
+    youtube: '<svg viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M21.6 7.2a2.6 2.6 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4a2.6 2.6 0 0 0-1.8 1.8A27 27 0 0 0 2 12c0 1.6.1 3.2.4 4.8a2.6 2.6 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.6 2.6 0 0 0 1.8-1.8c.3-1.6.4-3.2.4-4.8s-.1-3.2-.4-4.8zM10 15.2V8.8l5.4 3.2z"/></svg>',
+    pinterest: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.4 1.8-2.4.9 0 1.3.6 1.3 1.4 0 .9-.5 2.1-.8 3.3-.2 1 .5 1.8 1.5 1.8 1.8 0 3.1-1.9 3.1-4.6 0-2.4-1.7-4.1-4.2-4.1-2.9 0-4.5 2.2-4.5 4.4 0 .9.3 1.8.8 2.3l.1.4-.3 1.1c0 .2-.2.3-.4.2-1.3-.6-2.1-2.5-2.1-4 0-3.3 2.4-6.3 6.9-6.3 3.6 0 6.4 2.6 6.4 6 0 3.6-2.3 6.5-5.4 6.5-1 0-2-.5-2.4-1.2l-.6 2.5c-.2.9-.9 2.1-1.3 2.8A10 10 0 1 0 12 2z"/></svg>'
+  };
+  function redes() {
+    return '<nav class="lm-foot-soc" aria-label="Síguenos">' + (LM.REDES || []).map(function (r) {
+      var ic = r.k === 'trusted' ? '<img src="../img/trusted-shops.png" alt="" width="124" height="116" loading="lazy">' : RED_IC[r.k];
+      return r.url
+        ? '<a href="' + r.url + '" target="_blank" rel="noopener" aria-label="' + esc(r.t) + '" title="' + esc(r.t) + '">' + ic + '</a>'
+        : '<a href="#" class="is-pend" aria-label="' + esc(r.t) + '" title="' + esc(r.t) + ': falta la URL">' + ic + '</a>';
+    }).join('') + '</nav>';
+  }
   LM.footer = function (el) {
     var li = function (l) { return '<li><a href="' + LM.href(l[1]) + '"' + (l[2] ? ' rel="nofollow noopener" target="_blank"' : '') + '>' + l[0] + '</a></li>'; };
     var col = function (t, links, cls) { return '<div class="lm-fc' + (cls ? ' ' + cls : '') + '"><p>' + t + '</p><ul>' + links.map(li).join('') + '</ul></div>'; };
@@ -416,7 +432,7 @@
         '<li><a href="tel:+34858225189">Atención al cliente: 858 22 51 89</a></li>' +
         '<li><a href="https://wa.me/+34650282094" data-lead="whatsapp">WhatsApp</a></li></ul>' +
         '<a class="lm-foot-ts" href="https://www.trustedshops.es/" target="_blank" rel="noopener">Protección al Comprador y Valoraciones reales · Trusted Shops</a></div>' +
-      '</div><p class="lm-foot-fin" id="lm-legal">* ' + esc(C.legalFinanciacion.v) + '</p><div class="lm-foot-legal"><img src="' + LOGO + '" alt="LOMONACO" width="120" height="16" loading="lazy">' +
+      '</div><p class="lm-foot-fin" id="lm-legal">* ' + esc(C.legalFinanciacion.v) + '</p><div class="lm-foot-legal"><img src="' + LOGO + '" alt="LOMONACO" width="120" height="16" loading="lazy">' + redes() +
       '<span>© LM DESCANSO SL</span>' +
       '<a href="' + LM.WEB + '/aviso-legal/">Aviso legal</a><a href="' + LM.WEB + '/politica-de-privacidad/">Política privacidad</a><a href="' + LM.WEB + '/politica-de-cookies/">Política cookies</a></div>' +
       '</div></footer>';
