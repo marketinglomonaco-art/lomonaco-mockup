@@ -699,3 +699,6 @@ html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color 
 .lm-ocu span { font: 700 11.5px/1 var(--font); letter-spacing: .04em; text-transform: uppercase; color: var(--ink); white-space: nowrap; }
 .h4q-cimg .lm-ocu { left: 12px; top: 46px; } /* en el cuestionario, debajo de «El más compatible» */
 .lm-ocu--ficha { left: 18px; top: 18px; }
+
+/* 06/11 (Paco): la entrada de las categorías (texto de WooCommerce) al mismo tamaño que el resto del texto corrido (17 px), no como subtítulo */
+.c-intro { font-size: 17px; line-height: 1.5; }
