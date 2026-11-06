@@ -54,7 +54,7 @@ LM.CONFIG = {
 
 LM.WEB = 'https://www.grupolomonaco.com';
 /* Sello OCU (logo blanco de Paco, fuente/sellos/logo-ocu-white.webp): va sobre un círculo granate para leerse sobre fotos claras */
-LM.SELLO_OCU = { img: '../img/sello-ocu-200.webp', alt: 'Sello OCU' };
+LM.SELLO_OCU = { img: '../img/sello-ocu-color-160.webp', alt: 'OCU', t: 'Colchón analizado por OCU' }; // Paco, 06/11: logo oficial (azul), a la izquierda como las etiquetas
 
 /* Paco, 06/11: redes sociales y Trusted Shops con iconos en el pie. URLs sacadas de la web actual;
    TikTok, YouTube y Pinterest: las pasó Paco el 06/11 (url: null → se marca como pendiente) */

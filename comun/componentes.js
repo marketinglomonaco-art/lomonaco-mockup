@@ -133,7 +133,7 @@
      Precio para la medida elegida (por defecto 150 × 190), cuota a 12 meses y almohadas de regalo bajo el botón. */
   LM.selloOcu = function (k, cls) {
     var p = LM.PRODUCTOS[k]; if (!p || !p.ocu) return '';
-    return '<span class="lm-ocu' + (cls ? ' ' + cls : '') + '"><img src="' + LM.SELLO_OCU.img + '" alt="' + LM.SELLO_OCU.alt + '" width="200" height="200" loading="lazy"></span>';
+    return '<span class="lm-ocu' + (cls ? ' ' + cls : '') + '"><img src="' + LM.SELLO_OCU.img + '" alt="' + LM.SELLO_OCU.alt + '" width="160" height="160" loading="lazy"><span>' + LM.SELLO_OCU.t + '</span></span>';
   };
   LM.tarjeta = function (k, o) {
     o = o || {};
