@@ -120,7 +120,7 @@
     var body = '<button class="s-card-x" type="button" aria-label="Cerrar">' + LM.ico('close') + '</button>' +
       '<img src="' + (p ? p.img : c.img) + '" alt="" width="320" height="200">' +
       '<p class="lm-eyebrow">En el showroom</p><h3>' + (p ? p.titulo : c.t) + '</h3><p class="s-card-d">' + c.donde + '</p>';
-    if (p) body += '<p class="s-card-s">' + p.sensacionTxt + '</p>' + LM.firmeza(p, { txt: false }) + LM.precio(LM.desde(k), { desde: true, cuota: false });
+    if (p) body += '<p class="s-card-s">' + p.diferencia + '</p>' + LM.firmeza(p, { txt: false }) + LM.precio(LM.desde(k), { desde: true, cuota: false });
     body += '<button class="lm-btn lm-btn--buy lm-btn--full" type="button" data-ver="' + k + '">Quiero verlo en videollamada</button>' +
       '<a class="lm-link" href="' + (p ? LM.href(p.url) : LM.href(c.url)) + '">' + (p ? 'Ver la ficha del colchón' : 'Ver almohadas') + '</a>';
     card.innerHTML = body; card.hidden = false; ocultarPista();

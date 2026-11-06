@@ -149,7 +149,7 @@
 
   $('#p-reco').innerHTML = LM.ORDEN.filter(function (k) { return k !== K; }).map(function (k) {
     var p = LM.PRODUCTOS[k], d = LM.PRECIOS[k][st.medida] || LM.desde(k);
-    return '<a class="p-reco-c" href="' + LM.href(p.url) + '"><img src="' + p.img + '" alt="" width="160" height="160" loading="lazy"><span>' + (p.etiqueta ? '<small>' + p.etiqueta + '</small>' : '') + '<b>' + p.titulo + '</b><span>' + p.sensacionTxt + '</span>' + LM.precio(d, { cuota: false }) + '</span></a>';
+    return '<a class="p-reco-c" href="' + LM.href(p.url) + '"><img src="' + p.img + '" alt="" width="160" height="160" loading="lazy"><span>' + (p.etiqueta ? '<small>' + p.etiqueta + '</small>' : '') + '<b>' + p.titulo + '</b><span>' + p.diferencia + '</span>' + LM.precio(d, { cuota: false }) + '</span></a>';
   }).join('');
   var F = LM.FICHAS;
   if ($('#p-xsell')) $('#p-xsell').innerHTML = [

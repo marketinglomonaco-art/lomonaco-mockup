@@ -85,7 +85,7 @@
   chips($('#c-tipo'), TIPO, 'tipo');
   chips($('#c-mat'), FB.mat, 'mat');
   chips($('#c-alt'), ALT, 'alt');
-  $('#c-orden').onchange = function () { state.orden = this.value; render(); };
+  if ($('#c-orden')) $('#c-orden').onchange = function () { state.orden = this.value; render(); }; // Paco, 06/11: sin «Ordenar»
   if ($('#c-diff')) $('#c-diff').onchange = function () { table(); LM.track('compare_use', { filter: 'solo_diferencias', value: this.checked }); };
   $('#c-reset').onclick = function () { state.sens = 'all'; state.tipo = 'all'; state.mat = 'all'; state.alt = 'all'; chips($('#c-sens'), SENS, 'sens'); chips($('#c-tipo'), TIPO, 'tipo'); chips($('#c-mat'), FB.mat, 'mat'); chips($('#c-alt'), ALT, 'alt'); render(); };
   if ($('.c-table-wrap')) $('.c-table-wrap').addEventListener('scroll', function once() { LM.track('compare_use', { filter: 'tabla_scroll' }); this.removeEventListener('scroll', once); });

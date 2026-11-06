@@ -10,16 +10,43 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300..800&family=Playfair+Display:ital,wght@1,400;1,500&display=swap">
 
-<link rel="stylesheet" href="../comun/base.css?v=1793955954">
-<link rel="stylesheet" href="../comun/paginas.css?v=1793955954">
-<link rel="stylesheet" href="../comun/diseno1.css?v=1793955954">
-<link rel="stylesheet" href="../comun/rojo.css?v=1793955954">
+<link rel="stylesheet" href="../comun/base.css?v=1793958763">
+<link rel="stylesheet" href="../comun/paginas.css?v=1793958763">
+<link rel="stylesheet" href="../comun/diseno1.css?v=1793958763">
+<link rel="stylesheet" href="../comun/rojo.css?v=1793958763">
 </head>
 <body data-page="categoria" data-opcion="diseno1-a" data-variante="a" data-producto="" data-version="4">
 <a class="lm-skip" href="#main">Saltar al contenido</a>
 <div id="lm-header" data-active="Colchones"></div>
 <main id="main">
 <!-- CATEGORÍA · «Encuentra tu colchón»: comparador para decidir [C1, C2, C3] -->
+<!-- PROMO DEL MOMENTO · Paco, 06/11: el banner de la web actual (Black Friday) pasado a nuestro estilo.
+     Cuando cambie la promo, se cambian aquí los textos: titular, descuento, regalo y la cuota del sello. -->
+<section class="lm-w c-promo" aria-label="Promoción Black Friday" data-testid="promo-banner">
+  <div class="c-promo-in">
+    <div class="c-promo-txt">
+      <p class="c-promo-k">Black Friday</p>
+      <p class="c-promo-big"><b>-30&nbsp;%</b><span>en el 2.º colchón</span></p>
+      <p class="c-promo-gift"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 11h16v9H4zM3 7h18v4H3zM12 7v13M12 7c-1.5-3-5-3.5-5-1.2C7 7 9 7 12 7zm0 0c1.5-3 5-3.5 5-1.2C17 7 15 7 12 7z"/></svg>
+        Almohadas de regalo <s>120&nbsp;€</s> <strong>Gratis</strong></p>
+    </div>
+    <div class="c-promo-img">
+      <img src="../img/colchon-card-760.webp" alt="" width="760" height="760" fetchpriority="high">
+    </div>
+    <a class="h4-sello c-promo-sello" href="#lm-legal" aria-label="Desde 15 € al mes. Ver las condiciones de la financiación">
+      <svg class="h4-circ" viewBox="0 0 200 200" aria-hidden="true">
+        <circle cx="100" cy="100" r="100"/>
+        <g transform="rotate(-15 100 100)">
+          <text class="h4-circ-s" x="100" y="58" text-anchor="middle">DESDE</text>
+          <text class="h4-circ-n" x="96" y="131" text-anchor="middle">15€</text>
+          <text class="h4-circ-a" x="172" y="92" text-anchor="middle">*</text>
+          <text class="h4-circ-s" x="100" y="163" text-anchor="middle">MES</text>
+        </g>
+      </svg>
+    </a>
+  </div>
+</section>
+
 <nav class="lm-w c-crumbs" aria-label="Estás aquí"><a href="index.html">Inicio</a><span aria-hidden="true">/</span><span aria-current="page">Colchones</span></nav>
 
 <section class="c-head" aria-labelledby="c-h1">
@@ -27,25 +54,12 @@
     <div>
       <p class="lm-eyebrow">Encuentra tu colchón</p>
       <h1 class="lm-h2" id="c-h1">Colchones</h1>
-      <div class="lm-sub c-intro" data-testid="seo-intro"><!-- Introducción: primer párrafo de la descripción de la categoría en WooCommerce -->Bienvenido a LoMonaco, donde el descanso de calidad se une a materiales de primer nivel y un trato cercano en cada compra. Si estás buscando comprar un colchón online, has llegado al lugar indicado: contamos con una amplia variedad de colchones de gama alta y media, diseñados para adaptarse a cada tipo de durmiente y de presupuesto.</div>
     </div>
     <!-- Categoría · comentario 1 (29/10): sin bloque del teléfono (A y, después, también B) -->
   </div>
 </section>
 
-<section class="c-filters" aria-label="Filtros">
-  <div class="lm-w">
-    <!-- Categoría · comentario 2 (29/10): en la Opción A se quitan los filtros de medida, sensación y «qué valoras». Queda «Ordenar» -->
-    <!-- Opción B (29/10): sin filtro de medida ni «¿Qué valoras más?»; solo queda «¿Qué sensación buscas?» -->
-    <div class="c-f-row">
-      
-      <div class="c-f c-f-sort">
-        <label class="c-f-t" for="c-orden">Ordenar</label>
-        <select id="c-orden"><option value="rec">Recomendados</option><option value="asc">Precio: de menor a mayor</option><option value="desc">Precio: de mayor a menor</option></select>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- Paco, 06/11: fuera «Ordenar» y la línea divisoria -->
 
 <section class="c-list" aria-label="Colchones">
   <div class="lm-w">
@@ -55,7 +69,28 @@
   </div>
 </section>
 
-<!-- Categoría · comentarios 5 y 6 (29/10, A y B): el comparador se sustituye por el carrusel de compromisos de la home y, debajo, el configurador de packs -->
+<!-- Paco, 06/11: tarjetas → cuestionario de la home → compromisos → packs (versión reducida) → texto de entrada de la categoría -->
+<!-- CUESTIONARIO · Paco, 05/11: justo después de «Cuatro colchones». 5 preguntas del script de venta consultiva
+     del call center y resultado con los 2 colchones más compatibles (comun/cuestionario.js) -->
+<section class="lm-sec lm-alt h4q" id="cuestionario" aria-labelledby="h4q-t">
+  <div class="lm-w">
+    <div class="h4q-in">
+      <div class="h4q-intro">
+        <p class="lm-eyebrow">Test de 5 preguntas</p>
+        <h2 class="lm-h2" id="h4q-t">¿Qué colchón <em>es el tuyo?</em></h2>
+        <p class="lm-sub">Cuéntanos cómo duermes y te decimos qué dos colchones encajan mejor contigo, como lo haría nuestro equipo por teléfono.</p>
+        <ul class="h4q-pts">
+          <li><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg>Menos de un minuto</li>
+          <li><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg>Con los datos reales de cada colchón</li>
+          <li><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 4.5 4.5L19 7"/></svg>Sin dejar tus datos</li>
+        </ul>
+      </div>
+      <div class="h4q-box" id="h4q" data-testid="quiz" aria-live="polite"></div>
+    </div>
+    <div class="h4q-res" id="h4q-res" hidden></div>
+  </div>
+</section>
+
 <!-- COMPROMISOS · V4 cambio 12: «Te ayudamos a elegir» + «Sin letra pequeña» en un carrusel de tarjetas [H2, H3, H4, T1] -->
 <section class="lm-sec h4c" id="compromisos" aria-labelledby="h4c-t">
   <div class="lm-w">
@@ -74,28 +109,22 @@
   <div class="h4c-dots" id="h4c-dots" aria-hidden="true"></div>
 </section>
 
-<!-- PACKS · Paco, 05/11: solo los packs reales (canapé con regalos / base antideslizante con descuento),
-     precio de cada producto por separado y el ahorro del conjunto. Título: «Llévate toda la cama» -->
-<section class="lm-sec lm-alt h4p" id="packs" aria-labelledby="h4p-t">
+<!-- PACKS · VERSIÓN REDUCIDA (categorías) · Paco, 06/11: misma esencia que el de la home, más minimalista.
+     Sin la foto grande; se mantienen precios, regalos con foto, tachados y descuento. Lo pinta el mismo comun/packs.js -->
+<section class="lm-sec lm-alt h4p h4p--mini" id="packs" aria-labelledby="h4p-t">
   <div class="lm-w">
-    <div class="h4p-head">
-      <div>
-        <p class="lm-eyebrow">Packs de descanso</p>
-        <h2 class="lm-h2" id="h4p-t">Llévate toda la cama.</h2>
-      </div>
-      <p class="lm-sub">Colchón y canapé abatible o base tapizada, en una sola compra. Con canapé, te regalamos la ropa de cama.</p>
-    </div>
     <div class="h4p-in" id="h4p" data-testid="pack-config">
-      <figure class="h4p-img">
-        <img id="h4p-img" src="../img/pack-conf-canape-1200.webp" srcset="../img/pack-conf-canape-700.webp 700w, ../img/pack-conf-canape-1200.webp 1200w" sizes="(max-width: 900px) 100vw, 55vw" width="1200" height="896" alt="" loading="lazy">
-        <!-- 06/11 (Paco): sin etiqueta sobre la foto; el total de regalos y el ahorro ya salen al lado -->
-      </figure>
       <div class="h4p-box">
-        <div class="h4p-seg" role="radiogroup" aria-label="Tipo de base" id="h4p-base"></div>
-        <p class="h4p-k" id="h4p-ck">Elige tu colchón</p>
-        <div class="h4p-cols" role="radiogroup" aria-labelledby="h4p-ck" id="h4p-col"></div>
-        <p class="h4p-k" id="h4p-dk">Qué te llevas</p>
-        <ul class="h4p-det" id="h4p-det" aria-labelledby="h4p-dk"></ul>
+        <div class="h4p-m-sel">
+          <p class="lm-eyebrow">Packs de descanso</p>
+          <h2 class="lm-h2" id="h4p-t">Llévate toda la cama.</h2>
+          <div class="h4p-seg" role="radiogroup" aria-label="Tipo de base" id="h4p-base"></div>
+          <div class="h4p-cols" role="radiogroup" aria-label="Elige tu colchón" id="h4p-col"></div>
+        </div>
+        <div class="h4p-m-det">
+          <p class="h4p-k" id="h4p-dk">Qué te llevas</p>
+          <ul class="h4p-det" id="h4p-det" aria-labelledby="h4p-dk"></ul>
+        </div>
         <div class="h4p-foot">
           <div class="h4p-price" id="h4p-price" aria-live="polite"></div>
           <a class="lm-btn h4p-go" id="h4p-go" href="#">Ver el pack <svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
@@ -105,6 +134,13 @@
   </div>
 </section>
 
+
+<!-- Texto de entrada: primer párrafo de la descripción de la categoría en WooCommerce. Paco, 06/11: va después de los packs -->
+<section class="lm-sec c-intro-sec" aria-label="Sobre LoMonaco">
+  <div class="lm-w">
+    <p class="c-intro" data-testid="seo-intro">Bienvenido a LoMonaco, donde el descanso de calidad se une a materiales de primer nivel y un trato cercano en cada compra. Si estás buscando comprar un colchón online, has llegado al lugar indicado: contamos con una amplia variedad de colchones de gama alta y media, diseñados para adaptarse a cada tipo de durmiente y de presupuesto.</p>
+  </div>
+</section>
 
 <section class="lm-sec c-guide" aria-labelledby="c-guide-t">
   <div class="lm-w">
@@ -196,17 +232,17 @@
 
 </main>
 <div id="lm-footer"></div>
-<script src="../comun/datos.js?v=1793955954"></script>
-<script src="../comun/componentes.js?v=1793955954"></script>
+<script src="../comun/datos.js?v=1793958763"></script>
+<script src="../comun/componentes.js?v=1793958763"></script>
 <script>LM.init();</script>
-<script src="../comun/compromisos.js?v=1793955954"></script>
-<script src="../comun/packs.js?v=1793955954"></script>
-<script src="../comun/categoria.js?v=1793955954"></script>
-<script src="../comun/pack.js?v=1793955954"></script>
-<script src="../comun/asistente.js?v=1793955954"></script>
-<script src="../comun/presion.js?v=1793955954"></script>
-<script src="../comun/animaciones.js?v=1793955954"></script>
-<script src="../comun/v4.js?v=1793955954"></script>
-<script src="../comun/cuestionario.js?v=1793955954"></script>
+<script src="../comun/compromisos.js?v=1793958763"></script>
+<script src="../comun/packs.js?v=1793958763"></script>
+<script src="../comun/categoria.js?v=1793958763"></script>
+<script src="../comun/pack.js?v=1793958763"></script>
+<script src="../comun/asistente.js?v=1793958763"></script>
+<script src="../comun/presion.js?v=1793958763"></script>
+<script src="../comun/animaciones.js?v=1793958763"></script>
+<script src="../comun/v4.js?v=1793958763"></script>
+<script src="../comun/cuestionario.js?v=1793958763"></script>
 </body>
 </html>

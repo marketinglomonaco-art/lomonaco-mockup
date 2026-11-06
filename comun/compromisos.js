@@ -44,7 +44,7 @@
       // 1 · Te ayudamos a elegir: lleva al cuestionario de la home
       '<li class="h4c-card">' + ic('phone') + '<h3>Te ayudamos a elegir</h3>' +
         '<p>Cuéntanos cómo duermes y te recomendamos el colchón que encaja contigo. Sin compromiso.</p>' +
-        '<a class="h4c-more" href="index.html#cuestionario" data-lead="home-ayuda-test">Haz el test de 5 preguntas</a>' +
+        '<a class="h4c-more" href="' + (document.getElementById('cuestionario') ? '' : 'index.html') + '#cuestionario" data-lead="home-ayuda-test">Haz el test de 5 preguntas</a>' +
         '<a class="h4c-more h4c-more--tel" href="tel:' + C.telefono.tel + '" data-lead="home-ayuda" data-testid="call-home-ayuda">o llámanos al ' + LM.mark(C.telefono, C.telefono.v) + '</a></li>',
       // 2 · Envío
       '<li class="h4c-card">' + ic('truck') + '<h3>Te lo llevamos a casa</h3><p>' + LM.c('envio') + '. Te llega en ' + LM.c('entrega') + '.</p></li>',

@@ -84,6 +84,7 @@
     go.setAttribute('aria-label', 'Ver el pack ' + col.t + ' ' + PC.bases[st.base].t.toLowerCase());
   }
   function foto() {
+    if (!img) return; // versión reducida (categorías): sin foto
     if (ultimaFoto !== st.base) {
       ultimaFoto = st.base; var f = PC.bases[st.base];
       img.srcset = f.img + '-700.webp 700w, ' + f.img + '-1200.webp 1200w'; img.src = f.img + '-1200.webp';
@@ -103,5 +104,5 @@
   $('#h4p-go').addEventListener('click', function () { if (this.hasAttribute('data-pid')) LM.track('select_item', { item_list_name: 'home_pack_config', item_id: +this.getAttribute('data-pid') }); });
   pintarPack();
   // Las fotos de las bases se precargan para que el cambio sea instantáneo
-  PC.orden.forEach(function (b) { var i = new Image(); i.src = PC.bases[b].img + '-1200.webp'; });
+  if (img) PC.orden.forEach(function (b) { var i = new Image(); i.src = PC.bases[b].img + '-1200.webp'; });
 })();
