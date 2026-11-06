@@ -692,9 +692,6 @@ html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color 
 .h4p-seg button:focus:not(:focus-visible) { outline: none; }
 @media (prefers-reduced-motion: reduce) { .h4p-seg-ind { transition: none; } }
 
-/* Paco, 06/11: parallax de las fotos dentro de su marco (comun/animaciones.js). La foto va algo ampliada para que no se vean los bordes */
-.lm-plx { overflow: hidden; }
-.lm-plx img { scale: 1.16; will-change: translate; }
 
 /* Paco, 06/11: sello OCU siempre en el Natura Visco (esquina superior derecha de la foto) */
 .lm-ocu { position: absolute; right: 12px; top: 12px; z-index: 2; display: block; width: 64px; height: 64px; border-radius: 50%; background: var(--acc); box-shadow: 0 4px 14px rgba(0,0,0,.18); pointer-events: none; }
