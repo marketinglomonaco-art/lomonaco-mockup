@@ -231,14 +231,20 @@
     function render() {
       var t = opts.tabla();
       if (desplegable) {
-        el.innerHTML = '<div class="lm-size-head"><label class="lm-size-lbl" for="lm-size-sel">Elige tu medida</label>' +
+        // Paco, 06/11: al desplegar las medidas se ve el precio de cada una (con el tachado), en una lista propia
+        var precioDe = function (d) { return '<span class="lm-dd-pr">' + (d.r > d.p ? '<s>' + LM.eur(d.r) + '</s> ' : '') + '<b>' + LM.eur(d.p) + '</b></span>'; };
+        var cur = t[sel];
+        el.innerHTML = '<div class="lm-size-head"><span class="lm-size-lbl" id="lm-size-lbl">Elige tu medida</span>' +
           '<button type="button" class="lm-size-help" data-asistente aria-haspopup="dialog">' + LM.ico('chat') + 'Ayúdame a elegir</button></div>' +
-          '<div class="lm-size-dd"><select id="lm-size-sel" data-testid="size-dropdown">' +
+          '<div class="lm-size-dd lm-dd"><button type="button" class="lm-dd-btn" id="lm-size-btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lm-size-lbl lm-size-btn" data-testid="size-dropdown">' +
+          '<span class="lm-dd-m">' + sel.replace('x', ' × ') + ' cm</span>' + (cur ? precioDe(cur) : '') + LM.ico('down') + '</button>' +
+          '<ul class="lm-dd-list" role="listbox" aria-labelledby="lm-size-lbl" hidden>' +
           LM.MEDIDAS.map(function (m) {
             var d = t[m], st = !d ? 'na' : (!d.s ? 'out' : 'ok');
-            return '<option value="' + m + '"' + (m === sel ? ' selected' : '') + (st !== 'ok' ? ' disabled' : '') + '>' +
-              m.replace('x', ' × ') + ' cm' + (st === 'na' ? ' · no disponible' : st === 'out' ? ' · agotada' : '') + '</option>';
-          }).join('') + '</select>' + LM.ico('down') + '</div>';
+            return '<li role="option" tabindex="-1" data-m="' + m + '" aria-selected="' + (m === sel) + '"' + (st !== 'ok' ? ' aria-disabled="true"' : '') + '>' +
+              '<span class="lm-dd-m">' + m.replace('x', ' × ') + ' cm</span>' +
+              (st === 'ok' ? precioDe(d) : '<small>' + (st === 'na' ? 'No disponible' : 'Agotada') + '</small>') + '</li>';
+          }).join('') + '</ul></div>';
         return;
       }
       el.innerHTML = '<div class="lm-size-head"><span class="lm-size-lbl" id="lm-size-lbl">Elige tu medida</span>' +
@@ -260,18 +266,37 @@
       sel = m; LM.store.set('lm_medida', m);
       el.setAttribute('aria-busy', 'true');
       render();
-      if (focus) { var b = $('[data-m="' + m + '"]', el) || $('select', el); if (b) b.focus(); }
+      if (focus) { var b = $('.lm-sz[data-m="' + m + '"]', el) || $('.lm-dd-btn', el); if (b) b.focus(); }
       LM.track('select_item', { item_id: d.id, item_variant: m });
       setTimeout(function () { el.removeAttribute('aria-busy'); opts.onChange(m); }, 180);
     }
-    el.addEventListener('change', function (e) { if (e.target.tagName === 'SELECT') choose(e.target.value); });
+    /* Lista desplegable propia (Opción A): se abre con el botón; flechas, Intro y Esc; se cierra al pulsar fuera */
+    function abrir(on, foco) {
+      var btn = $('.lm-dd-btn', el), list = $('.lm-dd-list', el); if (!btn) return;
+      list.hidden = !on; btn.setAttribute('aria-expanded', on); el.classList.toggle('is-open', on);
+      if (on) { var o = $('[aria-selected="true"]', list) || $('[role="option"]:not([aria-disabled])', list); if (o) { o.scrollIntoView({ block: 'nearest' }); if (foco) o.focus(); } }
+      else if (foco) btn.focus();
+    }
+    document.addEventListener('click', function (e) { if (!el.contains(e.target)) abrir(false); });
     el.addEventListener('click', function (e) {
+      if (e.target.closest('.lm-dd-btn')) { abrir($('.lm-dd-list', el).hidden, e.detail === 0); return; }
+      var o = e.target.closest('[role="option"]');
+      if (o) { if (o.getAttribute('aria-disabled') !== 'true') choose(o.getAttribute('data-m'), true); return; }
       var b = e.target.closest('.lm-sz'); if (!b) return;
       if (b.getAttribute('aria-disabled') === 'true') { b.classList.add('is-shake'); setTimeout(function () { b.classList.remove('is-shake'); }, 400); return; }
       choose(b.getAttribute('data-m'));
     });
     el.addEventListener('keydown', function (e) {
-      if (e.target.tagName === 'SELECT') return;
+      var list = $('.lm-dd-list', el);
+      if (list) {
+        if (e.target.closest('.lm-dd-btn') && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) { e.preventDefault(); abrir(true, true); return; }
+        if (!e.target.closest('[role="option"]')) return;
+        var ops = $$('[role="option"]:not([aria-disabled])', list), j = ops.indexOf(e.target);
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') { e.preventDefault(); var n2 = ops[Math.min(ops.length - 1, Math.max(0, j + (e.key === 'ArrowDown' ? 1 : -1)))]; if (n2) n2.focus(); }
+        else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(e.target.getAttribute('data-m'), true); }
+        else if (e.key === 'Escape' || e.key === 'Tab') { if (e.key === 'Escape') e.preventDefault(); abrir(false, e.key === 'Escape'); }
+        return;
+      }
       var keys = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 };
       if (!(e.key in keys)) return;
       e.preventDefault();
@@ -338,8 +363,14 @@
         '</div></div></header>' +
       '<div class="lm-drawer" id="lm-drawer" hidden><div class="lm-drawer-in">' +
         LM.MENU.map(function (it) {
+          // Paco, 06/11: en el menú del móvil, «Colchones» empieza por «Modelos» (los 4 del menú de escritorio).
+          // «Tipos de colchones» y «Medidas principales» se quedan debajo (SEO)
+          var modelos = it.destacados ? '<p>Modelos</p><ul class="lm-dmod">' + it.destacados.map(function (k) {
+            var p = LM.PRODUCTOS[k], d = LM.desde(k);
+            return '<li><a href="' + LM.href(p.url) + '"><img src="' + p.img + '" alt="" width="56" height="56" loading="lazy"><span><b>' + esc(p.titulo) + '</b><small>' + esc(p.nucleo) + ' · desde ' + LM.eur(d.p) + '</small></span></a></li>';
+          }).join('') + '</ul>' : '';
           return '<details class="lm-dacc"><summary>' + esc(it.t) + LM.ico('down') + '</summary><a class="lm-dall" href="' + LM.href(it.href) + '">Ver todo ' + esc(it.t.toLowerCase()) + '</a>' +
-            it.grupos.map(function (g) { return '<p>' + esc(g.t) + '</p><ul' + (g.cols === 2 ? ' class="lm-d2"' : '') + '>' + g.links.map(function (l) { return '<li><a href="' + LM.href(l[1]) + '">' + esc(l[0]) + '</a></li>'; }).join('') + '</ul>'; }).join('') +
+            modelos + it.grupos.map(function (g) { return '<p>' + esc(g.t) + '</p><ul' + (g.cols === 2 ? ' class="lm-d2"' : '') + '>' + g.links.map(function (l) { return '<li><a href="' + LM.href(l[1]) + '">' + esc(l[0]) + '</a></li>'; }).join('') + '</ul>'; }).join('') +
             '</details>';
         }).join('') +
         '<a class="lm-dlive" href="showroom-live.html"><i class="lm-live-dot" aria-hidden="true"></i><span><b>Showroom Live</b><small>Visita la tienda por videollamada</small></span></a>' +

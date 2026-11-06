@@ -780,3 +780,37 @@ html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color 
 .c-promo-gimgs img { width: 52px; height: 52px; border-radius: 10px; object-fit: cover; background: #fff; }
 .c-promo-gift { gap: 12px; padding: 8px 16px 8px 8px; }
 @media (max-width: 700px) { .c-promo-gimgs img { width: 48px; height: 48px; } .c-promo-gift { flex-direction: column; align-items: flex-start; gap: 8px; padding: 10px 14px 12px 10px; } }
+
+/* ===== FICHA DE PRODUCTO · tanda del 06/11 (Paco) ===== */
+/* Medidas: lista desplegable propia con el precio de cada medida (sustituye al select del sistema) */
+.lm-dd-btn { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 54px; padding: 0 16px; border-radius: 12px; border: 1.5px solid var(--line); background: #fff; font: 600 16px/1.2 var(--font); color: var(--ink); text-align: left; cursor: pointer; transition: border-color .2s, box-shadow .2s; }
+.lm-dd-btn:hover { border-color: var(--ink); }
+.lm-dd-btn:focus-visible, .lm-dd.is-open .lm-dd-btn, .is-open > .lm-dd .lm-dd-btn { outline: none; border-color: var(--acc); box-shadow: 0 0 0 3px rgba(124,25,25,.15); }
+.lm-dd-btn .lm-dd-m { flex: 1; }
+.lm-size-dd .lm-dd-btn .lm-i { position: static; margin: 0; flex: none; transition: transform .2s; }
+.is-open .lm-dd-btn .lm-i { transform: rotate(180deg); }
+.lm-dd-pr { display: inline-flex; align-items: baseline; gap: 8px; white-space: nowrap; font-weight: 700; }
+.lm-dd-pr s { font-size: 13.5px; font-weight: 500; color: var(--mute); }
+.lm-dd-list { position: absolute; left: 0; right: 0; top: calc(100% + 6px); z-index: 30; max-height: min(420px, 60vh); overflow-y: auto; padding: 6px; border-radius: 14px; background: #fff; border: 1px solid var(--line); box-shadow: 0 12px 32px rgba(0,0,0,.12); }
+.lm-dd-list li { display: flex; align-items: center; gap: 12px; min-height: 46px; padding: 0 12px; border-radius: 10px; font-size: 15.5px; cursor: pointer; }
+.lm-dd-list li .lm-dd-m { flex: 1; }
+.lm-dd-list li:hover, .lm-dd-list li:focus { outline: none; background: var(--bg2); }
+.lm-dd-list li[aria-selected="true"] { background: var(--bg2); box-shadow: inset 3px 0 0 var(--acc); font-weight: 600; }
+.lm-dd-list li[aria-selected="true"] .lm-dd-pr b { color: var(--acc); }
+.lm-dd-list li[aria-disabled="true"] { color: var(--mute); cursor: not-allowed; }
+.lm-dd-list li small { font-size: 13px; }
+[aria-busy="true"] .lm-dd-btn { color: var(--mute); }
+
+/* Bloque «Las ventajas del modelo …» (beneficios + Laboratorio de descanso) */
+.p-ben.p-firm .p-lab { margin-top: clamp(28px, 3.5vw, 48px); }
+
+/* Garantía y condiciones: en móvil, una columna */
+@media (max-width: 700px) { .p-cond { grid-template-columns: 1fr; } }
+
+/* Menú del móvil: «Modelos» con foto, arriba de «Tipos de colchones» */
+.lm-dacc ul.lm-dmod { gap: 4px; }
+.lm-dmod a { display: flex !important; align-items: center; gap: 12px; padding: 6px 0 !important; }
+.lm-dmod img { width: 56px; height: 56px; flex: none; border-radius: 10px; object-fit: cover; background: var(--bg2); }
+.lm-dmod span { display: grid; gap: 2px; }
+.lm-dmod b { font-size: 15.5px; font-weight: 600; }
+.lm-dmod small { font-size: 13px; color: var(--mute); }

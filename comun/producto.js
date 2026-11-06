@@ -84,8 +84,7 @@
     sel.refresh(); setTimeout(renderPrice, 150);
     LM.track('select_item', { item_id: B().pid, item_variant: st.base });
   });
-  $$('input[name="recogida"]').forEach(function (r) { r.addEventListener('change', function () { st.recogida = this.value === 'si'; renderPrice(); }); });
-  $('#p-recogida-p').textContent = '+' + LM.eur(LM.RECOGIDA.p);
+  // Paco, 06/11: la retirada del colchón viejo se elige en el checkout, no en la ficha
 
   /* Compra [F6, F11] y segunda vía [F12] */
   function comprar(src) {
@@ -120,10 +119,8 @@
 
   /* Cuerpo [F13–F19] */
   $('#p-ben').innerHTML = P.beneficios.map(function (b) { return '<li><span class="h-ic">' + LM.ico(b[0]) + '</span><b>' + b[1] + '</b><p>' + b[2] + '</p></li>'; }).join('');
-  $('#p-firm-txt').textContent = P.sensacionLarga;
   $('#p-dur').textContent = P.durTxt;
-  $('#p-firm').innerHTML = LM.firmeza(P) + '<div class="p-scale" aria-hidden="true"><span>Más suave</span><span>Más firme</span></div>' +
-    '<p class="lm-note">Datos de firmeza y adaptabilidad de la ficha actual.</p>';
+  // Paco, 06/11: fuera la tarjeta de barras de firmeza y adaptabilidad (los datos siguen en el Laboratorio de descanso)
   scrub();
 
   var rows = [['Sensación', 'sensacionTxt'], ['Firmeza', 'firmeza', '%'], ['Adaptabilidad', 'adaptabilidad', '%'], ['Por dentro', 'nucleo'], ['Altura', 'altura'], ['Para quién', 'paraQuien']];

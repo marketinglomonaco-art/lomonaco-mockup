@@ -123,8 +123,7 @@
     var c = e.target.closest('[data-color]');
     if (c) { st.color[st.base] = c.getAttribute('data-color'); pintar(); LM.track('select_item', { item_variant: st.base + '-' + st.color[st.base], item_list_name: 'pack_color' }); }
   });
-  $$('input[name="recogida"]').forEach(function (r) { r.addEventListener('change', function () { st.recogida = this.value === 'si'; pintar(); }); });
-  $('#p-recogida-p').textContent = '+' + LM.eur(LM.RECOGIDA.p);
+  // Paco, 06/11: la retirada del colchón viejo se elige en el checkout, no en la ficha
 
   function comprar(src) {
     var d = actual(); if (!d) return;
