@@ -57,7 +57,7 @@
           '<div><dt>Reparto</dt><dd>' + reparto + '</dd></div>' +
         '</dl>' +
         '<div class="p-lab-leg"><span>Baja</span><i></i><span>Alta</span></div>' +
-        '<p class="p-lab-note">Simulación ilustrativa hecha con la firmeza y la adaptabilidad de este colchón. No es un ensayo de laboratorio.</p>' +
+        // Paco, 09/11: sin nota de «Simulación ilustrativa»
       '</div>' +
     '</div>';
   sec.insertBefore(box, sec.querySelector('.p-ind-w')); // Paco, 09/11: antes del bloque de independencia de lechos
