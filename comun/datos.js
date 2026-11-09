@@ -414,8 +414,12 @@ LM.PACK_BASES = {
 LM.GALERIA = {
   modelo: {
     latex: [['fp-06', 'esquina con la cinta Lomonaco'], ['fp-02', 'esquina sobre canapé de madera, con el nombre del modelo']],
-    gran:  [['fp-07', 'de frente sobre canapé de madera, con almohadas'], ['fp-05', 'sus capas por dentro, sobre el canapé']]
+    gran:  [['fp-07', 'de frente sobre canapé de madera, con almohadas'], ['fp-05', 'sus capas por dentro, sobre el canapé']],
+    /* Paco, 09/11: el Gold, con sus fotos de la sesión del showroom (mejoradas, en cuadrado: img/fpg-0N-*). Sin las comunes, que son del Látex */
+    gold:  [['fpg-02', 'esquina con la cinta Lomonaco'], ['fpg-03', 'el bordado Natura Gold'], ['fpg-06', 'con su cabecero en el showroom'],
+            ['fpg-04', 'las asas con la M'], ['fpg-05', 'superficie acolchada de cerca']]
   },
+  soloPropias: ['gold'],
   comunes: [['fp-01', 'detalle de la etiqueta'], ['fp-03', 'detalle del asa con la M'], ['fp-04', 'superficie acolchada de cerca']]
 };
-LM.galeria = function (k) { return (LM.GALERIA.modelo[k] || []).concat(LM.GALERIA.comunes); };
+LM.galeria = function (k) { var m = LM.GALERIA.modelo[k] || []; return LM.GALERIA.soloPropias.indexOf(k) > -1 ? m : m.concat(LM.GALERIA.comunes); };
