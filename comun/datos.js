@@ -176,6 +176,17 @@ LM.PRODUCTOS = {
     packs: { canape: { pid: 64601, tabla: 'latexCanape', d: 'Canapé abatible + almohadas, edredón y protector de regalo', img: '../img/pack-latex-canape-760.webp' },
              base: { pid: 73424, tabla: 'latexBase', d: 'Base tapizada antideslizante + almohadas de regalo', img: '../img/pack-latex-base-760.webp' } },
     fotosPropias: true,
+    /* Paco, 09/11: escena de una persona durmiendo con el colchón cortado (capas del Natura Látex). Solo en esta ficha */
+    escena: { img: '../img/escena-capas-latex', w: 1134, h: 1152,
+      /* Capa interactiva (Paco, 09/11): posición de cada capa sobre el corte [x %, y %], hueco de los muelles [x desde, x hasta, y desde, y hasta]
+         y zonas del cuerpo sobre los muelles [x desde, x hasta, zona, cuánto ceden 1–5, texto]. Explicación ilustrativa, no medida */
+      capasPos: [[9, 52.4], [18, 54.3], [27, 56.4], [21, 63.5]],
+      muelles: [17.5, 83.5, 59, 68],
+      zonas: [[17.5, 30, 'Cabeza', 1, 'La almohada hace el trabajo: aquí los muelles apenas notan peso.'],
+              [30, 44, 'Hombros', 4, 'Ceden más para que el hombro se hunda lo justo y no se cargue.'],
+              [44, 55, 'Cintura', 2, 'Empujan hacia arriba y rellenan el hueco: la espalda queda recta.'],
+              [55, 70, 'Cadera', 5, 'Es donde más peso hay: ceden y lo reparten entre muchos muelles.'],
+              [70, 83.5, 'Piernas', 2, 'Sujetan sin presión. Cada muelle trabaja solo, sin mover al de al lado.']] },
     vp: 'Látex natural sobre muelles ensacados. Te recibe suave, te sujeta bien y no pasas calor.',
     beneficios: [['waves', 'No pasas calor', 'El tejido y el látex dejan pasar el aire. La superficie se mantiene fresca.'],
                  ['body', 'Se adapta a tu cuerpo', 'El látex se amolda a hombros y cadera y recupera su forma en cuanto te mueves.'],
