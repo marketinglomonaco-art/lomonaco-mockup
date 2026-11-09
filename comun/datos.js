@@ -230,11 +230,11 @@ LM.ORDEN = ['visco', 'gold', 'latex', 'gran'];
    de él, 2) una línea en el centro del colchón las frena, 3) su lado sigue quieto. Coordenadas en % de la imagen */
 /* «Por dentro» (Paco, 09/11): una tarjeta por cada capa que se ve en el vídeo y un punto sobre esa capa.
    El vídeo es del Natura Látex (escena de Blender natura_latex_capas.py: 11 capas, 32 cm, de arriba abajo con su grosor).
-   Solo en su ficha: en las demás el vídeo no coincide con sus capas y se quedan sus 4 tarjetas, sin puntos.
+   Paco, 09/11: en todos los modelos del mockup (el mismo vídeo y las mismas capas en todas las fichas y packs).
    [nombre, texto, x, y] · x, y = punto sobre la capa, en % del fotograma abierto (960 × 960). Paco, 09/11: centrados en la capa.
    PROVISIONAL: nombres de la escena 3D; faltan los nombres y textos comerciales de Paco */
 LM.VIDEO_CAPAS = {
-  latex: [
+  todos: [
     ['Látex natural', '3 cm. Una capa suave que te acoge al tumbarte. Hipoalergénica y transpirable.', 63.96, 35.73],
     ['Capa de confort', '1 cm.', 63.96, 39.79],
     ['Capa de confort', '1 cm.', 63.96, 43.02],

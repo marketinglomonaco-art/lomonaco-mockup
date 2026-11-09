@@ -301,7 +301,7 @@
     var sec = $('#por-dentro'); if (!sec) return;
     var pin = $('.p-scrub-pin', sec), v = $('.p-scrub-v', sec), list = $('#p-scrub-steps'), bar = $('#p-scrub-prog');
     // Paco, 09/11: si hay capas del vídeo para este modelo (LM.VIDEO_CAPAS), una tarjeta por capa y un punto sobre ella
-    var CV = (LM.VIDEO_CAPAS || {})[K], capas = CV || P.capas, n = capas.length, dd = function (x) { return (x < 10 ? '0' : '') + x; };
+    var CV = (LM.VIDEO_CAPAS || {}).todos, capas = CV || P.capas, n = capas.length, dd = function (x) { return (x < 10 ? '0' : '') + x; };
     var NUM = ['', 'Una', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis', 'Siete', 'Ocho', 'Nueve', 'Diez', 'Once', 'Doce'];
     var A0 = .15, A1 = .86, tr = (A1 - A0) / n;
     var pasos = [{ a: 0, b: A0, k: 'Por dentro', t: 'Así es tu ' + P.nombre + '.', p: 'Lo abrimos capa a capa.', h2: true, aviso: true }]
