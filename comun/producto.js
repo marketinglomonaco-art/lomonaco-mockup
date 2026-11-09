@@ -328,7 +328,10 @@
         '<p class="p-scrub-p">' + s.p + '</p>' +
         // 29/10: el aviso de «desliza» va dentro de la primera tarjeta (antes flotaba aparte)
         (s.aviso ? '<p class="p-scrub-aviso"><span class="p-scrub-mouse" aria-hidden="true"><i></i></span><span>Desliza aquí dentro para abrir el colchón<small>Fuera del recuadro, la página sigue bajando</small></span></p>' : '') +
-        (s.cta ? '<a class="lm-btn" href="#p-size">Elegir mi medida</a>' : sig) + '</li>';
+        // Paco, 09/11: poder ir arriba y abajo. Desde la 1.ª capa, botón «Anterior» junto al de seguir
+        '<div class="p-scrub-nav">' + (i ? '<button type="button" class="p-scrub-prev" data-ir="' + (i - 1) + '" aria-label="Volver a la tarjeta anterior">' +
+          '<svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>Anterior</button>' : '') +
+        (s.cta ? '<a class="lm-btn" href="#p-size">Elegir mi medida</a>' : sig) + '</div></li>';
     }).join('');
     var items = $$('.p-scrub-step', list);
     if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {

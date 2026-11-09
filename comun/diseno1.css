@@ -1149,3 +1149,18 @@ html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color 
   .p-gal-track:not(.is-todas) figure.is-mas { display: none; }
 }
 @media (max-width: 900px) { .p-gal-mas { display: none; } }
+
+/* Por dentro · navegar arriba y abajo (Paco, 09/11): «Anterior» (contorno) junto a «Siguiente capa» */
+.p-scrub-nav { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 18px; }
+.p-scrub-nav .p-scrub-next, .p-scrub-nav .lm-btn { margin-top: 0; }
+.p-scrub-prev { display: inline-flex; align-items: center; gap: 6px; min-height: 42px; padding: 0 16px 0 13px; border-radius: 999px; background: transparent; color: var(--acc); box-shadow: inset 0 0 0 1.5px var(--acc); font-size: 14.5px; font-weight: 700; transition: background .2s, color .2s; }
+.p-scrub-prev:hover { background: var(--acc); color: #fff; }
+.p-scrub-prev .lm-i { width: 16px; height: 16px; }
+.p-scrub.is-static .p-scrub-prev, .p-scrub.is-static .p-scrub-nav:empty { display: none; }
+@media (max-width: 900px) {
+  .p-scrub-nav { margin-top: 12px; }
+  .p-scrub-prev { min-height: 38px; }
+}
+@media (max-width: 900px) {
+  .p-scrub-nav .lm-btn { min-height: 38px; padding: 0 16px; font-size: 14.5px; }
+}
