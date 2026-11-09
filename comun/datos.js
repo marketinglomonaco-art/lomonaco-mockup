@@ -281,12 +281,15 @@ LM.UGC = [
    Cada cama: foto de frente con dos puntos (por dentro y el canapé, en % de la foto) y sus fotos de detalle.
    El canapé abierto es el del Natura Látex (nogal): es el único que se fotografió abierto. */
 LM.SHOWROOM = {
-  /* Paco, 09/11: se empieza por la sala en plano general (arrastrar para mirar, como la primera versión) y desde ahí se elige
-     cada cama. Sin selector de colchones. puntos: [cama, x %, y %] sobre la foto */
+  /* Paco, 09/11: se empieza por la sala (se ven los 3 colchones) con efecto de cámara 3D y un plano para elegir desde dónde mirar.
+     puntos: [cama, x %, y %] sobre la foto. pos: [x, y, hacia dónde mira en grados] en el plano (200 × 132; 0° = derecha, −90° = al fondo).
+     «De frente» y «Entrada» son las fotos del iPhone (IMG_7035 y 7033) mejoradas desde el original; el resto, de la sesión nueva */
   sala: [
-    { img: 'general',    t: 'La sala',              puntos: [['latex', 31, 50], ['gran', 66, 41], ['almohadas', 74, 26]] },
-    { img: 'sala-gold',  t: 'Junto al Natura Gold', puntos: [['gold', 42, 56], ['latex', 72, 26]] },
-    { img: 'sala-fondo', t: 'Desde el Gran Natura', puntos: [['gold', 19, 37], ['latex', 31, 55], ['gran', 72, 72]] }
+    { img: 'sala-frente',  w: 2560, h: 1440, t: 'De frente',             pos: [100, 116, -90],  puntos: [['gold', 15, 60], ['latex', 57, 60], ['gran', 90, 58]] },
+    { img: 'sala-entrada', w: 2560, h: 1440, t: 'Desde la entrada',      pos: [26, 118, -58],   puntos: [['gold', 29, 64], ['latex', 57, 58], ['gran', 77, 57], ['almohadas', 85, 40]] },
+    { img: 'sala-gold',    w: 2560, h: 1707, t: 'Junto al Natura Gold',  pos: [16, 90, -24],    puntos: [['gold', 42, 56], ['latex', 72, 26]] },
+    { img: 'general',      w: 2560, h: 1707, t: 'Junto al Natura Látex', pos: [66, 92, -30],    puntos: [['latex', 31, 50], ['gran', 66, 41], ['almohadas', 74, 26]] },
+    { img: 'sala-fondo',   w: 2560, h: 1707, t: 'Desde el Gran Natura',  pos: [186, 96, -152],  puntos: [['latex', 31, 57], ['gran', 72, 72]] /* el Gold sale al fondo, pequeño y desenfocado: sin punto */ }
   ],
   orden: ['gran', 'latex', 'gold', 'almohadas'],
   camas: {

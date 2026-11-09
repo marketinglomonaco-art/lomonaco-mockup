@@ -9,10 +9,32 @@
   $$('[data-estado]').forEach(function (el) { el.innerHTML = LM.estado(); });
 
   /* ================= SALA (plano general) =================
-     Paco, 09/11: se empieza por la sala, como la primera versión: la foto es más grande que el visor y se arrastra para mirar
-     (con inercia), y las flechas cambian de punto de vista. Los puntos de cada cama abren su recorrido (más abajo). */
+     Paco, 09/11: se empieza por la sala, donde se ven los 3 colchones. Efecto de cámara 3D (falso): al arrastrar, la vista gira
+     un poco en perspectiva, como si movieras la cabeza; al cambiar de sitio, la cámara avanza hacia el nuevo punto de vista.
+     Plano para elegir desde dónde mirar (nuevo diseño). Los puntos de cada cama abren su recorrido (más abajo). */
   var sv = $('#s-sv'), SALA = S.sala;
   var flecha = function (d) { return '<svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + (d < 0 ? 'm15 6-6 6 6 6' : 'm9 6 6 6-6 6') + '"/></svg>'; };
+  var ICO_PLANO = '<svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2zM9 4v14M15 6v14"/></svg>';
+
+  /* Plano del showroom: pared de madera con el panel iluminado, las 3 camas en fila con su cabecero y su canapé,
+     la estantería de complementos y, encima, los puntos de vista con su cono de visión */
+  function cama(x, w, cab, can, etq) {
+    return '<g class="s-mp-bed"><rect x="' + (x + 3) + '" y="15" width="' + (w - 6) + '" height="5" rx="1.5" fill="' + cab + '"/>' +
+      '<rect x="' + x + '" y="20" width="' + w + '" height="44" rx="4" fill="' + can + '"/>' +
+      '<rect x="' + (x + 2.5) + '" y="21.5" width="' + (w - 5) + '" height="39" rx="3" fill="#fff"/>' +
+      '<rect x="' + (x + 6) + '" y="24" width="' + (w / 2 - 8) + '" height="7" rx="2.5" fill="#efe9e1"/><rect x="' + (x + w / 2 + 2) + '" y="24" width="' + (w / 2 - 8) + '" height="7" rx="2.5" fill="#efe9e1"/>' +
+      '<text x="' + (x + w / 2) + '" y="76" text-anchor="middle">' + etq + '</text></g>';
+  }
+  var PLANO = '<svg class="s-mp-svg" viewBox="0 0 200 132" aria-hidden="true">' +
+    '<defs><radialGradient id="s-mp-g" cx="0" cy="0" r="1"><stop offset="0" stop-color="#7c1919" stop-opacity=".75"/><stop offset="1" stop-color="#7c1919" stop-opacity="0"/></radialGradient></defs>' +
+    '<rect x="1" y="1" width="198" height="130" rx="12" fill="#f3eee7"/>' +
+    '<path d="M1 13V13a12 12 0 0 1 12-12h174a12 12 0 0 1 12 12z" fill="#b9997a"/>' +
+    '<rect x="10" y="12.5" width="166" height="2.5" rx="1.2" fill="#fff4dc"/>' +
+    cama(18, 42, '#b8b3ba', '#dcc5a2', 'Natura Gold') + cama(78, 42, '#5f5f66', '#7b5236', 'Natura Látex') + cama(138, 42, '#5f5f66', '#e4e0da', 'Gran Natura') +
+    '<rect x="184" y="16" width="11" height="22" rx="2" fill="#d6bd96"/><text class="s-mp-sm" x="189.5" y="46" text-anchor="middle">Almoh.</text>' +
+    '<path class="s-mp-cone" id="s-mp-cone" d="M0 0 L54 -30 A62 62 0 0 1 54 30 Z" fill="url(#s-mp-g)"/>' +
+    '</svg>';
+
   sv.setAttribute('tabindex', '0');
   sv.setAttribute('role', 'region');
   sv.setAttribute('aria-label', 'Sala del showroom. Arrastra o usa las flechas del teclado para mirar; toca una cama para verla de cerca.');
@@ -20,58 +42,86 @@
     '<div class="s-sv-stages" id="s-stages"></div>' +
     '<p class="s-sv-scene" id="s-scene" aria-live="polite"></p>' +
     '<p class="s-sv-hint" id="s-hint"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12"/><path d="M11 11.5v-2a1.5 1.5 0 0 1 3 0V12"/><path d="M14 10.5a1.5 1.5 0 0 1 3 0V12"/><path d="M17 11.5a1.5 1.5 0 0 1 3 0V16a5 5 0 0 1-5 5h-2.5a5 5 0 0 1-4.3-2.5L5.4 15a1.5 1.5 0 0 1 2.6-1.5L8 14"/></svg>Arrastra para mirar</p>' +
-    '<button class="s-sv-nav s-sv-prev" type="button" data-go="-1" aria-label="Otro punto de vista">' + flecha(-1) + '</button>' +
-    '<button class="s-sv-nav s-sv-next" type="button" data-go="1" aria-label="Avanzar por la sala">' + flecha(1) + '</button>' +
+    '<button class="s-sv-nav s-sv-prev" type="button" data-go="-1" aria-label="Punto de vista anterior">' + flecha(-1) + '</button>' +
+    '<button class="s-sv-nav s-sv-next" type="button" data-go="1" aria-label="Siguiente punto de vista">' + flecha(1) + '</button>' +
     '<button class="s-sv-full" type="button" id="s-sv-full" aria-label="Pantalla completa"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>' +
+    '<div class="s-mp" id="s-mp">' +
+      '<button class="s-mp-tog" type="button" id="s-mp-tog" aria-expanded="false" aria-controls="s-mp-card">' + ICO_PLANO + 'Plano</button>' +
+      '<div class="s-mp-card" id="s-mp-card" role="group" aria-labelledby="s-mp-k">' +
+        '<p class="s-mp-k" id="s-mp-k">Elige desde dónde mirar</p>' +
+        '<div class="s-mp-plan">' + PLANO + SALA.map(function (e, i) {
+          return '<button type="button" class="s-mp-pt" data-i="' + i + '" style="left:' + (e.pos[0] / 2) + '%;top:' + (e.pos[1] / 1.32) + '%" aria-label="Mirar ' + e.t.toLowerCase() + '"><b>' + (i + 1) + '</b><span>' + e.t + '</span></button>';
+        }).join('') + '</div>' +
+      '</div>' +
+    '</div>' +
     '<div class="s-sv-cta"><a class="lm-btn lm-btn--buy" href="#reserva">Verlo en directo por videollamada</a></div>';
 
   var stages = $('#s-stages'), cur = -1, pan = { x: .5, y: .5 }, vel = 0, dims = {}, stage = null, busy = false;
-  var RAT = 2560 / 1707;
+  var ESCALA = 1.18; // la foto es un 18 % mayor que el visor: margen para mirar sin perder los 3 colchones
   function medir() {
-    var w = sv.clientWidth, h = sv.clientHeight;
-    var sw = Math.max(w * 1.3, h * RAT * 1.08), sh = sw / RAT;
-    if (sh < h * 1.06) { sh = h * 1.06; sw = sh * RAT; }
+    var e = SALA[Math.max(0, cur)], rat = e.w / e.h, w = sv.clientWidth, h = sv.clientHeight;
+    var sw = Math.max(w * ESCALA, h * rat * 1.06), sh = sw / rat;
+    if (sh < h * 1.08) { sh = h * 1.08; sw = sh * rat; }
     dims = { w: w, h: h, sw: sw, sh: sh, rx: sw - w, ry: sh - h };
     $$('.s-stage', stages).forEach(function (st) { st.style.width = sw + 'px'; st.style.height = sh + 'px'; });
     pintar();
   }
+  /* Cámara: el desplazamiento mueve la foto y, a la vez, la gira unos grados en perspectiva (cabeza que gira) */
   function pintar() {
     if (!stage) return;
     pan.x = Math.min(1, Math.max(0, pan.x)); pan.y = Math.min(1, Math.max(0, pan.y));
-    stage.style.transform = 'translate3d(' + (-pan.x * dims.rx) + 'px,' + (-pan.y * dims.ry) + 'px,0)';
+    var giro = reduce ? 0 : (pan.x - .5) * -7, cab = reduce ? 0 : (pan.y - .5) * 4;
+    stage.style.transform = 'translate3d(' + (-pan.x * dims.rx) + 'px,' + (-pan.y * dims.ry) + 'px,0) rotateY(' + giro.toFixed(2) + 'deg) rotateX(' + cab.toFixed(2) + 'deg)';
   }
   function crearEscena(i) {
     var e = SALA[i], st = document.createElement('div'), n = '../img/sr2-' + e.img;
     st.className = 's-stage';
     st.style.width = dims.sw + 'px'; st.style.height = dims.sh + 'px';
-    st.innerHTML = '<img src="' + n + '-2560.webp" srcset="' + n + '-1600.webp 1600w, ' + n + '-2560.webp 2560w" sizes="' + Math.round(dims.sw) + 'px" alt="Showroom de Lo Monaco: ' + e.t + '" width="2560" height="1707" draggable="false">' +
+    st.innerHTML = '<img src="' + n + '-2560.webp" srcset="' + n + '-1600.webp 1600w, ' + n + '-2560.webp 2560w" sizes="' + Math.round(dims.sw) + 'px" alt="Showroom de Lo Monaco: ' + e.t + '" width="' + e.w + '" height="' + e.h + '" draggable="false">' +
       e.puntos.map(function (p) {
         var c = S.camas[p[0]];
         return '<button type="button" class="s-spot" data-cama="' + p[0] + '" style="left:' + p[1] + '%;top:' + p[2] + '%"><i aria-hidden="true"></i><span>' + c.t + '</span></button>';
       }).join('');
     return st;
   }
-  function ir(i, dir) {
+  /* Cambio de sitio: la cámara avanza (la foto actual se acerca y se difumina) y la nueva llega asentándose */
+  function ir(i) {
     i = (i + SALA.length) % SALA.length;
     if (i === cur || busy) return;
-    var prev = stage, next = crearEscena(i);
+    var prev = stage, prevPan = pan.x;
+    cur = i; medir();
+    var next = crearEscena(i);
     stages.appendChild(next);
     stage = next; pan = { x: .5, y: .5 }; vel = 0; pintar();
-    cur = i;
     $('#s-scene').textContent = (i + 1) + ' / ' + SALA.length + ' · ' + SALA[i].t;
+    marcarPlano();
     if (prev && !reduce) {
       busy = true;
-      next.classList.add(dir < 0 ? 'is-in-back' : 'is-in');
-      prev.classList.add(dir < 0 ? 'is-out-back' : 'is-out');
-      setTimeout(function () { prev.remove(); next.classList.remove('is-in', 'is-in-back'); busy = false; }, 700);
+      next.style.visibility = 'hidden';
+      // La cámara avanza cuando la foto nueva ya está lista (como mucho, 1,2 s de espera)
+      var img = next.querySelector('img'), hecho = false;
+      var arrancar = function () {
+        if (hecho) return; hecho = true;
+        next.style.visibility = '';
+        prev.style.transformOrigin = (prevPan * 100) + '% 55%';
+        prev.classList.add('is-go'); next.classList.add('is-come');
+        setTimeout(function () { prev.remove(); next.classList.remove('is-come'); busy = false; }, 760);
+      };
+      if (img.decode) img.decode().then(arrancar, arrancar); else img.onload = arrancar;
+      setTimeout(arrancar, 1200);
     } else if (prev) prev.remove();
     LM.track('showroom_scene', { scene: SALA[i].img });
+  }
+  function marcarPlano() {
+    var e = SALA[cur];
+    $$('.s-mp-pt', sv).forEach(function (b, j) { b.classList.toggle('is-on', j === cur); b.setAttribute('aria-pressed', j === cur); });
+    $('#s-mp-cone').style.transform = 'translate(' + e.pos[0] + 'px,' + e.pos[1] + 'px) rotate(' + e.pos[2] + 'deg)';
   }
 
   /* Arrastrar con ratón o dedo, con un poco de inercia */
   var drag = null;
   sv.addEventListener('pointerdown', function (e) {
-    if (e.target.closest('button, a')) return;
+    if (e.target.closest('button, a, .s-mp')) return;
     drag = { x: e.clientX, y: e.clientY, t: performance.now(), moved: false };
     sv.classList.add('is-drag'); vel = 0;
   });
@@ -95,26 +145,32 @@
     if (e.target !== sv) return;
     if (e.key === 'ArrowLeft') { pan.x -= .08; pintar(); e.preventDefault(); }
     if (e.key === 'ArrowRight') { pan.x += .08; pintar(); e.preventDefault(); }
-    if (e.key === 'ArrowUp') { ir(cur + 1, 1); e.preventDefault(); }
-    if (e.key === 'ArrowDown') { ir(cur - 1, -1); e.preventDefault(); }
+    if (e.key === 'ArrowUp') { ir(cur + 1); e.preventDefault(); }
+    if (e.key === 'ArrowDown') { ir(cur - 1); e.preventDefault(); }
   });
   var pista = true;
   function ocultarPista() { if (pista) { pista = false; $('#s-hint').classList.add('is-off'); } }
+  var mp = $('#s-mp'), tog = $('#s-mp-tog');
+  function plano(on) { mp.classList.toggle('is-open', on); tog.setAttribute('aria-expanded', on); }
   sv.addEventListener('click', function (e) {
     var b = e.target.closest('[data-cama]'); if (b) { abrirCama(b.getAttribute('data-cama')); return; }
-    var g = e.target.closest('[data-go]'); if (g) { ocultarPista(); ir(cur + +g.getAttribute('data-go'), +g.getAttribute('data-go')); }
+    var p = e.target.closest('.s-mp-pt'); if (p) { ocultarPista(); ir(+p.getAttribute('data-i')); if (matchMedia('(max-width: 700px)').matches) plano(false); return; }
+    if (e.target.closest('#s-mp-tog')) { plano(!mp.classList.contains('is-open')); return; }
+    var g = e.target.closest('[data-go]'); if (g) { ocultarPista(); ir(cur + +g.getAttribute('data-go')); }
   });
   $('#s-sv-full').addEventListener('click', function () {
     if (document.fullscreenElement) document.exitFullscreen(); else if (sv.requestFullscreen) sv.requestFullscreen();
   });
   document.addEventListener('fullscreenchange', function () { setTimeout(medir, 50); });
   addEventListener('resize', medir);
-  medir(); ir(0, 1);
-  // Pista inicial: un pequeño giro para que se entienda que se puede mirar
+  cur = 0; medir(); cur = -1; ir(0);
+  // Pista inicial: un pequeño giro de cámara para que se entienda que se puede mirar
   if (!reduce) setTimeout(function () {
     var t0 = performance.now();
-    (function giro(t) { var k = (t - t0) / 1600; if (!pista || k > 1) return; pan.x = .5 + Math.sin(k * Math.PI * 2) * .12; pintar(); requestAnimationFrame(giro); })(t0);
+    (function giro(t) { var k = (t - t0) / 1800; if (!pista || k > 1) return; pan.x = .5 + Math.sin(k * Math.PI * 2) * .22; pintar(); requestAnimationFrame(giro); })(t0);
   }, 900);
+  // Precarga de las vistas de la sala, para que el cambio de sitio sea inmediato
+  addEventListener('load', function () { SALA.forEach(function (e) { var im = new Image(); im.src = '../img/sr2-' + e.img + '-' + ((sv.clientWidth * (devicePixelRatio || 1)) > 1700 ? 2560 : 1600) + '.webp'; }); });
 
   /* De la sala a una cama, y vuelta */
   function abrirCama(k) {
