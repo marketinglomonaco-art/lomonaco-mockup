@@ -221,12 +221,14 @@ LM.PRODUCTOS = {
             ['Termorregulación', 'Deja pasar el aire y expulsa el calor.']] }
 };
 LM.ORDEN = ['visco', 'gold', 'latex', 'gran'];
-/* Módulo «Columna recta» (Paco, 09/11): solo la imagen, grande, con la columna marcada en puntos sobre la espalda.
-   Sin texto al lado ni comparación sin/con adaptación (Paco no los quiere). Encuadre ancho de su imagen (recorte del 28 % al 80 %
-   de la altura: img/escena-espalda-*). Columna y etiqueta en % de ese encuadre. Ilustrativo */
+/* Módulo «Columna recta» (Paco, 09/11): bloque narrativo con el scroll. La imagen se queda fija mientras bajas y cuenta
+   en tres pasos cómo el colchón deja la espalda recta: aparece la columna algo curvada, se iluminan las zonas donde trabaja
+   (hombro, cintura, cadera) y la columna se endereza en granate. Acercamiento suave de cámara a la espalda.
+   Encuadre ancho de la imagen de Paco (recorte del 28 % al 80 % de la altura: img/escena-espalda-*). Coordenadas en %. Ilustrativo */
 LM.ESCENA_CORTE = {
   img: '../img/escena-espalda', w: 1134, h: 599,
-  columna: 'M31 32.7 L67 32.7', etiqueta: [49, 19]
+  columna: { x0: 31, x1: 67, y: 32.7, curva: 3 }, etiqueta: [49, 19],
+  zonas: [[38, 44, 'El hombro se hunde lo justo'], [50, 45.5, 'La cintura, con apoyo'], [62, 44.5, 'La cadera reparte el peso']]
 };
 /* Paco, 29/10: foto nueva de cada modelo SOLO en el bloque de la home donde eliges colchón (ficha y listas sin cambios) */
 LM.FOTO_HOME = { visco: 'natura-visco-home', gold: 'natura-gold-home', latex: 'natura-latex-home', gran: 'gran-natura-home' };

@@ -117,20 +117,58 @@
     renderBases(); renderPrice();
   }
 
-  /* Módulo «Columna recta» (Paco, 09/11): la imagen manda. Sobre la espalda, la columna en puntos granate y la etiqueta
-     «Columna recta». Los puntos aparecen de la nuca a la cadera la primera vez que se ve el bloque */
+  /* Módulo «Columna recta» (Paco, 09/11) · bloque narrativo con el scroll. Mientras bajas, la imagen se queda fija y:
+     1) se dibuja la columna, algo curvada; 2) se iluminan una tras otra las zonas donde trabaja el colchón, con su frase;
+     3) la columna se endereza y pasa a granate, con «Columna recta». Todo sigue al scroll (si subes, se deshace).
+     Sin movimiento si el usuario lo ha reducido: se ve directamente el final */
   function espalda(esc, E) {
-    var s = function (w) { return E.img + '-' + w + '.webp'; };
-    esc.innerHTML = '<div class="p-esc-img">' +
-        '<img src="' + s(1200) + '" srcset="' + s(800) + ' 800w, ' + s(1200) + ' ' + E.w + 'w" sizes="(max-width: 1320px) 100vw, 1320px" alt="Persona durmiendo de lado sobre el ' + P.titulo + ', con la columna recta" width="' + E.w + '" height="' + E.h + '" loading="lazy">' +
-        '<svg class="p-esc-col" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="p-esc-sp" d="' + E.columna + '"/></svg>' +
-        '<p class="p-esc-lab" style="left:' + E.etiqueta[0] + '%;top:' + E.etiqueta[1] + '%">' + LM.ico('check') + 'Columna recta</p>' +
-        '<span class="p-esc-note">Recreación ilustrativa</span></div>';
+    var s = function (w) { return E.img + '-' + w + '.webp'; }, C = E.columna;
+    esc.innerHTML = '<div class="p-esc-stick"><div class="p-esc-img">' +
+        '<div class="p-esc-zoom">' +
+          '<img src="' + s(1200) + '" srcset="' + s(800) + ' 800w, ' + s(1200) + ' ' + E.w + 'w" sizes="(max-width: 1320px) 100vw, 1320px" alt="Persona durmiendo de lado sobre el ' + P.titulo + ', con la columna recta" width="' + E.w + '" height="' + E.h + '" loading="lazy">' +
+          E.zonas.map(function (z, i) { return '<i class="p-esc-glow" data-z="' + i + '" style="left:' + z[0] + '%;top:' + z[1] + '%" aria-hidden="true"></i>'; }).join('') +
+          '<svg class="p-esc-col" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="p-esc-sp"/></svg>' +
+          E.zonas.map(function (z, i) { return '<p class="p-esc-cap" data-z="' + i + '" style="left:' + z[0] + '%">' + z[2] + '</p>'; }).join('') +
+          '<p class="p-esc-lab" style="left:' + E.etiqueta[0] + '%;top:' + E.etiqueta[1] + '%">' + LM.ico('check') + 'Columna recta</p>' +
+        '</div>' +
+        '<ol class="p-esc-pasos" aria-hidden="true"><li></li><li></li><li></li></ol>' +
+        '<span class="p-esc-note">Recreación ilustrativa</span></div></div>';
     esc.hidden = false;
-    var caja = $('.p-esc-img', esc);
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) { caja.classList.add('is-in'); return; }
-    var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { io.disconnect(); caja.classList.add('is-in'); } }, { threshold: .35 });
-    io.observe(caja);
+    var zoom = $('.p-esc-zoom', esc), sp = $('.p-esc-sp', esc), lab = $('.p-esc-lab', esc), pasos = $$('.p-esc-pasos li', esc);
+    var glows = $$('.p-esc-glow', esc), caps = $$('.p-esc-cap', esc);
+    function lim(v) { return Math.max(0, Math.min(1, v)); }
+    function pintar(p) {
+      // 0–0,2: se dibuja la columna (curvada) · 0,2–0,7: zonas · 0,7–0,95: se endereza · acercamiento suave todo el rato
+      var dib = lim(p / .2), rect = lim((p - .7) / .25), N = 24, d = '';
+      for (var i = 0; i <= N; i++) {
+        var u = i / N, x = C.x0 + (C.x1 - C.x0) * u, y = C.y + C.curva * Math.sin(Math.PI * u) * (1 - rect);
+        if (u > dib + 1e-6) break;
+        d += (i ? ' L' : 'M') + x.toFixed(2) + ' ' + y.toFixed(2);
+      }
+      sp.setAttribute('d', d || 'M0 0');
+      var c1 = [255, 255, 255], c2 = [124, 25, 25];
+      sp.style.stroke = 'rgb(' + c1.map(function (v, k) { return Math.round(v + (c2[k] - v) * rect); }).join(',') + ')';
+      var tramo = .5 / E.zonas.length, activa = -1;
+      E.zonas.forEach(function (z, k) { var a = .2 + k * tramo; if (p >= a && p < a + tramo) activa = k; });
+      glows.forEach(function (g, k) { g.classList.toggle('is-on', k === activa); });
+      caps.forEach(function (c, k) { c.classList.toggle('is-on', k === activa); });
+      lab.classList.toggle('is-on', rect > .85);
+      var paso = p < .2 ? 0 : p < .7 ? 1 : 2;
+      pasos.forEach(function (l, k) { l.classList.toggle('is-on', k <= paso && p > .02); });
+      zoom.style.transform = 'scale(' + (1 + .07 * p).toFixed(4) + ')';
+    }
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { pintar(1); return; }
+    esc.classList.add('is-story');
+    var pendiente = false;
+    function medir() {
+      pendiente = false;
+      var r = esc.getBoundingClientRect(), st = $('.p-esc-stick', esc).offsetHeight, recorrido = r.height - st;
+      pintar(recorrido > 0 ? lim(-(r.top - parseFloat(getComputedStyle($('.p-esc-stick', esc)).top)) / recorrido) : 1);
+    }
+    function alScroll() { if (!pendiente) { pendiente = true; requestAnimationFrame(medir); } }
+    addEventListener('scroll', alScroll, { passive: true });
+    addEventListener('resize', alScroll);
+    medir();
   }
 
   /* Cuerpo [F13–F19] */
