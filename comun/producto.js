@@ -117,85 +117,73 @@
     renderBases(); renderPrice();
   }
 
-  /* Escena de corte · capa interactiva (Paco, 09/11): un visor recorre los muelles y explica cómo trabajan bajo cada zona
-     del cuerpo; los números marcan cada capa y se enlazan con la lista. Al verse por primera vez hace un recorrido solo */
-  function capaInteractiva(E) {
-    if (!E.zonas) return '';
-    var M = E.muelles;
-    return '<div class="p-esc-ov" id="p-esc-ov" role="group" aria-label="Pasa el ratón o desliza el dedo por el colchón">' +
-      (E.capasPos || []).map(function (p, i) { return '<button type="button" class="p-esc-pt" data-c="' + i + '" style="left:' + p[0] + '%;top:' + p[1] + '%" aria-label="Capa ' + (i + 1) + '">' + (i + 1) + '</button>'; }).join('') +
-      '<i class="p-esc-line" aria-hidden="true" style="bottom:' + (100 - M[2]) + '%"></i>' +
-      '<i class="p-esc-lens" aria-hidden="true" style="top:' + M[2] + '%;height:' + (M[3] - M[2]) + '%"></i>' +
-      '<div class="p-esc-tag" aria-live="polite"><p class="p-esc-tag-k">Bajo tu <b></b></p><span class="p-esc-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><p class="p-esc-tag-t"></p></div>' +
-      '<p class="p-esc-hint"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 8 3 12l4 4M17 8l4 4-4 4M3 12h18"/></svg>Desliza por el colchón</p></div>';
-  }
-  function escenaViva(esc, E) {
-    var ov = $('#p-esc-ov', esc), M = E.muelles, lens = $('.p-esc-lens', ov), line = $('.p-esc-line', ov), tag = $('.p-esc-tag', ov);
-    var zona = -1, demo = null;
-    function poner(x) {
-      x = Math.max(M[0] + 3, Math.min(M[1] - 3, x));
-      lens.style.left = x + '%'; line.style.left = x + '%';
-      tag.style.left = Math.max(19, Math.min(81, x)) + '%';
-      var z = 0; for (var i = 0; i < E.zonas.length; i++) if (x >= E.zonas[i][0] && x < E.zonas[i][1]) z = i;
-      if (z !== zona) {
-        zona = z; var Z = E.zonas[z];
-        $('.p-esc-tag-k b', tag).textContent = Z[2].toLowerCase();
-        $('.p-esc-tag-t', tag).textContent = Z[4];
-        $$('.p-esc-bars i', tag).forEach(function (b, j) { b.classList.toggle('is-on', j < Z[3]); });
-      }
+  /* Módulo «Tu espalda, recta» (Paco, 09/11). El cliente cambia entre «Sin adaptación» y «Con adaptación» y ve la columna:
+     doblada cuando el colchón no sujeta (la cadera se hunde) y recta con el colchón LM. La primera vez que se ve, empieza
+     en «Sin adaptación» y pasa sola a «Con adaptación» */
+  function espalda(esc, E) {
+    var N = P.nombre, src = function (b, w) { return b + '-' + w + '.webp'; };
+    var img = function (b, cls, alt) {
+      return '<img class="p-esc-v ' + cls + '" src="' + src(b, 1200) + '" srcset="' + src(b, 800) + ' 800w, ' + src(b, 1200) + ' ' + E.w + 'w" sizes="(max-width: 900px) 100vw, 52vw" alt="' + alt + '" width="' + E.w + '" height="' + E.h + '" loading="lazy">';
+    };
+    var TXT = {
+      sin: ['Si el colchón no se adapta…', 'La cadera se hunde de más, la cintura se queda sin apoyo y la columna se dobla. Por eso te levantas cargado.'],
+      con: ['Con el ' + N + '…', 'Cede justo donde pesas más, en el hombro y la cadera, y sujeta la cintura. Tu columna queda recta toda la noche.']
+    };
+    esc.innerHTML = '<div class="p-esc-img" data-modo="con">' +
+        img(E.con, 'p-esc-con', 'Persona durmiendo de lado sobre el ' + P.titulo + ' con la espalda recta') +
+        img(E.sin, 'p-esc-sin', 'La misma persona en un colchón que no se adapta: la cadera se hunde y la espalda se dobla') +
+        '<svg class="p-esc-col" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">' +
+          '<path class="p-esc-ref" d="' + E.columna.recta + '"/>' +
+          '<path class="p-esc-sp p-esc-sp--sin" d="' + E.columna.sin + '"/>' +
+          '<path class="p-esc-sp p-esc-sp--con" d="' + E.columna.con + '"/></svg>' +
+        '<p class="p-esc-lab p-esc-lab--sin">' + LM.ico('close') + 'La columna se dobla</p>' +
+        '<p class="p-esc-lab p-esc-lab--con">' + LM.ico('check') + 'Columna recta</p>' +
+        '<div class="p-esc-seg" role="radiogroup" aria-label="Comparar"><span class="p-esc-seg-ind" aria-hidden="true"></span>' +
+          '<button type="button" role="radio" data-modo="sin" aria-checked="false">Sin adaptación</button>' +
+          '<button type="button" role="radio" data-modo="con" aria-checked="true">Con adaptación</button></div>' +
+        '<span class="p-esc-note">Recreación ilustrativa</span></div>' +
+      '<figcaption class="p-esc-txt"><p class="lm-eyebrow">Tu espalda, en su sitio</p>' +
+        '<h3 class="p-esc-h">Así mantiene recta tu espalda <em>el ' + N + '.</em></h3>' +
+        '<div class="p-esc-est" aria-live="polite"><p class="p-esc-est-k"></p><p class="p-esc-est-t"></p></div>' +
+        '<ul class="p-esc-z">' +
+          '<li><b>Hombro</b><span>Se hunde lo justo, sin cargarse.</span></li>' +
+          '<li><b>Cintura</b><span>Tiene apoyo: no queda hueco.</span></li>' +
+          '<li><b>Cadera</b><span>Cede y reparte el peso, sin hundirse de más.</span></li></ul>' +
+        '<p class="p-esc-tip">Cambia entre <b>sin</b> y <b>con adaptación</b> en la imagen.</p></figcaption>';
+    esc.hidden = false;
+    var caja = $('.p-esc-img', esc), seg = $('.p-esc-seg', esc), ind = $('.p-esc-seg-ind', seg);
+    function deslizar() {
+      var b = $('[aria-checked="true"]', seg); if (!b || !b.offsetWidth) return;
+      ind.style.width = b.offsetWidth + 'px'; ind.style.transform = 'translateX(' + b.offsetLeft + 'px)';
     }
-    function parar() { if (demo) { cancelAnimationFrame(demo); demo = null; } }
-    function desdeEvento(e) { var r = ov.getBoundingClientRect(); return (e.clientX - r.left) / r.width * 100; }
-    ov.addEventListener('pointermove', function (e) { parar(); ov.classList.add('is-live', 'is-used'); poner(desdeEvento(e)); });
-    ov.addEventListener('pointerdown', function (e) { if (e.target.closest('.p-esc-pt')) return; parar(); ov.classList.add('is-live', 'is-used'); poner(desdeEvento(e)); });
-    poner(62);
-    // Capas: número sobre el corte <-> línea de la lista
-    function capa(i, on) {
-      $$('.p-esc-pt', ov).forEach(function (b) { b.classList.toggle('is-on', on && +b.getAttribute('data-c') === i); });
-      $$('.p-esc-l li', esc).forEach(function (l) { l.classList.toggle('is-on', on && +l.getAttribute('data-c') === i); });
+    function modo(m) {
+      caja.setAttribute('data-modo', m);
+      $$('button', seg).forEach(function (b) { b.setAttribute('aria-checked', b.getAttribute('data-modo') === m); });
+      $('.p-esc-est-k', esc).textContent = TXT[m][0]; $('.p-esc-est-t', esc).textContent = TXT[m][1];
+      $('.p-esc-est', esc).setAttribute('data-modo', m);
+      deslizar();
     }
-    esc.addEventListener('pointerover', function (e) { var t = e.target.closest('[data-c]'); if (t) capa(+t.getAttribute('data-c'), true); });
-    esc.addEventListener('pointerout', function (e) { var t = e.target.closest('[data-c]'); if (t) capa(+t.getAttribute('data-c'), false); });
-    esc.addEventListener('focusin', function (e) { var t = e.target.closest('.p-esc-pt'); if (t) capa(+t.getAttribute('data-c'), true); });
-    esc.addEventListener('focusout', function (e) { var t = e.target.closest('.p-esc-pt'); if (t) capa(+t.getAttribute('data-c'), false); });
-    // Recorrido automático la primera vez que se ve (sin él si el usuario reduce el movimiento)
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) { ov.classList.add('is-live'); return; }
-    function suave(k) { return k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2; }
+    var auto = null, tocado = false;
+    seg.addEventListener('click', function (e) { var b = e.target.closest('[data-modo]'); if (!b) return; tocado = true; clearTimeout(auto); modo(b.getAttribute('data-modo')); LM.track('espalda_modo', { modo: b.getAttribute('data-modo') }); });
+    seg.addEventListener('keydown', function (e) { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); tocado = true; clearTimeout(auto); var m = caja.getAttribute('data-modo') === 'con' ? 'sin' : 'con'; modo(m); $('[data-modo="' + m + '"]', seg).focus(); } });
+    addEventListener('resize', deslizar);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(deslizar);
+    modo('con');
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+    // Primera vez que se ve: empieza sin adaptación y pasa sola a con adaptación
+    modo('sin');
     var io = new IntersectionObserver(function (en) {
       if (!en[0].isIntersecting) return; io.disconnect();
-      if (ov.classList.contains('is-used')) return;
-      ov.classList.add('is-live');
-      var t0 = null, D = 3400, a = M[0] + 3, b = M[1] - 3;
-      // De la cabeza a los pies y vuelta a la cadera, donde más trabajan los muelles
-      function paso(t) {
-        if (t0 === null) t0 = t;
-        var k = Math.min(1, (t - t0) / D);
-        poner(k < .65 ? a + (b - a) * suave(k / .65) : b - (b - 62) * suave((k - .65) / .35));
-        demo = k < 1 ? requestAnimationFrame(paso) : null;
-      }
-      demo = requestAnimationFrame(paso);
-    }, { threshold: .5 });
-    io.observe(ov);
+      if (!tocado) auto = setTimeout(function () { if (!tocado) modo('con'); }, 1700);
+    }, { threshold: .55 });
+    io.observe(caja);
   }
 
   /* Cuerpo [F13–F19] */
   $('#p-ben').innerHTML = P.beneficios.map(function (b) { return '<li><span class="h-ic">' + LM.ico(b[0]) + '</span><b>' + b[1] + '</b><p>' + b[2] + '</p></li>'; }).join('');
   $('#p-dur').textContent = P.durTxt;
-  // Paco, 09/11: escena de corte, con las capas del colchón numeradas al lado
-  if (LM.ESCENA_CORTE && $('#p-esc')) {
-    var EC = LM.ESCENA_CORTE, conMuelles = P.escena === 'muelles';
-    var E = { img: EC.img, w: EC.w, h: EC.h, muelles: EC.muelles, zonas: EC.zonas[conMuelles ? 'muelles' : 'general'], capasPos: conMuelles ? EC.capasPos : [] };
-    var esc = $('#p-esc');
-    esc.innerHTML = '<div class="p-esc-img"><img src="' + E.img + '-1200.webp" srcset="' + E.img + '-800.webp 800w, ' + E.img + '-1200.webp ' + E.w + 'w" sizes="(max-width: 900px) 100vw, 52vw" alt="Persona durmiendo de lado sobre el ' + P.titulo + ', con el colchón cortado para ver sus capas" width="' + E.w + '" height="' + E.h + '" loading="lazy">' +
-        '<span class="p-esc-note">Recreación ilustrativa</span>' + capaInteractiva(E) + '</div>' +
-      '<figcaption class="p-esc-txt"><p class="lm-eyebrow">Por dentro, mientras duermes</p>' +
-        '<h3 class="p-esc-h">Así te sujeta el ' + P.nombre + ' <em>toda la noche.</em></h3>' +
-        '<p class="p-esc-sub">' + P.sensacionLarga + '</p>' +
-        '<ol class="p-esc-l">' + P.capas.map(function (c, i) { return '<li data-c="' + i + '"><b>' + c[0] + '</b><span>' + c[1] + '</span></li>'; }).join('') + '</ol>' +
-        '<p class="p-esc-alt">' + P.altura + ' · ' + P.nucleo + '</p></figcaption>';
-    esc.hidden = false;
-    if (E.zonas) escenaViva(esc, E);
-  }
+  // Paco, 09/11: «Tu espalda, recta»: sin adaptación / con adaptación sobre la misma escena
+  if (LM.ESCENA_CORTE && $('#p-esc')) espalda($('#p-esc'), LM.ESCENA_CORTE);
   // Paco, 06/11: fuera la tarjeta de barras de firmeza y adaptabilidad (los datos siguen en el Laboratorio de descanso)
   scrub();
 

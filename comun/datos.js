@@ -161,7 +161,6 @@ LM.PRODUCTOS = {
     durTxt: 'Los muelles ensacados reparten tu peso de forma uniforme y mantienen tu postura.',
     id: 41644, nombre: 'Natura Gold', titulo: 'Colchón Natura Gold', url: 'colchon-natura-gold.html',
     img: '../img/natura-gold-nueva-560.webp', foto: 'nueva', fotoNueva: '../img/natura-gold-nueva', imgDetalle: '../img/natura-latex-06-560.webp', 
-    escena: 'muelles', /* Paco, 09/11: escena de corte (lleva muelles) */
     etiqueta: 'El más vendido', nucleo: 'Muelles ensacados + visco', tipo: 'muelles', altura: '30 cm',
     firmeza: 80, adaptabilidad: 80, sensacion: 'equilibrada',
     sensacionTxt: 'Ni duro ni blando. Te acoge y te sujeta a la vez.',
@@ -177,7 +176,6 @@ LM.PRODUCTOS = {
     packs: { canape: { pid: 64601, tabla: 'latexCanape', d: 'Canapé abatible + almohadas, edredón y protector de regalo', img: '../img/pack-latex-canape-760.webp' },
              base: { pid: 73424, tabla: 'latexBase', d: 'Base tapizada antideslizante + almohadas de regalo', img: '../img/pack-latex-base-760.webp' } },
     fotosPropias: true,
-    escena: 'muelles', /* Paco, 09/11: escena de corte con explicación de los muelles y números de capa */
     vp: 'Látex natural sobre muelles ensacados. Te recibe suave, te sujeta bien y no pasas calor.',
     beneficios: [['waves', 'No pasas calor', 'El tejido y el látex dejan pasar el aire. La superficie se mantiene fresca.'],
                  ['body', 'Se adapta a tu cuerpo', 'El látex se amolda a hombros y cadera y recupera su forma en cuanto te mueves.'],
@@ -223,25 +221,12 @@ LM.PRODUCTOS = {
             ['Termorregulación', 'Deja pasar el aire y expulsa el calor.']] }
 };
 LM.ORDEN = ['visco', 'gold', 'latex', 'gran'];
-/* Escena de corte (Paco, 09/11): persona durmiendo con el colchón cortado. La imagen es la del Natura Látex; Paco la quiere
-   en todas las fichas. Capa interactiva: hueco de los muelles [x desde, x hasta, y desde, y hasta] y zonas del cuerpo
-   [x desde, x hasta, zona, cuánto cede 1–5, texto]. En los modelos con muelles (escena: 'muelles') los textos hablan de
-   muelles y se marcan las capas sobre el corte; en el resto, del colchón en general. Explicación ilustrativa, no medida */
+/* Módulo «Tu espalda, recta» (Paco, 09/11): no habla de capas (eso es el vídeo de «Por dentro»); enseña cómo el colchón
+   mantiene la espalda recta. Dos versiones de la misma imagen: con adaptación (la de Paco) y sin adaptación (deformada:
+   la cadera se hunde de más, efecto hamaca; scratchpad/scripts/sin_adaptacion.py). Columna en % de la imagen. Ilustrativo */
 LM.ESCENA_CORTE = {
-  img: '../img/escena-capas-latex', w: 1134, h: 1152, muelles: [17.5, 83.5, 59, 68],
-  capasPos: [[9, 52.4], [18, 54.3], [27, 56.4], [21, 63.5]],
-  zonas: {
-    muelles: [[17.5, 30, 'Cabeza', 1, 'La almohada hace el trabajo: aquí los muelles apenas notan peso.'],
-              [30, 44, 'Hombros', 4, 'Ceden más para que el hombro se hunda lo justo y no se cargue.'],
-              [44, 55, 'Cintura', 2, 'Empujan hacia arriba y rellenan el hueco: la espalda queda recta.'],
-              [55, 70, 'Cadera', 5, 'Es donde más peso hay: ceden y lo reparten entre muchos muelles.'],
-              [70, 83.5, 'Piernas', 2, 'Sujetan sin presión. Cada muelle trabaja solo, sin mover al de al lado.']],
-    general: [[17.5, 30, 'Cabeza', 1, 'La almohada hace el trabajo: aquí el colchón apenas nota peso.'],
-              [30, 44, 'Hombros', 4, 'Cede más para que el hombro se hunda lo justo y no se cargue.'],
-              [44, 55, 'Cintura', 2, 'Empuja hacia arriba y rellena el hueco: la espalda queda recta.'],
-              [55, 70, 'Cadera', 5, 'Es donde más peso hay: el colchón cede y lo reparte.'],
-              [70, 83.5, 'Piernas', 2, 'Sujeta sin presión, para que descanses toda la noche.']]
-  }
+  con: '../img/escena-capas-latex', sin: '../img/escena-sin-adaptacion', w: 1134, h: 1152,
+  columna: { con: 'M29 42.5 L71 42.5', sin: 'M29 42.6 C40 43.4 52 43.8 62 46 S68 45 71 44.2', recta: 'M29 42.5 L71 42.5' }
 };
 /* Paco, 29/10: foto nueva de cada modelo SOLO en el bloque de la home donde eliges colchón (ficha y listas sin cambios) */
 LM.FOTO_HOME = { visco: 'natura-visco-home', gold: 'natura-gold-home', latex: 'natura-latex-home', gran: 'gran-natura-home' };
