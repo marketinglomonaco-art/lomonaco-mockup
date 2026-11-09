@@ -324,8 +324,17 @@
       else directo();
     }
     function limitar(x) { return Math.min(1, Math.max(0, x)); }
+    // Paco, 09/11: qué parte del vídeo corresponde a cada punto del scroll (data-tramos en el <video>; sin él, lineal hasta el 85 %)
+    var tramos = (v.getAttribute('data-tramos') || '0 0, .85 1').split(',').map(function (s) { return s.trim().split(/\s+/).map(Number); });
+    function tramo(x) {
+      for (var i = 1; i < tramos.length; i++) {
+        var a = tramos[i - 1], b = tramos[i];
+        if (x <= b[0]) return a[1] + (b[1] - a[1]) * limitar((x - a[0]) / (b[0] - a[0] || 1));
+      }
+      return tramos[tramos.length - 1][1];
+    }
     function pintar() {
-      if (dur && !v.seeking) { var t = Math.min(1, p / .85) * (dur - .05); if (Math.abs(v.currentTime - t) > .02) v.currentTime = t; }
+      if (dur && !v.seeking) { var t = tramo(p) * (dur - .05); if (Math.abs(v.currentTime - t) > .02) v.currentTime = t; }
       var on = -1; pasos.forEach(function (s, i) { if (p >= s.a && p < s.b) on = i; });
       if (on !== last) {
         items.forEach(function (el, i) { el.classList.toggle('is-on', i === on); });
