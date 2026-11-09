@@ -1164,3 +1164,7 @@ html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color 
 @media (max-width: 900px) {
   .p-scrub-nav .lm-btn { min-height: 38px; padding: 0 16px; font-size: 14.5px; }
 }
+
+/* Por dentro (Paco, 09/11): al terminar las capas con el ratón encima, la página se quedaba atascada.
+   «overscroll-behavior: contain» no dejaba pasar la rueda a la página; ahora, cuando el recuadro ya no la usa, la página sigue bajando */
+.p-scrub-pin { overscroll-behavior: auto; }
