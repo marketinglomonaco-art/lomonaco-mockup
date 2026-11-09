@@ -132,10 +132,11 @@
           '<p class="p-esc-lab" style="left:' + E.etiqueta[0] + '%;top:' + E.etiqueta[1] + '%">' + LM.ico('check') + 'Columna recta</p>' +
         '</div>' +
         '<ol class="p-esc-pasos" aria-hidden="true"><li></li><li></li><li></li></ol>' +
-        '<span class="p-esc-note">Recreación ilustrativa</span></div></div>';
+        // Paco, 09/11: aviso integrado, como el de «Por dentro» (sin «Recreación ilustrativa»)
+        '<p class="p-esc-aviso"><span class="p-scrub-mouse" aria-hidden="true"><i></i></span><span>Sigue bajando<small>y verás cómo se queda recta tu espalda</small></span></p></div></div>';
     esc.hidden = false;
     var zoom = $('.p-esc-zoom', esc), sp = $('.p-esc-sp', esc), lab = $('.p-esc-lab', esc), pasos = $$('.p-esc-pasos li', esc);
-    var glows = $$('.p-esc-glow', esc), caps = $$('.p-esc-cap', esc);
+    var glows = $$('.p-esc-glow', esc), caps = $$('.p-esc-cap', esc), aviso = $('.p-esc-aviso', esc);
     function lim(v) { return Math.max(0, Math.min(1, v)); }
     function pintar(p) {
       // 0–0,2: se dibuja la columna (curvada) · 0,2–0,7: zonas · 0,7–0,95: se endereza · acercamiento suave todo el rato
@@ -153,6 +154,7 @@
       glows.forEach(function (g, k) { g.classList.toggle('is-on', k === activa); });
       caps.forEach(function (c, k) { c.classList.toggle('is-on', k === activa); });
       lab.classList.toggle('is-on', rect > .85);
+      aviso.classList.toggle('is-off', p > .82);
       var paso = p < .2 ? 0 : p < .7 ? 1 : 2;
       pasos.forEach(function (l, k) { l.classList.toggle('is-on', k <= paso && p > .02); });
       zoom.style.transform = 'scale(' + (1 + .07 * p).toFixed(4) + ')';

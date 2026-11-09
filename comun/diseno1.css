@@ -1049,3 +1049,17 @@ html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color 
   .p-esc-lab .lm-i { width: 15px; height: 15px; }
   .p-esc-pasos { bottom: 10px; } .p-esc-pasos li { width: 18px; height: 3px; }
 }
+
+/* Columna recta · aviso para seguir bajando (Paco, 09/11): mismo diseño que el de «Por dentro», sobre la imagen */
+.p-esc-aviso { position: absolute; left: 16px; bottom: 16px; z-index: 2; display: flex; align-items: center; gap: 12px; padding: 11px 16px 11px 13px; border-radius: 14px; background: rgba(255,255,255,.9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 8px 24px rgba(0,0,0,.14); font-size: 14px; font-weight: 600; line-height: 1.3; color: var(--ink); transition: opacity .4s ease, transform .4s ease; pointer-events: none; }
+.p-esc-aviso small { display: block; font-size: 12.5px; font-weight: 400; color: var(--mute); }
+.p-esc-aviso .p-scrub-mouse { border-color: var(--ink); }
+.p-esc-aviso .p-scrub-mouse i { background: var(--ink); }
+.p-esc-aviso.is-off { opacity: 0; transform: translateY(6px); }
+.p-esc .p-esc-pasos { left: auto; right: 18px; transform: none; bottom: 22px; }
+@media (max-width: 700px) {
+  .p-esc-aviso { left: 10px; bottom: 10px; padding: 8px 12px 8px 10px; gap: 9px; font-size: 13px; }
+  .p-esc-aviso small { font-size: 11.5px; }
+  .p-esc-aviso .p-scrub-mouse { width: 16px; height: 24px; }
+  .p-esc .p-esc-pasos { right: 12px; bottom: 16px; }
+}
