@@ -33,12 +33,12 @@
 
   /* Galería: la primera foto es la del pack con la base elegida; luego, las del colchón */
   var gal = $('#p-gal');
-  var alts = ['esquina con la cinta Lomonaco', 'esquina sobre canapé de madera', 'lateral con el nombre del modelo', 'detalle de la etiqueta', 'detalle del asa lateral', 'superficie acolchada de cerca'];
+  var alts = LM.galeria(K);   // Paco, 09/11: fotos de producto nuevas (las del modelo y las de detalle)
   function galeria() {
     var f = base().img;
     gal.innerHTML = '<figure class="is-main pk-main"><img src="' + f + '-1200.webp" srcset="' + f + '-700.webp 700w, ' + f + '-1200.webp 1200w" sizes="(max-width: 900px) 100vw, 64vw" width="1200" height="896" alt="' + nombrePack() + '" fetchpriority="high">' +
       '<span class="pk-regalo-chip">' + IC.regalo + 'Almohadas, edredón y protector · <s>' + LM.eur(VALOR) + '</s> <b>Gratis</b></span></figure>' +
-      alts.map(function (a, i) { return '<figure><img src="../img/producto-0' + (i + 2) + '-947.webp" srcset="../img/producto-0' + (i + 2) + '-560.webp 560w, ../img/producto-0' + (i + 2) + '-947.webp 947w" sizes="(max-width: 900px) 100vw, 32vw" width="947" height="947" alt="' + P.titulo + ': ' + a + '" loading="lazy"></figure>'; }).join('');
+      alts.map(function (a) { return '<figure><img src="../img/' + a[0] + '-947.webp" srcset="../img/' + a[0] + '-560.webp 560w, ../img/' + a[0] + '-947.webp 947w" sizes="(max-width: 900px) 100vw, 32vw" width="947" height="947" alt="' + P.titulo + ': ' + a[1] + '" loading="lazy"></figure>'; }).join('');
   }
   galeria();
   var count = $('#p-gal-count');

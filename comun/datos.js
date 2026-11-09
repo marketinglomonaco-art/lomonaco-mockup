@@ -408,3 +408,14 @@ LM.PACK_BASES = {
             colores: [['Antracita', '#3b3c40'], ['Beige', '#d8cbb3'], ['Chocolate', '#4a3427'], ['Gris claro', '#c8c8cc']], porDefecto: 'Antracita', foto: 'Antracita',
             pend: 'la base del pack en la tienda solo tiene Blanco y Chocolate; los 4 colores son de la base tapizada de tela' }
 };
+
+/* Galería de las fichas (Paco, 09/11): fotos de producto nuevas (img/fp-0N-1400|947|560.webp, cuadradas).
+   Cada modelo lleva las suyas delante; las de detalle (etiqueta, asa, acolchado) van en todas. */
+LM.GALERIA = {
+  modelo: {
+    latex: [['fp-06', 'esquina con la cinta Lomonaco'], ['fp-02', 'esquina sobre canapé de madera, con el nombre del modelo']],
+    gran:  [['fp-07', 'de frente sobre canapé de madera, con almohadas'], ['fp-05', 'sus capas por dentro, sobre el canapé']]
+  },
+  comunes: [['fp-01', 'detalle de la etiqueta'], ['fp-03', 'detalle del asa con la M'], ['fp-04', 'superficie acolchada de cerca']]
+};
+LM.galeria = function (k) { return (LM.GALERIA.modelo[k] || []).concat(LM.GALERIA.comunes); };
