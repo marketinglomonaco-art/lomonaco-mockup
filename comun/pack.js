@@ -38,9 +38,20 @@
     var f = base().img;
     gal.innerHTML = '<figure class="is-main pk-main"><img src="' + f + '-1200.webp" srcset="' + f + '-700.webp 700w, ' + f + '-1200.webp 1200w" sizes="(max-width: 900px) 100vw, 64vw" width="1200" height="896" alt="' + nombrePack() + '" fetchpriority="high">' +
       '<span class="pk-regalo-chip">' + IC.regalo + 'Almohadas, edredón y protector · <s>' + LM.eur(VALOR) + '</s> <b>Gratis</b></span></figure>' +
-      alts.map(function (a) { return '<figure><img src="../img/' + a[0] + '-947.webp" srcset="../img/' + a[0] + '-560.webp 560w, ../img/' + a[0] + '-947.webp 947w" sizes="(max-width: 900px) 100vw, 32vw" width="947" height="947" alt="' + P.titulo + ': ' + a[1] + '" loading="lazy"></figure>'; }).join('');
+      alts.map(function (a, i) { return '<figure' + (i + 1 >= VIS ? ' class="is-mas"' : '') + '><img src="../img/' + a[0] + '-947.webp" srcset="../img/' + a[0] + '-560.webp 560w, ../img/' + a[0] + '-947.webp 947w" sizes="(max-width: 900px) 100vw, 32vw" width="947" height="947" alt="' + P.titulo + ': ' + a[1] + '" loading="lazy"></figure>'; }).join('');
   }
+  // Paco, 09/11: la foto del pack + 4 a la vista; el resto con «Ver más fotos» (en el móvil, carrusel con todas)
+  var VIS = LM.GALERIA.visibles || 99;
   galeria();
+  if (alts.length + 1 > VIS) {
+    var mas = alts.length + 1 - VIS;
+    gal.insertAdjacentHTML('afterend', '<button type="button" class="lm-btn lm-btn--line p-gal-mas" aria-expanded="false" aria-controls="p-gal">Ver más fotos (' + mas + ')</button>');
+    var bMas = gal.nextElementSibling;
+    bMas.addEventListener('click', function () {
+      var on = gal.classList.toggle('is-todas');
+      bMas.setAttribute('aria-expanded', on); bMas.textContent = on ? 'Ver menos fotos' : 'Ver más fotos (' + mas + ')';
+    });
+  }
   var count = $('#p-gal-count');
   function contar() { var i = Math.round(gal.scrollLeft / (gal.clientWidth || 1)); count.textContent = (i + 1) + ' / ' + (alts.length + 1); }
   gal.addEventListener('scroll', contar, { passive: true }); contar();

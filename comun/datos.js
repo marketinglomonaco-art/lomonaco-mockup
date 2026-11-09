@@ -231,21 +231,21 @@ LM.ORDEN = ['visco', 'gold', 'latex', 'gran'];
 /* «Por dentro» (Paco, 09/11): una tarjeta por cada capa que se ve en el vídeo y un punto sobre esa capa.
    El vídeo es del Natura Látex (escena de Blender natura_latex_capas.py: 11 capas, 32 cm, de arriba abajo con su grosor).
    Solo en su ficha: en las demás el vídeo no coincide con sus capas y se quedan sus 4 tarjetas, sin puntos.
-   [nombre, texto, x, y] · x, y = punto sobre la capa, en % del fotograma abierto (960 × 960).
+   [nombre, texto, x, y] · x, y = punto sobre la capa, en % del fotograma abierto (960 × 960). Paco, 09/11: centrados en la capa.
    PROVISIONAL: nombres de la escena 3D; faltan los nombres y textos comerciales de Paco */
 LM.VIDEO_CAPAS = {
   latex: [
-    ['Látex natural', '3 cm. Una capa suave que te acoge al tumbarte. Hipoalergénica y transpirable.', 91.04, 31.25],
-    ['Capa de confort', '1 cm.', 90.63, 34.38],
-    ['Capa de confort', '1 cm.', 90.36, 37.34],
-    ['Capa fina', '1 cm.', 90.1, 40.36],
-    ['Espuma', '3 cm.', 89.74, 43.75],
-    ['Espuma', '3 cm.', 89.38, 47.14],
-    ['Muelles ensacados', '14 cm. Cada muelle trabaja solo: soporte a tu medida y no notas a tu pareja.', 87.5, 53.13],
-    ['Base', '2 cm.', 88.44, 58.07],
-    ['Capa fina', '1 cm.', 88.13, 60.68],
-    ['Capa fina', '1 cm.', 87.92, 63.54],
-    ['Capa inferior', '2 cm.', 87.6, 66.3]
+    ['Látex natural', '3 cm. Una capa suave que te acoge al tumbarte. Hipoalergénica y transpirable.', 63.96, 35.73],
+    ['Capa de confort', '1 cm.', 63.96, 39.79],
+    ['Capa de confort', '1 cm.', 63.96, 43.02],
+    ['Capa fina', '1 cm.', 63.96, 46.56],
+    ['Espuma', '3 cm.', 63.96, 50.31],
+    ['Espuma', '3 cm.', 63.96, 54.9],
+    ['Muelles ensacados', '14 cm. Cada muelle trabaja solo: soporte a tu medida y no notas a tu pareja.', 63.96, 60.42],
+    ['Base', '2 cm.', 63.96, 65.94],
+    ['Capa fina', '1 cm.', 63.96, 70.1],
+    ['Capa fina', '1 cm.', 63.96, 73.44],
+    ['Capa inferior', '2 cm.', 63.96, 76.77]
   ]
 };
 LM.ESCENA_PAREJA = {
@@ -431,15 +431,17 @@ LM.PACK_BASES = {
 
 /* Galería de las fichas (Paco, 09/11): fotos de producto nuevas (img/fp-0N-1400|947|560.webp, cuadradas).
    Cada modelo lleva las suyas delante; las de detalle (etiqueta, asa, acolchado) van en todas. */
+/* Galería de la ficha (Paco, 09/11): las 7 fotos de producto. La primera, el plano general (la cama entera en la habitación);
+   luego 4 a la vista y un botón «Ver más fotos» para las otras 2. En todas las fichas y packs.
+   El Natura Gold, con sus fotos del showroom (img/fpg-*), con la de la cama entera primero */
 LM.GALERIA = {
+  todas: [['fp-07', 'de frente en la habitación, sobre canapé de madera'], ['fp-06', 'esquina con la cinta Lomonaco'],
+          ['fp-02', 'esquina sobre canapé de madera, con el nombre del modelo'], ['fp-03', 'detalle del asa con la M'],
+          ['fp-04', 'superficie acolchada de cerca'], ['fp-05', 'sus capas por dentro, sobre el canapé'], ['fp-01', 'detalle de la etiqueta']],
   modelo: {
-    latex: [['fp-06', 'esquina con la cinta Lomonaco'], ['fp-02', 'esquina sobre canapé de madera, con el nombre del modelo']],
-    gran:  [['fp-07', 'de frente sobre canapé de madera, con almohadas'], ['fp-05', 'sus capas por dentro, sobre el canapé']],
-    /* Paco, 09/11: el Gold, con sus fotos de la sesión del showroom (mejoradas, en cuadrado: img/fpg-0N-*). Sin las comunes, que son del Látex */
-    gold:  [['fpg-02', 'esquina con la cinta Lomonaco'], ['fpg-03', 'el bordado Natura Gold'], ['fpg-06', 'con su cabecero en el showroom'],
-            ['fpg-04', 'las asas con la M'], ['fpg-05', 'superficie acolchada de cerca']]
+    gold: [['fpg-06', 'con su cabecero en el showroom'], ['fpg-02', 'esquina con la cinta Lomonaco'], ['fpg-03', 'el bordado Natura Gold'],
+           ['fpg-04', 'las asas con la M'], ['fpg-05', 'superficie acolchada de cerca']]
   },
-  soloPropias: ['gold'],
-  comunes: [['fp-01', 'detalle de la etiqueta'], ['fp-03', 'detalle del asa con la M'], ['fp-04', 'superficie acolchada de cerca']]
+  visibles: 5   // la grande + 4; el resto, con «Ver más fotos»
 };
-LM.galeria = function (k) { var m = LM.GALERIA.modelo[k] || []; return LM.GALERIA.soloPropias.indexOf(k) > -1 ? m : m.concat(LM.GALERIA.comunes); };
+LM.galeria = function (k) { return LM.GALERIA.modelo[k] || LM.GALERIA.todas; };

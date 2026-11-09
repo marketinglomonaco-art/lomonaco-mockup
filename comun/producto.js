@@ -28,13 +28,24 @@
   // La 2 y la 3 llevan el botón de vídeo, como antes
   var fotos = LM.galeria(K).map(function (x, i) { return { f: '../img/' + x[0], g: i ? 947 : 1400, h: i ? 947 : 1400, alt: x[1], video: i === 1 || i === 2 }; });
   var PLAY = '<span class="p-vid" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span><span class="p-vid-k" aria-hidden="true">Vídeo</span>';
-  var gal = $('#p-gal');
+  var gal = $('#p-gal'), VIS = LM.GALERIA.visibles || fotos.length;
   gal.innerHTML = fotos.map(function (x, i) {
-    return '<figure' + (i ? '' : ' class="is-main is-square"') + (x.video ? ' data-video' : '') + '><img src="' + x.f + '-' + x.g + '.webp" srcset="' + x.f + '-560.webp 560w, ' + x.f + '-' + x.g + '.webp ' + x.g + 'w"' +
+    return '<figure' + (i ? (i >= VIS ? ' class="is-mas"' : '') : ' class="is-main is-square"') + (x.video ? ' data-video' : '') + '><img src="' + x.f + '-' + x.g + '.webp" srcset="' + x.f + '-560.webp 560w, ' + x.f + '-' + x.g + '.webp ' + x.g + 'w"' +
       ' sizes="' + (i ? '(max-width: 900px) 100vw, 32vw' : '(max-width: 900px) 100vw, 64vw') + '" width="' + x.g + '" height="' + x.h + '"' +
       ' alt="' + P.titulo + ': ' + x.alt + '"' + (i ? ' loading="lazy"' : ' fetchpriority="high"') + '>' +
       (x.video ? '<button type="button" class="p-vid-b" aria-label="Ver el vídeo: ' + x.alt + '">' + PLAY + '</button>' : '') + '</figure>';
   }).join(''); // 29/10: sin avisos bajo la galería (Paco). Fotos de otro modelo y vídeos siguen pendientes en el LEEME
+  // Paco, 09/11: la grande + 4 a la vista; el resto con «Ver más fotos» (en el móvil, carrusel con todas)
+  if (fotos.length > VIS) {
+    var mas = fotos.length - VIS;
+    gal.insertAdjacentHTML('afterend', '<button type="button" class="lm-btn lm-btn--line p-gal-mas" aria-expanded="false" aria-controls="p-gal">Ver más fotos (' + mas + ')</button>');
+    var bMas = gal.nextElementSibling;
+    bMas.addEventListener('click', function () {
+      var on = gal.classList.toggle('is-todas');
+      bMas.setAttribute('aria-expanded', on); bMas.textContent = on ? 'Ver menos fotos' : 'Ver más fotos (' + mas + ')';
+      if (on) LM.track('galeria_ver_mas', {});
+    });
+  }
   var count = $('#p-gal-count');
   function contar() { var i = Math.round(gal.scrollLeft / (gal.clientWidth || 1)); count.textContent = (i + 1) + ' / ' + fotos.length; }
   gal.addEventListener('scroll', contar, { passive: true }); contar();

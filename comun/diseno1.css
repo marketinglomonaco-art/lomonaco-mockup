@@ -1140,3 +1140,10 @@ html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color 
 @media (max-width: 767px) {
   .p-scrub-pts i { width: 24px; height: 24px; margin: -12px 0 0 -12px; font-size: 11px; box-shadow: 0 0 0 4px rgba(124,25,25,.22), 0 3px 8px rgba(0,0,0,.28); }
 }
+
+/* Galería (Paco, 09/11): la grande + 4 y «Ver más fotos» para el resto. En el móvil sigue el carrusel con todas */
+.p-gal-mas { display: flex; width: 100%; justify-content: center; margin-top: 10px; }
+@media (min-width: 901px) {
+  .p-gal-track:not(.is-todas) figure.is-mas { display: none; }
+}
+@media (max-width: 900px) { .p-gal-mas { display: none; } }
