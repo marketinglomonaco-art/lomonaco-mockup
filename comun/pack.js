@@ -134,7 +134,7 @@
   $('#p-stick-cta').addEventListener('click', function () { comprar('sticky'); });
   $('#p-call').innerHTML = LM.llamar('pack') +
     '<a class="lm-live-link" href="showroom-live.html"><i class="lm-live-dot" aria-hidden="true"></i><span><b>¿Quieres verlo antes?</b> Te lo enseñamos por videollamada</span></a>';
-  $('#p-trust').innerHTML = LM.confianza(P, { link: '#condiciones' });
+  $('#p-trust').innerHTML = LM.confianza(P, { link: '#compromisos' });
 
   var box = $('#p-buy');
   function fijar() { box.style.top = 'min(var(--cab, 52px), ' + (innerHeight - box.offsetHeight - 16) + 'px)'; }

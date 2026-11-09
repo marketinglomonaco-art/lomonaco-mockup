@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300..800&family=Playfair+Display:ital,wght@1,400;1,500&display=swap">
 <link rel="preload" as="image" href="../img/producto-01-1400.webp" imagesrcset="../img/producto-01-560.webp 560w, ../img/producto-01-1400.webp 1400w" imagesizes="(max-width: 900px) 100vw, 64vw">
-<link rel="stylesheet" href="../comun/base.css?v=1794220837">
-<link rel="stylesheet" href="../comun/paginas.css?v=1794220837">
-<link rel="stylesheet" href="../comun/diseno1.css?v=1794220837">
-<link rel="stylesheet" href="../comun/rojo.css?v=1794220837">
+<link rel="stylesheet" href="../comun/base.css?v=1794221484">
+<link rel="stylesheet" href="../comun/paginas.css?v=1794221484">
+<link rel="stylesheet" href="../comun/diseno1.css?v=1794221484">
+<link rel="stylesheet" href="../comun/rojo.css?v=1794221484">
 </head>
 <body data-page="producto" data-opcion="diseno1-a" data-variante="a" data-producto="gran" data-version="4">
 <a class="lm-skip" href="#main">Saltar al contenido</a>
@@ -120,20 +120,25 @@
   </div>
 </section>
 
-<section class="lm-sec p-guar" id="condiciones" aria-labelledby="p-guar-t">
+<!-- Paco, 09/11: fuera «Garantía y condiciones · Sin letra pequeña»; va el carrusel de compromisos de la home -->
+<!-- COMPROMISOS · V4 cambio 12: «Te ayudamos a elegir» + «Sin letra pequeña» en un carrusel de tarjetas [H2, H3, H4, T1] -->
+<section class="lm-sec h4c" id="compromisos" aria-labelledby="h4c-t">
   <div class="lm-w">
-    <p class="lm-eyebrow">Garantía y condiciones</p>
-    <h2 class="lm-h2" id="p-guar-t">Sin letra pequeña.</h2>
-    <dl class="p-cond" data-testid="conditions">
-      <div><dt>Garantía</dt><dd><span data-cfg="garantia"></span>. <span data-cfg="garantiaCubre"></span></dd></div>
-      <div><dt>Prueba en casa</dt><dd><span data-cfg="prueba"></span> para probarlo en tu cama.</dd></div>
-      <div><dt>Devolución</dt><dd><span data-cfg="devolucion"></span>. <span data-cfg="devolucionCond"></span></dd></div>
-      <div><dt>Entrega</dt><dd><span data-cfg="envio"></span>. Te llega en <span data-cfg="entrega"></span>; con montaje, en <span data-cfg="entregaMontaje"></span>.</dd></div>
-      <div><dt>Pago</dt><dd>Tarjeta, Bizum, PayPal, transferencia o contra reembolso. A plazos: <span data-cfg="financiacion"></span>.</dd></div>
-    </dl>
-    <button class="lm-btn lm-btn--line" type="button" data-trust-preview="ficha">Por qué confiar en nosotros</button>
+    <div class="lm-head2">
+      <div>
+        <p class="lm-eyebrow">Nuestros compromisos</p>
+        <h2 class="lm-h2" id="h4c-t">Lo que te prometemos. <em>Sin letra pequeña.</em></h2>
+      </div>
+      <div class="h4c-nav">
+        <button type="button" class="h4c-arr" data-dir="-1" aria-label="Anterior" aria-controls="h4c-track"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+        <button type="button" class="h4c-arr" data-dir="1" aria-label="Siguiente" aria-controls="h4c-track"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+      </div>
+    </div>
   </div>
+  <ul class="h4c-track" id="h4c-track" tabindex="0" aria-label="Nuestros compromisos"></ul>
+  <div class="h4c-dots" id="h4c-dots" aria-hidden="true"></div>
 </section>
+
 
 <!-- 4 · CIERRE [F21–F25] -->
 <section class="p-ess" aria-label="Condiciones esenciales de compra" data-testid="essentials">
@@ -183,18 +188,18 @@
 
 </main>
 <div id="lm-footer"></div>
-<script src="../comun/datos.js?v=1794220837"></script>
-<script src="../comun/componentes.js?v=1794220837"></script>
+<script src="../comun/datos.js?v=1794221484"></script>
+<script src="../comun/componentes.js?v=1794221484"></script>
 <script>LM.init();</script>
-<script src="../comun/compromisos.js?v=1794220837"></script>
-<script src="../comun/packs.js?v=1794220837"></script>
-<script src="../comun/producto.js?v=1794220837"></script>
-<script src="../comun/pack.js?v=1794220837"></script>
-<script src="../comun/asistente.js?v=1794220837"></script>
-<script src="../comun/presion.js?v=1794220837"></script>
+<script src="../comun/compromisos.js?v=1794221484"></script>
+<script src="../comun/packs.js?v=1794221484"></script>
+<script src="../comun/producto.js?v=1794221484"></script>
+<script src="../comun/pack.js?v=1794221484"></script>
+<script src="../comun/asistente.js?v=1794221484"></script>
+<script src="../comun/presion.js?v=1794221484"></script>
 <!-- Paco, 09/11: fuera el módulo «Así se adaptan los muelles» (comun/muelles.js se conserva, sin cargar) -->
-<script src="../comun/animaciones.js?v=1794220837"></script>
-<script src="../comun/v4.js?v=1794220837"></script>
-<script src="../comun/cuestionario.js?v=1794220837"></script>
+<script src="../comun/animaciones.js?v=1794221484"></script>
+<script src="../comun/v4.js?v=1794221484"></script>
+<script src="../comun/cuestionario.js?v=1794221484"></script>
 </body>
 </html>

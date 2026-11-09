@@ -96,7 +96,7 @@
   $('#p-stick-cta').addEventListener('click', function () { comprar('sticky'); });
   $('#p-call').innerHTML = LM.llamar('ficha') +
     '<a class="lm-live-link" href="showroom-live.html"><i class="lm-live-dot" aria-hidden="true"></i><span><b>¿Quieres verlo antes?</b> Te lo enseñamos por videollamada</span></a>';
-  $('#p-trust').innerHTML = LM.confianza(P, { link: '#condiciones' });
+  $('#p-trust').innerHTML = LM.confianza(P, { link: '#compromisos' });
 
   /* Escritorio: la caja de compra acompaña a la galería. Si es más alta que la pantalla,
      sube hasta enseñar su parte de abajo (botón incluido) y ahí se queda fija. */
