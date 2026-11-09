@@ -225,6 +225,14 @@ LM.ORDEN = ['visco', 'gold', 'latex', 'gran'];
    en tres pasos cómo el colchón deja la espalda recta: aparece la columna algo curvada, se iluminan las zonas donde trabaja
    (hombro, cintura, cadera) y la columna se endereza en granate. Acercamiento suave de cámara a la espalda.
    Encuadre ancho de la imagen de Paco (recorte del 28 % al 80 % de la altura: img/escena-espalda-*). Coordenadas en %. Ilustrativo */
+/* Módulo «Independencia de lechos» (Paco, 09/11): pareja vista desde arriba (imagen de Paco: img/escena-pareja-*).
+   Mismo funcionamiento que el de la columna: la imagen se queda fija mientras bajas y 1) salen ondas de movimiento del lado
+   de él, 2) una línea en el centro del colchón las frena, 3) su lado sigue quieto. Coordenadas en % de la imagen */
+LM.ESCENA_PAREJA = {
+  img: '../img/escena-pareja', w: 1200, h: 896,
+  ondas: [43.5, 57], lado: [26, 8.5, 50.8, 92], limite: [50.8, 22, 90], etiqueta: [66, 44],
+  textos: [[37, 'Tu pareja se mueve…'], [50.8, '…pero cada muelle trabaja solo', '…pero el colchón absorbe el movimiento']]
+};
 LM.ESCENA_CORTE = {
   img: '../img/escena-espalda', w: 1134, h: 599,
   columna: { x0: 31, x1: 67, y: 32.7, curva: 3 }, etiqueta: [49, 19],

@@ -60,7 +60,7 @@
         '<p class="p-lab-note">Simulación ilustrativa hecha con la firmeza y la adaptabilidad de este colchón. No es un ensayo de laboratorio.</p>' +
       '</div>' +
     '</div>';
-  sec.appendChild(box);
+  sec.insertBefore(box, sec.querySelector('.p-ind-w')); // Paco, 09/11: antes del bloque de independencia de lechos
 
   // 29/10 · Metaballs: el campo de presión es la suma de todas las manchas, así se funden entre sí como en una
   // cámara de presión real. Se pinta en baja resolución (suavizado al escalar) y encima van las curvas de nivel.

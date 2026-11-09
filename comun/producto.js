@@ -173,11 +173,67 @@
     medir();
   }
 
+  /* Módulo «Independencia de lechos» (Paco, 09/11) · narrativo con el scroll, como el de la columna:
+     1) ondas animadas desde el lado de él («Tu pareja se mueve…»); 2) una línea en el centro del colchón las frena
+     («…pero cada muelle trabaja solo»); 3) las ondas se apagan y en el lado de ella: «Tú sigues durmiendo» */
+  function pareja(fig, E) {
+    var s = function (w) { return E.img + '-' + w + '.webp'; }, k = E.h / E.w * 100, y = function (v) { return (v * k / 100).toFixed(2); };
+    var muelles = P.nucleo.toLowerCase().indexOf('muelles') > -1;
+    var T = [E.textos[0][1], muelles ? E.textos[1][1] : E.textos[1][2]];
+    var L = E.lado, O = E.ondas, M = E.limite;
+    fig.innerHTML = '<div class="p-esc-stick"><div class="p-esc-img">' +
+        '<div class="p-esc-zoom">' +
+          '<img src="' + s(1200) + '" srcset="' + s(800) + ' 800w, ' + s(1200) + ' ' + E.w + 'w" sizes="(max-width: 1320px) 100vw, 1320px" alt="Pareja durmiendo abrazada sobre el ' + P.titulo + ', vista desde arriba" width="' + E.w + '" height="' + E.h + '" loading="lazy">' +
+          '<svg class="p-ind-svg" viewBox="0 0 100 ' + k.toFixed(2) + '" preserveAspectRatio="none" aria-hidden="true">' +
+            '<defs><clipPath id="p-ind-clip"><rect x="' + L[0] + '" y="' + y(L[1]) + '" width="' + (L[2] - L[0]) + '" height="' + y(L[3] - L[1]) + '" rx="1.2"/></clipPath></defs>' +
+            '<g clip-path="url(#p-ind-clip)">' + [0, 1, 2].map(function (i) {
+              return '<circle class="p-ind-onda" style="animation-delay:' + (i * .8) + 's;transform-origin:' + O[0] + 'px ' + y(O[1]) + 'px" cx="' + O[0] + '" cy="' + y(O[1]) + '" r="24"/>';
+            }).join('') + '</g>' +
+            '<line class="p-ind-lim" x1="' + M[0] + '" y1="' + y(M[1]) + '" x2="' + M[0] + '" y2="' + y(M[2]) + '"/>' +
+          '</svg>' +
+          '<p class="p-esc-cap" data-z="0" style="left:' + E.textos[0][0] + '%">' + T[0] + '</p>' +
+          '<p class="p-esc-cap" data-z="1" style="left:' + E.textos[1][0] + '%">' + T[1] + '</p>' +
+          '<p class="p-esc-lab" style="left:' + E.etiqueta[0] + '%;top:' + E.etiqueta[1] + '%">' + LM.ico('check') + 'Tú sigues durmiendo</p>' +
+        '</div>' +
+        '<ol class="p-esc-pasos" aria-hidden="true"><li></li><li></li><li></li></ol>' +
+        '<p class="p-esc-aviso"><span class="p-scrub-mouse" aria-hidden="true"><i></i></span><span>Sigue bajando<small>y verás por qué no te despierta</small></span></p></div></div>';
+    fig.hidden = false;
+    var zoom = $('.p-esc-zoom', fig), svg = $('.p-ind-svg', fig), lim = $('.p-ind-lim', fig), lab = $('.p-esc-lab', fig);
+    var caps = $$('.p-esc-cap', fig), pasos = $$('.p-esc-pasos li', fig), aviso = $('.p-esc-aviso', fig);
+    function c01(v) { return Math.max(0, Math.min(1, v)); }
+    function pintar(p) {
+      var paso = p < .42 ? 0 : p < .74 ? 1 : 2;
+      svg.classList.toggle('is-on', p > .06 && p < .8);
+      var l = c01((p - .42) / .2);
+      lim.style.opacity = l > 0 ? 1 : 0;
+      lim.style.clipPath = 'inset(0 0 ' + ((1 - l) * 100).toFixed(1) + '% 0)';
+      caps[0].classList.toggle('is-on', p > .08 && p < .42);
+      caps[1].classList.toggle('is-on', p >= .42 && p < .78);
+      lab.classList.toggle('is-on', p >= .76);
+      aviso.classList.toggle('is-off', p > .82);
+      pasos.forEach(function (li, i) { li.classList.toggle('is-on', i <= paso && p > .02); });
+      zoom.style.transform = 'scale(' + (1 + .05 * p).toFixed(4) + ')';
+    }
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { pintar(1); return; }
+    fig.classList.add('is-story');
+    var pendiente = false, st = $('.p-esc-stick', fig);
+    function medir() {
+      pendiente = false;
+      var r = fig.getBoundingClientRect(), recorrido = r.height - st.offsetHeight;
+      pintar(recorrido > 0 ? c01(-(r.top - parseFloat(getComputedStyle(st).top)) / recorrido) : 1);
+    }
+    function alScroll() { if (!pendiente) { pendiente = true; requestAnimationFrame(medir); } }
+    addEventListener('scroll', alScroll, { passive: true });
+    addEventListener('resize', alScroll);
+    medir();
+  }
+
   /* Cuerpo [F13–F19] */
   $('#p-ben').innerHTML = P.beneficios.map(function (b) { return '<li><span class="h-ic">' + LM.ico(b[0]) + '</span><b>' + b[1] + '</b><p>' + b[2] + '</p></li>'; }).join('');
   $('#p-dur').textContent = P.durTxt;
   // Paco, 09/11: «Tu espalda, recta»: sin adaptación / con adaptación sobre la misma escena
   if (LM.ESCENA_CORTE && $('#p-esc')) espalda($('#p-esc'), LM.ESCENA_CORTE);
+  if (LM.ESCENA_PAREJA && $('#p-ind')) pareja($('#p-ind'), LM.ESCENA_PAREJA);
   // Paco, 06/11: fuera la tarjeta de barras de firmeza y adaptabilidad (los datos siguen en el Laboratorio de descanso)
   scrub();
 

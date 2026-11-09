@@ -1063,3 +1063,33 @@ html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color 
   .p-esc-aviso .p-scrub-mouse { width: 16px; height: 24px; }
   .p-esc .p-esc-pasos { right: 12px; bottom: 16px; }
 }
+
+/* Columna recta (Paco, 09/11): puntos más grandes y sombreado de las zonas más visible */
+.p-esc-sp { stroke-width: 15; stroke-dasharray: .1 24; filter: drop-shadow(0 0 3px rgba(255,255,255,.95)) drop-shadow(0 2px 4px rgba(0,0,0,.3)); }
+.p-esc-glow { width: 22%; aspect-ratio: 1.5; background: radial-gradient(closest-side, rgba(124,25,25,.9), rgba(124,25,25,.55) 45%, rgba(124,25,25,.18) 75%, transparent); }
+.p-esc-glow.is-on { animation: p-glow 1.8s ease-in-out infinite; }
+@keyframes p-glow { 0%, 100% { opacity: 1; } 50% { opacity: .7; } }
+@media (max-width: 700px) {
+  .p-esc-sp { stroke-width: 10; stroke-dasharray: .1 16; }
+  .p-esc-glow { width: 30%; }
+}
+@media (prefers-reduced-motion: reduce) { .p-esc-glow.is-on { animation: none; } }
+
+/* Independencia de lechos (Paco, 09/11): mismo estilo que el de la columna, pareja vista desde arriba */
+.p-ind-w { margin-top: clamp(40px, 5vw, 72px); }
+.p-ind .p-esc-img { aspect-ratio: 1200 / 896; width: min(100%, calc((100vh - 130px) * 1.339)); }
+.p-ind .p-esc-zoom { transform-origin: 50% 55%; }
+.p-ind-svg { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+.p-ind-onda { fill: none; stroke: var(--acc); stroke-width: 3; vector-effect: non-scaling-stroke; opacity: 0; transform-box: view-box; filter: drop-shadow(0 0 3px rgba(255,255,255,.9)); }
+.p-ind-svg.is-on .p-ind-onda { animation: p-onda 2.4s cubic-bezier(.2,.6,.3,1) infinite; }
+@keyframes p-onda { 0% { transform: scale(.08); opacity: .9; } 70% { opacity: .35; } 100% { transform: scale(1); opacity: 0; } }
+.p-ind-lim { stroke: var(--acc); stroke-width: 3; stroke-dasharray: 8 7; stroke-linecap: round; vector-effect: non-scaling-stroke; opacity: 0; filter: drop-shadow(0 0 3px rgba(255,255,255,.95)); transition: opacity .3s; }
+.p-ind .p-esc-cap { top: 3%; }
+@media (max-width: 700px) {
+  .p-ind .p-esc-img { aspect-ratio: 1 / 1.02; }
+  .p-ind .p-esc-zoom { aspect-ratio: 1200 / 896; }
+  .p-ind .p-esc-cap { top: 2%; }
+}
+@media (prefers-reduced-motion: reduce) { .p-ind-svg.is-on .p-ind-onda { animation: none; } }
+.p-ind-onda { stroke-width: 4.5; }
+@media (max-width: 700px) { .p-ind-onda { stroke-width: 3.5; } }
