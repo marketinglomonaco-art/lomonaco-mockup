@@ -455,6 +455,40 @@
         : '<a href="#" class="is-pend" aria-label="' + esc(r.t) + '" title="' + esc(r.t) + ': falta la URL">' + ic + '</a>';
     }).join('') + '</nav>';
   }
+  /* Sellos de confianza del pie (Paco, 09/11): OCU, OEKO-TEX, ISO, Top Marcas de Descanso (inventado), Trusted Shops
+     (rehecho a nuestro estilo) y Producto de calidad garantizada. Todos con el mismo dibujo: círculo blanco, texto en arco
+     y un icono en el centro, en granate. MAQUETA: antes de producción, usar los logos oficiales y solo los sellos que se tengan */
+  var SELLO_IC = {
+    ocu: '<image href="' + LM.SELLO_OCU.img + '" x="31" y="31" width="38" height="38"/>',
+    oeko: '<path d="M50 30c-11 4-16 13-14 26 9 1 17-3 21-12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M36 56c5-8 11-14 20-18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>' +
+      '<text x="50" y="68" text-anchor="middle" font-size="11" font-weight="800" fill="currentColor">100</text>',
+    iso: '<text x="50" y="53" text-anchor="middle" font-size="19" font-weight="800" letter-spacing="1" fill="currentColor">ISO</text><text x="50" y="66" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="1.5" fill="currentColor">9001</text>',
+    top: '<path d="M36 64c-6-6-7-15-3-22M64 64c6-6 7-15 3-22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>' +
+      '<path d="M33 50l-4-2M32 57l-4 0M35 44l-3-4M67 50l4-2M68 57l4 0M65 44l3-4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>' +
+      '<path d="M50 38l3.3 6.8 7.5 1-5.4 5.2 1.3 7.4L50 54.9l-6.7 3.5 1.3-7.4-5.4-5.2 7.5-1z" fill="currentColor"/><text x="50" y="69" text-anchor="middle" font-size="8.5" font-weight="800" letter-spacing="1.2" fill="currentColor">TOP</text>',
+    trusted: '<text x="50" y="56" text-anchor="middle" font-size="17" font-weight="800" fill="currentColor">4,39</text>' +
+      [0, 1, 2, 3, 4].map(function (i) { return '<path transform="translate(' + (31.5 + i * 8.2) + ' 61) scale(.32)" d="M10 0l3 6.2 6.8.9-5 4.7 1.2 6.7L10 15.3 4 18.5l1.2-6.7-5-4.7 6.8-.9z" fill="currentColor"' + (i === 4 ? ' opacity=".35"' : '') + '/>'; }).join(''),
+    calidad: '<path d="M50 30l15 5v11c0 10-6.5 17-15 21-8.5-4-15-11-15-21V35z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><path d="M43 48.5l5 5 9.5-10" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>'
+  };
+  var SELLOS = [
+    ['ocu', 'ANALIZADO POR', 'LA OCU', 'Colchón Natura Visco analizado por la OCU'],
+    ['oeko', 'OEKO-TEX®', 'STANDARD 100', 'Tejidos con certificado OEKO-TEX Standard 100'],
+    ['iso', 'CALIDAD CERTIFICADA', 'GESTIÓN ISO', 'Gestión de calidad certificada ISO 9001'],
+    ['top', 'TOP MARCAS', 'DE DESCANSO', 'Top Marcas de Descanso'],
+    ['trusted', 'TIENDA VERIFICADA', 'TRUSTED SHOPS', 'Tienda verificada por Trusted Shops: ' + C.valoracion.media + ' de 5'],
+    ['calidad', 'PRODUCTO DE CALIDAD', 'GARANTIZADA', 'Producto de calidad garantizada']
+  ];
+  LM.sellos = function () {
+    return '<div class="lm-foot-sellos"><p class="lm-foot-sellos-t">Compra con confianza</p><ul>' + SELLOS.map(function (s) {
+      var id = 'lm-se-' + s[0];
+      return '<li title="' + esc(s[3]) + '"><svg viewBox="0 0 100 100" role="img" aria-label="' + esc(s[3]) + '">' +
+        '<defs><path id="' + id + '-a" d="M15 50a35 35 0 0 1 70 0"/><path id="' + id + '-b" d="M12.5 50a37.5 37.5 0 0 0 75 0"/></defs>' +
+        '<circle cx="50" cy="50" r="48" class="lm-se-bg"/><circle cx="50" cy="50" r="44.5" class="lm-se-ring"/><circle cx="50" cy="50" r="27" class="lm-se-in"/>' +
+        '<text class="lm-se-arc"><textPath href="#' + id + '-a" startOffset="50%" text-anchor="middle">' + s[1] + '</textPath></text>' +
+        '<text class="lm-se-arc"><textPath href="#' + id + '-b" startOffset="50%" text-anchor="middle">' + s[2] + '</textPath></text>' +
+        '<g class="lm-se-ic">' + SELLO_IC[s[0]] + '</g></svg></li>';
+    }).join('') + '</ul></div>';
+  };
   LM.footer = function (el) {
     var li = function (l) { return '<li><a href="' + LM.href(l[1]) + '"' + (l[2] ? ' rel="nofollow noopener" target="_blank"' : '') + '>' + l[0] + '</a></li>'; };
     var col = function (t, links, cls) { return '<div class="lm-fc' + (cls ? ' ' + cls : '') + '"><p>' + t + '</p><ul>' + links.map(li).join('') + '</ul></div>'; };
@@ -481,7 +515,7 @@
         '<li><a href="tel:+34858225189">Atención al cliente: 858 22 51 89</a></li>' +
         '<li><a href="https://wa.me/+34650282094" data-lead="whatsapp">WhatsApp</a></li></ul>' +
         '<a class="lm-foot-ts" href="https://www.trustedshops.es/" target="_blank" rel="noopener">Protección al Comprador y Valoraciones reales · Trusted Shops</a></div>' +
-      '</div><p class="lm-foot-fin" id="lm-legal">* ' + esc(C.legalFinanciacion.v) + '</p><div class="lm-foot-legal"><img src="' + LOGO + '" alt="LOMONACO" width="120" height="16" loading="lazy">' + redes() +
+      '</div>' + LM.sellos() + '<p class="lm-foot-fin" id="lm-legal">* ' + esc(C.legalFinanciacion.v) + '</p><div class="lm-foot-legal"><img src="' + LOGO + '" alt="LOMONACO" width="120" height="16" loading="lazy">' + redes() +
       '<span>© LM DESCANSO SL</span>' +
       '<a href="' + LM.WEB + '/aviso-legal/">Aviso legal</a><a href="' + LM.WEB + '/politica-de-privacidad/">Política privacidad</a><a href="' + LM.WEB + '/politica-de-cookies/">Política cookies</a></div>' +
       '</div></footer>';

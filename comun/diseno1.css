@@ -1168,3 +1168,18 @@ html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color 
 /* Por dentro (Paco, 09/11): al terminar las capas con el ratón encima, la página se quedaba atascada.
    «overscroll-behavior: contain» no dejaba pasar la rueda a la página; ahora, cuando el recuadro ya no la usa, la página sigue bajando */
 .p-scrub-pin { overscroll-behavior: auto; }
+
+/* Pie · sellos de confianza (Paco, 09/11): fila de 6 sellos redondos, blancos con granate */
+.lm-foot-sellos { margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--line); text-align: center; }
+.lm-foot-sellos-t { margin: 0 0 18px; font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+.lm-foot-sellos ul { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px 30px; margin: 0; padding: 0; list-style: none; }
+.lm-foot-sellos li { width: 120px; height: 120px; }
+.lm-foot-sellos svg { display: block; width: 100%; height: 100%; color: var(--acc); font-family: var(--font); filter: drop-shadow(0 4px 10px rgba(40,28,18,.08)); }
+.lm-se-bg { fill: #fff; }
+.lm-se-ring { fill: none; stroke: currentColor; stroke-width: 1.4; }
+.lm-se-in { fill: none; stroke: currentColor; stroke-width: .8; stroke-dasharray: 1.5 2.5; opacity: .5; }
+.lm-se-arc { font-size: 7.6px; font-weight: 800; letter-spacing: .9px; fill: currentColor; }
+@media (max-width: 600px) {
+  .lm-foot-sellos ul { gap: 16px 18px; }
+  .lm-foot-sellos li { width: 96px; height: 96px; }
+}
