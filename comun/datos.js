@@ -276,46 +276,26 @@ LM.UGC = [
   { id: 'jOycSLqKcig', autor: '1000manerasdevestir' }
 ];
 
-/* Showroom Live: escenas del visor (fotos IMG_7033–7037) y camas.
-   Posiciones en % de la foto. Modelos leídos en las etiquetas de cada colchón. */
+/* Showroom Live · Paco, 09/11: página rehecha con su sesión de fotos (test fotos LM/showroom/baja, _A740xxxx),
+   mejoradas (luz, color, definición) y ampliadas a 2560 px: img/sr2-<nombre>-{2560,1600,900}.webp.
+   Cada cama: foto de frente con dos puntos (por dentro y el canapé, en % de la foto) y sus fotos de detalle.
+   El canapé abierto es el del Natura Látex (nogal): es el único que se fotografió abierto. */
 LM.SHOWROOM = {
+  orden: ['gran', 'latex', 'gold', 'almohadas'],
   camas: {
-    gold:  { k: 'gold',  t: 'Natura Gold', donde: 'Cabecero tapizado gris y canapé de madera clara', img: '../img/showroom-7034-1400.webp' },
-    latex: { k: 'latex', t: 'Natura Látex', donde: 'Cabecero oscuro y canapé de madera nogal', img: '../img/showroom-detalle-7031.webp' },
-    gran:  { k: 'gran',  t: 'Gran Natura', donde: 'Cabecero oscuro y canapé blanco', img: '../img/showroom-7036-1400.webp' },
-    almohadas: { t: 'Almohadas y edredón', donde: 'Estantería de complementos', img: '../img/almohada-latex-760.webp', url: '/almohadas/' }
+    gran:  { t: 'Gran Natura', donde: 'Canapé de madera blanca y cabecero gris', puntos: { capas: [57, 50], canape: [57, 74] },
+             fotos: [['gran', 'De frente'], ['gran-esquina', 'La esquina y la cinta'], ['gran-bordado', 'El bordado'], ['gran-asa', 'El asa con la M'], ['gran-acolchado', 'El acolchado'], ['gran-ambiente', 'Con sus cojines']] },
+    latex: { t: 'Natura Látex', donde: 'Canapé de madera nogal y cabecero oscuro', puntos: { capas: [51, 62], canape: [51, 86] },
+             fotos: [['latex', 'De frente'], ['latex-esquina', 'La esquina y la cinta'], ['latex-bordado', 'El bordado'], ['latex-asa', 'Las asas'], ['latex-acolchado', 'El acolchado'], ['latex-ambiente', 'En el showroom']] },
+    gold:  { t: 'Natura Gold', donde: 'Canapé de madera clara y cabecero gris claro', puntos: { capas: [53, 52], canape: [53, 75] },
+             fotos: [['gold', 'De frente'], ['gold-esquina', 'La esquina'], ['gold-bordado', 'El bordado'], ['gold-asa', 'Las asas'], ['gold-acolchado', 'El acolchado'], ['gold-ambiente', 'En el showroom']] },
+    almohadas: { t: 'Almohadas y edredón', donde: 'Estantería de complementos', url: '/almohadas/',
+             fotos: [['almohadas', 'En la estantería'], ['almohadas-2', 'Almohada y edredón']] }
   },
-  /* Paco, 06/11: escenas del visor en este orden (flechas anterior/siguiente). puntos: [cama, x %, y %] sobre la foto.
-     (A y enlaces quedaron de la prueba tipo Street View, que Paco descartó: el visor plano no los usa). Las 4 «de cerca» son fotos de Paco (fuente/showroom-fotos-0611: 123, 156, 154 y 130) */
-  escenas: [
-    { id: 'entrada',  t: 'Entrada', img: 'showroom-7033', w: 2400, h: 1350, A: 100, src: ['-1400', '-2400'],
-      puntos: [['gold', 29, 64], ['latex', 57, 58], ['gran', 77, 57], ['almohadas', 85, 40]],
-      enlaces: [['goldlado', 6]] },
-    { id: 'goldlado', t: 'Junto al Natura Gold', img: 'showroom-7034', w: 2400, h: 1350, A: 100, src: ['-1400', '-2400'],
-      puntos: [['gold', 33, 66], ['latex', 67, 53], ['gran', 82, 50], ['almohadas', 81, 30]],
-      enlaces: [['frente', 12], ['gold-cerca', -17], ['entrada', 180]] },
-    { id: 'frente',   t: 'De frente', img: 'showroom-7035', w: 2400, h: 1350, A: 100, src: ['-1400', '-2400'],
-      puntos: [['gold', 15, 62], ['latex', 56, 62], ['gran', 89, 62]],
-      enlaces: [['gold-cerca', -35], ['latex-cerca', 6], ['gran-cerca', 39], ['granzona', 78], ['goldlado', 180]] },
-    { id: 'granzona', t: 'Zona Gran Natura', img: 'showroom-7036', w: 2400, h: 1350, A: 100, src: ['-1400', '-2400'],
-      puntos: [['latex', 12, 63], ['gran', 54, 68], ['almohadas', 82, 48]],
-      enlaces: [['gran-cerca', 4], ['almohadas-cerca', 32], ['rincon', -60], ['frente', 180]] },
-    { id: 'rincon',   t: 'Desde el rincón', img: 'showroom-7037', w: 2400, h: 1350, A: 100, src: ['-1400', '-2400'],
-      puntos: [['gran', 63, 78], ['latex', 32, 53], ['gold', 18, 44]],
-      enlaces: [['entrada', -70], ['granzona', 180]] },
-    { id: 'gold-cerca',  t: 'Natura Gold, de cerca', cama: 'gold', img: 'sr-gold', w: 2000, h: 1333, A: 90, src: ['-1200', '-2000'],
-      puntos: [['gold', 50, 60]], enlaces: [['latex-cerca', 70], ['frente', 180]] },
-    { id: 'latex-cerca', t: 'Natura Látex, de cerca', cama: 'latex', img: 'sr-latex', w: 2000, h: 1333, A: 90, src: ['-1200', '-2000'],
-      puntos: [['latex', 52, 54]], enlaces: [['gold-cerca', -70], ['gran-cerca', 70], ['frente', 180]] },
-    { id: 'gran-cerca',  t: 'Gran Natura, de cerca', cama: 'gran', img: 'sr-gran', w: 2000, h: 1333, A: 90, src: ['-1200', '-2000'],
-      puntos: [['gran', 57, 56]], enlaces: [['latex-cerca', -70], ['almohadas-cerca', 70], ['frente', 180]] },
-    { id: 'almohadas-cerca', t: 'Almohadas y edredón', cama: 'almohadas', img: 'sr-almohadas', w: 2000, h: 1333, A: 90, src: ['-1200', '-2000'],
-      puntos: [['almohadas', 60, 45]], enlaces: [['gran-cerca', -70], ['granzona', 180]] }
-  ],
-  detalles: [
-    [7031, 'La etiqueta del Natura Látex'], [7022, 'El acolchado, de cerca'], [7027, 'El lateral y su etiqueta'],
-    [7032, 'La cinta Lo Monaco'], [7012, 'El borde acolchado'], [7010, 'Colchón y canapé']
-  ]
+  canape: { t: 'Canapé abatible de madera', donde: 'El del Natura Látex, en nogal',
+            fotos: [['canape-abierto', 'Abierto, de frente'], ['canape-lado', 'Desde un lado'], ['canape-medio', 'Desde la esquina'], ['canape-piston', 'El mecanismo, de cerca']] },
+  detalles: [['gold-bordado', 'El bordado de cada modelo'], ['latex-esquina', 'La cinta Lo Monaco'], ['gran-acolchado', 'El acolchado, de cerca'],
+             ['latex-asa', 'Las asas, con la M'], ['canape-piston', 'El mecanismo del canapé'], ['almohadas-2', 'Almohada y edredón']]
 };
 
 /* V4 · Reseñas cortas del hero (carrusel). Solo opiniones reales de LM.RESENAS, salvo la del banner de Paco */

@@ -1,4 +1,4 @@
-/* LO MONACO · Showroom Live: visor del showroom y reserva de videollamada.
+/* LO MONACO · Showroom Live: recorrido colchón a colchón (fotos de Paco, 09/11) y reserva de videollamada.
    Todo el recorrido empuja a lo mismo: reservar la videollamada o llamar. */
 (function () {
   'use strict';
@@ -8,109 +8,16 @@
 
   $$('[data-estado]').forEach(function (el) { el.innerHTML = LM.estado(); });
 
-  /* ================= VISOR =================
-     Paco, 06/11: el visor de siempre (foto que se arrastra para mirar y flechas para avanzar), sin plano ni selector de zonas.
-     Probamos la sala tipo Street View y Paco prefiere esta. Fuera del visor: «¿Qué colchón quieres ver?».
-     Al pinchar un colchón se ven sus capas. */
-  var sv = $('#s-sv');
-  var ES = {}; S.escenas.forEach(function (e, i) { ES[e.id] = i; });
-  var arrow = function (d) { return '<svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + (d < 0 ? 'm15 6-6 6 6 6' : 'm9 6 6 6-6 6') + '"/></svg>'; };
-  sv.setAttribute('tabindex', '0');
-  sv.setAttribute('role', 'region');
-  sv.setAttribute('aria-label', 'Visor del showroom. Usa las flechas izquierda y derecha para mirar, y los botones para cambiar de sitio.');
-  sv.innerHTML =
-    '<div class="s-sv-stages" id="s-stages"></div>' +
-    '<p class="s-sv-scene" id="s-scene" aria-live="polite"></p>' +
-    '<p class="s-sv-hint" id="s-hint"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12"/><path d="M11 11.5v-2a1.5 1.5 0 0 1 3 0V12"/><path d="M14 10.5a1.5 1.5 0 0 1 3 0V12"/><path d="M17 11.5a1.5 1.5 0 0 1 3 0V16a5 5 0 0 1-5 5h-2.5a5 5 0 0 1-4.3-2.5L5.4 15a1.5 1.5 0 0 1 2.6-1.5L8 14"/></svg>Arrastra para mirar</p>' +
-    '<button class="s-sv-nav s-sv-prev" type="button" data-go="-1" aria-label="Sitio anterior">' + arrow(-1) + '</button>' +
-    '<button class="s-sv-nav s-sv-next" type="button" data-go="1" aria-label="Avanzar al siguiente sitio">' + arrow(1) + '</button>' +
-    '<button class="s-sv-full" type="button" id="s-full" aria-label="Pantalla completa"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>' +
-    '<div class="s-sv-cta"><a class="lm-btn lm-btn--buy" href="#reserva">Verlo en directo por videollamada</a></div>' +
-    '<aside class="s-card" id="s-card" hidden></aside>';
+  /* ================= RECORRIDO =================
+     Paco, 09/11: página rehecha con su sesión de fotos. Eliges colchón, ves sus fotos de detalle, sus capas al lado
+     y puedes abrir el canapé. Todo termina en la videollamada. */
+  var ph = $('#s-room-ph'), imgA = $('#s-img-a'), imgB = $('#s-img-b'), side = $('#s-room-side');
+  var R = { cama: S.orden[0], foto: 0, canape: false };
+  function src(n, w) { return '../img/sr2-' + n + '-' + w + '.webp'; }
+  function srcset(n) { return src(n, 900) + ' 900w, ' + src(n, 1600) + ' 1600w, ' + src(n, 2560) + ' 2560w'; }
+  function lista() { return R.canape ? S.canape.fotos : S.camas[R.cama].fotos; }
 
-  var stages = $('#s-stages'), cur = -1, pan = { x: .5, y: .5 }, vel = 0, dims = {}, stage = null, busy = false;
-
-  function medir() {
-    var e = S.escenas[Math.max(0, cur)], ratio = e.w / e.h;
-    var w = sv.clientWidth, h = sv.clientHeight;
-    var sw = Math.max(w * 1.3, h * ratio * 1.08), sh = sw / ratio;
-    if (sh < h * 1.05) { sh = h * 1.05; sw = sh * ratio; }
-    dims = { w: w, h: h, sw: sw, sh: sh, rx: sw - w, ry: sh - h };
-    $$('.s-stage', stages).forEach(function (st) { st.style.width = sw + 'px'; st.style.height = sh + 'px'; });
-    pintar();
-  }
-  function pintar() {
-    if (!stage) return;
-    pan.x = Math.min(1, Math.max(0, pan.x)); pan.y = Math.min(1, Math.max(0, pan.y));
-    stage.style.transform = 'translate3d(' + (-pan.x * dims.rx) + 'px,' + (-pan.y * dims.ry) + 'px,0)';
-  }
-  function crearEscena(i) {
-    var e = S.escenas[i], st = document.createElement('div');
-    st.className = 's-stage';
-    st.style.width = dims.sw + 'px'; st.style.height = dims.sh + 'px';
-    var big = '../img/' + e.img + e.src[1] + '.webp', small = '../img/' + e.img + e.src[0] + '.webp';
-    st.innerHTML = '<img src="' + big + '" srcset="' + small + ' ' + small.match(/-(\d+)\.webp$/)[1] + 'w, ' + big + ' ' + e.w + 'w" sizes="' + Math.round(dims.sw) + 'px" alt="Showroom de Lo Monaco: ' + e.t + '" width="' + e.w + '" height="' + e.h + '" draggable="false">' +
-      e.puntos.map(function (p) {
-        var c = S.camas[p[0]];
-        return '<button type="button" class="s-spot" data-spot="' + p[0] + '" style="left:' + p[1] + '%;top:' + p[2] + '%"><i aria-hidden="true"></i><span>' + c.t + '</span></button>';
-      }).join('');
-    return st;
-  }
-  function ir(i, dir) {
-    i = (i + S.escenas.length) % S.escenas.length;
-    if (i === cur || busy) return;
-    var prev = stage;
-    cur = i; medir();
-    var next = crearEscena(i);
-    stages.appendChild(next);
-    stage = next; pan = { x: .5, y: .45 }; vel = 0; pintar();
-    cerrarCard();
-    $('#s-scene').textContent = (i + 1) + ' / ' + S.escenas.length + ' · ' + S.escenas[i].t;
-    marcarPick();
-    if (prev && !reduce) {
-      busy = true;
-      next.classList.add(dir < 0 ? 'is-in-back' : 'is-in');
-      prev.classList.add(dir < 0 ? 'is-out-back' : 'is-out');
-      setTimeout(function () { prev.remove(); next.classList.remove('is-in', 'is-in-back'); busy = false; }, 700);
-    } else if (prev) prev.remove();
-    LM.track('showroom_scene', { scene: S.escenas[i].id });
-  }
-  function irA(id) { var i = ES[id]; if (i != null) { ocultarPista(); ir(i, i > cur ? 1 : -1); } }
-
-  /* Arrastrar con ratón o dedo, con un poco de inercia */
-  var drag = null;
-  sv.addEventListener('pointerdown', function (e) {
-    if (e.target.closest('button, a, .s-card')) return;
-    drag = { x: e.clientX, y: e.clientY, t: performance.now(), moved: false };
-    sv.classList.add('is-drag'); vel = 0;
-  });
-  addEventListener('pointermove', function (e) {
-    if (!drag) return;
-    var dx = e.clientX - drag.x, dy = e.clientY - drag.y, now = performance.now();
-    if (!drag.moved && Math.abs(dx) < 4 && Math.abs(dy) < 4) return;
-    if (!drag.moved && e.pointerType === 'touch' && Math.abs(dy) > Math.abs(dx)) { drag = null; sv.classList.remove('is-drag'); return; } // deja hacer scroll vertical
-    drag.moved = true; ocultarPista();
-    pan.x -= dx / (dims.rx || 1); pan.y -= dy / (dims.ry || 1);
-    vel = -dx / (dims.rx || 1) / Math.max(1, now - drag.t) * 16;
-    drag.x = e.clientX; drag.y = e.clientY; drag.t = now;
-    pintar();
-  });
-  addEventListener('pointercancel', function () { drag = null; sv.classList.remove('is-drag'); });
-  addEventListener('pointerup', function () {
-    if (!drag) return; drag = null; sv.classList.remove('is-drag');
-    (function inercia() { if (Math.abs(vel) < .0005) return; pan.x += vel; vel *= .92; pintar(); requestAnimationFrame(inercia); })();
-  });
-  sv.addEventListener('keydown', function (e) {
-    if (e.target !== sv) return;
-    if (e.key === 'ArrowLeft') { pan.x -= .08; pintar(); e.preventDefault(); }
-    if (e.key === 'ArrowRight') { pan.x += .08; pintar(); e.preventDefault(); }
-    if (e.key === 'ArrowUp') { ir(cur + 1, 1); e.preventDefault(); }
-    if (e.key === 'ArrowDown') { ir(cur - 1, -1); e.preventDefault(); }
-  });
-  var pista = true;
-  function ocultarPista() { if (pista) { pista = false; $('#s-hint').classList.add('is-off'); } }
-
-  /* Ficha de cada colchón: sus capas (Paco, 06/11), y siempre la videollamada */
+  /* Capas del colchón: esquema con las capas reales de datos.js */
   var MAT = [[/tejido|damastretch/i, 'tela', 16], [/fibra/i, 'fibra', 14], [/visco/i, 'visco', 20], [/hr extra/i, 'hr2', 18],
     [/núcleo hr/i, 'hr', 40], [/núcleo 100% látex/i, 'latex-n', 50], [/látex/i, 'latex', 22], [/algodón/i, 'algodon', 14], [/muelles/i, 'muelles', 46]];
   function material(n) { for (var i = 0; i < MAT.length; i++) if (MAT[i][0].test(n)) return MAT[i]; return null; }
@@ -124,57 +31,111 @@
       (extra.length ? '<ul class="s-capas-x">' + extra.map(function (c) { return '<li>' + LM.ico('check') + '<span><b>' + c.n + '.</b> ' + c.d + '</span></li>'; }).join('') + '</ul>' : '') +
       '<p class="s-capas-n">Esquema ilustrativo, sin escala.</p>';
   }
-  function abrirCard(k) {
-    var c = S.camas[k], p = LM.PRODUCTOS[k], card = $('#s-card'), e = S.escenas[cur];
-    var cerca = ES[k + '-cerca'] != null && e.id !== k + '-cerca';
-    var body = '<button class="s-card-x" type="button" aria-label="Cerrar">' + LM.ico('close') + '</button>';
-    if (p) body += '<p class="lm-eyebrow">Así es por dentro</p><h3>' + p.titulo + '</h3><p class="s-card-d">' + p.altura + ' · ' + p.nucleo + '</p>' + capasHTML(p);
-    else body += '<img src="' + c.img + '" alt="" width="320" height="200"><p class="lm-eyebrow">En el showroom</p><h3>' + c.t + '</h3><p class="s-card-d">' + c.donde + '</p>';
-    body += (cerca ? '<button class="lm-btn lm-btn--line lm-btn--full" type="button" data-ir="' + k + '-cerca">Verlo de cerca</button>' : '') +
-      '<button class="lm-btn lm-btn--buy lm-btn--full" type="button" data-ver="' + k + '">Quiero verlo en videollamada</button>' +
-      '<a class="lm-link" href="' + (p ? LM.href(p.url) : LM.href(c.url)) + '">' + (p ? 'Ver la ficha del colchón' : 'Ver almohadas') + '</a>';
-    card.innerHTML = body; card.hidden = false; ocultarPista();
-    LM.track('showroom_spot', { spot: k, scene: e.id });
-  }
-  function cerrarCard() { var c = $('#s-card'); if (c) c.hidden = true; }
-  sv.addEventListener('click', function (e) {
-    var b = e.target.closest('[data-spot]'); if (b) { abrirCard(b.getAttribute('data-spot')); return; }
-    if (e.target.closest('.s-card-x')) { cerrarCard(); return; }
-    var a = e.target.closest('[data-ir]'); if (a) { irA(a.getAttribute('data-ir')); return; }
-    var g = e.target.closest('[data-go]'); if (g) { ir(cur + +g.getAttribute('data-go'), +g.getAttribute('data-go')); return; }
-    var v = e.target.closest('[data-ver]'); if (v) { marcarInteres(v.getAttribute('data-ver')); $('#reserva').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); }
-  });
-  $('#s-full').addEventListener('click', function () {
-    if (document.fullscreenElement) document.exitFullscreen(); else if (sv.requestFullscreen) sv.requestFullscreen();
-  });
-  document.addEventListener('fullscreenchange', function () { setTimeout(medir, 50); });
-  addEventListener('resize', medir);
 
-  /* «¿Qué colchón quieres ver?» (fuera del visor): te pone delante de esa cama */
-  var PICK = ['gold', 'latex', 'gran', 'almohadas'];
-  $('#s-pick-row').innerHTML = PICK.map(function (k) {
+  /* Ficha lateral: el colchón (con sus capas), las almohadas o el canapé */
+  function pintarFicha() {
+    var k = R.cama, c = S.camas[k], p = LM.PRODUCTOS[k], h;
+    if (R.canape) {
+      var f = LM.FICHAS.canape;
+      h = '<p class="lm-eyebrow">El canapé, abierto</p><h3>' + S.canape.t + '</h3><p class="s-card-d">' + S.canape.donde + '</p>' +
+        '<p class="s-side-t">Se levanta con su mecanismo de pistones y deja todo el hueco libre para guardar. ' + f.d + '.</p>' +
+        LM.precio({ p: f.p, r: f.r }, { desde: true, cuota: false }) +
+        '<button class="lm-btn lm-btn--line lm-btn--full" type="button" data-cerrar>Cerrar el canapé</button>' +
+        '<button class="lm-btn lm-btn--buy lm-btn--full" type="button" data-ver="bases">Quiero verlo en videollamada</button>';
+    } else if (p) {
+      h = '<p class="lm-eyebrow">En el showroom</p><h3>' + p.titulo + '</h3><p class="s-card-d">' + c.donde + '</p>' +
+        '<p class="s-side-t">' + p.diferencia + '</p>' +
+        '<div class="s-side-capas" id="s-capas"><p class="s-side-k">Así es por dentro <small>' + p.altura + ' · ' + p.nucleo + '</small></p>' + capasHTML(p) + '</div>' +
+        '<button class="lm-btn lm-btn--buy lm-btn--full" type="button" data-ver="' + k + '">Quiero verlo en videollamada</button>' +
+        '<a class="lm-link" href="' + LM.href(p.url) + '">Ver la ficha del colchón</a>';
+    } else {
+      h = '<p class="lm-eyebrow">En el showroom</p><h3>' + c.t + '</h3><p class="s-card-d">' + c.donde + '</p>' +
+        '<p class="s-side-t">Almohadas de látex y viscoelásticas, y el edredón que regalamos con los packs de colchón y canapé.</p>' +
+        '<button class="lm-btn lm-btn--buy lm-btn--full" type="button" data-ver="almohadas">Quiero verlas en videollamada</button>' +
+        '<a class="lm-link" href="' + LM.href(c.url) + '">Ver almohadas</a>';
+    }
+    side.innerHTML = h;
+    LM.fill(side);
+  }
+
+  /* Foto grande con fundido entre fotos; los puntos solo en la foto de frente del colchón */
+  var capaVisible = imgA;
+  function pintarFoto() {
+    var fs = lista(), f = fs[R.foto], otra = capaVisible === imgA ? imgB : imgA;
+    otra.srcset = srcset(f[0]); otra.sizes = '(max-width: 900px) 100vw, 62vw'; otra.src = src(f[0], 1600);
+    otra.alt = (R.canape ? S.canape.t : S.camas[R.cama].t) + ': ' + f[1];
+    var mostrar = function () { otra.classList.add('is-on'); capaVisible.classList.remove('is-on'); capaVisible = otra; };
+    if (otra.complete && otra.naturalWidth) mostrar(); else { otra.onload = mostrar; otra.onerror = mostrar; }
+    $('#s-room-cap').textContent = (R.canape ? 'Canapé abierto' : S.camas[R.cama].t) + ' · ' + f[1] + ' · ' + (R.foto + 1) + '/' + fs.length;
+    var c = S.camas[R.cama], pts = '';
+    if (!R.canape && R.foto === 0 && c.puntos) {
+      pts = '<button type="button" class="s-spot" data-capas style="left:' + c.puntos.capas[0] + '%;top:' + c.puntos.capas[1] + '%"><i aria-hidden="true"></i><span>Por dentro</span></button>' +
+        '<button type="button" class="s-spot" data-abrir style="left:' + c.puntos.canape[0] + '%;top:' + c.puntos.canape[1] + '%"><i aria-hidden="true"></i><span>Abrir el canapé</span></button>';
+    }
+    $('#s-room-pts').innerHTML = pts;
+    $('#s-room-th').innerHTML = fs.map(function (x, i) {
+      return '<button type="button" role="listitem" class="s-room-t' + (i === R.foto ? ' is-on' : '') + '" data-foto="' + i + '" aria-label="' + x[1] + '"' + (i === R.foto ? ' aria-current="true"' : '') + '>' +
+        '<img src="' + src(x[0], 900) + '" alt="" width="900" height="600" loading="lazy"><span>' + x[1] + '</span></button>';
+    }).join('');
+    var b = $('#s-canape'), conCanape = !!(c.puntos);
+    b.hidden = !R.canape && (!conCanape || R.foto === 0); // en la foto de frente ya está el punto «Abrir el canapé»
+    b.textContent = R.canape ? 'Cerrar el canapé' : 'Abrir el canapé';
+    b.setAttribute('aria-pressed', R.canape);
+  }
+  function verCama(k) {
+    R.cama = k; R.foto = 0; R.canape = false;
+    $$('.s-pick-b').forEach(function (b) { var on = b.getAttribute('data-pick') === k; b.setAttribute('aria-selected', on); b.tabIndex = on ? 0 : -1; });
+    pintarFoto(); pintarFicha();
+    LM.track('showroom_pick', { item: k });
+  }
+  function canape(on) {
+    R.canape = on; R.foto = 0; pintarFoto(); pintarFicha();
+    if (on) LM.track('showroom_canape', { cama: R.cama });
+  }
+  function mover(d) { var n = lista().length; R.foto = (R.foto + d + n) % n; pintarFoto(); }
+
+  $('#s-pick-row').innerHTML = S.orden.map(function (k) {
     var p = LM.PRODUCTOS[k], c = S.camas[k];
-    return '<button type="button" class="s-pick-b" data-pick="' + k + '" aria-pressed="false"><img src="' + (p ? p.img : c.img) + '" alt="" width="56" height="56" loading="lazy">' +
+    return '<button type="button" role="tab" class="s-pick-b" data-pick="' + k + '" aria-selected="false" tabindex="-1"><img src="' + src(c.fotos[0][0], 900) + '" alt="" width="56" height="56" loading="lazy">' +
       '<span><b>' + (p ? p.nombre : c.t) + '</b><small>' + (p ? p.nucleo : 'Complementos') + '</small></span></button>';
   }).join('');
-  $('#s-pick-row').addEventListener('click', function (e) {
-    var b = e.target.closest('[data-pick]'); if (!b) return;
-    var k = b.getAttribute('data-pick');
-    sv.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
-    irA(k + '-cerca');
-    LM.track('showroom_pick', { item: k });
+  $('#s-pick-row').addEventListener('click', function (e) { var b = e.target.closest('[data-pick]'); if (b) verCama(b.getAttribute('data-pick')); });
+  $('#s-pick-row').addEventListener('keydown', function (e) {
+    var d = { ArrowRight: 1, ArrowLeft: -1 }[e.key]; if (!d) return;
+    var i = (S.orden.indexOf(R.cama) + d + S.orden.length) % S.orden.length; verCama(S.orden[i]); $('[data-pick="' + S.orden[i] + '"]').focus(); e.preventDefault();
   });
-  function marcarPick() {
-    var e = S.escenas[cur];
-    $$('.s-pick-b').forEach(function (b) { b.setAttribute('aria-pressed', !!e && e.cama === b.getAttribute('data-pick')); });
-  }
-
-  cur = 0; medir(); cur = -1; ir(0, 1);
-  // Pista inicial: un pequeño giro para que se entienda que se puede mirar
-  if (!reduce) setTimeout(function () {
-    var t0 = performance.now();
-    (function giro(t) { var k = (t - t0) / 1600; if (!pista || k > 1) return; pan.x = .5 + Math.sin(k * Math.PI * 2) * .12; pintar(); requestAnimationFrame(giro); })(t0);
-  }, 900);
+  $('#s-room').addEventListener('click', function (e) {
+    var t = e.target.closest('[data-foto]'); if (t) { R.foto = +t.getAttribute('data-foto'); pintarFoto(); return; }
+    if (e.target.closest('[data-prev]')) { mover(-1); return; }
+    if (e.target.closest('[data-next]')) { mover(1); return; }
+    if (e.target.closest('#s-canape')) { canape(!R.canape); return; }
+    if (e.target.closest('[data-abrir]')) { canape(true); return; }
+    if (e.target.closest('[data-cerrar]')) { canape(false); return; }
+    if (e.target.closest('[data-capas]')) {
+      var cp = $('#s-capas'); if (!cp) return;
+      cp.classList.remove('is-flash'); void cp.offsetWidth; cp.classList.add('is-flash');
+      if (matchMedia('(max-width: 900px)').matches) cp.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+      LM.track('showroom_capas', { cama: R.cama }); return;
+    }
+    var v = e.target.closest('[data-ver]'); if (v) { marcarInteres(v.getAttribute('data-ver')); $('#reserva').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); }
+  });
+  // Deslizar el dedo sobre la foto para pasar a la siguiente
+  var x0 = null;
+  ph.addEventListener('pointerdown', function (e) { if (!e.target.closest('button')) x0 = e.clientX; });
+  ph.addEventListener('pointerup', function (e) { if (x0 == null) return; var dx = e.clientX - x0; x0 = null; if (Math.abs(dx) > 40) mover(dx < 0 ? 1 : -1); });
+  ph.addEventListener('pointercancel', function () { x0 = null; });
+  ph.setAttribute('tabindex', '0');
+  ph.addEventListener('keydown', function (e) { if (e.target !== ph) return; if (e.key === 'ArrowLeft') { mover(-1); e.preventDefault(); } if (e.key === 'ArrowRight') { mover(1); e.preventDefault(); } });
+  $('#s-full').addEventListener('click', function () {
+    if (document.fullscreenElement) document.exitFullscreen(); else if (ph.requestFullscreen) ph.requestFullscreen();
+  });
+  verCama(S.orden[0]);
+  // Precarga: las fotos de frente de cada cama y el canapé abierto, para que el cambio sea inmediato
+  addEventListener('load', function () {
+    var w = (ph.clientWidth * (devicePixelRatio || 1)) > 1600 ? 2560 : 1600;
+    S.orden.map(function (k) { return S.camas[k].fotos[0][0]; }).concat(S.canape.fotos.map(function (f) { return f[0]; }))
+      .forEach(function (n) { var i = new Image(); i.src = src(n, w); });
+  });
 
   /* ================= RESERVA ================= */
   var form = $('#s-form'), R = { dia: null, hora: null, interes: [], canal: 'WhatsApp' };
@@ -262,7 +223,7 @@
 
   /* ================= DETALLES Y DUDAS ================= */
   $('#s-det').innerHTML = S.detalles.map(function (d) {
-    return '<figure class="s-det-i' + (d[0] === 7010 ? ' is-tall' : '') + '"><img src="../img/showroom-detalle-' + d[0] + '.webp" alt="' + d[1] + '" width="900" height="' + (d[0] === 7010 ? 1600 : 506) + '" loading="lazy"><figcaption>' + d[1] + '</figcaption></figure>';
+    return '<figure class="s-det-i"><img src="../img/sr2-' + d[0] + '-900.webp" srcset="../img/sr2-' + d[0] + '-900.webp 900w, ../img/sr2-' + d[0] + '-1600.webp 1600w" sizes="(max-width: 700px) 100vw, 33vw" alt="' + d[1] + '" width="900" height="600" loading="lazy"><figcaption>' + d[1] + '</figcaption></figure>';
   }).join('');
   $('#s-faq').innerHTML = LM.faqHTML([
     ['¿Cuánto cuesta la videollamada?', LM.c('videollamada') + '. No tienes que comprar nada.'],
