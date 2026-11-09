@@ -431,17 +431,14 @@ LM.PACK_BASES = {
 
 /* Galería de las fichas (Paco, 09/11): fotos de producto nuevas (img/fp-0N-1400|947|560.webp, cuadradas).
    Cada modelo lleva las suyas delante; las de detalle (etiqueta, asa, acolchado) van en todas. */
-/* Galería de la ficha (Paco, 09/11): las 7 fotos de producto. La primera, el plano general (la cama entera en la habitación);
+/* Galería de la ficha (Paco, 09/11): las 7 fotos de producto, en el orden de Paco. La primera, el plano general (la cama entera en la habitación);
    luego 4 a la vista y un botón «Ver más fotos» para las otras 2. En todas las fichas y packs.
-   El Natura Gold, con sus fotos del showroom (img/fpg-*), con la de la cama entera primero */
+   Igual en todos los modelos (el Gold ya no usa sus fotos del showroom, img/fpg-*, que se conservan) */
 LM.GALERIA = {
   todas: [['fp-07', 'de frente en la habitación, sobre canapé de madera'], ['fp-06', 'esquina con la cinta Lomonaco'],
-          ['fp-02', 'esquina sobre canapé de madera, con el nombre del modelo'], ['fp-03', 'detalle del asa con la M'],
-          ['fp-04', 'superficie acolchada de cerca'], ['fp-05', 'sus capas por dentro, sobre el canapé'], ['fp-01', 'detalle de la etiqueta']],
-  modelo: {
-    gold: [['fpg-06', 'con su cabecero en el showroom'], ['fpg-02', 'esquina con la cinta Lomonaco'], ['fpg-03', 'el bordado Natura Gold'],
-           ['fpg-04', 'las asas con la M'], ['fpg-05', 'superficie acolchada de cerca']]
-  },
+          ['fp-05', 'sus capas por dentro, sobre el canapé'], ['fp-04', 'superficie acolchada de cerca'], ['fp-03', 'detalle del asa con la M'],
+          ['fp-02', 'esquina sobre canapé de madera, con el nombre del modelo'], ['fp-01', 'detalle de la etiqueta']],
+  modelo: {},   // Paco, 09/11: las 7 fotos y este orden, en todos los modelos (también el Gold)
   visibles: 5   // la grande + 4; el resto, con «Ver más fotos»
 };
 LM.galeria = function (k) { return LM.GALERIA.modelo[k] || LM.GALERIA.todas; };

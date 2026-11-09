@@ -25,8 +25,8 @@
   /* Galería [F2]: una foto grande y debajo dos columnas (en móvil, carrusel).
      Fotos nuevas del Natura Látex; en el resto de modelos se usan como provisionales. */
   // Paco, 09/11: fotos de producto nuevas. Primero las del modelo (Látex, Gran Natura) y luego las de detalle, en todas.
-  // La 2 y la 3 llevan el botón de vídeo, como antes
-  var fotos = LM.galeria(K).map(function (x, i) { return { f: '../img/' + x[0], g: i ? 947 : 1400, h: i ? 947 : 1400, alt: x[1], video: i === 1 || i === 2 }; });
+  // Paco, 09/11: el botón de vídeo, en la 4.ª y la 5.ª
+  var fotos = LM.galeria(K).map(function (x, i) { return { f: '../img/' + x[0], g: i ? 947 : 1400, h: i ? 947 : 1400, alt: x[1], video: i === 3 || i === 4 }; });
   var PLAY = '<span class="p-vid" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg></span><span class="p-vid-k" aria-hidden="true">Vídeo</span>';
   var gal = $('#p-gal'), VIS = LM.GALERIA.visibles || fotos.length;
   gal.innerHTML = fotos.map(function (x, i) {
@@ -38,7 +38,7 @@
   // Paco, 09/11: la grande + 4 a la vista; el resto con «Ver más fotos» (en el móvil, carrusel con todas)
   if (fotos.length > VIS) {
     var mas = fotos.length - VIS;
-    gal.insertAdjacentHTML('afterend', '<button type="button" class="lm-btn lm-btn--line p-gal-mas" aria-expanded="false" aria-controls="p-gal">Ver más fotos (' + mas + ')</button>');
+    gal.insertAdjacentHTML('afterend', '<button type="button" class="p-gal-mas" aria-expanded="false" aria-controls="p-gal">Ver más fotos (' + mas + ')</button>');
     var bMas = gal.nextElementSibling;
     bMas.addEventListener('click', function () {
       var on = gal.classList.toggle('is-todas');

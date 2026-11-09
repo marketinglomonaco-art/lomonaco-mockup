@@ -45,7 +45,7 @@
   galeria();
   if (alts.length + 1 > VIS) {
     var mas = alts.length + 1 - VIS;
-    gal.insertAdjacentHTML('afterend', '<button type="button" class="lm-btn lm-btn--line p-gal-mas" aria-expanded="false" aria-controls="p-gal">Ver más fotos (' + mas + ')</button>');
+    gal.insertAdjacentHTML('afterend', '<button type="button" class="p-gal-mas" aria-expanded="false" aria-controls="p-gal">Ver más fotos (' + mas + ')</button>');
     var bMas = gal.nextElementSibling;
     bMas.addEventListener('click', function () {
       var on = gal.classList.toggle('is-todas');
