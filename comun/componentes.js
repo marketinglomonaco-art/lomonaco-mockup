@@ -468,6 +468,9 @@
       '<path d="M50 38l3.3 6.8 7.5 1-5.4 5.2 1.3 7.4L50 54.9l-6.7 3.5 1.3-7.4-5.4-5.2 7.5-1z" fill="currentColor"/><text x="50" y="69" text-anchor="middle" font-size="8.5" font-weight="800" letter-spacing="1.2" fill="currentColor">TOP</text>',
     trusted: '<text x="50" y="56" text-anchor="middle" font-size="17" font-weight="800" fill="currentColor">4,39</text>' +
       [0, 1, 2, 3, 4].map(function (i) { return '<path transform="translate(' + (31.5 + i * 8.2) + ' 61) scale(.32)" d="M10 0l3 6.2 6.8.9-5 4.7 1.2 6.7L10 15.3 4 18.5l1.2-6.7-5-4.7 6.8-.9z" fill="currentColor"' + (i === 4 ? ' opacity=".35"' : '') + '/>'; }).join(''),
+    garantia: '<text x="50" y="57" text-anchor="middle" font-size="22" font-weight="800" fill="currentColor">10</text><text x="50" y="68" text-anchor="middle" font-size="8.5" font-weight="800" letter-spacing="1.4" fill="currentColor">AÑOS</text>',
+    dinero: '<path d="M62.5 41.5A14 14 0 1 0 64 52" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M58.5 40.5l4.3 1.4.9-4.4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '<text x="50" y="55.5" text-anchor="middle" font-size="13" font-weight="800" fill="currentColor">€</text>',
     calidad: '<path d="M50 30l15 5v11c0 10-6.5 17-15 21-8.5-4-15-11-15-21V35z" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"/><path d="M43 48.5l5 5 9.5-10" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>'
   };
   var SELLOS = [
@@ -476,7 +479,10 @@
     ['iso', 'CALIDAD CERTIFICADA', 'GESTIÓN ISO', 'Gestión de calidad certificada ISO 9001'],
     ['top', 'TOP MARCAS', 'DE DESCANSO', 'Top Marcas de Descanso'],
     ['trusted', 'TIENDA VERIFICADA', 'TRUSTED SHOPS', 'Tienda verificada por Trusted Shops: ' + C.valoracion.media + ' de 5'],
-    ['calidad', 'PRODUCTO DE CALIDAD', 'GARANTIZADA', 'Producto de calidad garantizada']
+    ['calidad', 'PRODUCTO DE CALIDAD', 'GARANTIZADA', 'Producto de calidad garantizada'],
+    // Paco, 09/11: dos más
+    ['garantia', 'PRODUCTO CON', 'DE GARANTÍA', 'Producto con 10 años de garantía'],
+    ['dinero', 'COMPRA GARANTIZADA', 'DINERO DEVUELTO', 'Compra garantizada o te devolvemos el dinero']
   ];
   LM.sellos = function () {
     return '<div class="lm-foot-sellos"><p class="lm-foot-sellos-t">Compra con confianza</p><ul>' + SELLOS.map(function (s) {

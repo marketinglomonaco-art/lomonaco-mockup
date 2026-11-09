@@ -131,6 +131,18 @@
      1) se dibuja la columna, algo curvada; 2) se iluminan una tras otra las zonas donde trabaja el colchón, con su frase;
      3) la columna se endereza y pasa a granate, con «Columna recta». Todo sigue al scroll (si subes, se deshace).
      Sin movimiento si el usuario lo ha reducido: se ve directamente el final */
+  /* Paco, 09/11: en el móvil la imagen fija se quedaba sola, con un hueco blanco debajo. Debajo de la imagen va
+     el texto del momento en grande, una línea que lo explica y el paso (1 de 3). En escritorio no se ve */
+  function txtMovil(k, expl) {
+    return '<div class="p-esc-txt"><p class="p-esc-txt-k">' + k + ' · <span class="p-esc-txt-n">Paso 1 de 3</span></p>' +
+      '<p class="p-esc-txt-t" aria-live="polite"></p><p class="p-esc-txt-p">' + expl + '</p></div>';
+  }
+  function txtSincro(el, paso) {
+    var on = $('.p-esc-lab.is-on', el) || $('.p-esc-cap.is-on', el), t = $('.p-esc-txt-t', el), n = $('.p-esc-txt-n', el);
+    var v = on ? on.textContent : (t.textContent || $('.p-esc-cap', el).textContent);
+    if (t.textContent !== v) t.textContent = v;
+    var nv = 'Paso ' + (paso + 1) + ' de 3'; if (n.textContent !== nv) n.textContent = nv;
+  }
   function espalda(esc, E) {
     var s = function (w) { return E.img + '-' + w + '.webp'; }, C = E.columna;
     esc.innerHTML = '<div class="p-esc-stick"><div class="p-esc-img">' +
@@ -143,7 +155,8 @@
         '</div>' +
         '<ol class="p-esc-pasos" aria-hidden="true"><li></li><li></li><li></li></ol>' +
         // Paco, 09/11: aviso integrado, como el de «Por dentro» (sin «Recreación ilustrativa»)
-        '<p class="p-esc-aviso"><span class="p-scrub-mouse" aria-hidden="true"><i></i></span><span>Sigue bajando<small>y verás cómo se queda recta tu espalda</small></span></p></div></div>';
+        '<p class="p-esc-aviso"><span class="p-scrub-mouse" aria-hidden="true"><i></i></span><span>Sigue bajando<small>y verás cómo se queda recta tu espalda</small></span></p></div>' +
+        txtMovil('Columna recta', 'El colchón cede donde hace falta y sujeta donde lo necesitas, para que tu espalda descanse recta.') + '</div>';
     esc.hidden = false;
     var zoom = $('.p-esc-zoom', esc), sp = $('.p-esc-sp', esc), lab = $('.p-esc-lab', esc), pasos = $$('.p-esc-pasos li', esc);
     var glows = $$('.p-esc-glow', esc), caps = $$('.p-esc-cap', esc), aviso = $('.p-esc-aviso', esc);
@@ -168,6 +181,7 @@
       var paso = p < .2 ? 0 : p < .7 ? 1 : 2;
       pasos.forEach(function (l, k) { l.classList.toggle('is-on', k <= paso && p > .02); });
       zoom.style.transform = 'scale(' + (1 + .07 * p).toFixed(4) + ')';
+      txtSincro(esc, paso);
     }
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) { pintar(1); return; }
     esc.classList.add('is-story');
@@ -206,7 +220,8 @@
           '<p class="p-esc-lab" style="left:' + E.etiqueta[0] + '%;top:' + E.etiqueta[1] + '%">' + LM.ico('check') + 'Tú sigues durmiendo</p>' +
         '</div>' +
         '<ol class="p-esc-pasos" aria-hidden="true"><li></li><li></li><li></li></ol>' +
-        '<p class="p-esc-aviso"><span class="p-scrub-mouse" aria-hidden="true"><i></i></span><span>Sigue bajando<small>y verás por qué no te despierta</small></span></p></div></div>';
+        '<p class="p-esc-aviso"><span class="p-scrub-mouse" aria-hidden="true"><i></i></span><span>Sigue bajando<small>y verás por qué no te despierta</small></span></p></div>' +
+        txtMovil('Independencia de lechos', 'Si tu pareja se gira o se levanta, el movimiento se queda en su lado y no te despierta.') + '</div>';
     fig.hidden = false;
     var zoom = $('.p-esc-zoom', fig), svg = $('.p-ind-svg', fig), lim = $('.p-ind-lim', fig), lab = $('.p-esc-lab', fig);
     var caps = $$('.p-esc-cap', fig), pasos = $$('.p-esc-pasos li', fig), aviso = $('.p-esc-aviso', fig);
@@ -223,6 +238,7 @@
       aviso.classList.toggle('is-off', p > .82);
       pasos.forEach(function (li, i) { li.classList.toggle('is-on', i <= paso && p > .02); });
       zoom.style.transform = 'scale(' + (1 + .05 * p).toFixed(4) + ')';
+      txtSincro(fig, paso);
     }
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) { pintar(1); return; }
     fig.classList.add('is-story');
