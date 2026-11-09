@@ -289,9 +289,25 @@
   function scrub() {
     var sec = $('#por-dentro'); if (!sec) return;
     var pin = $('.p-scrub-pin', sec), v = $('.p-scrub-v', sec), list = $('#p-scrub-steps'), bar = $('#p-scrub-prog');
-    var pasos = [{ a: 0, b: .15, k: 'Por dentro', t: 'Así es tu ' + P.nombre + '.', p: 'Lo abrimos capa a capa.', h2: true, aviso: true }]
-      .concat(P.capas.map(function (c, i) { return { a: .17 + i * .17, b: .17 + (i + 1) * .17, k: 'Capa 0' + (i + 1) + ' de 0' + P.capas.length, t: c[0], p: c[1] }; }))
-      .concat([{ a: .87, b: 1.01, k: P.altura + ' de descanso', t: 'Cuatro capas. Un solo objetivo.', p: 'Que duermas fresco y te levantes descansado. Firmeza ' + P.firmeza + '% y adaptabilidad ' + P.adaptabilidad + '%.', cta: true }]);
+    // Paco, 09/11: si hay capas del vídeo para este modelo (LM.VIDEO_CAPAS), una tarjeta por capa y un punto sobre ella
+    var CV = (LM.VIDEO_CAPAS || {})[K], capas = CV || P.capas, n = capas.length, dd = function (x) { return (x < 10 ? '0' : '') + x; };
+    var NUM = ['', 'Una', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis', 'Siete', 'Ocho', 'Nueve', 'Diez', 'Once', 'Doce'];
+    var A0 = .15, A1 = .86, tr = (A1 - A0) / n;
+    var pasos = [{ a: 0, b: A0, k: 'Por dentro', t: 'Así es tu ' + P.nombre + '.', p: 'Lo abrimos capa a capa.', h2: true, aviso: true }]
+      .concat(capas.map(function (c, i) { return { a: A0 + i * tr, b: A0 + (i + 1) * tr, k: 'Capa ' + dd(i + 1) + ' de ' + dd(n), t: c[0], p: c[1], pt: CV ? i : -1 }; }))
+      .concat([{ a: A1, b: 1.01, k: P.altura + ' de descanso', t: (NUM[n] || n) + ' capas. Un solo objetivo.', p: 'Que duermas fresco y te levantes descansado. Firmeza ' + P.firmeza + '% y adaptabilidad ' + P.adaptabilidad + '%.', cta: true }]);
+    // Puntos sobre las capas: la capa se ajusta al trozo de vídeo que se ve (object-fit: cover)
+    var pts = $('.p-scrub-pts', sec), dots = [];
+    if (pts && CV) {
+      pts.innerHTML = CV.map(function (c, i) { return '<i style="left:' + c[2] + '%;top:' + c[3] + '%">' + (i + 1) + '</i>'; }).join('');
+      dots = $$('i', pts);
+      var encajar = function () {
+        var m = v.parentNode, W = m.clientWidth, H = m.clientHeight, vw = v.videoWidth || +v.getAttribute('width'), vh = v.videoHeight || +v.getAttribute('height');
+        var s = Math.max(W / vw, H / vh), w = vw * s, h = vh * s, op = getComputedStyle(v).objectPosition.split(' ').map(parseFloat);
+        pts.style.cssText = 'width:' + w + 'px;height:' + h + 'px;left:' + ((W - w) * (op[0] / 100)) + 'px;top:' + ((H - h) * ((op[1] === undefined ? 50 : op[1]) / 100)) + 'px';
+      };
+      encajar(); addEventListener('resize', encajar); v.addEventListener('loadedmetadata', encajar);
+    }
     list.innerHTML = pasos.map(function (s, i) {
       var tag = s.h2 ? 'h2 id="p-scrub-t"' : 'h3';
       // Comentario 6: cada tarjeta lleva un botón para pasar a la siguiente capa
@@ -313,6 +329,7 @@
     var dur = 0, p = 0, obj = 0, raf = 0, last = -1, pedido = false;
     var track = $('#p-scrub-track');
     var RECORRIDO = 2400, RECORRIDO_TACTIL = 1100; // px de rueda / de dedo para abrirlo entero
+    if (n > 4) { RECORRIDO += (n - 4) * 350; RECORRIDO_TACTIL += (n - 4) * 160; } // más capas, más recorrido (unos 3 golpes de rueda por capa)
     function cargar() {
       if (pedido) return; pedido = true;
       var url = v.getAttribute(innerWidth < 768 ? 'data-src-sm' : 'data-src-lg');
@@ -338,6 +355,7 @@
       var on = -1; pasos.forEach(function (s, i) { if (p >= s.a && p < s.b) on = i; });
       if (on !== last) {
         items.forEach(function (el, i) { el.classList.toggle('is-on', i === on); });
+        dots.forEach(function (d, i) { d.classList.toggle('is-on', on > -1 && pasos[on].pt === i); });
         if (track) $$('#p-scrub-stops button').forEach(function (bt, i) { bt.classList.toggle('is-on', i === on); bt.classList.toggle('is-pasado', i < on); });
         last = on;
       }

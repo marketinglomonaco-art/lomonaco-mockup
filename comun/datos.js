@@ -228,6 +228,26 @@ LM.ORDEN = ['visco', 'gold', 'latex', 'gran'];
 /* Módulo «Independencia de lechos» (Paco, 09/11): pareja vista desde arriba (imagen de Paco: img/escena-pareja-*).
    Mismo funcionamiento que el de la columna: la imagen se queda fija mientras bajas y 1) salen ondas de movimiento del lado
    de él, 2) una línea en el centro del colchón las frena, 3) su lado sigue quieto. Coordenadas en % de la imagen */
+/* «Por dentro» (Paco, 09/11): una tarjeta por cada capa que se ve en el vídeo y un punto sobre esa capa.
+   El vídeo es del Natura Látex (escena de Blender natura_latex_capas.py: 11 capas, 32 cm, de arriba abajo con su grosor).
+   Solo en su ficha: en las demás el vídeo no coincide con sus capas y se quedan sus 4 tarjetas, sin puntos.
+   [nombre, texto, x, y] · x, y = punto sobre la capa, en % del fotograma abierto (960 × 960).
+   PROVISIONAL: nombres de la escena 3D; faltan los nombres y textos comerciales de Paco */
+LM.VIDEO_CAPAS = {
+  latex: [
+    ['Látex natural', '3 cm. Una capa suave que te acoge al tumbarte. Hipoalergénica y transpirable.', 91.04, 31.25],
+    ['Capa de confort', '1 cm.', 90.63, 34.38],
+    ['Capa de confort', '1 cm.', 90.36, 37.34],
+    ['Capa fina', '1 cm.', 90.1, 40.36],
+    ['Espuma', '3 cm.', 89.74, 43.75],
+    ['Espuma', '3 cm.', 89.38, 47.14],
+    ['Muelles ensacados', '14 cm. Cada muelle trabaja solo: soporte a tu medida y no notas a tu pareja.', 87.5, 53.13],
+    ['Base', '2 cm.', 88.44, 58.07],
+    ['Capa fina', '1 cm.', 88.13, 60.68],
+    ['Capa fina', '1 cm.', 87.92, 63.54],
+    ['Capa inferior', '2 cm.', 87.6, 66.3]
+  ]
+};
 LM.ESCENA_PAREJA = {
   img: '../img/escena-pareja', w: 1200, h: 896,
   ondas: [43.5, 57], lado: [26, 8.5, 50.8, 92], limite: [50.8, 22, 90], etiqueta: [66, 44],
