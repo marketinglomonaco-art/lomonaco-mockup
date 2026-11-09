@@ -1108,3 +1108,16 @@ html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color 
   .p-esc .p-esc-aviso small { font-size: 11px; }
   .p-esc .p-esc-aviso .p-scrub-mouse { width: 15px; height: 22px; }
 }
+
+/* Paco, 09/11: el aviso «Sigue bajando» siempre en el lateral izquierdo (abajo), en todos los módulos con scroll:
+   columna recta, independencia de lechos y «Por dentro» */
+.p-esc .p-esc-aviso { left: 24px; right: auto; transform: none; }
+.p-esc .p-esc-aviso.is-off { transform: translateY(6px); }
+.p-scrub-hint { left: 24px; right: auto; transform: none; }
+.p-scrub.is-empezado .p-scrub-hint { transform: translateY(10px); }
+@media (max-width: 900px) {
+  .p-scrub-hint { left: 14px; }
+}
+@media (max-width: 700px) {
+  .p-esc .p-esc-aviso { left: 12px; }
+}
