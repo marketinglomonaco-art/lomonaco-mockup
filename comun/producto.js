@@ -122,8 +122,8 @@
   function capaInteractiva(E) {
     if (!E.zonas) return '';
     var M = E.muelles;
-    return '<div class="p-esc-ov" id="p-esc-ov" role="group" aria-label="Pasa el ratón o desliza el dedo por los muelles">' +
-      E.capasPos.map(function (p, i) { return '<button type="button" class="p-esc-pt" data-c="' + i + '" style="left:' + p[0] + '%;top:' + p[1] + '%" aria-label="Capa ' + (i + 1) + '">' + (i + 1) + '</button>'; }).join('') +
+    return '<div class="p-esc-ov" id="p-esc-ov" role="group" aria-label="Pasa el ratón o desliza el dedo por el colchón">' +
+      (E.capasPos || []).map(function (p, i) { return '<button type="button" class="p-esc-pt" data-c="' + i + '" style="left:' + p[0] + '%;top:' + p[1] + '%" aria-label="Capa ' + (i + 1) + '">' + (i + 1) + '</button>'; }).join('') +
       '<i class="p-esc-line" aria-hidden="true" style="bottom:' + (100 - M[2]) + '%"></i>' +
       '<i class="p-esc-lens" aria-hidden="true" style="top:' + M[2] + '%;height:' + (M[3] - M[2]) + '%"></i>' +
       '<div class="p-esc-tag" aria-live="polite"><p class="p-esc-tag-k">Bajo tu <b></b></p><span class="p-esc-bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><p class="p-esc-tag-t"></p></div>' +
@@ -182,8 +182,10 @@
   $('#p-ben').innerHTML = P.beneficios.map(function (b) { return '<li><span class="h-ic">' + LM.ico(b[0]) + '</span><b>' + b[1] + '</b><p>' + b[2] + '</p></li>'; }).join('');
   $('#p-dur').textContent = P.durTxt;
   // Paco, 09/11: escena de corte, con las capas del colchón numeradas al lado
-  if (P.escena && $('#p-esc')) {
-    var E = P.escena, esc = $('#p-esc');
+  if (LM.ESCENA_CORTE && $('#p-esc')) {
+    var EC = LM.ESCENA_CORTE, conMuelles = P.escena === 'muelles';
+    var E = { img: EC.img, w: EC.w, h: EC.h, muelles: EC.muelles, zonas: EC.zonas[conMuelles ? 'muelles' : 'general'], capasPos: conMuelles ? EC.capasPos : [] };
+    var esc = $('#p-esc');
     esc.innerHTML = '<div class="p-esc-img"><img src="' + E.img + '-1200.webp" srcset="' + E.img + '-800.webp 800w, ' + E.img + '-1200.webp ' + E.w + 'w" sizes="(max-width: 900px) 100vw, 52vw" alt="Persona durmiendo de lado sobre el ' + P.titulo + ', con el colchón cortado para ver sus capas" width="' + E.w + '" height="' + E.h + '" loading="lazy">' +
         '<span class="p-esc-note">Recreación ilustrativa</span>' + capaInteractiva(E) + '</div>' +
       '<figcaption class="p-esc-txt"><p class="lm-eyebrow">Por dentro, mientras duermes</p>' +
