@@ -35,7 +35,8 @@
         '<a class="lm-talk-o lm-talk-wa" href="' + WA + '" target="_blank" rel="noopener" data-lead="whatsapp" tabindex="-1">' + WA_SVG + 'WhatsApp</a>' +
         '<button class="lm-talk-o lm-talk-call" type="button" aria-controls="lm-talk-pop" aria-expanded="false" tabindex="-1">' + LM.ico('phone') + 'Te llamamos</button>' +
       '</div>' +
-      '<button class="lm-talk-main" type="button" aria-expanded="false">' + LM.ico('chat') + '¿Hablamos?</button>';
+      // Paco, 09/11: la burbuja, en verde WhatsApp y con su icono
+      '<button class="lm-talk-main" type="button" aria-expanded="false">' + WA_SVG + '¿Hablamos?</button>';
     document.body.appendChild(b);
 
     var main = b.querySelector('.lm-talk-main'), opts = LM.$$('.lm-talk-o', b), pop = b.querySelector('.lm-talk-pop'), call = b.querySelector('.lm-talk-call');

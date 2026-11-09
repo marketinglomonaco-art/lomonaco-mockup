@@ -1225,3 +1225,19 @@ html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color 
   .s-vista img { border-radius: 10px; }
   .s-vista span { font-size: 13px; }
 }
+
+/* Pie · formas de pago (Paco, 09/11): todas a la misma altura y con la misma separación, centradas bajo los sellos */
+.lm-foot-pagos { margin-top: 34px; text-align: center; }
+.lm-foot-pagos ul { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 18px 44px; margin: 0; padding: 0; list-style: none; }
+.lm-foot-pagos li { display: flex; align-items: center; height: 30px; }
+.lm-foot-pagos svg { display: block; height: 100%; width: auto; font-family: var(--font); }
+@media (max-width: 600px) {
+  .lm-foot-pagos ul { gap: 16px 26px; }
+  .lm-foot-pagos li { height: 24px; }
+}
+
+/* «¿Hablamos?» (Paco, 09/11): verde WhatsApp */
+.lm-talk-main { background: var(--wa); color: #fff; }
+.lm-talk-main:hover { background: #1fb457; }
+.lm-talk-main::after { border-color: var(--wa); }
+.lm-talk-main svg { width: 22px; height: 22px; flex: none; }

@@ -495,6 +495,21 @@
         '<g class="lm-se-ic">' + SELLO_IC[s[0]] + '</g></svg></li>';
     }).join('') + '</ul></div>';
   };
+  /* Formas de pago en el pie (Paco, 09/11): seQura, Pepper, transferencia, Visa, Mastercard y Bizum, misma altura y separación.
+     MAQUETA: dibujados aquí con los colores de cada marca; en producción, los logos oficiales */
+  var PAGOS = [
+    ['seQura', '0 0 112 34', '<rect width="112" height="34" rx="7" fill="#52bf9d"/><text x="56" y="23.5" text-anchor="middle" font-size="20" font-weight="700" fill="#fff">seQura</text>'],
+    ['Pepper', '0 0 104 34', '<text x="52" y="24" text-anchor="middle" font-size="27" font-weight="800" letter-spacing="-.5" fill="#ef5148">pepper</text>'],
+    ['Transferencia bancaria', '0 0 138 34', '<text x="0" y="14.5" font-size="13.5" font-weight="800" letter-spacing=".2" fill="#111">TRANSFERENCIA</text><text x="0" y="30" font-size="13.5" font-weight="800" letter-spacing=".2" fill="#111">BANCARIA</text>'],
+    ['Visa', '0 0 58 36', '<rect x=".75" y=".75" width="56.5" height="34.5" rx="3" fill="#fff" stroke="#c9c9ce" stroke-width="1.5"/><rect x="3" y="3" width="52" height="6" fill="#1a1f71"/><rect x="3" y="27" width="52" height="6" fill="#f7b600"/><text x="29" y="24" text-anchor="middle" font-size="15.5" font-weight="900" font-style="italic" fill="#1a1f71">VISA</text>'],
+    ['Mastercard', '0 0 52 34', '<defs><clipPath id="lm-mc"><circle cx="19" cy="17" r="15"/></clipPath></defs><circle cx="19" cy="17" r="15" fill="#eb001b"/><circle cx="33" cy="17" r="15" fill="#f79e1b"/><circle cx="33" cy="17" r="15" fill="#ff5f00" clip-path="url(#lm-mc)"/>'],
+    ['Bizum', '0 0 104 34', '<path d="M5 6l6 6M5 28l14-14M15 24l5 5" fill="none" stroke="#05b9cf" stroke-width="4.2" stroke-linecap="round"/><text x="28" y="24.5" font-size="24" font-weight="600" letter-spacing="-.3" fill="#05b9cf">bizum</text>']
+  ];
+  LM.pagos = function () {
+    return '<div class="lm-foot-pagos"><p class="lm-foot-sellos-t">Paga como prefieras</p><ul>' + PAGOS.map(function (p) {
+      return '<li><svg viewBox="' + p[1] + '" role="img" aria-label="' + p[0] + '">' + p[2] + '</svg></li>';
+    }).join('') + '</ul></div>';
+  };
   LM.footer = function (el) {
     var li = function (l) { return '<li><a href="' + LM.href(l[1]) + '"' + (l[2] ? ' rel="nofollow noopener" target="_blank"' : '') + '>' + l[0] + '</a></li>'; };
     var col = function (t, links, cls) { return '<div class="lm-fc' + (cls ? ' ' + cls : '') + '"><p>' + t + '</p><ul>' + links.map(li).join('') + '</ul></div>'; };
@@ -521,7 +536,7 @@
         '<li><a href="tel:+34858225189">Atención al cliente: 858 22 51 89</a></li>' +
         '<li><a href="https://wa.me/+34650282094" data-lead="whatsapp">WhatsApp</a></li></ul>' +
         '<a class="lm-foot-ts" href="https://www.trustedshops.es/" target="_blank" rel="noopener">Protección al Comprador y Valoraciones reales · Trusted Shops</a></div>' +
-      '</div>' + LM.sellos() + '<p class="lm-foot-fin" id="lm-legal">* ' + esc(C.legalFinanciacion.v) + '</p><div class="lm-foot-legal"><img src="' + LOGO + '" alt="LOMONACO" width="120" height="16" loading="lazy">' + redes() +
+      '</div>' + LM.sellos() + LM.pagos() + '<p class="lm-foot-fin" id="lm-legal">* ' + esc(C.legalFinanciacion.v) + '</p><div class="lm-foot-legal"><img src="' + LOGO + '" alt="LOMONACO" width="120" height="16" loading="lazy">' + redes() +
       '<span>© LM DESCANSO SL</span>' +
       '<a href="' + LM.WEB + '/aviso-legal/">Aviso legal</a><a href="' + LM.WEB + '/politica-de-privacidad/">Política privacidad</a><a href="' + LM.WEB + '/politica-de-cookies/">Política cookies</a></div>' +
       '</div></footer>';
