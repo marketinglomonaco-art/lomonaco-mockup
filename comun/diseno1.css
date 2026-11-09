@@ -1093,3 +1093,18 @@ html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color 
 @media (prefers-reduced-motion: reduce) { .p-ind-svg.is-on .p-ind-onda { animation: none; } }
 .p-ind-onda { stroke-width: 4.5; }
 @media (max-width: 700px) { .p-ind-onda { stroke-width: 3.5; } }
+
+/* Columna e independencia de lechos (Paco, 09/11): las frases y la etiqueta final, siempre arriba en el centro (mismo sitio);
+   el aviso del scroll, abajo en el centro, en una pastilla oscura translúcida que se integra con la foto sin perder contraste */
+.p-esc .p-esc-cap, .p-esc .p-esc-lab { left: 50% !important; top: 5% !important; }
+.p-esc .p-esc-aviso { left: 50%; bottom: 18px; transform: translateX(-50%); gap: 10px; padding: 9px 18px 9px 12px; border-radius: 999px; background: rgba(24,19,16,.5); -webkit-backdrop-filter: blur(12px) saturate(1.2); backdrop-filter: blur(12px) saturate(1.2); border: 1px solid rgba(255,255,255,.16); box-shadow: 0 8px 24px rgba(0,0,0,.18); color: #fff; white-space: nowrap; }
+.p-esc .p-esc-aviso small { color: rgba(255,255,255,.75); }
+.p-esc .p-esc-aviso .p-scrub-mouse { width: 18px; height: 27px; border-color: #fff; }
+.p-esc .p-esc-aviso .p-scrub-mouse i { background: #fff; }
+.p-esc .p-esc-aviso.is-off { transform: translate(-50%, 6px); }
+@media (max-width: 700px) {
+  .p-esc .p-esc-cap, .p-esc .p-esc-lab { top: 4% !important; }
+  .p-esc .p-esc-aviso { bottom: 12px; padding: 7px 14px 7px 10px; gap: 8px; font-size: 12.5px; }
+  .p-esc .p-esc-aviso small { font-size: 11px; }
+  .p-esc .p-esc-aviso .p-scrub-mouse { width: 15px; height: 22px; }
+}
