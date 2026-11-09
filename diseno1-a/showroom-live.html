@@ -10,10 +10,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300..800&family=Playfair+Display:ital,wght@1,400;1,500&display=swap">
 <link rel="preload" as="image" href="../img/showroom-7035-2400.webp" imagesrcset="../img/showroom-7035-1400.webp 1400w, ../img/showroom-7035-2400.webp 2400w" imagesizes="100vw">
-<link rel="stylesheet" href="../comun/base.css?v=1794206074">
-<link rel="stylesheet" href="../comun/paginas.css?v=1794206074">
-<link rel="stylesheet" href="../comun/diseno1.css?v=1794206074">
-<link rel="stylesheet" href="../comun/rojo.css?v=1794206074">
+<link rel="stylesheet" href="../comun/base.css?v=1794208561">
+<link rel="stylesheet" href="../comun/paginas.css?v=1794208561">
+<link rel="stylesheet" href="../comun/diseno1.css?v=1794208561">
+<link rel="stylesheet" href="../comun/rojo.css?v=1794208561">
 </head>
 <body data-page="showroom" data-opcion="diseno1-a" data-variante="a" data-producto="" data-version="4">
 <a class="lm-skip" href="#main">Saltar al contenido</a>
@@ -44,13 +44,14 @@
       <p class="lm-eyebrow">Paseo virtual</p>
       <h2 class="lm-h2" id="s-tour-t">Muévete por el showroom. <em>Curiosea.</em></h2>
     </div>
-    <p class="lm-sub">Elige un colchón, mira sus detalles de cerca, descubre sus capas y abre el canapé.</p>
+    <p class="lm-sub">Arrastra para mirar la sala y toca una cama para verla de cerca, descubrir sus capas y abrir el canapé.</p>
   </div>
-  <div class="lm-w s-pick" id="s-pick">
-    <p class="s-pick-k">¿Qué colchón quieres ver?</p>
-    <div class="s-pick-row" id="s-pick-row" role="tablist" aria-label="Colchones del showroom"></div>
+  <!-- Paco, 09/11: primero la sala en plano general (se arrastra para mirar); los puntos de cada cama abren su recorrido -->
+  <div class="s-sv-wrap" id="s-sala">
+    <div class="s-sv" id="s-sv" data-testid="showroom-viewer"></div>
   </div>
-  <div class="lm-w s-room" id="s-room" data-testid="showroom-viewer">
+  <div class="lm-w s-room" id="s-room" data-testid="showroom-cama" hidden>
+    <button class="s-room-back" type="button" id="s-back"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>Volver a la sala</button>
     <div class="s-room-main">
       <figure class="s-room-ph" id="s-room-ph">
         <img class="s-room-img is-on" id="s-img-a" alt="" width="2560" height="1707" draggable="false">
@@ -153,18 +154,18 @@
 
 </main>
 <div id="lm-footer"></div>
-<script src="../comun/datos.js?v=1794206074"></script>
-<script src="../comun/componentes.js?v=1794206074"></script>
+<script src="../comun/datos.js?v=1794208561"></script>
+<script src="../comun/componentes.js?v=1794208561"></script>
 <script>LM.init();</script>
-<script src="../comun/compromisos.js?v=1794206074"></script>
-<script src="../comun/packs.js?v=1794206074"></script>
-<script src="../comun/showroom.js?v=1794206074"></script>
-<script src="../comun/pack.js?v=1794206074"></script>
-<script src="../comun/asistente.js?v=1794206074"></script>
-<script src="../comun/presion.js?v=1794206074"></script>
-<script src="../comun/muelles.js?v=1794206074"></script>
-<script src="../comun/animaciones.js?v=1794206074"></script>
-<script src="../comun/v4.js?v=1794206074"></script>
-<script src="../comun/cuestionario.js?v=1794206074"></script>
+<script src="../comun/compromisos.js?v=1794208561"></script>
+<script src="../comun/packs.js?v=1794208561"></script>
+<script src="../comun/showroom.js?v=1794208561"></script>
+<script src="../comun/pack.js?v=1794208561"></script>
+<script src="../comun/asistente.js?v=1794208561"></script>
+<script src="../comun/presion.js?v=1794208561"></script>
+<script src="../comun/muelles.js?v=1794208561"></script>
+<script src="../comun/animaciones.js?v=1794208561"></script>
+<script src="../comun/v4.js?v=1794208561"></script>
+<script src="../comun/cuestionario.js?v=1794208561"></script>
 </body>
 </html>

@@ -8,6 +8,128 @@
 
   $$('[data-estado]').forEach(function (el) { el.innerHTML = LM.estado(); });
 
+  /* ================= SALA (plano general) =================
+     Paco, 09/11: se empieza por la sala, como la primera versión: la foto es más grande que el visor y se arrastra para mirar
+     (con inercia), y las flechas cambian de punto de vista. Los puntos de cada cama abren su recorrido (más abajo). */
+  var sv = $('#s-sv'), SALA = S.sala;
+  var flecha = function (d) { return '<svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + (d < 0 ? 'm15 6-6 6 6 6' : 'm9 6 6 6-6 6') + '"/></svg>'; };
+  sv.setAttribute('tabindex', '0');
+  sv.setAttribute('role', 'region');
+  sv.setAttribute('aria-label', 'Sala del showroom. Arrastra o usa las flechas del teclado para mirar; toca una cama para verla de cerca.');
+  sv.innerHTML =
+    '<div class="s-sv-stages" id="s-stages"></div>' +
+    '<p class="s-sv-scene" id="s-scene" aria-live="polite"></p>' +
+    '<p class="s-sv-hint" id="s-hint"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12"/><path d="M11 11.5v-2a1.5 1.5 0 0 1 3 0V12"/><path d="M14 10.5a1.5 1.5 0 0 1 3 0V12"/><path d="M17 11.5a1.5 1.5 0 0 1 3 0V16a5 5 0 0 1-5 5h-2.5a5 5 0 0 1-4.3-2.5L5.4 15a1.5 1.5 0 0 1 2.6-1.5L8 14"/></svg>Arrastra para mirar</p>' +
+    '<button class="s-sv-nav s-sv-prev" type="button" data-go="-1" aria-label="Otro punto de vista">' + flecha(-1) + '</button>' +
+    '<button class="s-sv-nav s-sv-next" type="button" data-go="1" aria-label="Avanzar por la sala">' + flecha(1) + '</button>' +
+    '<button class="s-sv-full" type="button" id="s-sv-full" aria-label="Pantalla completa"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>' +
+    '<div class="s-sv-cta"><a class="lm-btn lm-btn--buy" href="#reserva">Verlo en directo por videollamada</a></div>';
+
+  var stages = $('#s-stages'), cur = -1, pan = { x: .5, y: .5 }, vel = 0, dims = {}, stage = null, busy = false;
+  var RAT = 2560 / 1707;
+  function medir() {
+    var w = sv.clientWidth, h = sv.clientHeight;
+    var sw = Math.max(w * 1.3, h * RAT * 1.08), sh = sw / RAT;
+    if (sh < h * 1.06) { sh = h * 1.06; sw = sh * RAT; }
+    dims = { w: w, h: h, sw: sw, sh: sh, rx: sw - w, ry: sh - h };
+    $$('.s-stage', stages).forEach(function (st) { st.style.width = sw + 'px'; st.style.height = sh + 'px'; });
+    pintar();
+  }
+  function pintar() {
+    if (!stage) return;
+    pan.x = Math.min(1, Math.max(0, pan.x)); pan.y = Math.min(1, Math.max(0, pan.y));
+    stage.style.transform = 'translate3d(' + (-pan.x * dims.rx) + 'px,' + (-pan.y * dims.ry) + 'px,0)';
+  }
+  function crearEscena(i) {
+    var e = SALA[i], st = document.createElement('div'), n = '../img/sr2-' + e.img;
+    st.className = 's-stage';
+    st.style.width = dims.sw + 'px'; st.style.height = dims.sh + 'px';
+    st.innerHTML = '<img src="' + n + '-2560.webp" srcset="' + n + '-1600.webp 1600w, ' + n + '-2560.webp 2560w" sizes="' + Math.round(dims.sw) + 'px" alt="Showroom de Lo Monaco: ' + e.t + '" width="2560" height="1707" draggable="false">' +
+      e.puntos.map(function (p) {
+        var c = S.camas[p[0]];
+        return '<button type="button" class="s-spot" data-cama="' + p[0] + '" style="left:' + p[1] + '%;top:' + p[2] + '%"><i aria-hidden="true"></i><span>' + c.t + '</span></button>';
+      }).join('');
+    return st;
+  }
+  function ir(i, dir) {
+    i = (i + SALA.length) % SALA.length;
+    if (i === cur || busy) return;
+    var prev = stage, next = crearEscena(i);
+    stages.appendChild(next);
+    stage = next; pan = { x: .5, y: .5 }; vel = 0; pintar();
+    cur = i;
+    $('#s-scene').textContent = (i + 1) + ' / ' + SALA.length + ' · ' + SALA[i].t;
+    if (prev && !reduce) {
+      busy = true;
+      next.classList.add(dir < 0 ? 'is-in-back' : 'is-in');
+      prev.classList.add(dir < 0 ? 'is-out-back' : 'is-out');
+      setTimeout(function () { prev.remove(); next.classList.remove('is-in', 'is-in-back'); busy = false; }, 700);
+    } else if (prev) prev.remove();
+    LM.track('showroom_scene', { scene: SALA[i].img });
+  }
+
+  /* Arrastrar con ratón o dedo, con un poco de inercia */
+  var drag = null;
+  sv.addEventListener('pointerdown', function (e) {
+    if (e.target.closest('button, a')) return;
+    drag = { x: e.clientX, y: e.clientY, t: performance.now(), moved: false };
+    sv.classList.add('is-drag'); vel = 0;
+  });
+  addEventListener('pointermove', function (e) {
+    if (!drag) return;
+    var dx = e.clientX - drag.x, dy = e.clientY - drag.y, now = performance.now();
+    if (!drag.moved && Math.abs(dx) < 4 && Math.abs(dy) < 4) return;
+    if (!drag.moved && e.pointerType === 'touch' && Math.abs(dy) > Math.abs(dx)) { drag = null; sv.classList.remove('is-drag'); return; } // deja hacer scroll vertical
+    drag.moved = true; ocultarPista();
+    pan.x -= dx / (dims.rx || 1); pan.y -= dy / (dims.ry || 1);
+    vel = -dx / (dims.rx || 1) / Math.max(1, now - drag.t) * 16;
+    drag.x = e.clientX; drag.y = e.clientY; drag.t = now;
+    pintar();
+  });
+  addEventListener('pointercancel', function () { drag = null; sv.classList.remove('is-drag'); });
+  addEventListener('pointerup', function () {
+    if (!drag) return; drag = null; sv.classList.remove('is-drag');
+    (function inercia() { if (Math.abs(vel) < .0005) return; pan.x += vel; vel *= .92; pintar(); requestAnimationFrame(inercia); })();
+  });
+  sv.addEventListener('keydown', function (e) {
+    if (e.target !== sv) return;
+    if (e.key === 'ArrowLeft') { pan.x -= .08; pintar(); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { pan.x += .08; pintar(); e.preventDefault(); }
+    if (e.key === 'ArrowUp') { ir(cur + 1, 1); e.preventDefault(); }
+    if (e.key === 'ArrowDown') { ir(cur - 1, -1); e.preventDefault(); }
+  });
+  var pista = true;
+  function ocultarPista() { if (pista) { pista = false; $('#s-hint').classList.add('is-off'); } }
+  sv.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-cama]'); if (b) { abrirCama(b.getAttribute('data-cama')); return; }
+    var g = e.target.closest('[data-go]'); if (g) { ocultarPista(); ir(cur + +g.getAttribute('data-go'), +g.getAttribute('data-go')); }
+  });
+  $('#s-sv-full').addEventListener('click', function () {
+    if (document.fullscreenElement) document.exitFullscreen(); else if (sv.requestFullscreen) sv.requestFullscreen();
+  });
+  document.addEventListener('fullscreenchange', function () { setTimeout(medir, 50); });
+  addEventListener('resize', medir);
+  medir(); ir(0, 1);
+  // Pista inicial: un pequeño giro para que se entienda que se puede mirar
+  if (!reduce) setTimeout(function () {
+    var t0 = performance.now();
+    (function giro(t) { var k = (t - t0) / 1600; if (!pista || k > 1) return; pan.x = .5 + Math.sin(k * Math.PI * 2) * .12; pintar(); requestAnimationFrame(giro); })(t0);
+  }, 900);
+
+  /* De la sala a una cama, y vuelta */
+  function abrirCama(k) {
+    ocultarPista();
+    $('#s-sala').hidden = true; $('#s-room').hidden = false;
+    verCama(k);
+    $('#tour').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+  }
+  function volverSala() {
+    if (document.fullscreenElement) document.exitFullscreen();
+    $('#s-room').hidden = true; $('#s-sala').hidden = false; medir();
+    $('#tour').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    sv.focus({ preventScroll: true });
+  }
+
   /* ================= RECORRIDO =================
      Paco, 09/11: página rehecha con su sesión de fotos. Eliges colchón, ves sus fotos de detalle, sus capas al lado
      y puedes abrir el canapé. Todo termina en la videollamada. */
@@ -84,9 +206,8 @@
   }
   function verCama(k) {
     R.cama = k; R.foto = 0; R.canape = false;
-    $$('.s-pick-b').forEach(function (b) { var on = b.getAttribute('data-pick') === k; b.setAttribute('aria-selected', on); b.tabIndex = on ? 0 : -1; });
     pintarFoto(); pintarFicha();
-    LM.track('showroom_pick', { item: k });
+    LM.track('showroom_cama', { item: k });
   }
   function canape(on) {
     R.canape = on; R.foto = 0; pintarFoto(); pintarFicha();
@@ -94,16 +215,6 @@
   }
   function mover(d) { var n = lista().length; R.foto = (R.foto + d + n) % n; pintarFoto(); }
 
-  $('#s-pick-row').innerHTML = S.orden.map(function (k) {
-    var p = LM.PRODUCTOS[k], c = S.camas[k];
-    return '<button type="button" role="tab" class="s-pick-b" data-pick="' + k + '" aria-selected="false" tabindex="-1"><img src="' + src(c.fotos[0][0], 900) + '" alt="" width="56" height="56" loading="lazy">' +
-      '<span><b>' + (p ? p.nombre : c.t) + '</b><small>' + (p ? p.nucleo : 'Complementos') + '</small></span></button>';
-  }).join('');
-  $('#s-pick-row').addEventListener('click', function (e) { var b = e.target.closest('[data-pick]'); if (b) verCama(b.getAttribute('data-pick')); });
-  $('#s-pick-row').addEventListener('keydown', function (e) {
-    var d = { ArrowRight: 1, ArrowLeft: -1 }[e.key]; if (!d) return;
-    var i = (S.orden.indexOf(R.cama) + d + S.orden.length) % S.orden.length; verCama(S.orden[i]); $('[data-pick="' + S.orden[i] + '"]').focus(); e.preventDefault();
-  });
   $('#s-room').addEventListener('click', function (e) {
     var t = e.target.closest('[data-foto]'); if (t) { R.foto = +t.getAttribute('data-foto'); pintarFoto(); return; }
     if (e.target.closest('[data-prev]')) { mover(-1); return; }
@@ -129,7 +240,7 @@
   $('#s-full').addEventListener('click', function () {
     if (document.fullscreenElement) document.exitFullscreen(); else if (ph.requestFullscreen) ph.requestFullscreen();
   });
-  verCama(S.orden[0]);
+  $('#s-back').addEventListener('click', volverSala);
   // Precarga: las fotos de frente de cada cama y el canapé abierto, para que el cambio sea inmediato
   addEventListener('load', function () {
     var w = (ph.clientWidth * (devicePixelRatio || 1)) > 1600 ? 2560 : 1600;
