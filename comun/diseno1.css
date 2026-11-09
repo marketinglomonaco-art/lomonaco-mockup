@@ -1201,3 +1201,27 @@ html body .h4p-seg button[aria-checked="true"] { color: #fff; transition: color 
 .p-lab-cap #lab-coord { flex: none; display: inline-block; min-width: 13ch; text-align: right; }
 .p-lab-dl dd { white-space: nowrap; font-feature-settings: "tnum" 1; }
 @media (max-width: 420px) { .p-lab-cap { padding: 9px 12px; font-size: 10.5px; letter-spacing: .06em; } }
+
+/* Showroom · sala (Paco, 09/11): falso 3D que sigue al ratón y tira de vistas con su foto (sin plano flotante) */
+.s-sv.is-raton { cursor: default; }
+.s-stage { transform-style: preserve-3d; }
+.s-sv .s-spot { transform: translate(-50%, -50%) translateZ(70px); }
+.s-mp, .s-sv-scene { display: none !important; }
+.s-vistas { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+.s-vista { display: block; padding: 0; background: none; text-align: left; cursor: pointer; }
+.s-vista img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 12px; opacity: .62; transition: opacity .25s, box-shadow .25s; }
+.s-vista span { display: flex; align-items: baseline; gap: 8px; margin-top: 9px; font-size: 14px; font-weight: 600; line-height: 1.3; color: var(--mute); transition: color .25s; }
+.s-vista b { font-size: 12px; font-weight: 800; letter-spacing: .06em; color: var(--acc); font-variant-numeric: tabular-nums; }
+.s-vista:hover img { opacity: .9; }
+.s-vista:hover span { color: var(--ink); }
+.s-vista.is-on img { opacity: 1; box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--acc); }
+.s-vista.is-on span { color: var(--ink); }
+.s-vista:focus-visible { outline: none; }
+.s-vista:focus-visible img { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--ink); }
+@media (max-width: 700px) {
+  .s-vistas { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 40%; gap: 10px; overflow-x: auto; padding: 0 var(--pad) 4px; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .s-vistas::-webkit-scrollbar { display: none; }
+  .s-vista { scroll-snap-align: start; }
+  .s-vista img { border-radius: 10px; }
+  .s-vista span { font-size: 13px; }
+}

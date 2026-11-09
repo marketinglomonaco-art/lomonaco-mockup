@@ -40,21 +40,19 @@
   sv.setAttribute('aria-label', 'Sala del showroom. Arrastra o usa las flechas del teclado para mirar; toca una cama para verla de cerca.');
   sv.innerHTML =
     '<div class="s-sv-stages" id="s-stages"></div>' +
-    '<p class="s-sv-scene" id="s-scene" aria-live="polite"></p>' +
+
     '<p class="s-sv-hint" id="s-hint"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12"/><path d="M11 11.5v-2a1.5 1.5 0 0 1 3 0V12"/><path d="M14 10.5a1.5 1.5 0 0 1 3 0V12"/><path d="M17 11.5a1.5 1.5 0 0 1 3 0V16a5 5 0 0 1-5 5h-2.5a5 5 0 0 1-4.3-2.5L5.4 15a1.5 1.5 0 0 1 2.6-1.5L8 14"/></svg>Arrastra para mirar</p>' +
     '<button class="s-sv-nav s-sv-prev" type="button" data-go="-1" aria-label="Punto de vista anterior">' + flecha(-1) + '</button>' +
     '<button class="s-sv-nav s-sv-next" type="button" data-go="1" aria-label="Siguiente punto de vista">' + flecha(1) + '</button>' +
     '<button class="s-sv-full" type="button" id="s-sv-full" aria-label="Pantalla completa"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>' +
-    '<div class="s-mp" id="s-mp">' +
-      '<button class="s-mp-tog" type="button" id="s-mp-tog" aria-expanded="false" aria-controls="s-mp-card">' + ICO_PLANO + 'Plano</button>' +
-      '<div class="s-mp-card" id="s-mp-card" role="group" aria-labelledby="s-mp-k">' +
-        '<p class="s-mp-k" id="s-mp-k">Elige desde dónde mirar</p>' +
-        '<div class="s-mp-plan">' + PLANO + SALA.map(function (e, i) {
-          return '<button type="button" class="s-mp-pt" data-i="' + i + '" style="left:' + (e.pos[0] / 2) + '%;top:' + (e.pos[1] / 1.32) + '%" aria-label="Mirar ' + e.t.toLowerCase() + '"><b>' + (i + 1) + '</b><span>' + e.t + '</span></button>';
-        }).join('') + '</div>' +
-      '</div>' +
-    '</div>' +
     '<div class="s-sv-cta"><a class="lm-btn lm-btn--buy" href="#reserva">Verlo en directo por videollamada</a></div>';
+  // Paco, 09/11: el plano se sustituye por una tira de vistas con su foto, debajo del visor (como la galería de las fichas)
+  sv.insertAdjacentHTML('afterend', '<div class="s-vistas" id="s-vistas" role="tablist" aria-label="Desde dónde mirar la sala">' + SALA.map(function (e, i) {
+    return '<button type="button" role="tab" class="s-vista" data-i="' + i + '" aria-selected="false">' +
+      '<img src="../img/sr2-' + e.img + '-900.webp" alt="" width="900" height="' + Math.round(900 * e.h / e.w) + '" loading="lazy" draggable="false">' +
+      '<span><b>' + (i < 9 ? '0' : '') + (i + 1) + '</b>' + e.t + '</span></button>';
+  }).join('') + '</div>');
+  $('#s-vistas').addEventListener('click', function (e) { var b = e.target.closest('.s-vista'); if (b) { ocultarPista(); ir(+b.getAttribute('data-i')); } });
 
   var stages = $('#s-stages'), cur = -1, pan = { x: .5, y: .5 }, vel = 0, dims = {}, stage = null, busy = false;
   var ESCALA = 1.18; // la foto es un 18 % mayor que el visor: margen para mirar sin perder los 3 colchones
@@ -70,7 +68,7 @@
   function pintar() {
     if (!stage) return;
     pan.x = Math.min(1, Math.max(0, pan.x)); pan.y = Math.min(1, Math.max(0, pan.y));
-    var giro = reduce ? 0 : (pan.x - .5) * -7, cab = reduce ? 0 : (pan.y - .5) * 4;
+    var giro = reduce ? 0 : (pan.x - .5) * -9, cab = reduce ? 0 : (pan.y - .5) * 5;
     stage.style.transform = 'translate3d(' + (-pan.x * dims.rx) + 'px,' + (-pan.y * dims.ry) + 'px,0) rotateY(' + giro.toFixed(2) + 'deg) rotateX(' + cab.toFixed(2) + 'deg)';
   }
   function crearEscena(i) {
@@ -93,7 +91,6 @@
     var next = crearEscena(i);
     stages.appendChild(next);
     stage = next; pan = { x: .5, y: .5 }; vel = 0; pintar();
-    $('#s-scene').textContent = (i + 1) + ' / ' + SALA.length + ' · ' + SALA[i].t;
     marcarPlano();
     if (prev && !reduce) {
       busy = true;
@@ -113,15 +110,36 @@
     LM.track('showroom_scene', { scene: SALA[i].img });
   }
   function marcarPlano() {
-    var e = SALA[cur];
-    $$('.s-mp-pt', sv).forEach(function (b, j) { b.classList.toggle('is-on', j === cur); b.setAttribute('aria-pressed', j === cur); });
-    $('#s-mp-cone').style.transform = 'translate(' + e.pos[0] + 'px,' + e.pos[1] + 'px) rotate(' + e.pos[2] + 'deg)';
+    $$('.s-vista').forEach(function (b, j) { b.classList.toggle('is-on', j === cur); b.setAttribute('aria-selected', j === cur); });
+    var on = $('.s-vista.is-on'), tira = $('#s-vistas');
+    if (on && tira && tira.scrollWidth > tira.clientWidth) tira.scrollTo({ left: on.offsetLeft - (tira.clientWidth - on.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' });
   }
 
-  /* Arrastrar con ratón o dedo, con un poco de inercia */
+  /* Paco, 09/11 · falso 3D: con el ratón, la vista sigue al cursor (suave, sin bamboleo): la foto se desplaza,
+     gira unos grados en perspectiva y los puntos de las camas flotan por delante. En el móvil, se arrastra */
+  var raton = matchMedia('(hover: hover) and (pointer: fine)').matches, meta = null, sigue = 0;
+  function seguir() {
+    sigue = 0; if (!meta) return;
+    pan.x += (meta.x - pan.x) * .07; pan.y += (meta.y - pan.y) * .07; pintar();
+    if (Math.abs(meta.x - pan.x) > .0008 || Math.abs(meta.y - pan.y) > .0008) sigue = requestAnimationFrame(seguir);
+  }
+  if (raton && !reduce) {
+    sv.classList.add('is-raton');
+    sv.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      var r = sv.getBoundingClientRect();
+      meta = { x: .08 + .84 * Math.min(1, Math.max(0, (e.clientX - r.left) / r.width)), y: .15 + .7 * Math.min(1, Math.max(0, (e.clientY - r.top) / r.height)) };
+      ocultarPista(); if (!sigue) sigue = requestAnimationFrame(seguir);
+    });
+    sv.addEventListener('pointerleave', function () { meta = { x: .5, y: .5 }; if (!sigue) sigue = requestAnimationFrame(seguir); });
+    $('#s-hint').lastChild.textContent = 'Mueve el ratón para mirar';
+  }
+
+  /* Arrastrar con el dedo (o el ratón, si no se sigue al cursor), con un poco de inercia */
   var drag = null;
   sv.addEventListener('pointerdown', function (e) {
-    if (e.target.closest('button, a, .s-mp')) return;
+    if (e.target.closest('button, a')) return;
+    if (raton && !reduce && e.pointerType === 'mouse') return;
     drag = { x: e.clientX, y: e.clientY, t: performance.now(), moved: false };
     sv.classList.add('is-drag'); vel = 0;
   });
@@ -150,12 +168,8 @@
   });
   var pista = true;
   function ocultarPista() { if (pista) { pista = false; $('#s-hint').classList.add('is-off'); } }
-  var mp = $('#s-mp'), tog = $('#s-mp-tog');
-  function plano(on) { mp.classList.toggle('is-open', on); tog.setAttribute('aria-expanded', on); }
   sv.addEventListener('click', function (e) {
     var b = e.target.closest('[data-cama]'); if (b) { abrirCama(b.getAttribute('data-cama')); return; }
-    var p = e.target.closest('.s-mp-pt'); if (p) { ocultarPista(); ir(+p.getAttribute('data-i')); if (matchMedia('(max-width: 700px)').matches) plano(false); return; }
-    if (e.target.closest('#s-mp-tog')) { plano(!mp.classList.contains('is-open')); return; }
     var g = e.target.closest('[data-go]'); if (g) { ocultarPista(); ir(cur + +g.getAttribute('data-go')); }
   });
   $('#s-sv-full').addEventListener('click', function () {
