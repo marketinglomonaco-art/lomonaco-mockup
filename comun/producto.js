@@ -117,65 +117,19 @@
     renderBases(); renderPrice();
   }
 
-  /* Módulo «Tu espalda, recta» (Paco, 09/11). El cliente cambia entre «Sin adaptación» y «Con adaptación» y ve la columna:
-     doblada cuando el colchón no sujeta (la cadera se hunde) y recta con el colchón LM. La primera vez que se ve, empieza
-     en «Sin adaptación» y pasa sola a «Con adaptación» */
+  /* Módulo «Columna recta» (Paco, 09/11): la imagen manda. Sobre la espalda, la columna en puntos granate y la etiqueta
+     «Columna recta». Los puntos aparecen de la nuca a la cadera la primera vez que se ve el bloque */
   function espalda(esc, E) {
-    var N = P.nombre, src = function (b, w) { return b + '-' + w + '.webp'; };
-    var img = function (b, cls, alt) {
-      return '<img class="p-esc-v ' + cls + '" src="' + src(b, 1200) + '" srcset="' + src(b, 800) + ' 800w, ' + src(b, 1200) + ' ' + E.w + 'w" sizes="(max-width: 900px) 100vw, 52vw" alt="' + alt + '" width="' + E.w + '" height="' + E.h + '" loading="lazy">';
-    };
-    var TXT = {
-      sin: ['Si el colchón no se adapta…', 'La cadera se hunde de más, la cintura se queda sin apoyo y la columna se dobla. Por eso te levantas cargado.'],
-      con: ['Con el ' + N + '…', 'Cede justo donde pesas más, en el hombro y la cadera, y sujeta la cintura. Tu columna queda recta toda la noche.']
-    };
-    esc.innerHTML = '<div class="p-esc-img" data-modo="con">' +
-        img(E.con, 'p-esc-con', 'Persona durmiendo de lado sobre el ' + P.titulo + ' con la espalda recta') +
-        img(E.sin, 'p-esc-sin', 'La misma persona en un colchón que no se adapta: la cadera se hunde y la espalda se dobla') +
-        '<svg class="p-esc-col" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">' +
-          '<path class="p-esc-ref" d="' + E.columna.recta + '"/>' +
-          '<path class="p-esc-sp p-esc-sp--sin" d="' + E.columna.sin + '"/>' +
-          '<path class="p-esc-sp p-esc-sp--con" d="' + E.columna.con + '"/></svg>' +
-        '<p class="p-esc-lab p-esc-lab--sin">' + LM.ico('close') + 'La columna se dobla</p>' +
-        '<p class="p-esc-lab p-esc-lab--con">' + LM.ico('check') + 'Columna recta</p>' +
-        '<div class="p-esc-seg" role="radiogroup" aria-label="Comparar"><span class="p-esc-seg-ind" aria-hidden="true"></span>' +
-          '<button type="button" role="radio" data-modo="sin" aria-checked="false">Sin adaptación</button>' +
-          '<button type="button" role="radio" data-modo="con" aria-checked="true">Con adaptación</button></div>' +
-        '<span class="p-esc-note">Recreación ilustrativa</span></div>' +
-      '<figcaption class="p-esc-txt"><p class="lm-eyebrow">Tu espalda, en su sitio</p>' +
-        '<h3 class="p-esc-h">Así mantiene recta tu espalda <em>el ' + N + '.</em></h3>' +
-        '<div class="p-esc-est" aria-live="polite"><p class="p-esc-est-k"></p><p class="p-esc-est-t"></p></div>' +
-        '<ul class="p-esc-z">' +
-          '<li><b>Hombro</b><span>Se hunde lo justo, sin cargarse.</span></li>' +
-          '<li><b>Cintura</b><span>Tiene apoyo: no queda hueco.</span></li>' +
-          '<li><b>Cadera</b><span>Cede y reparte el peso, sin hundirse de más.</span></li></ul>' +
-        '<p class="p-esc-tip">Cambia entre <b>sin</b> y <b>con adaptación</b> en la imagen.</p></figcaption>';
+    var s = function (w) { return E.img + '-' + w + '.webp'; };
+    esc.innerHTML = '<div class="p-esc-img">' +
+        '<img src="' + s(1200) + '" srcset="' + s(800) + ' 800w, ' + s(1200) + ' ' + E.w + 'w" sizes="(max-width: 1320px) 100vw, 1320px" alt="Persona durmiendo de lado sobre el ' + P.titulo + ', con la columna recta" width="' + E.w + '" height="' + E.h + '" loading="lazy">' +
+        '<svg class="p-esc-col" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="p-esc-sp" d="' + E.columna + '"/></svg>' +
+        '<p class="p-esc-lab" style="left:' + E.etiqueta[0] + '%;top:' + E.etiqueta[1] + '%">' + LM.ico('check') + 'Columna recta</p>' +
+        '<span class="p-esc-note">Recreación ilustrativa</span></div>';
     esc.hidden = false;
-    var caja = $('.p-esc-img', esc), seg = $('.p-esc-seg', esc), ind = $('.p-esc-seg-ind', seg);
-    function deslizar() {
-      var b = $('[aria-checked="true"]', seg); if (!b || !b.offsetWidth) return;
-      ind.style.width = b.offsetWidth + 'px'; ind.style.transform = 'translateX(' + b.offsetLeft + 'px)';
-    }
-    function modo(m) {
-      caja.setAttribute('data-modo', m);
-      $$('button', seg).forEach(function (b) { b.setAttribute('aria-checked', b.getAttribute('data-modo') === m); });
-      $('.p-esc-est-k', esc).textContent = TXT[m][0]; $('.p-esc-est-t', esc).textContent = TXT[m][1];
-      $('.p-esc-est', esc).setAttribute('data-modo', m);
-      deslizar();
-    }
-    var auto = null, tocado = false;
-    seg.addEventListener('click', function (e) { var b = e.target.closest('[data-modo]'); if (!b) return; tocado = true; clearTimeout(auto); modo(b.getAttribute('data-modo')); LM.track('espalda_modo', { modo: b.getAttribute('data-modo') }); });
-    seg.addEventListener('keydown', function (e) { if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); tocado = true; clearTimeout(auto); var m = caja.getAttribute('data-modo') === 'con' ? 'sin' : 'con'; modo(m); $('[data-modo="' + m + '"]', seg).focus(); } });
-    addEventListener('resize', deslizar);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(deslizar);
-    modo('con');
-    if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
-    // Primera vez que se ve: empieza sin adaptación y pasa sola a con adaptación
-    modo('sin');
-    var io = new IntersectionObserver(function (en) {
-      if (!en[0].isIntersecting) return; io.disconnect();
-      if (!tocado) auto = setTimeout(function () { if (!tocado) modo('con'); }, 1700);
-    }, { threshold: .55 });
+    var caja = $('.p-esc-img', esc);
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) { caja.classList.add('is-in'); return; }
+    var io = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { io.disconnect(); caja.classList.add('is-in'); } }, { threshold: .35 });
     io.observe(caja);
   }
 

@@ -221,12 +221,12 @@ LM.PRODUCTOS = {
             ['Termorregulación', 'Deja pasar el aire y expulsa el calor.']] }
 };
 LM.ORDEN = ['visco', 'gold', 'latex', 'gran'];
-/* Módulo «Tu espalda, recta» (Paco, 09/11): no habla de capas (eso es el vídeo de «Por dentro»); enseña cómo el colchón
-   mantiene la espalda recta. Dos versiones de la misma imagen: con adaptación (la de Paco) y sin adaptación (deformada:
-   la cadera se hunde de más, efecto hamaca; scratchpad/scripts/sin_adaptacion.py). Columna en % de la imagen. Ilustrativo */
+/* Módulo «Columna recta» (Paco, 09/11): solo la imagen, grande, con la columna marcada en puntos sobre la espalda.
+   Sin texto al lado ni comparación sin/con adaptación (Paco no los quiere). Encuadre ancho de su imagen (recorte del 28 % al 80 %
+   de la altura: img/escena-espalda-*). Columna y etiqueta en % de ese encuadre. Ilustrativo */
 LM.ESCENA_CORTE = {
-  con: '../img/escena-capas-latex', sin: '../img/escena-sin-adaptacion', w: 1134, h: 1152,
-  columna: { con: 'M29 42.5 L71 42.5', sin: 'M29 42.6 C40 43.4 52 43.8 62 46 S68 45 71 44.2', recta: 'M29 42.5 L71 42.5' }
+  img: '../img/escena-espalda', w: 1134, h: 599,
+  columna: 'M31 32.7 L67 32.7', etiqueta: [49, 19]
 };
 /* Paco, 29/10: foto nueva de cada modelo SOLO en el bloque de la home donde eliges colchón (ficha y listas sin cambios) */
 LM.FOTO_HOME = { visco: 'natura-visco-home', gold: 'natura-gold-home', latex: 'natura-latex-home', gran: 'gran-natura-home' };
