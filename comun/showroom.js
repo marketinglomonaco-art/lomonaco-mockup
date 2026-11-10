@@ -46,13 +46,48 @@
     '<button class="s-sv-nav s-sv-next" type="button" data-go="1" aria-label="Siguiente punto de vista">' + flecha(1) + '</button>' +
     '<button class="s-sv-full" type="button" id="s-sv-full" aria-label="Pantalla completa"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>' +
     '<div class="s-sv-cta"><a class="lm-btn lm-btn--buy" href="#reserva">Verlo en directo por videollamada</a></div>';
-  // Paco, 09/11: el plano se sustituye por una tira de vistas con su foto, debajo del visor (como la galería de las fichas)
-  sv.insertAdjacentHTML('afterend', '<div class="s-vistas" id="s-vistas" role="tablist" aria-label="Desde dónde mirar la sala">' + SALA.map(function (e, i) {
-    return '<button type="button" role="tab" class="s-vista" data-i="' + i + '" aria-selected="false">' +
-      '<img src="../img/sr2-' + e.img + '-900.webp" alt="" width="900" height="' + Math.round(900 * e.h / e.w) + '" loading="lazy" draggable="false">' +
-      '<span><b>' + (i < 9 ? '0' : '') + (i + 1) + '</b>' + e.t + '</span></button>';
-  }).join('') + '</div>');
-  $('#s-vistas').addEventListener('click', function (e) { var b = e.target.closest('.s-vista'); if (b) { ocultarPista(); ir(+b.getAttribute('data-i')); } });
+  /* Paco, 10/11: «Desde dónde mirar» como un plano del showroom hecho por un arquitecto: línea granate, muy limpio.
+     Pared con el panel iluminado, las 3 camas con su cabecero, almohadas, mesillas y alfombras, y la estantería.
+     Cada punto de vista: punto numerado; el elegido, con su cono de visión y una línea de puntos. Al lado, la lista. */
+  function camaPlano(x, etq, mesas, alfombra) {
+    var w = 112, l = x - w / 2, g = '';
+    if (alfombra) g += '<rect class="s-pl-rug" x="' + (x - 88) + '" y="92" width="176" height="122" rx="4"/>';
+    mesas.forEach(function (m) {
+      g += m[0] === 'c' ? '<circle class="s-pl-mue" cx="' + (x + m[1]) + '" cy="44" r="10"/>'
+        : '<rect class="s-pl-mue" x="' + (x + m[1] - 12) + '" y="31" width="24" height="24" rx="2"/>';
+    });
+    g += '<rect class="s-pl-cab" x="' + (l - 6) + '" y="26" width="' + (w + 12) + '" height="9" rx="2"/>' +
+      '<rect class="s-pl-bed" x="' + l + '" y="35" width="' + w + '" height="128" rx="6"/>' +
+      '<rect class="s-pl-alm" x="' + (l + 9) + '" y="42" width="42" height="17" rx="5"/><rect class="s-pl-alm" x="' + (l + w - 51) + '" y="42" width="42" height="17" rx="5"/>' +
+      '<path class="s-pl-fold" d="M' + (l + 6) + ' 112H' + (l + w - 6) + '"/>' +
+      '<text class="s-pl-etq" x="' + x + '" y="236" text-anchor="middle">' + etq + '</text>';
+    return g;
+  }
+  function cono(c) {
+    var x = c[0], y = c[1], h = c[2] / 2 * Math.PI / 180, L = c[3];
+    var x1 = x - Math.sin(h) * L, x2 = x + Math.sin(h) * L, yy = y - Math.cos(h) * L;
+    return 'M' + x + ' ' + y + 'L' + x1.toFixed(1) + ' ' + yy.toFixed(1) + 'A' + L + ' ' + L + ' 0 0 1 ' + x2.toFixed(1) + ' ' + yy.toFixed(1) + 'Z';
+  }
+  var PLANO_SALA = '<svg class="s-pl-svg" viewBox="0 0 600 330" aria-hidden="true">' +
+    '<defs><linearGradient id="s-pl-g" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#7c1919" stop-opacity=".22"/><stop offset="1" stop-color="#7c1919" stop-opacity="0"/></linearGradient></defs>' +
+    '<rect class="s-pl-room" x="6" y="18" width="588" height="306" rx="3"/>' +
+    '<path class="s-pl-wall" d="M6 18H594"/><path class="s-pl-luz" d="M40 23H548"/>' +
+    // conos de visión debajo de los muebles (las camas, blancas, los tapan); la línea de puntos llega hasta los pies de la cama
+    SALA.map(function (e, i) { return '<g class="s-pl-vis" data-i="' + i + '"><path class="s-pl-cono" d="' + cono(e.cam) + '"/><path class="s-pl-ray" d="M' + e.cam[0] + ' ' + (e.cam[1] - 15) + 'V' + Math.max(e.cam[1] - e.cam[3] + 10, e.cam[3] > 150 ? 252 : 0) + '"/></g>'; }).join('') +
+    camaPlano(130, 'NATURA GOLD', [['c', -76], ['c', 76]], true) +
+    camaPlano(300, 'NATURA LÁTEX', [['r', -74], ['r', 74]], false) +
+    camaPlano(470, 'GRAN NATURA', [['r', -74], ['c', 76]], true) +
+    '<rect class="s-pl-mue" x="562" y="26" width="26" height="74" rx="2"/><path class="s-pl-mue" d="M562 50.5h26M562 75h26"/>' +
+    '<text class="s-pl-sm" x="575" y="116" text-anchor="middle">ALMOH.</text>' +
+    '</svg>';
+  sv.insertAdjacentHTML('afterend', '<div class="s-plano" id="s-plano">' +
+    '<div class="s-pl-map">' + PLANO_SALA + SALA.map(function (e, i) {
+      return '<button type="button" class="s-pl-pt" data-i="' + i + '" style="left:' + (e.cam[0] / 6).toFixed(2) + '%;top:' + (e.cam[1] / 3.3).toFixed(2) + '%" aria-label="Mirar: ' + e.t + '">' + (i + 1) + '</button>';
+    }).join('') + '</div>' +
+    '<div class="s-pl-side"><p class="lm-eyebrow">Elige desde dónde mirar</p><ul class="s-pl-list">' + SALA.map(function (e, i) {
+      return '<li><button type="button" class="s-pl-op" data-i="' + i + '" aria-pressed="false"><b>' + (i < 9 ? '0' : '') + (i + 1) + '</b><span>' + e.t + '<small>' + e.s + '</small></span></button></li>';
+    }).join('') + '</ul></div></div>');
+  $('#s-plano').addEventListener('click', function (e) { var b = e.target.closest('[data-i]'); if (b && b.tagName === 'BUTTON') { ocultarPista(); ir(+b.getAttribute('data-i')); } });
 
   var stages = $('#s-stages'), cur = -1, pan = { x: .5, y: .5 }, vel = 0, dims = {}, stage = null, busy = false;
   var ESCALA = 1.18; // la foto es un 18 % mayor que el visor: margen para mirar sin perder los 3 colchones
@@ -110,9 +145,7 @@
     LM.track('showroom_scene', { scene: SALA[i].img });
   }
   function marcarPlano() {
-    $$('.s-vista').forEach(function (b, j) { b.classList.toggle('is-on', j === cur); b.setAttribute('aria-selected', j === cur); });
-    var on = $('.s-vista.is-on'), tira = $('#s-vistas');
-    if (on && tira && tira.scrollWidth > tira.clientWidth) tira.scrollTo({ left: on.offsetLeft - (tira.clientWidth - on.offsetWidth) / 2, behavior: reduce ? 'auto' : 'smooth' });
+    $$('.s-pl-pt, .s-pl-op, .s-pl-vis').forEach(function (b) { var on = +b.getAttribute('data-i') === cur; b.classList.toggle('is-on', on); if (b.tagName === 'BUTTON') b.setAttribute('aria-pressed', on); });
   }
 
   /* Paco, 09/11 · falso 3D: con el ratón, la vista sigue al cursor (suave, sin bamboleo): la foto se desplaza,

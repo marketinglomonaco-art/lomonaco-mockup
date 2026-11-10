@@ -318,15 +318,14 @@ LM.UGC = [
    Cada cama: foto de frente con dos puntos (por dentro y el canapé, en % de la foto) y sus fotos de detalle.
    El canapé abierto es el del Natura Látex (nogal): es el único que se fotografió abierto. */
 LM.SHOWROOM = {
-  /* Paco, 09/11: se empieza por la sala (se ven los 3 colchones) con efecto de cámara 3D y un plano para elegir desde dónde mirar.
-     puntos: [cama, x %, y %] sobre la foto. pos: [x, y, hacia dónde mira en grados] en el plano (200 × 132; 0° = derecha, −90° = al fondo).
-     «De frente» y «Entrada» son las fotos del iPhone (IMG_7035 y 7033) mejoradas desde el original; el resto, de la sesión nueva */
+  /* Paco, 10/11: sala con sus 4 fotos nuevas (Desktop/fotos 2 → fuente/showroom-fotos-1011, sin retocar el color):
+     toda la sala y cada colchón de frente. puntos: [cama, x %, y %] sobre la foto, al lado del bordado (sin taparlo).
+     cam: dónde está la cámara en el plano del showroom (600 × 330): [x, y, ángulo de visión en grados, largo del cono] */
   sala: [
-    { img: 'sala-frente',  w: 2560, h: 1440, t: 'De frente',             pos: [100, 116, -90],  puntos: [['gold', 15, 60], ['latex', 57, 60], ['gran', 90, 58]] },
-    { img: 'sala-entrada', w: 2560, h: 1440, t: 'Desde la entrada',      pos: [26, 118, -58],   puntos: [['gold', 29, 64], ['latex', 57, 58], ['gran', 77, 57], ['almohadas', 85, 40]] },
-    { img: 'sala-gold',    w: 2560, h: 1707, t: 'Junto al Natura Gold',  pos: [16, 90, -24],    puntos: [['gold', 42, 56], ['latex', 72, 26]] },
-    { img: 'general',      w: 2560, h: 1707, t: 'Junto al Natura Látex', pos: [66, 92, -30],    puntos: [['latex', 31, 50], ['gran', 66, 41], ['almohadas', 74, 26]] },
-    { img: 'sala-fondo',   w: 2560, h: 1707, t: 'Desde el Gran Natura',  pos: [186, 96, -152],  puntos: [['latex', 31, 57], ['gran', 72, 72]] /* el Gold sale al fondo, pequeño y desenfocado: sin punto */ }
+    { img: 'sala2-general', w: 2048, h: 1365, t: 'Toda la sala', s: 'Las tres camas', cam: [300, 304, 46, 250], puntos: [['gold', 24, 51], ['latex', 56, 51.5], ['gran', 75, 52.5]] },
+    { img: 'sala2-gold',    w: 2048, h: 1365, t: 'Natura Gold', s: 'De frente', cam: [130, 262, 30, 92], puntos: [['gold', 69, 54]] },
+    { img: 'sala2-latex',   w: 2048, h: 1365, t: 'Natura Látex', s: 'De frente', cam: [300, 262, 30, 92], puntos: [['latex', 67, 60]] },
+    { img: 'sala2-gran',    w: 2048, h: 1365, t: 'Gran Natura', s: 'De frente', cam: [470, 262, 30, 92], puntos: [['gran', 69, 67]] }
   ],
   orden: ['gran', 'latex', 'gold', 'almohadas'],
   camas: {
