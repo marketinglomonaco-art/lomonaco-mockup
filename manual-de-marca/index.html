@@ -388,6 +388,18 @@
   .doc .carta .band .logo { position: absolute; left: 10cqw; top: 50%; transform: translateY(-50%); width: 34cqw; color: #fff; }
   .doc .carta .ln { position: absolute; left: 10cqw; right: 10cqw; height: 1.6cqw; border-radius: 1cqw; background: #e6e6ea; }
 
+
+  /* Histórico de versiones */
+  .hist { width: 100%; border-collapse: collapse; font-size: 15px; }
+  .hist th { text-align: left; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 0 20px 12px 0; }
+  .hist td { padding: 16px 20px 16px 0; border-top: 1px solid var(--line); vertical-align: top; color: var(--mute); }
+  .hist td:first-child { font-weight: 700; color: var(--lm); white-space: nowrap; }
+  .hist td:nth-child(2) { white-space: nowrap; color: var(--ink); }
+  .hist td:nth-child(3) { color: var(--ink); min-width: 180px; }
+  .hist td:nth-child(3) small { display: block; color: var(--mute); }
+  .hist ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
+  .cover .meta a { color: inherit; text-underline-offset: 3px; }
+
   /* 08 Resumen */
   .resumen { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r-sm); overflow: hidden; }
   .resumen div { padding: 24px; background: #fff; }
@@ -445,6 +457,8 @@
     .glos td:first-child { width: auto; }
     .glos, .glos tbody, .glos tr, .glos td { display: block; } .glos thead { display: none; }
     .glos tr { padding: 14px 0; border-top: 1px solid var(--line); } .glos td { border: 0; padding: 2px 0; }
+    .hist, .hist tbody, .hist tr, .hist td { display: block; } .hist thead { display: none; }
+    .hist tr { padding: 14px 0; border-top: 1px solid var(--line); } .hist td { border: 0; padding: 2px 0; white-space: normal !important; }
     .mono { grid-template-columns: 1fr; }
     .apl, .doc { grid-template-columns: 1fr; }
     .pareja, .comp, .iuso, .icards, .prueba, .ianat { grid-template-columns: 1fr; }
@@ -501,7 +515,7 @@
       <span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span>
       <h1>Manual<br>de <em>marca</em></h1>
       <div class="meta">
-        <span><b>Versión</b>2.0</span><span><b>Fecha</b>10 de noviembre de 2026</span><span><b>Para</b>Web, redes y piezas</span>
+        <span><b>Versión</b><a href="#historico">2.0</a></span><span><b>Fecha</b>10 de noviembre de 2026</span><span><b>Para</b>Web, redes y piezas</span>
       </div>
     </div>
     <div class="cover-f"><img src="img/vida-vertical.webp" alt="Pareja en su dormitorio sobre un colchón LOMONACO" fetchpriority="high"></div>
@@ -997,6 +1011,42 @@
         <div><b>FOTOGRAFÍA</b><p>Natural y sin filtros. Momentos íntimos robados que emocionan.</p></div>
         <div><b>ICONOS Y ELEMENTOS</b><p>Iconos de línea 1,6 en granate o blanco. Botones píldora y esquinas de 24 px.</p></div>
       </div>
+    </div>
+  </section>
+
+  <!-- HISTÓRICO -->
+  <section class="s" id="historico">
+    <div class="s-h"><span class="s-n">Registro</span><h2>Histórico de versiones</h2></div>
+    <div class="s-b">
+      <table class="hist">
+        <thead><tr><th>Versión</th><th>Fecha</th><th>Quién</th><th>Qué cambia</th></tr></thead>
+        <tbody>
+          <tr><td>2.0</td><td>10/11/2026</td><td>Paco<small>Marketing · pide y aprueba</small></td><td><ul>
+            <li>El logo principal pasa a ser blanco sobre granate; granate sobre gris queda como secundario (web)</li>
+            <li>El granate es el color principal: portada, logo, área de respeto y resumen en granate; proporción para piezas corporativas</li>
+            <li>Nueva sección Aplicaciones: presentación, separador, contenido, tarjeta, firma de email, redes y documentos A4</li>
+            <li>Playfair Display siempre en cursiva SemiBold 600, un solo peso en todo el documento</li>
+            <li>Vídeo actualizado: Playfair 600 y firma final en granate con logo blanco</li>
+          </ul></td></tr>
+          <tr><td>1.2</td><td>06/11/2026</td><td>Paco<small>Marketing · pide y aprueba</small></td><td><ul>
+            <li>Apertura con foto a pantalla completa y vídeo de marca (60 s, música original) que se abre a pantalla completa</li>
+            <li>Fondos siempre en gris claro #F6F6F6, nunca blanco; proporción de color de la web actualizada</li>
+            <li>Publicado en enlace para compartir</li>
+          </ul></td></tr>
+          <tr><td>1.1</td><td>06/11/2026</td><td>Paco<small>Marketing · pide y aprueba</small></td><td><ul>
+            <li>Segunda tipografía (Playfair Display cursiva) y ejemplos de títulos con subtítulos</li>
+            <li>Nueva sección Iconos</li>
+            <li>Fotografía: natural, sin filtros, momentos íntimos que emocionan</li>
+            <li>Logo o texto sobre foto siempre en blanco, con capa negra al 10 %</li>
+            <li>Granate oficial #7C1919 confirmado y logos descargables en ese color</li>
+            <li>Prueba de 150 noches</li>
+          </ul></td></tr>
+          <tr><td>1.0</td><td>06/11/2026</td><td>Paco<small>Marketing · pide y aprueba</small></td><td><ul>
+            <li>Primera edición: marca, logotipo, color, tipografía, tono de voz, fotografía, elementos y resumen, con las fotos de la marca</li>
+          </ul></td></tr>
+        </tbody>
+      </table>
+      <p class="nota">Cada versión nueva añade una fila arriba. Maquetación: Claude, a partir de las indicaciones de Paco.</p>
     </div>
   </section>
 </main>
