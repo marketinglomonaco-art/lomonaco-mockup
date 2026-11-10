@@ -83,6 +83,7 @@
     '<text class="s-pl-sm" x="575" y="116" text-anchor="middle">ALMOH.</text>' +
     '</svg>';
   sv.insertAdjacentHTML('afterend', '<div class="s-plano" id="s-plano">' +
+    '<button type="button" class="s-pl-tog" aria-expanded="false"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18v14H3zM3 9h18M8 9v10"/></svg><span>Ver plano</span></button>' +
     '<div class="s-pl-map">' + PLANO_SALA + SALA.map(function (e, i) {
       return '<button type="button" class="s-pl-pt" data-i="' + i + '" style="left:' + (e.cam[0] / 6).toFixed(2) + '%;top:' + (e.cam[1] / 3.3).toFixed(2) + '%" aria-label="Mirar: ' + e.t + '">' + (i + 1) + '</button>';
     }).join('') + '</div>' +
@@ -92,8 +93,14 @@
     '<p class="s-pl-now" aria-live="polite"><small>Estás viendo</small><b></b></p></div>');
   /* Paco, 10/11 · tres propuestas para integrar el plano (sin rosa). Se eligen con ?plano=1, 2 o 3:
      1 · panel gris a la altura de la foto · 2 · con miniaturas de cada vista · 3 · plano pequeño dentro de la foto */
-  var PV = (/[?&]plano=([123])/.exec(location.search) || [])[1] || '1';
+  var PV = (/[?&]plano=([1-6])/.exec(location.search) || [])[1] || '1';
   sv.parentNode.setAttribute('data-plano', PV);
+  /* 4 · barra bajo la foto · 5 · panel granate con el plano en blanco · 6 · fotos de cada vista dentro del visor,
+     y el plano se abre con «Ver plano» */
+  $('.s-pl-tog').addEventListener('click', function () {
+    var on = sv.parentNode.classList.toggle('is-plano');
+    this.setAttribute('aria-expanded', on); this.lastChild.textContent = on ? 'Ocultar plano' : 'Ver plano';
+  });
   // Paco, 10/11: los 3 pasos no van en la columna del plano; se queda el bloque grande «Cómo funciona» de la página
   $('#s-plano').addEventListener('click', function (e) { var b = e.target.closest('[data-i]'); if (b && b.tagName === 'BUTTON') { ocultarPista(); ir(+b.getAttribute('data-i')); } });
 

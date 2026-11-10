@@ -1492,3 +1492,104 @@ html.s-cm-open { overflow: hidden; }
   .s-sv-wrap[data-plano="3"] .s-plano { border: 0; background: var(--bg2); }
   .s-sv-wrap[data-plano="3"] .s-pl-room { stroke: none; }
 }
+
+/* ===== Showroom · plano: propuestas 4, 5 y 6 (Paco, 10/11) ===== */
+.s-pl-tog { display: none; }
+
+/* 4 · Barra bajo la foto: la foto a todo el ancho y, debajo, una franja gris con el plano a la izquierda
+   y las cuatro vistas en fila, como pestañas. La elegida, subrayada en granate */
+@media (min-width: 1000px) {
+  .s-sv-wrap[data-plano="4"]:not([hidden]) { display: block; }
+  .s-sv-wrap[data-plano="4"] .s-plano { grid-template-columns: 250px minmax(0, 1fr); gap: 36px; align-items: center; margin-top: 12px; padding: 14px 28px 14px 14px; border: 0; background: var(--bg2); }
+  .s-sv-wrap[data-plano="4"] .s-pl-list { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .s-sv-wrap[data-plano="4"] .s-pl-op { padding: 12px 6px 14px; border-radius: 0; background: none; box-shadow: inset 0 -2px 0 transparent; transition: box-shadow .2s; }
+  .s-sv-wrap[data-plano="4"] .s-pl-op:hover { background: none; box-shadow: inset 0 -2px 0 #cfcfd4; }
+  .s-sv-wrap[data-plano="4"] .s-pl-op.is-on { background: none; box-shadow: inset 0 -2px 0 var(--acc); }
+  .s-sv-wrap[data-plano="4"] .s-pl-op.is-on span { color: var(--acc); }
+  .s-sv-wrap[data-plano="4"] .s-pl-side .lm-eyebrow { margin: 0 0 4px 6px; }
+}
+.s-sv-wrap[data-plano="4"] .s-pl-room { stroke: none; }
+@media (max-width: 999px) {
+  .s-sv-wrap[data-plano="4"] .s-plano { border: 0; background: var(--bg2); }
+}
+
+/* 5 · Panel granate: como el logo principal (blanco sobre granate). El plano, en línea blanca;
+   sin transparencias, para que no salga rosa */
+.s-sv-wrap[data-plano="5"] .s-plano { border: 0; background: var(--acc); color: #fff; }
+.s-sv-wrap[data-plano="5"] .s-pl-room { fill: none; stroke: #fff; stroke-width: 1; }
+.s-sv-wrap[data-plano="5"] .s-pl-wall { stroke: #fff; }
+.s-sv-wrap[data-plano="5"] .s-pl-luz, .s-sv-wrap[data-plano="5"] .s-pl-rug, .s-sv-wrap[data-plano="5"] .s-pl-mue, .s-sv-wrap[data-plano="5"] .s-pl-fold { stroke: #fff; stroke-width: .9; }
+.s-sv-wrap[data-plano="5"] .s-pl-cab, .s-sv-wrap[data-plano="5"] .s-pl-bed { fill: var(--acc); stroke: #fff; }
+.s-sv-wrap[data-plano="5"] .s-pl-alm { stroke: #fff; }
+.s-sv-wrap[data-plano="5"] .s-pl-etq, .s-sv-wrap[data-plano="5"] .s-pl-sm { fill: #fff; }
+.s-sv-wrap[data-plano="5"] .s-pl-cono { fill: none; stroke: #fff; stroke-width: 1; stroke-dasharray: 3 4; }
+.s-sv-wrap[data-plano="5"] .s-pl-ray { stroke: #fff; }
+.s-sv-wrap[data-plano="5"] .s-pl-pt { background: var(--acc); color: #fff; box-shadow: inset 0 0 0 1.6px #fff; }
+.s-sv-wrap[data-plano="5"] .s-pl-pt.is-on { background: #fff; color: var(--acc); box-shadow: 0 0 0 3px var(--acc), 0 0 0 4px #fff; }
+.s-sv-wrap[data-plano="5"] .s-pl-side .lm-eyebrow { color: #fff; }
+.s-sv-wrap[data-plano="5"] .s-pl-op { color: #fff; background: none; }
+.s-sv-wrap[data-plano="5"] .s-pl-op small { color: #fff; font-weight: 400; }
+.s-sv-wrap[data-plano="5"] .s-pl-op b { color: #fff; box-shadow: inset 0 0 0 1.5px #fff; }
+.s-sv-wrap[data-plano="5"] .s-pl-op:hover { background: none; }
+.s-sv-wrap[data-plano="5"] .s-pl-op:hover span { text-decoration: underline; text-underline-offset: 4px; }
+.s-sv-wrap[data-plano="5"] .s-pl-op.is-on { background: none; }
+.s-sv-wrap[data-plano="5"] .s-pl-op.is-on b { background: #fff; color: var(--acc); }
+.s-sv-wrap[data-plano="5"] .s-pl-op.is-on::after { content: ""; position: absolute; right: 10px; top: 50%; width: 7px; height: 7px; margin-top: -4px; border-top: 2px solid #fff; border-right: 2px solid #fff; transform: rotate(45deg); }
+.s-sv-wrap[data-plano="5"] .s-pl-nota { display: block; margin: 14px 0 0; font-size: 12.5px; line-height: 1.45; color: #fff; }
+@media (min-width: 1000px) {
+  .s-sv-wrap[data-plano="5"] .s-plano { display: flex; flex-direction: column; justify-content: flex-start; gap: 24px; padding: 22px 18px 18px; }
+  .s-sv-wrap[data-plano="5"] .s-pl-side { flex: 1; display: flex; flex-direction: column; }
+  .s-sv-wrap[data-plano="5"] .s-pl-op { padding: 12px 4px; }
+  .s-sv-wrap[data-plano="5"] .s-pl-nota { margin-top: auto; }
+}
+@media (max-width: 760px) {
+  .s-sv-wrap[data-plano="5"] .s-pl-op.is-on::after { display: none; }
+}
+
+/* 6 · Fotos dentro del visor: abajo a la izquierda, las cuatro vistas como fotos pequeñas en tarjetas blancas
+   (como Street View). El plano no ocupa sitio: se abre encima con «Ver plano» */
+@media (min-width: 1000px) {
+  .s-sv-wrap[data-plano="6"]:not([hidden]) { display: block; position: relative; }
+  .s-sv-wrap[data-plano="6"] .s-plano { position: absolute; left: calc(var(--pad) + 16px); bottom: 16px; z-index: 5; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin: 0; padding: 0; border: 0; background: none; pointer-events: none; }
+  .s-sv-wrap[data-plano="6"] .s-plano > * { pointer-events: auto; }
+  .s-sv-wrap[data-plano="6"] .s-pl-tog { order: 1; display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 16px 0 12px; border-radius: 999px; background: rgba(255,255,255,.95); color: var(--ink); font-size: 14px; font-weight: 700; box-shadow: 0 6px 18px rgba(0,0,0,.18); cursor: pointer; }
+  .s-sv-wrap[data-plano="6"] .s-pl-tog .lm-i { width: 19px; height: 19px; color: var(--acc); }
+  .s-sv-wrap[data-plano="6"] .s-pl-map { order: 2; display: none; width: 300px; padding: 10px; border-radius: 14px; background: #fff; box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+  .s-sv-wrap[data-plano="6"].is-plano .s-pl-map { display: block; }
+  .s-sv-wrap[data-plano="6"] .s-pl-room { stroke: none; }
+  .s-sv-wrap[data-plano="6"] .s-pl-side { order: 3; }
+  .s-sv-wrap[data-plano="6"] .s-pl-side .lm-eyebrow, .s-sv-wrap[data-plano="6"] .s-pl-op b, .s-sv-wrap[data-plano="6"] .s-pl-op small { display: none; }
+  .s-sv-wrap[data-plano="6"] .s-pl-list { display: flex; gap: 8px; }
+  .s-sv-wrap[data-plano="6"] .s-pl-op { flex-direction: column; align-items: stretch; gap: 0; width: 118px; padding: 4px; border-radius: 12px; background: rgba(255,255,255,.95); box-shadow: 0 6px 18px rgba(0,0,0,.2); }
+  .s-sv-wrap[data-plano="6"] .s-pl-op:hover { background: #fff; }
+  .s-sv-wrap[data-plano="6"] .s-pl-th { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 8px; }
+  .s-sv-wrap[data-plano="6"] .s-pl-op span { padding: 6px 4px 2px; font-size: 12.5px; line-height: 1.2; }
+  .s-sv-wrap[data-plano="6"] .s-pl-op.is-on { background: #fff; box-shadow: 0 0 0 2px var(--acc), 0 6px 18px rgba(0,0,0,.2); }
+  .s-sv-wrap[data-plano="6"] .s-pl-op.is-on span { color: var(--acc); }
+}
+/* en el móvil, como la 2: el plano y debajo las fotos */
+@media (max-width: 999px) {
+  .s-sv-wrap[data-plano="6"] .s-plano { margin-top: 14px; border: 0; background: none; padding: 0; }
+  .s-sv-wrap[data-plano="6"] .s-pl-map { padding: 10px; border-radius: var(--r); background: var(--bg2); }
+  .s-sv-wrap[data-plano="6"] .s-pl-room, .s-sv-wrap[data-plano="6"] .s-pl-cab, .s-sv-wrap[data-plano="6"] .s-pl-bed, .s-sv-wrap[data-plano="6"] .s-pl-pt { fill: var(--bg2); stroke: none; }
+  .s-sv-wrap[data-plano="6"] .s-pl-cab, .s-sv-wrap[data-plano="6"] .s-pl-bed { stroke: var(--acc); }
+  .s-sv-wrap[data-plano="6"] .s-pl-list { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  .s-sv-wrap[data-plano="6"] .s-pl-op { flex-direction: column; align-items: stretch; gap: 8px; padding: 6px 0; background: none; }
+  .s-sv-wrap[data-plano="6"] .s-pl-op b { display: none; }
+  .s-sv-wrap[data-plano="6"] .s-pl-th { display: block; width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 10px; }
+  .s-sv-wrap[data-plano="6"] .s-pl-op.is-on { background: none; }
+  .s-sv-wrap[data-plano="6"] .s-pl-op.is-on .s-pl-th { box-shadow: 0 0 0 2px #fff, 0 0 0 4px var(--acc); }
+  .s-sv-wrap[data-plano="6"] .s-pl-op.is-on span { color: var(--acc); }
+}
+@media (max-width: 760px) {
+  .s-sv-wrap[data-plano="6"] .s-pl-list { grid-template-columns: 1fr 1fr; }
+}
+/* Propuesta 6 · «Ver plano» como una tarjeta más, a la derecha de las fotos; el plano se abre encima */
+@media (min-width: 1000px) {
+  .s-sv-wrap[data-plano="6"] .s-plano { display: grid; grid-template-columns: auto auto; justify-content: start; align-items: stretch; gap: 8px; }
+  .s-sv-wrap[data-plano="6"] .s-pl-map { grid-column: 1 / -1; grid-row: 1; justify-self: start; width: 270px; }
+  .s-sv-wrap[data-plano="6"] .s-pl-side { grid-row: 2; grid-column: 1; }
+  .s-sv-wrap[data-plano="6"] .s-pl-tog { grid-row: 2; grid-column: 2; flex-direction: column; justify-content: center; gap: 6px; width: 88px; min-height: 0; padding: 8px; border-radius: 12px; font-size: 12.5px; line-height: 1.2; text-align: center; box-shadow: 0 6px 18px rgba(0,0,0,.2); }
+  .s-sv-wrap[data-plano="6"] .s-pl-tog .lm-i { width: 24px; height: 24px; }
+  .s-sv-wrap[data-plano="6"].is-plano .s-pl-tog { box-shadow: 0 0 0 2px var(--acc), 0 6px 18px rgba(0,0,0,.2); }
+}
