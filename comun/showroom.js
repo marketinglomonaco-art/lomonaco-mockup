@@ -89,13 +89,7 @@
     '<div class="s-pl-side"><p class="lm-eyebrow">Elige desde dónde mirar</p><ul class="s-pl-list">' + SALA.map(function (e, i) {
       return '<li><button type="button" class="s-pl-op" data-i="' + i + '" aria-pressed="false"><b>' + (i < 9 ? '0' : '') + (i + 1) + '</b><span>' + e.t + '<small>' + e.s + '</small></span></button></li>';
     }).join('') + '</ul></div></div>');
-  // Paco, 10/11: debajo de la lista, los 3 pasos de «Cómo funciona» (el bloque de la página se quita: viven aquí)
-  var PASOS_HOW = [['Eliges día y hora', 'De lunes a viernes, de 9:00 a 18:00. Solo te pedimos tu nombre y tu teléfono.'],
-    ['Te llamamos por vídeo', 'Por ' + C.videoCanales.v + '. Te enseñamos las camas que quieras ver, de cerca.'],
-    ['Decides con calma', 'Te ayudamos con la medida y la base. Si te convence, lo pides por teléfono o en la web.']];
-  $('#s-plano').insertAdjacentHTML('beforeend', '<div class="s-pl-how"><p class="lm-eyebrow">Cómo funciona</p><ol>' + PASOS_HOW.map(function (x, i) {
-    return '<li><span>' + (i + 1) + '</span><div><b>' + x[0] + '</b><p>' + x[1] + '</p></div></li>';
-  }).join('') + '</ol><a class="lm-btn lm-btn--full s-pl-cta" href="#reserva">Reservar videollamada</a></div>');
+  // Paco, 10/11: los 3 pasos no van en la columna del plano; se queda el bloque grande «Cómo funciona» de la página
   $('#s-plano').addEventListener('click', function (e) { var b = e.target.closest('[data-i]'); if (b && b.tagName === 'BUTTON') { ocultarPista(); ir(+b.getAttribute('data-i')); } });
 
   var stages = $('#s-stages'), cur = -1, pan = { x: .5, y: .5 }, vel = 0, dims = {}, stage = null, busy = false;
@@ -311,7 +305,7 @@
     } else if (p) {
       h = '<p class="lm-eyebrow">En el showroom</p><h3>' + p.titulo + '</h3><p class="s-card-d">' + c.donde + '</p>' +
         '<p class="s-side-t">' + p.diferencia + '</p>' +
-        '<div class="s-side-capas" id="s-capas"><p class="s-side-k">Capas <small>' + p.altura + ' · ' + p.nucleo + '</small></p>' + capasHTML(p) + '</div>' +
+        /* Paco, 10/11: fuera el esquema de capas de la ficha lateral (ya sale en la ventana «Capas» en 3D) */
         '<button class="lm-btn lm-btn--buy lm-btn--full" type="button" data-ver="' + k + '">Quiero verlo en videollamada</button>' +
         '<a class="lm-link" href="' + LM.href(p.url) + '">Ver la ficha del colchón</a>';
     } else {
@@ -509,8 +503,8 @@
       '<div class="s-cm-box">' +
         '<div class="s-cm-head"><p class="lm-eyebrow" id="s-cm-k">Capas</p><button type="button" class="s-cm-x" id="s-cm-x">' + LM.ico('close') + 'Salir</button></div>' +
         '<div class="s-cm-in">' +
-          '<div class="s-cm-media"><video muted playsinline disablepictureinpicture preload="auto" poster="../img/natura-latex-capas-v2-inicio.webp" aria-hidden="true"></video>' +
-            '<div class="s-cm-pts" aria-hidden="true">' + CV.map(function (c, i) { return '<i style="left:' + c[2] + '%;top:' + c[3] + '%">' + (i + 1) + '</i>'; }).join('') + '</div>' +
+          '<div class="s-cm-media"><div class="s-cm-cam"><video muted playsinline disablepictureinpicture preload="auto" poster="../img/natura-latex-capas-v2-inicio.webp" aria-hidden="true"></video>' +
+            '<div class="s-cm-pts" aria-hidden="true">' + CV.map(function (c, i) { return '<i style="left:' + c[2] + '%;top:' + c[3] + '%">' + (i + 1) + '</i>'; }).join('') + '</div></div>' +
             '<div class="s-cm-bar" aria-hidden="true"><i></i></div></div>' +
           '<div class="s-cm-txt"><p class="s-cm-n" id="s-cm-n"></p><h3 class="s-cm-t" id="s-cm-t"></h3><p class="s-cm-p" id="s-cm-p"></p>' +
             '<div class="s-cm-nav"><button type="button" class="s-cm-prev" data-cm="-1">' + flechaArr + 'Anterior</button><button type="button" class="lm-btn s-cm-next" data-cm="1">Siguiente capa ' + flechaAb + '</button></div>' +
@@ -528,6 +522,25 @@
       var on = cmActual(), sig = Math.min(cmPasos.length - 1, Math.max(0, on + +b.getAttribute('data-cm')));
       cmIr(cmPasos[sig].a + .01);
     });
+    /* Paco, 10/11 · falso 3D con el ratón: el cuadro se inclina unos grados hacia el cursor y el colchón se desplaza
+       un poco por dentro (con sus puntos). Suave, sin bamboleo; vuelve al centro al salir. No en táctil ni con «reducir movimiento» */
+    if (matchMedia('(hover: hover) and (pointer: fine)').matches && !reduce) {
+      var med = $('.s-cm-media', CM), cam = $('.s-cm-cam', CM), tg = { x: 0, y: 0 }, now = { x: 0, y: 0 }, tRaf = 0;
+      var tilt = function () {
+        tRaf = 0; now.x += (tg.x - now.x) * .08; now.y += (tg.y - now.y) * .08;
+        med.style.transform = 'rotateY(' + (now.x * 7).toFixed(2) + 'deg) rotateX(' + (-now.y * 5).toFixed(2) + 'deg)';
+        cam.style.transform = 'translate3d(' + (-now.x * 12).toFixed(1) + 'px,' + (-now.y * 9).toFixed(1) + 'px,0) scale(1.06)';
+        if (Math.abs(tg.x - now.x) > .002 || Math.abs(tg.y - now.y) > .002) tRaf = requestAnimationFrame(tilt);
+      };
+      CM.addEventListener('pointermove', function (e) {
+        if (e.pointerType !== 'mouse') return;
+        var r = med.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+        tg.x = Math.max(-1, Math.min(1, (e.clientX - cx) / (r.width * .75)));
+        tg.y = Math.max(-1, Math.min(1, (e.clientY - cy) / (r.height * .75)));
+        if (!tRaf) tRaf = requestAnimationFrame(tilt);
+      });
+      CM.addEventListener('pointerleave', function () { tg.x = tg.y = 0; if (!tRaf) tRaf = requestAnimationFrame(tilt); });
+    }
     var RECO = 4800, RECO_T = 2200, ty = null;
     CM.addEventListener('wheel', function (e) { e.preventDefault(); cmIr(cmObj + e.deltaY * (e.deltaMode === 1 ? 40 : 1) / RECO); }, { passive: false });
     CM.addEventListener('touchstart', function (e) { ty = e.target.closest('button') ? null : e.touches[0].clientY; }, { passive: true });

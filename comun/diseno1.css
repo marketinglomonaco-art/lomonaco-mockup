@@ -1381,3 +1381,11 @@ html.s-cm-open { overflow: hidden; }
   .s-cm-p { font-size: 15px; }
   .s-cm-aviso { display: none; }
 }
+
+/* Ventana «Capas» · falso 3D con el ratón (Paco, 10/11) */
+.s-cm-in { perspective: 1400px; }
+.s-cm-media { transform-style: preserve-3d; will-change: transform; box-shadow: 0 18px 40px rgba(40,28,18,.18); }
+.s-cm-cam { position: absolute; inset: 0; transform: scale(1.06); will-change: transform; }
+
+/* Paco, 10/11: sin pasos en la columna del plano (vuelve el bloque «Cómo funciona» de la página) */
+.s-pl-how { display: none !important; }
