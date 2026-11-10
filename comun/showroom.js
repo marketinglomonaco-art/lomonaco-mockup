@@ -87,6 +87,12 @@
     '<div class="s-pl-side"><p class="lm-eyebrow">Elige desde dónde mirar</p><ul class="s-pl-list">' + SALA.map(function (e, i) {
       return '<li><button type="button" class="s-pl-op" data-i="' + i + '" aria-pressed="false"><b>' + (i < 9 ? '0' : '') + (i + 1) + '</b><span>' + e.t + '<small>' + e.s + '</small></span></button></li>';
     }).join('') + '</ul></div></div>');
+  // Paco, 10/11: debajo de la lista, los 3 pasos de «Cómo funciona» en pequeño (copiados del bloque de la página)
+  var pasosHow = $$('.s-steps li');
+  if (pasosHow.length) $('#s-plano').insertAdjacentHTML('beforeend', '<div class="s-pl-how"><p class="lm-eyebrow">Cómo funciona</p><ol>' + pasosHow.map(function (li, i) {
+    var t = li.querySelector('b'), d = li.querySelector('p');
+    return '<li><span>' + (i + 1) + '</span><div><b>' + (t ? t.textContent : '') + '</b><p>' + (d ? d.textContent : '') + '</p></div></li>';
+  }).join('') + '</ol><a class="lm-btn lm-btn--full s-pl-cta" href="#reserva">Reservar videollamada</a></div>');
   $('#s-plano').addEventListener('click', function (e) { var b = e.target.closest('[data-i]'); if (b && b.tagName === 'BUTTON') { ocultarPista(); ir(+b.getAttribute('data-i')); } });
 
   var stages = $('#s-stages'), cur = -1, pan = { x: .5, y: .5 }, vel = 0, dims = {}, stage = null, busy = false;
@@ -135,7 +141,7 @@
       var arrancar = function () {
         if (hecho) return; hecho = true;
         next.style.visibility = '';
-        prev.style.transformOrigin = (prevPan * 100) + '% 55%';
+        prev.style.transformOrigin = origenGo || ((prevPan * 100) + '% 55%'); origenGo = null;
         prev.classList.add('is-go'); next.classList.add('is-come');
         setTimeout(function () { prev.remove(); next.classList.remove('is-come'); busy = false; }, 760);
       };
@@ -189,7 +195,7 @@
   });
   addEventListener('pointercancel', function () { drag = null; sv.classList.remove('is-drag'); });
   addEventListener('pointerup', function () {
-    if (!drag) return; drag = null; sv.classList.remove('is-drag');
+    if (!drag) return; if (drag.moved) arrastrado = performance.now(); drag = null; sv.classList.remove('is-drag');
     (function inercia() { if (Math.abs(vel) < .0005) return; pan.x += vel; vel *= .92; pintar(); requestAnimationFrame(inercia); })();
   });
   sv.addEventListener('keydown', function (e) {
@@ -201,9 +207,39 @@
   });
   var pista = true;
   function ocultarPista() { if (pista) { pista = false; $('#s-hint').classList.add('is-off'); } }
+  /* Paco, 10/11: en la vista de toda la sala, si pinchas en el suelo (a los pies de una cama) o cerca de un colchón,
+     te acercas: la cámara avanza hacia ese punto y entra en la foto de frente de esa cama (con el mismo falso 3D).
+     Al pasar el ratón por la sala sale una marca en el suelo, como en Street View, con «Acércate al …» */
+  var origenGo = null, arrastrado = 0;
+  sv.insertAdjacentHTML('beforeend', '<div class="s-walk" id="s-walk" aria-hidden="true"><i></i><span></span></div>');
+  var walk = $('#s-walk');
+  function camaCercana(e) {
+    if (!stage || !SALA[cur] || SALA[cur].puntos.length < 2) return null;
+    var r = stage.getBoundingClientRect(), x = (e.clientX - r.left) / r.width * 100, mejor = null, dist = 1e9;
+    SALA[cur].puntos.forEach(function (p) {
+      var j = -1; SALA.forEach(function (v, k) { if (v.puntos.length === 1 && v.puntos[0][0] === p[0]) j = k; });
+      if (j > -1 && Math.abs(p[1] - x) < dist) { dist = Math.abs(p[1] - x); mejor = { cama: p[0], vista: j }; }
+    });
+    return mejor;
+  }
+  sv.addEventListener('pointermove', function (e) {
+    var c = !drag && !busy && !e.target.closest('button, a') ? camaCercana(e) : null;
+    sv.classList.toggle('is-walk', !!c);
+    if (!c) return;
+    var r = sv.getBoundingClientRect();
+    walk.style.transform = 'translate(' + (e.clientX - r.left) + 'px,' + (e.clientY - r.top) + 'px)';
+    walk.lastChild.textContent = 'Acércate al ' + S.camas[c.cama].t;
+  });
+  sv.addEventListener('pointerleave', function () { sv.classList.remove('is-walk'); });
   sv.addEventListener('click', function (e) {
     var b = e.target.closest('[data-cama]'); if (b) { abrirCama(b.getAttribute('data-cama')); return; }
-    var g = e.target.closest('[data-go]'); if (g) { ocultarPista(); ir(cur + +g.getAttribute('data-go')); }
+    var g = e.target.closest('[data-go]'); if (g) { ocultarPista(); ir(cur + +g.getAttribute('data-go')); return; }
+    if (e.target.closest('button, a') || performance.now() - arrastrado < 350) return;
+    var c = camaCercana(e); if (!c) return;
+    var r = stage.getBoundingClientRect();
+    origenGo = ((e.clientX - r.left) / r.width * 100).toFixed(1) + '% ' + ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%';
+    ocultarPista(); sv.classList.remove('is-walk'); ir(c.vista);
+    LM.track('showroom_acercarse', { cama: c.cama });
   });
   $('#s-sv-full').addEventListener('click', function () {
     if (document.fullscreenElement) document.exitFullscreen(); else if (sv.requestFullscreen) sv.requestFullscreen();
