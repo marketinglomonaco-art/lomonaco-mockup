@@ -80,6 +80,31 @@
     if ($('#c-table')) $('#c-table').innerHTML = h;
   }
 
+  /* Paco, 10/11 · Opción B: en qué se diferencian los cuatro, de un vistazo (solo datos de las fichas) */
+  function vs() {
+    var box = $('#c-vs'); if (!box) return;
+    var m = state.medida;
+    var FILAS = ['', 'Su punto fuerte', 'Elígelo si', 'Por dentro', 'Sensación', 'Altura', 'Precio en ' + LM.medidaTxt(m)];
+    var orden = ['gran', 'latex', 'gold', 'visco'];
+    box.innerHTML = '<div class="c-vs-lab" aria-hidden="true">' + FILAS.map(function (f) { return '<div class="c-vs-c">' + f + '</div>'; }).join('') + '</div>' +
+      orden.map(function (k) {
+        var p = P[k], d = precio(k), fb = p.beneficios[0], si = p.paraQuien.replace(/^Para ti si /, '');
+        var c = function (i, h) { return '<div class="c-vs-c" data-l="' + FILAS[i] + '">' + h + '</div>'; };
+        return '<article class="c-vs-col" data-testid="compare-' + k + '">' +
+          '<div class="c-vs-c c-vs-top"><a href="' + LM.href(p.url) + '" tabindex="-1" aria-hidden="true"><img src="../img/' + LM.FOTO_HOME[k] + '-480.webp" alt="" width="480" height="480" loading="lazy"></a>' +
+            (p.etiqueta ? '<span class="lm-pill">' + p.etiqueta + '</span>' : '') + '<h3><a href="' + LM.href(p.url) + '">' + p.titulo + '</a></h3></div>' +
+          c(1, '<p class="c-vs-fuerte">' + LM.ico(fb[0]) + '<b>' + fb[1] + '</b></p>') +
+          c(2, '<p>' + si.charAt(0).toUpperCase() + si.slice(1) + '</p>') +
+          c(3, '<p>' + p.nucleo + '</p>') +
+          c(4, '<p>' + p.sensacionTxt + '</p>' + LM.firmeza(p, { txt: false })) +
+          c(5, '<p>' + p.altura + '</p>') +
+          c(6, (d ? LM.precio(d, { cuota: false }) : '<p class="c-na">No lo fabricamos en ' + LM.medidaTxt(m) + '.</p>') +
+            '<a class="lm-btn lm-btn--full" href="' + LM.href(p.url) + '">Ver ' + p.nombre + '</a>') +
+          '</article>';
+      }).join('');
+  }
+  vs();
+
   chips($('#c-medidas'), LM.MEDIDAS.map(function (m) { return [m, m.replace('x', '×')]; }), 'medida');
   chips($('#c-sens'), SENS, 'sens');
   chips($('#c-tipo'), TIPO, 'tipo');

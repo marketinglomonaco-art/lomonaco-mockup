@@ -108,6 +108,18 @@
     var c = LM.cuota(p); if (c == null) return '';
     return '<b>' + LM.eur(c) + ' al mes</b> en 12 meses' + (LM.sinIntereses(p) ? ' sin intereses' : '') + LM.ast;
   };
+  /* Paco, 10/11: en la recomendación, siempre la cuota más baja que da la calculadora (hoy, 36 meses) */
+  LM.cuotaBaja = function (p) {
+    var best = null;
+    Object.keys(LM.FINANCIACION.plazos).forEach(function (n) {
+      var c = LM.cuotaPlazo(p, +n); if (c != null && (!best || c < best.c)) best = { c: c, n: +n };
+    });
+    return best;
+  };
+  LM.cuotaBajaFrase = function (p) {
+    var b = LM.cuotaBaja(p); if (!b) return '';
+    return '<b>' + LM.eur(b.c) + ' al mes</b> en ' + b.n + ' meses' + (b.n === 12 && LM.sinIntereses(p) ? ' sin intereses' : '') + LM.ast;
+  };
   LM.ast = '<a class="lm-ast" href="#lm-legal" aria-label="Ver condiciones de la financiación">*</a>';
   LM.cuotaTxt = function (p) { var f = LM.cuotaFrase(p); return f ? 'o ' + f : ''; };
   LM.precio = function (d, o) {
@@ -319,9 +331,23 @@
     return '<a class="lm-mc" href="' + LM.href(f.url) + '">' + (f.img ? '<img src="' + f.img + '" alt="" width="120" height="120" loading="lazy">' : '<span class="lm-mc-ph">' + LM.ico('home') + '</span>') +
       '<span><small>' + esc(f.d) + '</small><b>' + esc(f.n) + '</b><em>Desde ' + LM.eur(f.p) + '</em></span></a>';
   }
+  /* Paco, 10/11 · Opción B: vuelve el botón de packs del menú, con su submenú (packs con canapé y con base) */
+  var PK_ORDEN = ['gran', 'latex', 'gold', 'visco'];
+  function packsMenu() {
+    var g = function (base, t) {
+      return { t: t, links: PK_ORDEN.map(function (k) { return ['Pack ' + LM.PRODUCTOS[k].nombre + (base === 'canape' ? ' + canapé' : ' + base'), LM.PRODUCTOS[k].url.replace('colchon-', 'pack-') + '?base=' + base]; }) };
+    };
+    return { t: LM.MENU_PACKS.t, href: LM.MENU_PACKS.href, grupos: [g('canape', 'Packs con canapé abatible'), g('base', 'Packs con base antideslizante')] };
+  }
+  function packCard(k) {
+    var p = LM.PRODUCTOS[k], d = LM.desdeTabla(LM.PRECIOS[p.packs.canape.tabla]);
+    return '<a class="lm-mc" href="' + p.url.replace('colchon-', 'pack-') + '?base=canape"><img src="' + p.packs.canape.img + '" alt="" width="120" height="120" loading="lazy">' +
+      '<span><small>Colchón + canapé</small><b>Pack ' + esc(p.nombre) + '</b><em>Desde ' + LM.eur(d.p) + '</em></span></a>';
+  }
   LM.header = function (el) {
     var active = el.getAttribute('data-active') || '';
     var tel = LM.mark(C.telefono, C.telefono.v);
+    var OPB = document.body.getAttribute('data-op') === 'b';
     var nav = LM.MENU.map(function (it, i) {
       var cards = it.destacados ? it.destacados.map(megaCard).join('') : (it.fichas || []).map(fichaCard).join('');
       return '<li class="lm-ni' + (active === it.t ? ' is-active' : '') + '">' +
@@ -332,12 +358,19 @@
             g.links.map(function (l) { return '<li><a href="' + LM.href(l[1]) + '">' + esc(l[0]) + '</a></li>'; }).join('') + '</ul></div>';
         }).join('') + '<div class="lm-mcards">' + cards + '</div></div></div></li>';
     }).join('');
+    var PKM = OPB ? packsMenu() : null;
+    var navPacks = !OPB ? '' : '<li class="lm-ni lm-ni-packs">' +
+        '<a class="lm-nl lm-nl-packs" href="' + PKM.href + '" aria-haspopup="true" aria-expanded="false">' + esc(PKM.t) + LM.ico('down', 'lm-car') + '</a>' +
+        '<div class="lm-mega" role="region" aria-label="Packs"><div class="lm-w lm-mega-in">' +
+        PKM.grupos.map(function (g) { return '<div class="lm-mg"><p>' + esc(g.t) + '</p><ul>' + g.links.map(function (l) { return '<li><a href="' + l[1] + '">' + esc(l[0]) + '</a></li>'; }).join('') + '</ul></div>'; }).join('') +
+        '<div class="lm-mcards">' + PK_ORDEN.map(packCard).join('') + '</div></div></div></li>';
     el.innerHTML =
       // V4 · Cambio 1 y 1b: franja en color LM. Al pasar el hero cambia a los valores de marca, en corto
       '<div class="lm-top"><div class="lm-w lm-top-in lm-top-a">' +
-        '<span class="lm-top-h">' + esc(C.horario.v) + '</span>' +
+        // Paco, 10/11 · Opción B: fuera el horario y el teléfono de la franja (salen en el menú, debajo)
+        (OPB ? '' : '<span class="lm-top-h">' + esc(C.horario.v) + '</span>') +
         '<a class="lm-top-promo" href="' + LM.href('/packs/') + '">Ofertas en packs</a>' +
-        '<a class="lm-top-tel" href="tel:' + C.telefono.tel + '" data-lead="topbar">' + LM.ico('phone') + tel + '<span class="lm-top-hm">' + esc(C.horario.corto) + '</span></a>' +
+        (OPB ? '' : '<a class="lm-top-tel" href="tel:' + C.telefono.tel + '" data-lead="topbar">' + LM.ico('phone') + tel + '<span class="lm-top-hm">' + esc(C.horario.corto) + '</span></a>') +
       '</div>' +
       '<div class="lm-w lm-top-b">' +
         '<a class="lm-top-dto" href="' + LM.href('/packs/') + '">Hasta 60 % DTO</a>' +
@@ -348,14 +381,14 @@
         '<li>' + LM.ico('shield') + '<span>' + LM.c('garantia') + ' de garantía</span></li>' +
         '<li>' + LM.ico('home') + '<span>' + LM.mark(C.fabricacion, 'Fabricación propia') + '</span></li>' +
         '<li>' + LM.ico('user') + '<span>+' + LM.c('clientes') + ' clientes</span></li></ul>' +
-        '<a class="lm-top-tel lm-top-tel2" href="tel:' + C.telefono.tel + '" data-lead="topbar-fija">' + LM.ico('phone') + tel + '<span class="lm-top-hor">' + esc(C.horario.corto) + '</span></a>' +
+        (OPB ? '' : '<a class="lm-top-tel lm-top-tel2" href="tel:' + C.telefono.tel + '" data-lead="topbar-fija">' + LM.ico('phone') + tel + '<span class="lm-top-hor">' + esc(C.horario.corto) + '</span></a>') +
       '</div></div>' +
       '<header class="lm-head"><div class="lm-w lm-head-in">' +
         '<button class="lm-burger" type="button" aria-label="Abrir el menú" aria-expanded="false" aria-controls="lm-drawer">' + LM.ico('menu') + '</button>' +
         '<a class="lm-logo" href="index.html"><img src="' + LOGO + '" alt="LOMONACO" width="128" height="19"></a>' +
         '<nav class="lm-nav" aria-label="Menú principal"><ul>' + nav +
           '<li class="lm-ni' + (active === 'Showroom Live' ? ' is-active' : '') + '"><a class="lm-nl lm-live" href="showroom-live.html"><i class="lm-live-dot" aria-hidden="true"></i>Showroom Live</a></li>' +
-          '</ul></nav>' + // Paco, 05/11: fuera el botón «Packs colchón + canapé o base»
+          navPacks + '</ul></nav>' + // Paco, 05/11: fuera el botón «Packs colchón + canapé o base»
         '<div class="lm-head-r">' +
           '<a class="lm-head-tel" href="tel:' + C.telefono.tel + '" data-lead="header">' + LM.ico('phone') + '<span><b>' + tel + '</b><small>' + esc(C.horario.corto) + '</small></span></a>' +
           '<a class="lm-ico lm-acc" href="' + LM.WEB + '/mi-cuenta/" aria-label="Mi cuenta">' + LM.ico('user') + '</a>' +
@@ -373,6 +406,8 @@
             modelos + it.grupos.map(function (g) { return '<p>' + esc(g.t) + '</p><ul' + (g.cols === 2 ? ' class="lm-d2"' : '') + '>' + g.links.map(function (l) { return '<li><a href="' + LM.href(l[1]) + '">' + esc(l[0]) + '</a></li>'; }).join('') + '</ul>'; }).join('') +
             '</details>';
         }).join('') +
+        (!OPB ? '' : '<details class="lm-dacc lm-dacc-packs"><summary>Packs' + LM.ico('down') + '</summary>' +
+          PKM.grupos.map(function (g) { return '<p>' + esc(g.t) + '</p><ul>' + g.links.map(function (l) { return '<li><a href="' + l[1] + '">' + esc(l[0]) + '</a></li>'; }).join('') + '</ul>'; }).join('') + '</details>') +
         '<a class="lm-dlive" href="showroom-live.html"><i class="lm-live-dot" aria-hidden="true"></i><span><b>Showroom Live</b><small>Visita la tienda por videollamada</small></span></a>' +
         LM.llamar('menu', { label: 'Te ayudamos a elegir' }) +
       '</div></div>';
@@ -383,7 +418,7 @@
       var h = a.getAttribute('href');
       if (/^(tel:|mailto:|#)/.test(h) || /wa\.me/.test(h)) return;
       if (/\/mi-cuenta\//.test(h)) { a.setAttribute('href', '#'); return; }
-      if (/^[\w-]+\.html$/.test(h)) return; // páginas de la maqueta (home, fichas, Showroom Live, categoría)
+      if (/^[\w-]+\.html([?#].*)?$/.test(h)) return; // páginas de la maqueta (home, fichas, Showroom Live, categoría)
       a.setAttribute('href', 'colchones.html');
     });
 

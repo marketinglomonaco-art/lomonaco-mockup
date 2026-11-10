@@ -34,6 +34,21 @@
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(recolocar);
   colB.innerHTML = PC.colchones.map(function (c) { return '<button type="button" role="radio" data-col="' + c.k + '"><b>' + c.t + '</b><small>' + c.d + '</small></button>'; }).join('');
   var img = $('#h4p-img'), ultimaFoto = 'canape';
+  /* Paco, 10/11 · Categoría (versión reducida): que no se elija el colchón a ciegas. Bajo los botones,
+     qué es el colchón elegido, cómo se siente, sus tres puntos fuertes y el enlace a su ficha */
+  var info = null;
+  if (pc.closest('.h4p--mini')) {
+    info = document.createElement('div'); info.className = 'h4p-info'; info.id = 'h4p-info'; info.setAttribute('aria-live', 'polite');
+    colB.parentNode.insertBefore(info, colB.nextSibling);
+  }
+  function pintarInfo() {
+    if (!info) return;
+    var P = LM.PRODUCTOS[st.col];
+    info.innerHTML = '<p class="h4p-info-k">' + P.nucleo + ' · ' + P.altura + '</p>' +
+      '<p class="h4p-info-s">' + P.sensacionTxt + '</p>' +
+      '<ul class="h4p-info-b">' + P.beneficios.slice(0, 3).map(function (b) { return '<li>' + LM.ico(b[0]) + '<span>' + b[1] + '</span></li>'; }).join('') + '</ul>' +
+      '<a class="h4p-info-l" href="' + LM.href(P.url) + '">Ver el colchón ' + P.nombre + '</a>';
+  }
 
   // Paco, 06/11: los regalos, con más protagonismo: bloque propio con las fotos grandes, valor tachado y «Gratis»
   function regalos(G, v) {
@@ -51,7 +66,7 @@
     $$('[data-base]', segB).forEach(function (b) { var on = b.getAttribute('data-base') === st.base; b.setAttribute('aria-checked', on); b.tabIndex = on ? 0 : -1; });
     deslizar();
     $$('[data-col]', colB).forEach(function (b) { var on = b.getAttribute('data-col') === st.col; b.setAttribute('aria-checked', on); b.tabIndex = on ? 0 : -1; });
-    foto();
+    foto(); pintarInfo();
     var m = medida(st.col, st.base), pack = tabla(st.col, st.base)[m], colchon = LM.PRECIOS[st.col][m];
     var G = LM.regalosPack(st.col, st.base), vReg = G.reduce(function (s, r) { return s + r[4]; }, 0);
     var go = $('#h4p-go'), h, precio;

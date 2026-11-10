@@ -1593,3 +1593,60 @@ html.s-cm-open { overflow: hidden; }
   .s-sv-wrap[data-plano="6"] .s-pl-tog .lm-i { width: 24px; height: 24px; }
   .s-sv-wrap[data-plano="6"].is-plano .s-pl-tog { box-shadow: 0 0 0 2px var(--acc), 0 6px 18px rgba(0,0,0,.2); }
 }
+
+/* ===== Paco, 10/11 · Opciones A y B ===== */
+/* Selector A / B de la maqueta (abajo en el centro) */
+.lm-ab { gap: 2px; }
+.lm-ab a { display: inline-flex; align-items: center; min-height: 34px; padding: 0 16px; border-radius: 999px; color: #fff; text-decoration: none; white-space: nowrap; }
+.lm-ab a:hover { background: rgba(255,255,255,.14); }
+.lm-ab a[aria-current] { background: #fff; color: #1d1d1f; }
+
+/* A y B · Configurador de packs de la categoría: qué es cada colchón */
+.h4p--mini .h4p-cols small { display: block; font-size: 12.5px; }
+.h4p-info { padding: 14px 16px; border-radius: 12px; background: var(--bg2); font-size: 14px; line-height: 1.45; }
+.h4p-info-k { font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
+.h4p-info-s { margin-top: 4px; color: var(--ink); }
+.h4p-info-b { display: grid; gap: 6px; margin: 10px 0 0; }
+.h4p-info-b li { display: flex; align-items: center; gap: 8px; font-weight: 600; }
+.h4p-info-b .lm-i { width: 18px; height: 18px; flex: none; color: var(--acc); }
+.h4p-info-l { display: inline-block; margin-top: 10px; font-weight: 600; color: var(--acc); text-underline-offset: 3px; }
+
+/* B · Franja LM sin horario ni teléfono: «Ofertas en packs» en el centro */
+body[data-op="b"] .lm-top-in.lm-top-a { justify-content: center; }
+
+/* B · Botón de packs del menú, con su submenú */
+.lm-nl.lm-nl-packs { margin-left: 6px; min-height: 38px; padding: 0 12px 0 16px; border-radius: 10px; background: var(--acc); color: #fff; font-weight: 600; }
+.lm-nl.lm-nl-packs:hover, .lm-nl.lm-nl-packs[aria-expanded="true"] { color: #fff; background: var(--acc-d); }
+.lm-ni-packs .lm-mega-in .lm-mc img { object-fit: cover; }
+@media (min-width: 1024px) and (max-width: 1320px) {
+  body[data-op="b"] .lm-head-tel small { display: none; }
+  body[data-op="b"] .lm-nl.lm-nl-packs { padding: 0 8px 0 12px; font-size: 13px; }
+}
+
+/* B · Categoría: los cuatro de un vistazo */
+.c-vs-head { margin-bottom: clamp(20px, 3vw, 32px); }
+.c-vs { display: grid; grid-template-columns: 150px repeat(4, minmax(0, 1fr)); grid-template-rows: repeat(7, auto); column-gap: 12px; }
+.c-vs-lab, .c-vs-col { display: grid; grid-row: 1 / span 7; grid-template-rows: subgrid; }
+.c-vs-col { padding: 0 18px 18px; border-radius: var(--r); background: #fff; }
+.c-vs-c { padding: 14px 0; border-top: 1px solid var(--line); font-size: 14.5px; line-height: 1.45; }
+.c-vs-c:first-child { border-top: 0; }
+.c-vs-lab .c-vs-c { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
+.c-vs-lab .c-vs-c:first-child { padding: 0; }
+.c-vs-top { position: relative; padding: 18px 0 14px; }
+.c-vs-top img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 12px; background: var(--bg2); }
+.c-vs-top .lm-pill { position: absolute; top: 28px; left: 10px; }
+.c-vs-top h3 { margin-top: 12px; font-size: 18px; font-weight: 700; letter-spacing: -.01em; }
+.c-vs-top h3 a { color: inherit; text-decoration: none; }
+.c-vs-top h3 a:hover { color: var(--acc); }
+.c-vs-fuerte { display: flex; align-items: center; gap: 8px; }
+.c-vs-fuerte .lm-i { width: 22px; height: 22px; flex: none; color: var(--acc); }
+.c-vs .lm-firm { gap: 6px; margin-top: 10px; }
+.c-vs-sec { background: var(--bg2); }
+.c-vs .lm-price-now { font-size: 22px; }
+.c-vs .lm-btn { margin-top: 12px; min-height: 44px; }
+@media (max-width: 999px) {
+  .c-vs { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 8px; scrollbar-width: thin; }
+  .c-vs-lab { display: none; }
+  .c-vs-col { display: block; flex: 0 0 min(78%, 320px); scroll-snap-align: start; }
+  .c-vs-c[data-l]::before { content: attr(data-l); display: block; margin-bottom: 4px; font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
+}

@@ -117,7 +117,7 @@
         '<div class="h4q-pct"><b>' + x.pct + ' %</b><span>compatible contigo</span><i aria-hidden="true"><i style="width:' + x.pct + '%"></i></i></div>' +
         '<p class="lm-card-k">' + p.nucleo + ' · ' + p.altura + '</p><h3>' + p.titulo + '</h3>' +
         '<ul class="h4q-why">' + beneficios(k, r).map(function (b) { return '<li>' + LM.ico(b[0]) + '<span><b>' + b[1] + '.</b> ' + b[2] + '</span></li>'; }).join('') + '</ul>' +
-        (d ? '<div class="h4q-price"><p class="h4q-fee">' + LM.cuotaFrase(d.p) + '</p>' +
+        (d ? '<div class="h4q-price"><p class="h4q-fee">' + LM.cuotaBajaFrase(d.p) + '</p>' +
           '<p class="h4q-cash">o ' + LM.eur(d.p) + (d.r > d.p ? ' <s>' + LM.eur(d.r) + '</s>' : '') + ' al contado, en ' + LM.medidaTxt(medida) + '</p></div>'
           : '<p class="c-na">No lo fabricamos en ' + LM.medidaTxt(medida) + '.</p>') +
         LM.regaloAlmohadas() +
