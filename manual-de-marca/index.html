@@ -8,7 +8,7 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,400;1,500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,600&display=swap">
 <style>
   :root {
     --lm: #7c1919; --lm-d: #5e1212; --ink: #1d1d1f; --mute: #5f5f66; --line: #d9d9de; --bg: #f6f6f6; --bg2: #fff; /* 06/11: el fondo es siempre gris claro, nunca blanco */
@@ -41,7 +41,7 @@
   .abre::after { content: ''; position: absolute; inset: 0; background: var(--velo); }
   .abre-t { position: absolute; z-index: 1; left: var(--pad); right: var(--pad); bottom: clamp(32px, 6vw, 80px); display: flex; justify-content: space-between; align-items: end; gap: 24px; }
   .abre h2 { font-size: clamp(48px, 7.4vw, 124px); font-weight: 600; letter-spacing: -.01em; line-height: 1; }
-  .abre h2 em { display: block; font: italic 400 1.08em/1.02 var(--serif); }
+  .abre h2 em { display: block; font: italic 600 1.08em/1.02 var(--serif); }
   .abre .logo { position: absolute; z-index: 1; top: clamp(24px, 4vw, 48px); left: var(--pad); width: clamp(150px, 16vw, 230px); color: #fff; }
   .abre .vbtn { flex: none; display: inline-flex; cursor: pointer; background: transparent; border: 0; font-family: inherit; align-items: center; gap: 10px; color: #fff; font-size: 15px; font-weight: 600; text-decoration: none; padding: 12px 18px; border-radius: 999px; box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.9); }
   .abre .vbtn:hover { background: #fff; color: var(--lm); }
@@ -53,7 +53,9 @@
 
   /* Portada */
   .cover { display: grid; grid-template-columns: 1.1fr .9fr; min-height: calc(100svh - 56px); }
-  .cover-t { display: flex; flex-direction: column; justify-content: space-between; gap: 48px; padding: clamp(32px, 6vw, 88px) var(--pad); }
+  .cover-t { display: flex; flex-direction: column; justify-content: space-between; gap: 48px; padding: clamp(32px, 6vw, 88px) var(--pad); background: var(--lm); color: #fff; }
+  .cover .meta, .cover .meta b { color: #fff; } .cover .meta { opacity: .85; }
+  .cover .logo { color: #fff; }
   .cover .logo { width: min(520px, 100%); }
   .cover h1 { font-size: clamp(56px, 9vw, 148px); font-weight: 700; letter-spacing: -.045em; line-height: .92; }
   .cover h1 span { color: var(--lm); }
@@ -95,7 +97,8 @@
   .sangre p { position: absolute; left: var(--pad); bottom: var(--pad); max-width: 15em; color: #fff; font-size: clamp(26px, 3.6vw, 54px); font-weight: 700; letter-spacing: -.03em; line-height: 1.02; z-index: 1; }
 
   /* 02 Logotipo */
-  .logo-hero { display: grid; place-items: center; padding: clamp(56px, 9vw, 140px) clamp(24px, 6vw, 96px); border-radius: var(--r); background: var(--bg2); }
+  .logo-hero { display: grid; place-items: center; padding: clamp(56px, 9vw, 140px) clamp(24px, 6vw, 96px); border-radius: var(--r); background: var(--lm); }
+  .logo-hero .logo { color: #fff; }
   .logo-hero .logo { width: min(640px, 100%); }
   .versiones { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
   .ver { display: grid; gap: 10px; }
@@ -105,10 +108,11 @@
   .ver small b { color: var(--ink); font-weight: 600; display: block; }
   .ver-foto div { background: linear-gradient(var(--velo), var(--velo)), url(img/vida-zapatillas.webp) center 40%/cover; }
   .const { display: grid; grid-template-columns: 1.4fr 1fr; gap: 12px; }
-  .respeto { position: relative; display: grid; place-items: center; padding: clamp(28px, 4vw, 48px); border-radius: var(--r-sm); background: var(--bg2); }
-  .respeto .caja { position: relative; padding: clamp(18px, 3vw, 34px); outline: 1.5px dashed rgba(124,25,25,.5); width: 100%; max-width: 440px; }
+  .respeto { position: relative; display: grid; place-items: center; padding: clamp(28px, 4vw, 48px); border-radius: var(--r-sm); background: var(--lm); }
+  .respeto .logo { color: #fff; }
+  .respeto .caja { position: relative; padding: clamp(18px, 3vw, 34px); outline: 1.5px dashed rgba(255,255,255,.55); width: 100%; max-width: 440px; }
   .respeto .caja .logo { width: 100%; }
-  .respeto .x { position: absolute; font-size: 12px; font-weight: 700; color: var(--lm); }
+  .respeto .x { position: absolute; font-size: 12px; font-weight: 700; color: #fff; }
   .respeto .x1 { top: 2px; left: 50%; transform: translateX(-50%); }
   .respeto .x2 { left: 6px; top: 50%; transform: translateY(-50%); }
   .mono { display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center; padding: clamp(24px, 4vw, 40px); border-radius: var(--r-sm); background: var(--lm); color: #fff; }
@@ -236,13 +240,13 @@
 
 
   /* Acento serif: una palabra o remate en Playfair Display cursiva */
-  em.sf, .sf { font: italic 400 1.08em/1.02 var(--serif); letter-spacing: -.01em; }
+  em.sf, .sf { font: italic 600 1.08em/1.02 var(--serif); letter-spacing: -.01em; }
   em.sf, .sf, .cx-t em, .manif em, .prueba em, .sangre em, .cover h1 em { font-variant-numeric: lining-nums; }
-  .cover h1 em { font: italic 400 1.04em/.9 var(--serif); letter-spacing: -.02em; color: var(--lm); }
-  .sangre p em { display: block; font: italic 400 1.1em/1 var(--serif); letter-spacing: -.01em; }
+  .cover h1 em { font: italic 600 1.04em/.9 var(--serif); letter-spacing: -.02em; color: #fff; }
+  .sangre p em { display: block; font: italic 600 1.1em/1 var(--serif); letter-spacing: -.01em; }
   .espec--serif { background: var(--bg); border: 1px solid var(--line); }
-  .espec--serif .aa { font: italic 400 clamp(120px, 14vw, 250px)/.8 var(--serif); letter-spacing: -.03em; color: var(--lm); }
-  .espec--serif .abc { font-family: var(--serif); font-style: italic; font-weight: 400; }
+  .espec--serif .aa { font: italic 600 clamp(120px, 14vw, 250px)/.8 var(--serif); letter-spacing: -.03em; color: var(--lm); }
+  .espec--serif .abc { font-family: var(--serif); font-style: italic; font-weight: 600; }
   .pareja { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
   .pareja > div { display: grid; gap: 8px; align-content: start; padding: 24px; border-radius: var(--r-sm); background: var(--bg2); }
   .pareja b { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
@@ -256,7 +260,7 @@
   .cx-l > * { position: relative; }
   .cx-eye { font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 12px; }
   .cx-t { font-size: clamp(32px, 3.6vw, 52px); font-weight: 700; letter-spacing: -.02em; line-height: 1.05; }
-  .cx-t em { font: italic 400 1.08em/1 var(--serif); letter-spacing: -.01em; }
+  .cx-t em { font: italic 600 1.08em/1 var(--serif); letter-spacing: -.01em; }
   .cx-s { margin-top: 16px; font-size: clamp(17px, 1.5vw, 20px); color: var(--mute); max-width: 26em; }
   .cx-b { margin-top: 28px; }
   .cx-spec { font-size: 13px; color: var(--mute); }
@@ -319,22 +323,82 @@
   /* Fotografía: manifiesto */
   .manif { margin: 0; padding: clamp(32px, 5vw, 72px) 0 0; border-top: 1px solid var(--ink); }
   .manif p { font-size: clamp(36px, 5vw, 76px); font-weight: 700; letter-spacing: -.03em; line-height: 1.02; }
-  .manif p em { display: block; font: italic 400 1.08em/1.05 var(--serif); letter-spacing: -.01em; color: var(--lm); }
+  .manif p em { display: block; font: italic 600 1.08em/1.05 var(--serif); letter-spacing: -.01em; color: var(--lm); }
   .manif footer { margin-top: 24px; max-width: 40em; font-size: clamp(17px, 1.5vw, 20px); color: var(--mute); }
   .manif footer b { color: var(--ink); font-weight: 600; }
   .prueba { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r-sm); overflow: hidden; }
   .prueba div { padding: 28px; background: #fff; }
   .prueba b { display: block; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; }
   .prueba p { font-size: clamp(22px, 2.2vw, 30px); font-weight: 700; letter-spacing: -.02em; line-height: 1.15; }
-  .prueba p em { font: italic 400 1.08em/1 var(--serif); }
+  .prueba p em { font: italic 600 1.08em/1 var(--serif); }
   .prueba div:first-child b { color: var(--mute); }
   .prueba div:last-child { background: var(--lm); color: #fff; }
+
+
+  /* 09 Aplicaciones · estructura principal: granate + logo blanco */
+  .apl { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .apl figure { margin: 0; display: grid; gap: 10px; align-content: start; }
+  .apl figcaption { font-size: 13px; color: var(--mute); } .apl figcaption b { display: block; color: var(--ink); font-weight: 600; font-size: 15px; }
+  .ap-lm { background: var(--lm); color: #fff; }
+  .ap-lm .logo { color: #fff; }
+  .slide { position: relative; aspect-ratio: 16/9; border-radius: var(--r-sm); overflow: hidden; container-type: inline-size; }
+  .slide .logo { position: absolute; top: 7cqw; left: 7cqw; width: 26cqw; }
+  .slide h4 { position: absolute; left: 7cqw; bottom: 9cqw; font-size: 7.2cqw; font-weight: 600; letter-spacing: -.01em; line-height: 1; }
+  .slide h4 em { display: block; font: italic 600 1.08em/1.05 var(--serif); }
+  .slide .fe { position: absolute; right: 7cqw; bottom: 9.6cqw; font-size: 2.1cqw; opacity: .8; }
+  .slide .num { position: absolute; left: 7cqw; top: 7cqw; font-size: 2.2cqw; font-weight: 700; letter-spacing: .08em; opacity: .8; }
+  .slide .big { position: absolute; left: 7cqw; bottom: 8cqw; font-size: 11cqw; font-weight: 700; letter-spacing: -.04em; line-height: .9; }
+  .slide .mono { position: absolute; right: 7cqw; top: 7cqw; width: 5cqw; fill: #fff; padding: 0; background: none; display: block; }
+  .slide--con { background: var(--bg); border: 1px solid var(--line); }
+  .slide--con .band { position: absolute; inset: 0 0 auto 0; height: 15cqw; background: var(--lm); }
+  .slide--con .band .logo { top: 50%; transform: translateY(-50%); width: 18cqw; left: 6cqw; }
+  .slide--con .band span { position: absolute; right: 6cqw; top: 50%; transform: translateY(-50%); font-size: 2cqw; color: #fff; opacity: .85; }
+  .slide--con h5 { margin: 0; position: absolute; left: 6cqw; top: 21cqw; font-size: 4.6cqw; font-weight: 700; letter-spacing: -.02em; }
+  .slide--con ul { position: absolute; left: 6cqw; top: 30cqw; margin: 0; padding: 0; list-style: none; display: grid; gap: 1.6cqw; font-size: 2.3cqw; color: var(--mute); }
+  .slide--con li::before { content: ''; display: inline-block; width: 1.2cqw; height: 1.2cqw; border-radius: 50%; background: var(--lm); margin-right: 1.6cqw; vertical-align: .2cqw; }
+  .slide--con .ph { position: absolute; right: 6cqw; top: 21cqw; width: 38cqw; aspect-ratio: 16/11; border-radius: 1.8cqw; background: url(img/vida-lectura.webp) center/cover; }
+  .tarj { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .tarj > div { position: relative; aspect-ratio: 85/55; border-radius: 10px; overflow: hidden; container-type: inline-size; box-shadow: 0 1px 0 var(--line); }
+  .tarj .ap-lm .logo { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 62cqw; }
+  .tarj .dorso { background: var(--bg2); border: 1px solid var(--line); }
+  .tarj .dorso b { position: absolute; left: 9cqw; top: 12cqw; font-size: 7cqw; font-weight: 700; letter-spacing: -.01em; }
+  .tarj .dorso i { position: absolute; left: 9cqw; top: 23cqw; font-style: normal; font-size: 4.4cqw; color: var(--mute); }
+  .tarj .dorso p { position: absolute; left: 9cqw; bottom: 10cqw; margin: 0; font-size: 4.4cqw; line-height: 1.45; }
+  .tarj .dorso .mono { position: absolute; right: 9cqw; bottom: 10cqw; width: 9cqw; fill: var(--lm); padding: 0; background: none; display: block; }
+  .firma { display: grid; grid-template-columns: auto 1fr; border-radius: var(--r-sm); overflow: hidden; background: var(--bg2); border: 1px solid var(--line); }
+  .firma .ap-lm { display: grid; place-items: center; padding: 22px 26px; }
+  .firma .ap-lm svg { width: 46px; fill: #fff; }
+  .firma div:last-child { padding: 18px 22px; font-size: 14px; line-height: 1.5; color: var(--mute); }
+  .firma div:last-child b { display: block; color: var(--ink); font-size: 16px; }
+  .firma div:last-child a { color: var(--lm); font-weight: 600; text-decoration: none; }
+  .redes { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; padding: 18px; border-radius: var(--r-sm); background: var(--bg2); border: 1px solid var(--line); }
+  .redes .av { width: 84px; height: 84px; border-radius: 50%; display: grid; place-items: center; }
+  .redes .av svg { width: 32px; fill: #fff; }
+  .redes .cab { position: relative; aspect-ratio: 3/1; border-radius: 12px; overflow: hidden; container-type: inline-size; }
+  .redes .cab .logo { position: absolute; left: 7cqw; top: 50%; transform: translateY(-50%); width: 40cqw; }
+  .redes .cab span { position: absolute; right: 7cqw; top: 50%; transform: translateY(-50%); font: italic 600 4.8cqw/1 var(--serif); }
+  .doc { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .doc > div { position: relative; aspect-ratio: 210/297; border-radius: 10px; overflow: hidden; container-type: inline-size; background: var(--bg2); border: 1px solid var(--line); }
+  .doc .ap-lm.dtop { position: absolute; inset: 0 0 52% 0; }
+  .doc .ap-lm.dtop .logo { position: absolute; left: 10cqw; top: 12cqw; width: 52cqw; }
+  .doc .ap-lm.dtop h6 { position: absolute; left: 10cqw; bottom: 10cqw; margin: 0; font-size: 9cqw; font-weight: 600; line-height: 1.02; }
+  .doc .ap-lm.dtop h6 em { display: block; font: italic 600 1.08em/1.05 var(--serif); }
+  .doc .pie-doc { position: absolute; left: 10cqw; right: 10cqw; bottom: 10cqw; font-size: 3.4cqw; color: var(--mute); display: flex; justify-content: space-between; }
+  .doc .carta .band { position: absolute; inset: 0 0 auto 0; height: 13cqw; background: var(--lm); }
+  .doc .carta .band .logo { position: absolute; left: 10cqw; top: 50%; transform: translateY(-50%); width: 34cqw; color: #fff; }
+  .doc .carta .ln { position: absolute; left: 10cqw; right: 10cqw; height: 1.6cqw; border-radius: 1cqw; background: #e6e6ea; }
 
   /* 08 Resumen */
   .resumen { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r-sm); overflow: hidden; }
   .resumen div { padding: 24px; background: #fff; }
   .resumen b { display: block; font-size: 13px; font-weight: 700; color: var(--lm); letter-spacing: .08em; margin-bottom: 10px; }
   .resumen p { font-size: 16px; }
+  .s--lm { background: var(--lm); color: #fff; border-top: 0; }
+  .s--lm .s-n { color: #fff; opacity: .8; }
+  .s--lm .resumen { background: rgba(255,255,255,.22); border-color: rgba(255,255,255,.22); }
+  .s--lm .resumen div { background: var(--lm); }
+  .s--lm .resumen b { color: #fff; opacity: .75; }
+  .pie { border-top: 1px solid rgba(255,255,255,.22); }
 
   .pie { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 16px 32px; align-items: end; padding: 48px var(--pad); background: var(--lm); color: #fff; font-size: 13px; }
   .pie .logo { width: 180px; color: #fff; }
@@ -382,6 +446,7 @@
     .glos, .glos tbody, .glos tr, .glos td { display: block; } .glos thead { display: none; }
     .glos tr { padding: 14px 0; border-top: 1px solid var(--line); } .glos td { border: 0; padding: 2px 0; }
     .mono { grid-template-columns: 1fr; }
+    .apl, .doc { grid-template-columns: 1fr; }
     .pareja, .comp, .iuso, .icards, .prueba, .ianat { grid-template-columns: 1fr; }
     .cx--foto .cx-l { align-content: start; min-height: 560px; }
     .cx--foto .cx-l img { object-position: 30% 100%; }
@@ -416,7 +481,7 @@
   <a class="logo" href="#portada" aria-label="LOMONACO · inicio del manual"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></a>
   <nav aria-label="Secciones">
     <a href="#marca"><b>01</b>Marca</a><a href="#logotipo"><b>02</b>Logotipo</a><a href="#color"><b>03</b>Color</a><a href="#tipografia"><b>04</b>Tipografía</a>
-    <a href="#iconos"><b>05</b>Iconos</a><a href="#tono"><b>06</b>Tono</a><a href="#fotografia"><b>07</b>Fotografía</a><a href="#elementos"><b>08</b>Elementos</a><a href="#resumen"><b>09</b>Resumen</a>
+    <a href="#iconos"><b>05</b>Iconos</a><a href="#tono"><b>06</b>Tono</a><a href="#fotografia"><b>07</b>Fotografía</a><a href="#elementos"><b>08</b>Elementos</a><a href="#aplicaciones"><b>09</b>Aplicaciones</a><a href="#resumen"><b>10</b>Resumen</a>
   </nav>
 </header>
 
@@ -436,7 +501,7 @@
       <span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span>
       <h1>Manual<br>de <em>marca</em></h1>
       <div class="meta">
-        <span><b>Edición</b>01</span><span><b>Fecha</b>Noviembre 2026</span><span><b>Para</b>Web, redes y piezas</span>
+        <span><b>Versión</b>2.0</span><span><b>Fecha</b>10 de noviembre de 2026</span><span><b>Para</b>Web, redes y piezas</span>
       </div>
     </div>
     <div class="cover-f"><img src="img/vida-vertical.webp" alt="Pareja en su dormitorio sobre un colchón LOMONACO" fetchpriority="high"></div>
@@ -469,14 +534,14 @@
     <div class="s-b">
       <div class="bloque">
         <div class="logo-hero"><span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span></div>
-        <p class="txt"><b>LOMONACO en una sola palabra, en mayúsculas y con la M subrayada.</b> La barra bajo la M forma parte del logo: nunca se separa, se mueve ni se quita. El logo se usa siempre desde el archivo original, nunca se reescribe con una tipografía.</p>
+        <p class="txt"><b>Versión principal: blanco sobre granate.</b> El burdeos es el color principal de la marca y el logo vive sobre él en todas las piezas corporativas: presentaciones, portadas, papelería y redes. <b>LOMONACO en una sola palabra, en mayúsculas y con la M subrayada.</b> La barra bajo la M forma parte del logo: nunca se separa, se mueve ni se quita. El logo se usa siempre desde el archivo original, nunca se reescribe con una tipografía.</p>
       </div>
 
       <div class="bloque">
         <span class="k">Versiones de color</span>
         <div class="versiones">
-          <div class="ver"><div style="background:#f6f6f6;border:1px solid var(--line)"><span class="logo"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span></div><small><b>Principal</b>Granate sobre gris claro</small></div>
-          <div class="ver"><div style="background:var(--lm)"><span class="logo" style="color:#fff"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span></div><small><b>Invertida</b>Blanco sobre granate</small></div>
+          <div class="ver"><div style="background:var(--lm)"><span class="logo" style="color:#fff"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span></div><small><b>Principal</b>Blanco sobre granate</small></div>
+          <div class="ver"><div style="background:#f6f6f6;border:1px solid var(--line)"><span class="logo"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span></div><small><b>Secundaria</b>Granate sobre gris claro (web)</small></div>
           <div class="ver"><div style="background:var(--ink)"><span class="logo" style="color:#fff"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span></div><small><b>Monocolor</b>Blanco sobre negro, o negro sobre gris claro</small></div>
           <div class="ver ver-foto"><div><span class="logo" style="color:#fff"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span></div><small><b>Sobre foto</b>Siempre en blanco, con la capa negra al 10 %</small></div>
         </div>
@@ -531,12 +596,12 @@
   <section class="s" id="color">
     <div class="s-h"><span class="s-n">03</span><h2>Color</h2></div>
     <div class="s-b">
-      <p class="lead">Fondo gris claro, blanco y negro. El <em>granate LM</em> es el acento: poco y en el sitio justo.</p>
+      <p class="lead">El <em>granate LM</em> es el color principal de la marca: protagonista en el logo, las portadas y las piezas corporativas. En la web, sobre fondo gris claro, marca lo importante.</p>
 
       <div class="bloque">
         <span class="k">Principales · pulsa para copiar el código</span>
         <div class="prim">
-          <button class="sw" data-hex="#7C1919" data-n="Granate LM" data-uso="Color oficial de marca" type="button"></button>
+          <button class="sw" data-hex="#7C1919" data-n="Granate LM" data-uso="Color principal de marca" type="button"></button>
           <button class="sw" data-hex="#1D1D1F" data-n="Negro" type="button"></button>
           <button class="sw" data-hex="#FFFFFF" data-n="Blanco" data-uso="Tarjetas, texto sobre oscuro y logo sobre foto" type="button"></button>
           <button class="sw" data-hex="#F6F6F6" data-n="Gris claro" data-uso="Fondo de página y de escena, siempre" type="button"></button>
@@ -553,7 +618,17 @@
       </div>
 
       <div class="bloque">
-        <span class="k">Proporción en una página</span>
+        <span class="k">Proporción en piezas corporativas · presentaciones, portadas, papelería, redes</span>
+        <div class="prop">
+          <span style="flex:60;background:#7c1919;color:#fff">Granate LM 60 %</span>
+          <span style="flex:25;background:#fff">Blanco 25 %</span>
+          <span style="flex:10;background:#f6f6f6">Gris 10 %</span>
+          <span style="flex:5;background:#1d1d1f;color:#fff">5 %</span>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <span class="k">Proporción en la web</span>
         <div class="prop">
           <span style="flex:60;background:#f6f6f6">Gris claro · fondo 60 %</span>
           <span style="flex:22;background:#fff">Blanco 22 %</span>
@@ -563,8 +638,8 @@
       </div>
 
       <div class="uso">
-        <div><h3>El granate va en</h3><ul><li>Botones de compra y descuentos</li><li>Titulares y enlaces</li><li>La franja superior y las bandas de aviso, con texto blanco</li><li>La opción seleccionada (medida, modelo…)</li></ul></div>
-        <div class="no"><h3>Nunca</h3><ul><li>Naranja, rosa ni otros rojos</li><li>Fondos blancos: el fondo es siempre gris claro #F6F6F6</li><li>Fondos beige o cálidos</li><li>Degradados de color</li><li>Granate en textos largos o en antetítulos (van en negro)</li><li>Logo o texto granate sobre una foto: sobre foto, siempre blanco</li></ul></div>
+        <div><h3>El granate va en</h3><ul><li><b>Fondo protagonista de portadas, presentaciones y piezas corporativas</b>, con el logo y el texto en blanco</li><li>Botones de compra y descuentos</li><li>Titulares y enlaces</li><li>La franja superior y las bandas de aviso, con texto blanco</li><li>La opción seleccionada (medida, modelo…)</li></ul></div>
+        <div class="no"><h3>Nunca</h3><ul><li>Naranja, rosa ni otros rojos</li><li>Fondos blancos: el fondo claro es siempre gris #F6F6F6</li><li>Fondos beige o cálidos</li><li>Degradados de color</li><li>Granate en textos largos o en antetítulos (van en negro)</li><li>Logo o texto granate sobre una foto: sobre foto, siempre blanco</li></ul></div>
       </div>
 
       <div class="granate-foto">
@@ -592,7 +667,7 @@
       </div>
       <div class="espec espec--serif">
         <span class="aa">Aa</span>
-        <p class="abc">Playfair Display · cursiva<br>ABCDEFGHIJKLMNÑOPQRSTUVWXYZ<br>abcdefghijklmnñopqrstuvwxyz<br>0123456789 · áéíóú<span style="font-family:var(--font);font-style:normal"><b style="color:var(--ink)">Secundaria · el acento emocional.</b> Solo en cursiva, peso 400 (500 en tamaños pequeños). Va dentro de un titular de Albert Sans, nunca sola. También gratuita en Google Fonts (OFL).</span></p>
+        <p class="abc">Playfair Display · cursiva<br>ABCDEFGHIJKLMNÑOPQRSTUVWXYZ<br>abcdefghijklmnñopqrstuvwxyz<br>0123456789 · áéíóú<span style="font-family:var(--font);font-style:normal"><b style="color:var(--ink)">Secundaria · el acento emocional.</b> Siempre en cursiva SemiBold (600): un único peso en todo el documento. Va dentro de un titular de Albert Sans, nunca sola. También gratuita en Google Fonts (OFL).</span></p>
       </div>
       <div class="pareja">
         <div><b>Albert Sans</b><p class="muestra" style="font-weight:700">Cuenta</p><p>Lo que es: producto, precio, condiciones. Clara y directa.</p></div>
@@ -614,7 +689,7 @@
         <span class="k">Escala para la web</span>
         <div class="escala">
           <div class="esc"><small><b>Portada</b>44–88 px · 700<br>espaciado −3 % · interlínea 1</small><p class="t-display">La marca de toda la vida</p></div>
-          <div class="esc"><small><b>Titular con acento</b>Albert Sans 600 + Playfair cursiva 400<br>la cursiva al 108 % del titular</small><p class="t-display" style="font-weight:600;letter-spacing:-.005em">La marca de <em class="sf">toda la vida</em></p></div>
+          <div class="esc"><small><b>Titular con acento</b>Albert Sans 600 + Playfair cursiva 600<br>la cursiva al 108 % del titular</small><p class="t-display" style="font-weight:600;letter-spacing:-.005em">La marca de <em class="sf">toda la vida</em></p></div>
           <div class="esc"><small><b>Titular H1</b>36–64 px · 700 · granate<br>espaciado −2 % · interlínea 1,05</small><p class="t-h1">Colchones</p></div>
           <div class="esc"><small><b>Titular H2</b>30–48 px · 700<br>espaciado −2 % · interlínea 1,05</small><p class="t-h2">Elige tu colchón</p></div>
           <div class="esc"><small><b>Titular H3</b>22–28 px · 800<br>espaciado −2 % · interlínea 1,15</small><p class="t-h3">Pruébalo 150 noches en tu cama</p></div>
@@ -654,7 +729,7 @@
       </div>
       <div class="uso">
         <div><h3>Así sí</h3><ul><li>Titulares en minúscula, con la primera en mayúscula</li><li>Texto alineado a la izquierda</li><li>Máximo dos pesos por bloque</li><li>Una sola cursiva Playfair por titular, al final o en la segunda línea</li><li>Líneas de 60 a 70 caracteres</li></ul></div>
-        <div class="no"><h3>Así no</h3><ul><li>Titulares enteros en MAYÚSCULAS (solo antetítulos cortos)</li><li>Otras tipografías, o Playfair en recta (sin cursiva)</li><li>Playfair en párrafos, precios, botones o etiquetas</li><li>Texto justificado o centrado en párrafos largos</li><li>Cursivas decorativas</li></ul></div>
+        <div class="no"><h3>Así no</h3><ul><li>Titulares enteros en MAYÚSCULAS (solo antetítulos cortos)</li><li>Otras tipografías, o Playfair en recta (sin cursiva)</li><li>Playfair en otro peso que no sea SemiBold 600</li><li>Playfair en párrafos, precios, botones o etiquetas</li><li>Texto justificado o centrado en párrafos largos</li><li>Cursivas decorativas</li></ul></div>
       </div>
       <p class="nota">Los precios de la escala son un <b>ejemplo de formato</b>, no precios reales.</p>
     </div>
@@ -870,14 +945,54 @@
     </div>
   </section>
 
-  <!-- 08 RESUMEN -->
-  <section class="s" id="resumen">
-    <div class="s-h"><span class="s-n">09</span><h2>En una página</h2></div>
+  <!-- 09 APLICACIONES -->
+  <section class="s" id="aplicaciones">
+    <div class="s-h"><span class="s-n">09</span><h2>Aplicaciones</h2></div>
+    <div class="s-b">
+      <p class="lead">La estructura principal: <em>fondo granate y logo blanco</em>. Es la cara de la marca en todo lo corporativo.</p>
+
+      <div class="bloque">
+        <span class="k">Presentaciones</span>
+        <div class="apl">
+          <figure><div class="slide ap-lm"><span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span><h4>Presentación<em>de marca</em></h4><span class="fe">Noviembre 2026</span></div><figcaption><b>Portada</b>Granate a sangre, logo blanco arriba a la izquierda y título con su remate en cursiva</figcaption></figure>
+          <figure><div class="slide ap-lm"><span class="num">SECCIÓN</span><svg class="mono" viewBox="0 0 376 440" aria-hidden="true"><use href="#mono"/></svg><span class="big">02 Color</span></div><figcaption><b>Separador de sección</b>Número y título grandes en blanco; monograma arriba a la derecha</figcaption></figure>
+          <figure style="grid-column:1/-1"><div class="slide slide--con"><div class="band"><span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span><span>Presentación de marca · 03</span></div><h5>Contenido</h5><ul><li>Fondo gris claro para leer</li><li>Banda granate con el logo en blanco</li><li>Una foto real, sin filtros</li></ul><div class="ph"></div></div><figcaption><b>Diapositiva de contenido</b>Fondo gris claro, banda superior granate con el logo blanco: el granate siempre presente</figcaption></figure>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <span class="k">Tarjeta de visita · 85 × 55 mm</span>
+        <div class="tarj">
+          <div class="ap-lm"><span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span></div>
+          <div class="dorso"><b>Nombre Apellido</b><i>Cargo</i><p>868 28 67 52<br>grupolomonaco.com</p><svg class="mono" viewBox="0 0 376 440" aria-hidden="true"><use href="#mono"/></svg></div>
+        </div>
+      </div>
+
+      <div class="apl">
+        <figure><div class="firma"><div class="ap-lm"><svg viewBox="0 0 376 440" aria-hidden="true"><use href="#mono"/></svg></div><div><b>Nombre Apellido</b>Cargo · Lo Monaco<br>868 28 67 52 · <a href="#aplicaciones">grupolomonaco.com</a></div></div><figcaption><b>Firma de email</b>Monograma blanco sobre granate y datos en gris</figcaption></figure>
+        <figure><div class="redes"><div class="av ap-lm"><svg viewBox="0 0 376 440" aria-hidden="true"><use href="#mono"/></svg></div><div class="cab ap-lm"><span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span><span>toda la vida</span></div></div><figcaption><b>Redes sociales</b>Foto de perfil: monograma blanco sobre granate. Cabecera: logo blanco sobre granate</figcaption></figure>
+      </div>
+
+      <div class="bloque">
+        <span class="k">Documentos · A4</span>
+        <div class="doc">
+          <div><div class="ap-lm dtop"><span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span><h6>Informe<em>anual</em></h6></div><div class="pie-doc"><span>Lo Monaco · LM Descanso SL</span><span>2026</span></div></div>
+          <div class="carta"><div class="band"><span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span></div><div class="ln" style="top:24cqw;width:40cqw"></div><div class="ln" style="top:34cqw"></div><div class="ln" style="top:39cqw"></div><div class="ln" style="top:44cqw;right:30cqw"></div><div class="ln" style="top:54cqw"></div><div class="ln" style="top:59cqw"></div><div class="ln" style="top:64cqw;right:46cqw"></div><div class="pie-doc"><span>868 28 67 52</span><span>grupolomonaco.com</span></div></div>
+        </div>
+        <p class="txt">Portada de documento con la mitad superior en granate; carta y documentos internos con banda granate y logo blanco.</p>
+      </div>
+      <p class="nota">Nombres, cargos y títulos son de ejemplo para mostrar la composición.</p>
+    </div>
+  </section>
+
+  <!-- 10 RESUMEN -->
+  <section class="s s--lm" id="resumen">
+    <div class="s-h"><span class="s-n">10</span><h2>En una página</h2></div>
     <div class="s-b">
       <div class="resumen">
-        <div><b>LOGO</b><p>LOMONACO con la M subrayada. Granate sobre blanco; sobre foto, siempre blanco. Mínimo 100 px.</p></div>
-        <div><b>COLOR</b><p>Fondo siempre gris #F6F6F6, nunca blanco. Negro #1D1D1F. Acento granate #7C1919.</p></div>
-        <div><b>TIPOGRAFÍA</b><p>Albert Sans para todo. Playfair Display cursiva solo para la palabra que emociona.</p></div>
+        <div><b>LOGO</b><p>Principal: blanco sobre granate. En la web, granate sobre gris; sobre foto, siempre blanco. Mínimo 100 px.</p></div>
+        <div><b>COLOR</b><p>Granate #7C1919, color principal y protagonista en lo corporativo. Fondo claro siempre gris #F6F6F6, nunca blanco.</p></div>
+        <div><b>TIPOGRAFÍA</b><p>Albert Sans para todo. Playfair Display, siempre cursiva SemiBold 600, solo para la palabra que emociona.</p></div>
         <div><b>TONO</b><p>De tú, corto y con cifras reales. «150 noches», nunca «150 días».</p></div>
         <div><b>FOTOGRAFÍA</b><p>Natural y sin filtros. Momentos íntimos robados que emocionan.</p></div>
         <div><b>ICONOS Y ELEMENTOS</b><p>Iconos de línea 1,6 en granate o blanco. Botones píldora y esquinas de 24 px.</p></div>
@@ -888,7 +1003,7 @@
 
 <footer class="pie">
   <span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span>
-  <p>Manual de marca · Edición 01 · Noviembre 2026<br>Lo Monaco · LM Descanso SL</p>
+  <p>Manual de marca · Versión 2.0 · 10/11/2026<br>Lo Monaco · LM Descanso SL</p>
 </footer>
 
 <div class="vplayer" id="vplayer" hidden>
