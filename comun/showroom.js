@@ -87,8 +87,13 @@
       return '<button type="button" class="s-pl-pt" data-i="' + i + '" style="left:' + (e.cam[0] / 6).toFixed(2) + '%;top:' + (e.cam[1] / 3.3).toFixed(2) + '%" aria-label="Mirar: ' + e.t + '">' + (i + 1) + '</button>';
     }).join('') + '</div>' +
     '<div class="s-pl-side"><p class="lm-eyebrow">Elige desde dónde mirar</p><ul class="s-pl-list">' + SALA.map(function (e, i) {
-      return '<li><button type="button" class="s-pl-op" data-i="' + i + '" aria-pressed="false"><b>' + (i < 9 ? '0' : '') + (i + 1) + '</b><span>' + e.t + '<small>' + e.s + '</small></span></button></li>';
-    }).join('') + '</ul></div></div>');
+      return '<li><button type="button" class="s-pl-op" data-i="' + i + '" aria-pressed="false"><img class="s-pl-th" src="../img/sr2-' + e.img + '-900.webp" alt="" width="900" height="600" decoding="async"><b>' + (i < 9 ? '0' : '') + (i + 1) + '</b><span>' + e.t + '<small>' + e.s + '</small></span></button></li>';
+    }).join('') + '</ul><p class="s-pl-nota">Pincha en un número del plano, o en el suelo de la foto para acercarte a una cama.</p></div>' +
+    '<p class="s-pl-now" aria-live="polite"><small>Estás viendo</small><b></b></p></div>');
+  /* Paco, 10/11 · tres propuestas para integrar el plano (sin rosa). Se eligen con ?plano=1, 2 o 3:
+     1 · panel gris a la altura de la foto · 2 · con miniaturas de cada vista · 3 · plano pequeño dentro de la foto */
+  var PV = (/[?&]plano=([123])/.exec(location.search) || [])[1] || '1';
+  sv.parentNode.setAttribute('data-plano', PV);
   // Paco, 10/11: los 3 pasos no van en la columna del plano; se queda el bloque grande «Cómo funciona» de la página
   $('#s-plano').addEventListener('click', function (e) { var b = e.target.closest('[data-i]'); if (b && b.tagName === 'BUTTON') { ocultarPista(); ir(+b.getAttribute('data-i')); } });
 
@@ -149,6 +154,7 @@
     LM.track('showroom_scene', { scene: SALA[i].img });
   }
   function marcarPlano() {
+    var now = $('.s-pl-now b'); if (now && SALA[cur]) now.textContent = SALA[cur].t + (SALA[cur].puntos.length === 1 ? ' · ' + SALA[cur].s.toLowerCase() : '');
     $$('.s-pl-pt, .s-pl-op, .s-pl-vis').forEach(function (b) { var on = +b.getAttribute('data-i') === cur; b.classList.toggle('is-on', on); if (b.tagName === 'BUTTON') b.setAttribute('aria-pressed', on); });
   }
 
