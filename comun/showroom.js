@@ -40,6 +40,8 @@
   sv.setAttribute('aria-label', 'Sala del showroom. Arrastra o usa las flechas del teclado para mirar; toca una cama para verla de cerca.');
   sv.innerHTML =
     '<div class="s-sv-stages" id="s-stages"></div>' +
+    // Paco, 10/11: de cerca, un botón para volver a ver las tres camas
+    '<button class="s-sv-todos" type="button" id="s-todos"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10h18M5 10V6h4v4M15 10V6h4v4M3 10v8M21 10v8M3 15h18"/></svg>Ver todos los colchones</button>' +
 
     '<p class="s-sv-hint" id="s-hint"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12"/><path d="M11 11.5v-2a1.5 1.5 0 0 1 3 0V12"/><path d="M14 10.5a1.5 1.5 0 0 1 3 0V12"/><path d="M17 11.5a1.5 1.5 0 0 1 3 0V16a5 5 0 0 1-5 5h-2.5a5 5 0 0 1-4.3-2.5L5.4 15a1.5 1.5 0 0 1 2.6-1.5L8 14"/></svg>Arrastra para mirar</p>' +
     '<button class="s-sv-nav s-sv-prev" type="button" data-go="-1" aria-label="Punto de vista anterior">' + flecha(-1) + '</button>' +
@@ -87,11 +89,12 @@
     '<div class="s-pl-side"><p class="lm-eyebrow">Elige desde dónde mirar</p><ul class="s-pl-list">' + SALA.map(function (e, i) {
       return '<li><button type="button" class="s-pl-op" data-i="' + i + '" aria-pressed="false"><b>' + (i < 9 ? '0' : '') + (i + 1) + '</b><span>' + e.t + '<small>' + e.s + '</small></span></button></li>';
     }).join('') + '</ul></div></div>');
-  // Paco, 10/11: debajo de la lista, los 3 pasos de «Cómo funciona» en pequeño (copiados del bloque de la página)
-  var pasosHow = $$('.s-steps li');
-  if (pasosHow.length) $('#s-plano').insertAdjacentHTML('beforeend', '<div class="s-pl-how"><p class="lm-eyebrow">Cómo funciona</p><ol>' + pasosHow.map(function (li, i) {
-    var t = li.querySelector('b'), d = li.querySelector('p');
-    return '<li><span>' + (i + 1) + '</span><div><b>' + (t ? t.textContent : '') + '</b><p>' + (d ? d.textContent : '') + '</p></div></li>';
+  // Paco, 10/11: debajo de la lista, los 3 pasos de «Cómo funciona» (el bloque de la página se quita: viven aquí)
+  var PASOS_HOW = [['Eliges día y hora', 'De lunes a viernes, de 9:00 a 18:00. Solo te pedimos tu nombre y tu teléfono.'],
+    ['Te llamamos por vídeo', 'Por ' + C.videoCanales.v + '. Te enseñamos las camas que quieras ver, de cerca.'],
+    ['Decides con calma', 'Te ayudamos con la medida y la base. Si te convence, lo pides por teléfono o en la web.']];
+  $('#s-plano').insertAdjacentHTML('beforeend', '<div class="s-pl-how"><p class="lm-eyebrow">Cómo funciona</p><ol>' + PASOS_HOW.map(function (x, i) {
+    return '<li><span>' + (i + 1) + '</span><div><b>' + x[0] + '</b><p>' + x[1] + '</p></div></li>';
   }).join('') + '</ol><a class="lm-btn lm-btn--full s-pl-cta" href="#reserva">Reservar videollamada</a></div>');
   $('#s-plano').addEventListener('click', function (e) { var b = e.target.closest('[data-i]'); if (b && b.tagName === 'BUTTON') { ocultarPista(); ir(+b.getAttribute('data-i')); } });
 
@@ -129,6 +132,7 @@
     if (i === cur || busy) return;
     var prev = stage, prevPan = pan.x;
     cur = i; medir();
+    sv.classList.toggle('is-cerca', SALA[i].puntos.length < 2);
     var next = crearEscena(i);
     stages.appendChild(next);
     stage = next; pan = { x: .5, y: .5 }; vel = 0; pintar();
@@ -234,6 +238,7 @@
   sv.addEventListener('click', function (e) {
     var b = e.target.closest('[data-cama]'); if (b) { abrirCama(b.getAttribute('data-cama')); return; }
     var g = e.target.closest('[data-go]'); if (g) { ocultarPista(); ir(cur + +g.getAttribute('data-go')); return; }
+    if (e.target.closest('#s-todos')) { ir(0); LM.track('showroom_vista_general', {}); return; }
     if (e.target.closest('button, a') || performance.now() - arrastrado < 350) return;
     var c = camaCercana(e); if (!c) return;
     var r = stage.getBoundingClientRect();
@@ -306,7 +311,7 @@
     } else if (p) {
       h = '<p class="lm-eyebrow">En el showroom</p><h3>' + p.titulo + '</h3><p class="s-card-d">' + c.donde + '</p>' +
         '<p class="s-side-t">' + p.diferencia + '</p>' +
-        '<div class="s-side-capas" id="s-capas"><p class="s-side-k">Así es por dentro <small>' + p.altura + ' · ' + p.nucleo + '</small></p>' + capasHTML(p) + '</div>' +
+        '<div class="s-side-capas" id="s-capas"><p class="s-side-k">Capas <small>' + p.altura + ' · ' + p.nucleo + '</small></p>' + capasHTML(p) + '</div>' +
         '<button class="lm-btn lm-btn--buy lm-btn--full" type="button" data-ver="' + k + '">Quiero verlo en videollamada</button>' +
         '<a class="lm-link" href="' + LM.href(p.url) + '">Ver la ficha del colchón</a>';
     } else {
@@ -330,7 +335,7 @@
     $('#s-room-cap').textContent = (R.canape ? 'Canapé abierto' : S.camas[R.cama].t) + ' · ' + f[1] + ' · ' + (R.foto + 1) + '/' + fs.length;
     var c = S.camas[R.cama], pts = '';
     if (!R.canape && R.foto === 0 && c.puntos) {
-      pts = '<button type="button" class="s-spot" data-capas style="left:' + c.puntos.capas[0] + '%;top:' + c.puntos.capas[1] + '%"><i aria-hidden="true"></i><span>Por dentro</span></button>' +
+      pts = '<button type="button" class="s-spot" data-capas style="left:' + c.puntos.capas[0] + '%;top:' + c.puntos.capas[1] + '%"><i aria-hidden="true"></i><span>Capas</span></button>' +
         '<button type="button" class="s-spot" data-abrir style="left:' + c.puntos.canape[0] + '%;top:' + c.puntos.canape[1] + '%"><i aria-hidden="true"></i><span>Abrir el canapé</span></button>';
     }
     $('#s-room-pts').innerHTML = pts;
@@ -361,12 +366,7 @@
     if (e.target.closest('#s-canape')) { canape(!R.canape); return; }
     if (e.target.closest('[data-abrir]')) { canape(true); return; }
     if (e.target.closest('[data-cerrar]')) { canape(false); return; }
-    if (e.target.closest('[data-capas]')) {
-      var cp = $('#s-capas'); if (!cp) return;
-      cp.classList.remove('is-flash'); void cp.offsetWidth; cp.classList.add('is-flash');
-      if (matchMedia('(max-width: 900px)').matches) cp.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
-      LM.track('showroom_capas', { cama: R.cama }); return;
-    }
+    if (e.target.closest('[data-capas]')) { abrirCapas(R.cama, e.target.closest('[data-capas]')); LM.track('showroom_capas', { cama: R.cama }); return; }
     var v = e.target.closest('[data-ver]'); if (v) { marcarInteres(v.getAttribute('data-ver')); $('#reserva').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); }
   });
   // Deslizar el dedo sobre la foto para pasar a la siguiente
@@ -491,6 +491,85 @@
     document.body.classList.toggle('lm-has-stick', on);
   }
   addEventListener('scroll', barra, { passive: true }); barra();
+
+  /* ================= CAPAS EN 3D (Paco, 10/11) =================
+     El punto «Capas» abre una ventana con el colchón en 3D de la web (el vídeo de «Por dentro» de las fichas):
+     con la rueda o el dedo se abre capa a capa, con una tarjeta y un punto por capa. Siempre con «Salir» (y Esc). */
+  var CM = null, cmP = 0, cmObj = 0, cmRaf = 0, cmDur = 0, cmVolver = null, cmPasos = [], cmLast = -1;
+  var CV = (LM.VIDEO_CAPAS || {}).todos || [], CV_TR = [[0, 0], [.15, .5], [.86, .5], [.97, 1]];
+  var NUMS = ['', 'Una', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis', 'Siete', 'Ocho', 'Nueve', 'Diez', 'Once', 'Doce'];
+  function cmTramo(x) {
+    for (var i = 1; i < CV_TR.length; i++) { var a = CV_TR[i - 1], b = CV_TR[i]; if (x <= b[0]) return a[1] + (b[1] - a[1]) * Math.min(1, Math.max(0, (x - a[0]) / (b[0] - a[0]))); }
+    return 1;
+  }
+  function crearCapas() {
+    var flechaArr = '<svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>';
+    var flechaAb = '<svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg>';
+    document.body.insertAdjacentHTML('beforeend', '<div class="s-cm" id="s-cm" hidden role="dialog" aria-modal="true" aria-labelledby="s-cm-t">' +
+      '<div class="s-cm-box">' +
+        '<div class="s-cm-head"><p class="lm-eyebrow" id="s-cm-k">Capas</p><button type="button" class="s-cm-x" id="s-cm-x">' + LM.ico('close') + 'Salir</button></div>' +
+        '<div class="s-cm-in">' +
+          '<div class="s-cm-media"><video muted playsinline disablepictureinpicture preload="auto" poster="../img/natura-latex-capas-v2-inicio.webp" aria-hidden="true"></video>' +
+            '<div class="s-cm-pts" aria-hidden="true">' + CV.map(function (c, i) { return '<i style="left:' + c[2] + '%;top:' + c[3] + '%">' + (i + 1) + '</i>'; }).join('') + '</div>' +
+            '<div class="s-cm-bar" aria-hidden="true"><i></i></div></div>' +
+          '<div class="s-cm-txt"><p class="s-cm-n" id="s-cm-n"></p><h3 class="s-cm-t" id="s-cm-t"></h3><p class="s-cm-p" id="s-cm-p"></p>' +
+            '<div class="s-cm-nav"><button type="button" class="s-cm-prev" data-cm="-1">' + flechaArr + 'Anterior</button><button type="button" class="lm-btn s-cm-next" data-cm="1">Siguiente capa ' + flechaAb + '</button></div>' +
+            '<p class="s-cm-aviso"><span class="p-scrub-mouse" aria-hidden="true"><i></i></span>Usa la rueda o desliza para abrir el colchón</p></div>' +
+        '</div>' +
+      '</div></div>');
+    CM = $('#s-cm');
+    var v = $('video', CM), url = '../img/natura-latex-capas-v2-' + (innerWidth < 768 ? 640 : 960) + '.mp4';
+    v.addEventListener('loadedmetadata', function () { cmDur = v.duration || 0; cmPintar(); });
+    if (window.fetch && location.protocol !== 'file:') fetch(url).then(function (r) { if (!r.ok) throw r; return r.blob(); }).then(function (b) { v.src = URL.createObjectURL(b); }).catch(function () { v.src = url; });
+    else v.src = url;
+    CM.addEventListener('click', function (e) {
+      if (e.target === CM || e.target.closest('#s-cm-x')) { cerrarCapas(); return; }
+      var b = e.target.closest('[data-cm]'); if (!b) return;
+      var on = cmActual(), sig = Math.min(cmPasos.length - 1, Math.max(0, on + +b.getAttribute('data-cm')));
+      cmIr(cmPasos[sig].a + .01);
+    });
+    var RECO = 4800, RECO_T = 2200, ty = null;
+    CM.addEventListener('wheel', function (e) { e.preventDefault(); cmIr(cmObj + e.deltaY * (e.deltaMode === 1 ? 40 : 1) / RECO); }, { passive: false });
+    CM.addEventListener('touchstart', function (e) { ty = e.target.closest('button') ? null : e.touches[0].clientY; }, { passive: true });
+    CM.addEventListener('touchmove', function (e) { if (ty === null) return; e.preventDefault(); var y = e.touches[0].clientY; cmIr(cmObj + (ty - y) / RECO_T); ty = y; }, { passive: false });
+    CM.addEventListener('touchend', function () { ty = null; });
+    document.addEventListener('keydown', function (e) {
+      if (!CM || CM.hidden) return;
+      if (e.key === 'Escape') { cerrarCapas(); return; }
+      if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); cmIr(cmObj + .06); }
+      if (e.key === 'ArrowUp' || e.key === 'PageUp') { e.preventDefault(); cmIr(cmObj - .06); }
+    });
+  }
+  function cmActual() { var on = 0; cmPasos.forEach(function (s, i) { if (cmP >= s.a - .001) on = i; }); return on; }
+  function cmIr(x) { cmObj = Math.min(1, Math.max(0, x)); if (!cmRaf) cmRaf = requestAnimationFrame(cmBucle); }
+  function cmBucle() { cmRaf = 0; cmP += (cmObj - cmP) * .16; if (Math.abs(cmObj - cmP) < .0008) cmP = cmObj; cmPintar(); if (cmP !== cmObj) cmRaf = requestAnimationFrame(cmBucle); }
+  function cmPintar() {
+    var v = $('video', CM);
+    if (cmDur && !v.seeking) { var t = cmTramo(cmP) * (cmDur - .05); if (Math.abs(v.currentTime - t) > .02) v.currentTime = t; }
+    $('.s-cm-bar i', CM).style.transform = 'scaleX(' + cmP.toFixed(3) + ')';
+    CM.classList.toggle('is-empezado', cmP > .02);
+    var on = cmActual(); if (on === cmLast) return; cmLast = on;
+    var s = cmPasos[on];
+    $('#s-cm-n').textContent = s.k; $('#s-cm-t').textContent = s.t; $('#s-cm-p').textContent = s.p;
+    $$('.s-cm-pts i', CM).forEach(function (d, i) { d.classList.toggle('is-on', s.pt === i); });
+    $('.s-cm-prev', CM).disabled = on === 0; $('.s-cm-next', CM).hidden = on === cmPasos.length - 1;
+    $('.s-cm-next', CM).firstChild.textContent = on === 0 ? 'Empezar ' : 'Siguiente capa ';
+  }
+  function abrirCapas(k, desde) {
+    if (!CM) crearCapas();
+    var P = LM.PRODUCTOS[k] || LM.PRODUCTOS.latex, n = CV.length, A0 = .15, A1 = .86, tr = (A1 - A0) / n;
+    cmPasos = [{ a: 0, k: 'Capa a capa', t: 'Así es tu ' + P.nombre + '.', p: 'Lo abrimos capa a capa: usa la rueda, desliza o pulsa «Empezar».', pt: -1 }]
+      .concat(CV.map(function (c, i) { return { a: A0 + i * tr, k: 'Capa ' + (i < 9 ? '0' : '') + (i + 1) + ' de ' + n, t: c[0], p: c[1], pt: i }; }))
+      .concat([{ a: A1, k: P.altura + ' de descanso', t: (NUMS[n] || n) + ' capas. Un solo objetivo.', p: 'Que duermas fresco y te levantes descansado.', pt: -1 }]);
+    $('#s-cm-k').textContent = 'Capas · ' + P.nombre;
+    cmVolver = desde || document.activeElement; cmP = cmObj = 0; cmLast = -1;
+    CM.hidden = false; document.documentElement.classList.add('s-cm-open');
+    cmPintar(); $('#s-cm-x').focus({ preventScroll: true });
+  }
+  function cerrarCapas() {
+    CM.hidden = true; document.documentElement.classList.remove('s-cm-open');
+    if (cmVolver && cmVolver.focus) cmVolver.focus({ preventScroll: true });
+  }
 
   LM.fill(document);
 })();
