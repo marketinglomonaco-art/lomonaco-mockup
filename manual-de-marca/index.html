@@ -205,6 +205,8 @@
   .gal .revisar::after { content: 'Revisar texto del logo'; position: absolute; top: 10px; left: 10px; padding: 5px 10px; border-radius: 999px; background: var(--ink); color: #fff; font-size: 12px; font-weight: 600; }
   .c3 { grid-column: span 3; } .c4 { grid-column: span 4; } .c6 { grid-column: span 6; } .c8 { grid-column: span 8; } .c12 { grid-column: span 12; }
   .r-sq { aspect-ratio: 1; } .r-w { aspect-ratio: 1646/1042; } .r-gn { aspect-ratio: 1; }
+  .c5 { grid-column: span 5; } .c7 { grid-column: span 7; }
+  .r-p { aspect-ratio: 928/1152; } .r-54 { aspect-ratio: 1152/928; } .r-pano { aspect-ratio: 12/5; }
   .fill { aspect-ratio: auto; }
   .gn-2x2 { grid-row: span 2; }
   .reglas { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 48px; counter-reset: r; }
@@ -441,6 +443,7 @@
     .gal figure { grid-column: span 2; grid-row: auto; }
     .gal .r-sq.c3 { grid-column: span 1; }
     .gal .fill { aspect-ratio: 1646/1042; }
+    .gal .r-pano { aspect-ratio: 1152/928; }
     .gal .gn-2x2 { aspect-ratio: 1; }
     .glos td:first-child { width: auto; }
     .glos, .glos tbody, .glos tr, .glos td { display: block; } .glos thead { display: none; }
@@ -501,10 +504,10 @@
       <span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span>
       <h1>Manual<br>de <em>marca</em></h1>
       <div class="meta">
-        <span><b>Versión</b>2.0</span><span><b>Fecha</b>10 de noviembre de 2026</span><span><b>Para</b>Web, redes y piezas</span>
+        <span><b>Versión</b>2.1</span><span><b>Fecha</b>11 de noviembre de 2026</span><span><b>Para</b>Web, redes y piezas</span>
       </div>
     </div>
-    <div class="cover-f"><img src="img/vida-vertical.webp" alt="Pareja en su dormitorio sobre un colchón LOMONACO" fetchpriority="high"></div>
+    <div class="cover-f"><img src="img/casa-estirarse.webp" alt="Mujer estirándose y riendo al despertar sobre un colchón Natura Látex de LOMONACO" fetchpriority="high"></div>
   </section>
 
   <!-- 01 MARCA -->
@@ -574,7 +577,7 @@
           <figure><div><span class="logo" style="transform:scaleX(1.45)"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span></div><figcaption>No deformar ni estirar</figcaption></figure>
           <figure><div><span class="logo" style="color:#d9762b"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span></div><figcaption>No cambiar de color</figcaption></figure>
           <figure><div><span class="logo" style="transform:rotate(-12deg);filter:drop-shadow(0 8px 6px rgba(0,0,0,.35))"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span></div><figcaption>No girar ni añadir sombras</figcaption></figure>
-          <figure><div style="background:url(img/producto-acolchado.webp) center/cover"><span class="logo" style="color:var(--lm)"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span></div><figcaption>No usar el logo en granate sobre una foto</figcaption></figure>
+          <figure><div style="background:url(img/casa-lectura.webp) center 30%/cover"><span class="logo" style="color:var(--lm)"><svg viewBox="0 0 2931.33 426.24"><use href="#logo"/></svg></span></div><figcaption>No usar el logo en granate sobre una foto</figcaption></figure>
         </div>
       </div>
 
@@ -643,10 +646,10 @@
       </div>
 
       <div class="granate-foto">
-        <img src="img/producto-etiqueta.webp" alt="Etiqueta granate cosida en el lateral del colchón" loading="lazy">
+        <img src="img/detalle-granate.webp" alt="Cinta granate LOMONACO, logo bordado Natura Látex y asa con la M" loading="lazy">
         <div class="bloque" style="align-content:center">
           <span class="k">El granate en el producto</span>
-          <p class="txt">En las fotos, el granate no se añade: <b>lo pone el propio colchón</b>. La etiqueta del lateral, la cinta y el vivo del Gran Natura son el único toque de color de la imagen.</p>
+          <p class="txt">En las fotos, el granate no se añade: <b>lo pone el propio colchón</b>: la cinta LOMONACO, el logo bordado con el nombre del modelo y el asa con la M.</p>
           <div class="bloque rule">
             <span class="k">Paleta que sale de las fotos</span>
             <div class="fotopal" id="fotopal"></div>
@@ -886,40 +889,30 @@
           <figure class="c8 r-w"><img src="img/vida-lectura.webp" alt="Pareja leyendo y riendo en la cama" loading="lazy"><figcaption><b>A-04</b>Leer</figcaption></figure>
           <figure class="c6 r-w"><img src="img/vida-zapatillas.webp" alt="Pareja mayor; él se pone las zapatillas, ella lee" loading="lazy"><figcaption><b>A-05</b>Mañana</figcaption></figure>
           <figure class="c6 r-w"><img src="img/vida-abrazo.webp" alt="Pareja abrazándose junto a la cama" loading="lazy"><figcaption><b>A-06</b>Abrazo</figcaption></figure>
-          <figure class="c8 r-w"><img src="img/vida-despertar.webp" alt="Persona estirándose al despertar" loading="lazy"><figcaption><b>A-07</b>Estirarse</figcaption></figure>
-          <figure class="c4 r-w fill"><img src="img/vida-bebe.webp" alt="Familia con un bebé tumbada en el colchón" loading="lazy"><figcaption><b>A-08</b>Familia</figcaption></figure>
-          <figure class="c4 r-w fill"><img src="img/vida-biberon.webp" alt="Madre dando el biberón junto a la cama" loading="lazy"><figcaption><b>A-09</b>Noche</figcaption></figure>
-          <figure class="c8 r-w"><img src="img/vida-nino-manta.webp" alt="Niño jugando con el edredón sobre el colchón" loading="lazy"><figcaption><b>A-10</b>Jugar</figcaption></figure>
+          <figure class="c4 r-w"><img src="img/vida-nino-manta.webp" alt="Niño jugando con el edredón sobre el colchón" loading="lazy"><figcaption><b>A-07</b>Jugar</figcaption></figure>
+          <figure class="c4 r-w"><img src="img/vida-biberon.webp" alt="Madre dando el biberón junto a la cama" loading="lazy"><figcaption><b>A-08</b>Noche</figcaption></figure>
+          <figure class="c4 r-w"><img src="img/vida-almohadazos.webp" alt="Pareja jugando con una almohada sobre el colchón" loading="lazy"><figcaption><b>A-09</b>Almohadazos</figcaption></figure>
         </div>
         <p class="txt">Momentos de verdad, con movimiento y algo de desorden: risas, abrazos, despertares, niños y mascotas. <b>Si hay grano, que sea el de la cámara con poca luz, nunca un filtro añadido.</b> El logo LOMONACO se lee en el lateral cuando la escena lo permite, sin forzarlo.</p>
       </div>
 
       <div class="bloque" id="f-producto">
-        <span class="k">B · Producto · el detalle, con la misma naturalidad</span>
+        <span class="k">B · El colchón en casa · el producto, en una escena real</span>
         <div class="gal">
-          <figure class="c6 r-gn gn-2x2"><img src="img/producto-gran-natura.webp" alt="Gran Natura sobre canapé de nogal con dos almohadas" loading="lazy"><figcaption><b>B-01</b>Gran Natura</figcaption></figure>
-          <figure class="c3 r-sq"><img src="img/producto-esquina.webp" alt="Esquina del Natura Látex sobre canapé" loading="lazy"><figcaption><b>B-02</b>Esquina</figcaption></figure>
-          <figure class="c3 r-sq"><img src="img/producto-asa.webp" alt="Asa del colchón con el monograma M" loading="lazy"><figcaption><b>B-03</b>Asa M</figcaption></figure>
-          <figure class="c3 r-sq"><img src="img/producto-acolchado.webp" alt="Detalle del acolchado del colchón" loading="lazy"><figcaption><b>B-04</b>Acolchado</figcaption></figure>
-          <figure class="c3 r-sq revisar"><img src="img/producto-cinta.webp" alt="Colchón con cinta granate LOMONACO" loading="lazy"><figcaption><b>B-05</b>Cinta</figcaption></figure>
+          <figure class="c5 r-p"><img src="img/casa-estirarse.webp" alt="Mujer estirándose y riendo al despertar sobre un Natura Látex" loading="lazy"><figcaption><b>B-01</b>Estirarse</figcaption></figure>
+          <figure class="c7 r-p fill"><img src="img/casa-embarazo.webp" alt="Pareja esperando un bebé junto a un Natura Látex" loading="lazy"><figcaption><b>B-02</b>Esperar</figcaption></figure>
+          <figure class="c6 r-54"><img src="img/casa-tumbada.webp" alt="Mujer tumbada con calcetines granates sobre el colchón" loading="lazy"><figcaption><b>B-03</b>Descansar</figcaption></figure>
+          <figure class="c6 r-54 fill"><img src="img/casa-lectura.webp" alt="Mujer leyendo con los pies apoyados en la pared" loading="lazy"><figcaption><b>B-04</b>Leer</figcaption></figure>
+          <figure class="c12 r-pano"><img src="img/casa-bebe.webp" alt="Padres jugando con su bebé sobre el colchón" loading="lazy" style="object-position:50% 45%"><figcaption><b>B-05</b>Familia</figcaption></figure>
         </div>
-        <p class="txt">En un dormitorio real, no en un estudio: luz de ventana, pared clara y suelo de madera. Primeros planos del acolchado, el asa con la M y la etiqueta o la cinta granate.</p>
-      </div>
-
-      <div class="bloque" id="f-ambiente">
-        <span class="k">C · Ambiente · producto en su casa</span>
-        <div class="gal">
-          <figure class="c6 r-sq revisar"><img src="img/ambiente-noche.webp" alt="Pareja de noche: ella duerme, él lee con la lámpara encendida" loading="lazy"><figcaption><b>C-01</b>Noche</figcaption></figure>
-          <figure class="c6 r-sq"><img src="img/ambiente-familia.webp" alt="Niña saltando en la cama con sus padres a pleno sol" loading="lazy"><figcaption><b>C-02</b>Mañana de sol</figcaption></figure>
-        </div>
-        <p class="txt">El Gran Natura en un dormitorio completo, con gente viviendo en él. Sol de ventana o lámpara de noche, ropa de cama de lino arrugada.</p>
+        <p class="txt">El colchón se ve entero, en un dormitorio con vida: la cinta LOMONACO, el logo bordado con el nombre del modelo y las asas con la M. Luz de ventana, pijamas, camas sin hacer y <b>el color tal y como es</b>.</p>
       </div>
 
       <div class="uso">
         <div><h3>Buscamos</h3><ul><li>Momentos que emocionan: llegar, abrazar, despertar, jugar</li><li>Gente que no posa ni mira a cámara</li><li>Camas deshechas, pijamas, casas vividas</li><li>Luz natural o de lámpara, color sin tocar</li></ul></div>
         <div class="no"><h3>Evitamos</h3><ul><li>La perfección de la IA: pieles de plástico, camas impecables, sonrisas a cámara</li><li>Filtros, viñetas y colores de moda</li><li>Fotos de banco de imágenes y modelos posando</li><li>Flash, luz de estudio y fondos vacíos</li></ul></div>
       </div>
-      <p class="nota"><b>Si una imagen se genera o se retoca con IA:</b> que no se note, y revisa que el logo y el nombre del modelo estén bien escritos. En C-01 se lee «GRAND NATURE» en lugar de «Gran Natura», y en B-05 el logo del lateral está mal formado. Están marcadas como <b>Revisar texto del logo</b>.</p>
+      <p class="nota"><b>Si una imagen se genera o se retoca con IA:</b> que no se note, y revisa que el logo y el nombre del modelo estén bien escritos.</p>
     </div>
   </section>
 
@@ -937,8 +930,8 @@
       <div class="bloque">
         <span class="k">Todo junto</span>
         <div class="card">
-          <img src="img/ambiente-familia.webp" alt="Familia en la cama con el Gran Natura" loading="lazy">
-          <div><span class="t-eye">Gran Natura · 100 % látex</span><p class="t-h2">La marca de <em class="sf">toda la vida</em></p><p class="t-small">150 noches de prueba en tu cama · 10 años de garantía</p><div class="fila"><a class="btn" href="#elementos">Ver colchón</a><span class="dto">−40 %</span></div></div>
+          <img src="img/casa-tumbada.webp" alt="Mujer tumbada con calcetines granates sobre un colchón Natura Látex" loading="lazy">
+          <div><span class="t-eye">Natura Látex</span><p class="t-h2">La marca de <em class="sf">toda la vida</em></p><p class="t-small">150 noches de prueba en tu cama · 10 años de garantía</p><div class="fila"><a class="btn" href="#elementos">Ver colchón</a><span class="dto">−40 %</span></div></div>
         </div>
         <p class="nota">Pieza de ejemplo para ver los elementos combinados; el descuento no es una oferta real.</p>
       </div>
@@ -1003,7 +996,7 @@
 
 <footer class="pie">
   <span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span>
-  <p>Manual de marca · Versión 2.0 · 10/11/2026<br>Lo Monaco · LM Descanso SL</p>
+  <p>Manual de marca · Versión 2.1 · 11/11/2026<br>Lo Monaco · LM Descanso SL</p>
 </footer>
 
 <div class="vplayer" id="vplayer" hidden>
@@ -1036,7 +1029,7 @@
   });
 
   // Paleta medida sobre las fotos (colores dominantes)
-  var pal = [['Marfil', '#E8E5DE'], ['Lino', '#D5D0C8'], ['Piedra', '#B9B1A2'], ['Arena', '#A5957E'], ['Nogal', '#78624A'], ['Café', '#403328']];
+  var pal = [['Marfil', '#DCDBD4'], ['Lino', '#BCB5A5'], ['Arena', '#A99980'], ['Salvia', '#8D8978'], ['Nogal', '#624D36'], ['Café', '#3C3528']];
   document.getElementById('fotopal').innerHTML = pal.map(function (p) { return '<span><div style="background:' + p[1] + '"></div><small><b>' + p[0] + '</b>' + p[1] + '</small></span>'; }).join('');
 
   var toast = document.getElementById('toast'), t;
