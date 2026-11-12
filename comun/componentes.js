@@ -166,8 +166,15 @@
   LM.packLista = function (D, o) {
     o = o || {};
     if (!D) return '<p class="c-na">Este pack no se hace en esta medida.</p>';
-    var li = function (l) {
-      return '<li class="pkl-li' + (l.regalo ? ' is-regalo' : '') + '"><img src="' + l.img + '" alt="" width="64" height="64" loading="lazy"><span><b>' + esc(l.t) + '</b><small>' + esc(l.sub) + '</small></span>' +
+    // o.colores: muestras de color en la línea del canapé o la base (se elige ahí mismo)
+    var COLS = D.pk.base === 'canape' ? LM.TIENDA.canape.colores : LM.TIENDA.base3d.colores;
+    var sw = function () {
+      return '<span class="pkl-sw" role="radiogroup" aria-label="Color del ' + (D.pk.base === 'canape' ? 'canapé' : 'la base') + '">' + COLS.map(function (x) {
+        return '<button type="button" role="radio" data-pkc="' + esc(x.k) + '" aria-checked="' + (x.k === D.color) + '" aria-label="' + esc(x.k) + '" title="' + esc(x.k) + '"><img src="../img/tienda/' + x.sw + '-700.webp" alt="" width="28" height="28" loading="lazy"></button>';
+      }).join('') + '</span>';
+    };
+    var li = function (l, i) {
+      return '<li class="pkl-li' + (l.regalo ? ' is-regalo' : '') + '"><img src="' + l.img + '" alt="" width="64" height="64" loading="lazy"><span><b>' + esc(l.t) + '</b><small>' + esc(l.sub) + '</small>' + (o.colores && !l.regalo && i === 1 ? sw() : '') + '</span>' +
         (l.regalo ? '<em><s>' + LM.eur(l.p) + '</s><strong>Gratis</strong></em>' : '<em>' + (l.p != null ? LM.eur(l.p) : '—') + '</em>') + '</li>';
     };
     return '<ul class="pkl" aria-label="Qué te llevas">' + D.lineas.map(li).join('') +
@@ -859,12 +866,17 @@
       body.innerHTML = !this.items.length ? '<p>Tu carrito está vacío.</p><a class="lm-btn" href="colchones.html">Ver colchones</a>' :
         (added ? '<p class="lm-cart-ok">' + LM.ico('check') + 'Añadido a tu carrito</p>' : '') +
         '<ul class="lm-lis">' + this.items.map(function (it, i) { return LM.cart.linea(it, i); }).join('') + '</ul>' +
-        '<div class="lm-cart-tot"><span>Total <small>IVA incluido</small></span><b>' + LM.eur(this.total()) + '</b></div>' +
-        '<p class="lm-cart-fee">' + LM.cuotaTxt(this.total()) + '</p>' +
-        '<a class="lm-btn lm-btn--buy lm-btn--full" href="finalizar-compra.html" data-testid="cart-checkout">' + LM.ico('lock') + 'Finalizar compra</a>' +
-        '<div class="lm-cart-2"><a class="lm-btn lm-btn--line" href="carrito.html">Ver carrito</a><button class="lm-btn lm-btn--line" type="button" data-close>Seguir comprando</button></div>' +
-        LM.confianza() +
-        LM.llamar('cart', { label: '¿Prefieres comprar por teléfono?' });
+        // Paco, 12/11: resumen en una sola caja y garantías compactas, para que el panel se lea de un vistazo
+        '<div class="lm-cart-sum"><div class="lm-cart-tot"><span>Total <small>IVA incluido</small></span><b>' + LM.eur(this.total()) + '</b></div>' +
+          '<p class="lm-cart-fee">' + LM.cuotaTxt(this.total()) + '</p>' +
+          '<a class="lm-btn lm-btn--buy lm-btn--full" href="finalizar-compra.html" data-testid="cart-checkout">' + LM.ico('lock') + 'Finalizar compra</a>' +
+          '<div class="lm-cart-links"><a href="carrito.html">Ver carrito</a><span aria-hidden="true">·</span><button type="button" data-close>Seguir comprando</button></div></div>' +
+        '<ul class="lm-cart-trust" aria-label="Compra con confianza">' +
+          '<li>' + LM.ico('truck') + '<span><b>Envío gratis</b>' + LM.c('entrega') + '</span></li>' +
+          '<li>' + LM.ico('moon') + '<span><b>' + LM.c('prueba') + '</b>de prueba en tu cama</span></li>' +
+          '<li>' + LM.ico('back') + '<span><b>Si no te convence</b>' + LM.c('devolucion').toLowerCase() + '</span></li>' +
+          '<li>' + LM.ico('shield') + '<span><b>' + LM.c('garantia') + '</b>de garantía</span></li></ul>' +
+        LM.llamar('cart', { label: '¿Prefieres comprar por teléfono?', cls: 'lm-call--cart' });
       if (this.el.hidden) {
         this.last = document.activeElement;
         this.el.hidden = false;

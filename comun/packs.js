@@ -69,10 +69,12 @@
     foto(); pintarInfo();
     // Paco, 12/11: lista con cada pieza y cada regalo con su precio real para la medida; al final, por separado y lo que te ahorras
     var pkKey = st.col + (st.base === 'canape' ? 'Canape' : 'Base');
-    var m = LM.medidaInicial(), D = LM.packDesglose(pkKey, m);
-    if (!D) { m = M; D = LM.packDesglose(pkKey, m); }
+    var COLS = (st.base === 'canape' ? LM.TIENDA.canape : LM.TIENDA.base3d).colores;
+    if (!COLS.some(function (x) { return x.k === st.color; })) st.color = st.base === 'canape' ? 'Nogal' : 'Chocolate';
+    var m = LM.medidaInicial(), D = LM.packDesglose(pkKey, m, st.color);
+    if (!D) { m = M; D = LM.packDesglose(pkKey, m, st.color); }
     var pack = D.d, go = $('#h4p-go');
-    var h = LM.packLista(D, { precio: false });
+    var h = LM.packLista(D, { precio: false, colores: true });
     var precio = '<p class="h4p-from">Pack para ' + LM.medidaTxt(m) + '</p><p class="h4p-now">' + LM.eur(pack.p) + '</p>' +
       (D.ahorro >= 1 ? '<p class="h4p-save">Te ahorras ' + LM.eur(D.ahorro) + '</p>' : '');
     $('#h4p-det').innerHTML = h;
@@ -98,6 +100,13 @@
       var n = bs[(i + k + bs.length) % bs.length]; set(n.getAttribute(attr)); pintarPack(); n.focus();
     });
   }
+  // Paco, 12/11: color del canapé o de la base, elegido en su línea del listado
+  $('#h4p-det').addEventListener('click', function (e) {
+    var b = e.target.closest('[data-pkc]'); if (!b) return;
+    st.color = b.getAttribute('data-pkc'); pintarPack();
+    var n = $('#h4p-det [data-pkc="' + st.color + '"]'); if (n) n.focus({ preventScroll: true });
+    LM.track('pack_color', { color: st.color, base: st.base });
+  });
   radios(segB, 'data-base', function (v) { st.base = v; });
   radios(colB, 'data-col', function (v) { st.col = v; });
   $('#h4p-go').addEventListener('click', function () { if (this.hasAttribute('data-pid')) LM.track('select_item', { item_list_name: 'home_pack_config', item_id: +this.getAttribute('data-pid') }); });
