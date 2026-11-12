@@ -2562,3 +2562,27 @@ body[data-page="cuenta"] { background: var(--bg2); }
 .sl-av:hover .sl-av-ph, .sl-av.is-open .sl-av-ph { transform: translateY(-4px); box-shadow: 0 0 0 4px #fff, 0 0 0 7px var(--acc), 0 18px 40px rgba(0,0,0,.24); }
 .sl-av:hover .sl-av-ph img, .sl-av.is-open .sl-av-ph img { transform: scale(1.07); }
 @media (prefers-reduced-motion: reduce) { .sl-av-ph, .sl-av-ph img { transition: none; } .sl-av:hover .sl-av-ph img { transform: none; } }
+
+/* Paco, 12/11 · Paseo virtual: tras dar un paso al frente, el botón para volver a toda la sala */
+.s-sv.is-paso .s-sv-todos { display: inline-flex; }
+/* Paco, 12/11 · Paseo: delante de una cama, su nombre es solo una etiqueta (no abre otra vista) */
+.s-sv.is-cerca .s-spot { cursor: default; }
+
+/* Paco, 12/11 · Paseo: delante de cada cama, colchón y canapé abren su pop-up */
+.s-sv.is-cerca .s-spot { cursor: pointer; }
+.s-cp .s-cm-box { width: min(980px, 100%); }
+.s-cp-in { overflow-y: auto; display: grid; gap: 32px; padding: 0 24px 24px; }
+.s-cp-t { margin: 0; font-size: clamp(24px, 2.4vw, 32px); font-weight: 800; letter-spacing: -.02em; color: var(--acc); }
+.s-cp-s { margin: 6px 0 14px; font-size: 15px; color: var(--mute); }
+.s-cp-m { display: flex; flex-wrap: wrap; gap: 6px; }
+.s-cp-cabe { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: center; margin-top: 18px; }
+.s-cp-cabe figure, .s-cp-plano { margin: 0; border-radius: var(--r); overflow: hidden; background: #e2e2e2; }
+.s-cp-cabe img, .s-cp-plano img { display: block; width: 100%; height: auto; }
+.s-cp-plano { max-width: 560px; margin-top: 16px; }
+.s-cp-dl { margin-top: 18px; }
+.s-cp-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; padding-top: 4px; }
+@media (max-width: 700px) { .s-cp-cabe { grid-template-columns: 1fr; } .s-cp-in { padding: 0 16px 18px; } }
+.s-cp-m button { min-height: 36px; padding: 0 13px; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1.5px var(--line); font-size: 13.5px; font-weight: 600; color: var(--ink); cursor: pointer; }
+.s-cp-m button:hover { box-shadow: inset 0 0 0 1.5px var(--ink); }
+.s-cp-m button[aria-checked="true"] { background: var(--acc); box-shadow: none; color: #fff; }
+.s-cp-cabe figure { max-width: 380px; justify-self: end; }

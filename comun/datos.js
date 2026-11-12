@@ -325,9 +325,9 @@ LM.SHOWROOM = {
      cam: dónde está la cámara en el plano del showroom (600 × 330): [x, y, ángulo de visión en grados, largo del cono] */
   sala: [
     { img: 'sala2-general', w: 2048, h: 1365, t: 'Toda la sala', s: 'Las tres camas', cam: [300, 304, 46, 250], puntos: [['gold', 24, 51], ['latex', 56, 51.5], ['gran', 75, 52.5]] },
-    { img: 'sala2-gold',    w: 2048, h: 1365, t: 'Natura Gold', s: 'De frente', cam: [130, 262, 30, 92], puntos: [['gold', 69, 54]] },
-    { img: 'sala2-latex',   w: 2048, h: 1365, t: 'Natura Látex', s: 'De frente', cam: [300, 262, 30, 92], puntos: [['latex', 67, 60]] },
-    { img: 'sala2-gran',    w: 2048, h: 1365, t: 'Gran Natura', s: 'De frente', cam: [470, 262, 30, 92], puntos: [['gran', 69, 67]] }
+    { img: 'sala2-gold',    w: 2048, h: 1365, t: 'Natura Gold', s: 'De frente', cam: [130, 262, 30, 92], puntos: [['gold', 69, 54]], canape: [50, 70] },
+    { img: 'sala2-latex',   w: 2048, h: 1365, t: 'Natura Látex', s: 'De frente', cam: [300, 262, 30, 92], puntos: [['latex', 67, 60]], canape: [50, 80] },
+    { img: 'sala2-gran',    w: 2048, h: 1365, t: 'Gran Natura', s: 'De frente', cam: [470, 262, 30, 92], puntos: [['gran', 69, 67]], canape: [50, 82] }
   ],
   orden: ['gran', 'latex', 'gold', 'almohadas'],
   camas: {

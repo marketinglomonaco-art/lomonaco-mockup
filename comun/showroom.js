@@ -117,11 +117,13 @@
   $('#s-plano').addEventListener('click', function (e) { var b = e.target.closest('[data-i]'); if (b && b.tagName === 'BUTTON') { ocultarPista(); ir(+b.getAttribute('data-i')); } });
 
   var stages = $('#s-stages'), cur = -1, pan = { x: .5, y: .5 }, vel = 0, dims = {}, stage = null, busy = false;
+  var zoom = 1, PASO = 1.5; // Paco, 12/11: «un paso al frente» en la vista de toda la sala
   var ESCALA = 1.18; // la foto es un 18 % mayor que el visor: margen para mirar sin perder los 3 colchones
   function medir() {
     var e = SALA[Math.max(0, cur)], rat = e.w / e.h, w = sv.clientWidth, h = sv.clientHeight;
     var sw = Math.max(w * ESCALA, h * rat * 1.06), sh = sw / rat;
     if (sh < h * 1.08) { sh = h * 1.08; sw = sh * rat; }
+    sw *= zoom; sh *= zoom;
     dims = { w: w, h: h, sw: sw, sh: sh, rx: sw - w, ry: sh - h };
     $$('.s-stage', stages).forEach(function (st) { st.style.width = sw + 'px'; st.style.height = sh + 'px'; });
     pintar();
@@ -141,7 +143,9 @@
       e.puntos.map(function (p) {
         var c = S.camas[p[0]];
         return '<button type="button" class="s-spot" data-cama="' + p[0] + '" style="left:' + p[1] + '%;top:' + p[2] + '%"><i aria-hidden="true"></i><span>' + c.t + '</span></button>';
-      }).join('');
+      }).join('') +
+      // Paco, 12/11: delante de cada cama, también el canapé
+      (e.canape ? '<button type="button" class="s-spot" data-pieza="canape" data-k="' + e.puntos[0][0] + '" style="left:' + e.canape[0] + '%;top:' + e.canape[1] + '%"><i aria-hidden="true"></i><span>Canapé</span></button>' : '');
     return st;
   }
   /* Cambio de sitio: la cámara avanza (la foto actual se acerca y se difumina) y la nueva llega asentándose */
@@ -149,6 +153,7 @@
     i = (i + SALA.length) % SALA.length;
     if (i === cur || busy) return;
     var prev = stage, prevPan = pan.x;
+    if (zoom !== 1) { zoom = 1; sv.classList.remove('is-paso'); }
     cur = i; medir();
     sv.classList.toggle('is-cerca', SALA[i].puntos.length < 2);
     var next = crearEscena(i);
@@ -234,6 +239,27 @@
      te acercas: la cámara avanza hacia ese punto y entra en la foto de frente de esa cama (con el mismo falso 3D).
      Al pasar el ratón por la sala sale una marca en el suelo, como en Street View, con «Acércate al …» */
   var origenGo = null, arrastrado = 0;
+  function animarZoom(z, px, py, fin) {
+    var z0 = zoom, x0 = pan.x, y0 = pan.y, t0 = performance.now(), T = reduce ? 0 : 900;
+    busy = true;
+    (function paso(t) {
+      var k = T ? Math.min(1, (t - t0) / T) : 1, e = 1 - Math.pow(1 - k, 3);
+      zoom = z0 + (z - z0) * e;
+      if (px != null) { pan.x = x0 + (px - x0) * e; pan.y = y0 + (py - y0) * e; if (meta) meta = { x: pan.x, y: pan.y }; }
+      medir();
+      if (k < 1) requestAnimationFrame(paso); else { busy = false; if (fin) fin(); }
+    })(t0);
+  }
+  function darPaso(e) {
+    var r = stage.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+    sv.classList.add('is-paso'); sv.classList.remove('is-walk');
+    $('#s-todos').lastChild.textContent = 'Volver a toda la sala';
+    animarZoom(PASO, Math.min(.95, Math.max(.05, px)), Math.min(.9, Math.max(.1, py - .08)));
+    LM.track('showroom_paso', { x: px.toFixed(2) });
+  }
+  function atras() {
+    animarZoom(1, .5, .5, function () { sv.classList.remove('is-paso'); $('#s-todos').lastChild.textContent = 'Ver todos los colchones'; });
+  }
   sv.insertAdjacentHTML('beforeend', '<div class="s-walk" id="s-walk" aria-hidden="true"><i></i><span></span></div>');
   var walk = $('#s-walk');
   function camaCercana(e) {
@@ -251,15 +277,29 @@
     if (!c) return;
     var r = sv.getBoundingClientRect();
     walk.style.transform = 'translate(' + (e.clientX - r.left) + 'px,' + (e.clientY - r.top) + 'px)';
-    walk.lastChild.textContent = 'Acércate al ' + S.camas[c.cama].t;
+    walk.lastChild.textContent = cur === 0 && zoom < 1.05 ? 'Acércate' : 'Acércate al ' + S.camas[c.cama].t;
   });
   sv.addEventListener('pointerleave', function () { sv.classList.remove('is-walk'); });
   sv.addEventListener('click', function (e) {
-    var b = e.target.closest('[data-cama]'); if (b) { abrirCama(b.getAttribute('data-cama')); return; }
+    var pz = e.target.closest('[data-pieza="canape"]');
+    if (pz) { ocultarPista(); abrirCanapePop(pz.getAttribute('data-k'), pz); return; }
+    // Paco, 12/11: el nombre de una cama, en la sala, te acerca a ella dentro del paseo (como pinchar a sus pies), no a otra vista
+    var b = e.target.closest('[data-cama]');
+    if (b) {
+      var k = b.getAttribute('data-cama'), j = -1;
+      SALA.forEach(function (v, n) { if (v.puntos.length === 1 && v.puntos[0][0] === k) j = n; });
+      if (j > -1 && j !== cur && !busy) {
+        var r = stage.getBoundingClientRect(), rb = b.getBoundingClientRect();
+        origenGo = ((rb.left + 14 - r.left) / r.width * 100).toFixed(1) + '% ' + ((rb.top + 14 - r.top) / r.height * 100).toFixed(1) + '%';
+        ocultarPista(); sv.classList.remove('is-walk'); ir(j); LM.track('showroom_acercarse', { cama: k, desde: 'nombre' });
+      } else if (j === cur) { abrirCapas(k, b); LM.track('showroom_capas', { cama: k, desde: 'paseo' }); } // delante de la cama: pop-up de «Capas»
+      return;
+    }
     var g = e.target.closest('[data-go]'); if (g) { ocultarPista(); ir(cur + +g.getAttribute('data-go')); return; }
-    if (e.target.closest('#s-todos')) { ir(0); LM.track('showroom_vista_general', {}); return; }
+    if (e.target.closest('#s-todos')) { if (cur === 0 && zoom > 1.01) atras(); else ir(0); LM.track('showroom_vista_general', {}); return; }
     if (e.target.closest('button, a') || performance.now() - arrastrado < 350) return;
-    var c = camaCercana(e); if (!c) return;
+    var c = camaCercana(e); if (!c || busy) return;
+    if (cur === 0 && zoom < 1.05) { ocultarPista(); darPaso(e); return; } // primero, un paso al frente
     var r = stage.getBoundingClientRect();
     origenGo = ((e.clientX - r.left) / r.width * 100).toFixed(1) + '% ' + ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%';
     ocultarPista(); sv.classList.remove('is-walk'); ir(c.vista);
@@ -549,7 +589,8 @@
     });
     /* Paco, 10/11 · falso 3D con el ratón: el cuadro se inclina unos grados hacia el cursor y el colchón se desplaza
        un poco por dentro (con sus puntos). Suave, sin bamboleo; vuelve al centro al salir. No en táctil ni con «reducir movimiento» */
-    if (matchMedia('(hover: hover) and (pointer: fine)').matches && !reduce) {
+    // Paco, 12/11: sin el efecto 3D en el colchón de «Capas» (se queda quieto)
+    if (false) {
       var med = $('.s-cm-media', CM), cam = $('.s-cm-cam', CM), tg = { x: 0, y: 0 }, now = { x: 0, y: 0 }, tRaf = 0;
       var tilt = function () {
         tRaf = 0; now.x += (tg.x - now.x) * .08; now.y += (tg.y - now.y) * .08;
@@ -607,6 +648,58 @@
   function cerrarCapas() {
     CM.hidden = true; document.documentElement.classList.remove('s-cm-open');
     if (cmVolver && cmVolver.focus) cmVolver.focus({ preventScroll: true });
+  }
+
+  /* Paco, 12/11 · Pop-up del canapé en el paseo: «¿Qué te cabe dentro?» y la ficha técnica con el plano,
+     con los mismos datos que la ficha del canapé (comun/tienda.js) */
+  var CP = null, cpVolver = null;
+  function abrirCanapePop(k, desde) {
+    var T = LM.TIENDA.canape, MD = Object.keys(T.tabla), cama = S.camas[k] || {};
+    var txt = function (m) { return m.replace('-2p', '').replace('x', ' × ') + ' cm'; };
+    if (!CP) {
+      document.body.insertAdjacentHTML('beforeend', '<div class="s-cm s-cp" id="s-cp" hidden role="dialog" aria-modal="true" aria-labelledby="s-cp-t">' +
+        '<div class="s-cm-box"><div class="s-cm-head"><p class="lm-eyebrow" id="s-cp-k">Canapé</p><button type="button" class="s-cm-x" id="s-cp-x">' + LM.ico('close') + 'Salir</button></div>' +
+        '<div class="s-cp-in">' +
+          '<section class="s-cp-sec"><h3 class="s-cp-t" id="s-cp-t">¿Qué te cabe dentro?</h3><p class="s-cp-s">Elige la medida y te decimos cuánto espacio tienes debajo de la cama.</p>' +
+            '<div class="tf-cabe-m s-cp-m" role="radiogroup" aria-label="Medida del canapé"></div>' +
+            '<div class="s-cp-cabe"><div class="s-cp-r" aria-live="polite"></div><figure><img src="../img/tienda/' + T.colores[3].fotos[1] + '-700.webp" alt="Canapé abatible abierto con un edredón dentro" width="700" height="700" loading="lazy"></figure></div></section>' +
+          '<section class="s-cp-sec"><h3 class="s-cp-t">Ficha técnica</h3>' +
+            '<figure class="s-cp-plano"><img src="../img/tienda/' + T.medidasImg + '-700.webp" alt="Plano del canapé: ' + T.cotas.alto + ' cm de alto, ' + T.cotas.fondo + ' cm de fondo y ' + T.cotas.apertura + ' cm con la tapa abierta" width="700" height="700" loading="lazy"></figure>' +
+            '<dl class="p-tech-dl s-cp-dl">' + [
+              ['Alto', T.cotas.alto + ' cm'], ['Fondo del arcón', T.cotas.fondo + ' cm'], ['Altura con la tapa abierta', T.cotas.apertura + ' cm'],
+              ['Acabados', 'Blanco, Nórdico, Roble y Nogal'], ['Apertura', 'Abatible, con frenos de seguridad'], ['Tapa', 'Antideslizante. Partida en 180 × 200 y 200 × 200 cm'],
+              ['Material', 'Madera de alta calidad'], ['Medidas', MD.map(txt).join(' · ')], ['Montaje', 'Lo montas tú, con las instrucciones paso a paso'],
+              ['Garantía', T.garantia], ['Entrega', T.entrega]
+            ].map(function (r) { return '<div><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>'; }).join('') + '</dl></section>' +
+          '<div class="s-cp-cta"><button type="button" class="lm-btn lm-btn--video" data-cp-ver>' + LM.ico('video') + 'Quiero verlo en videollamada</button><a class="lm-link" href="' + T.pagina + '">Ver la ficha del canapé</a></div>' +
+        '</div></div></div>');
+      CP = $('#s-cp');
+      var cabe = function (m) {
+        var a = m.replace('-2p', '').split('x'), w = +a[0] - 4, l = +a[1] - 4, fo = T.cotas.fondo;
+        var litros = Math.round(w * l * fo / 1000 / 10) * 10, maletas = Math.floor(w / 40) * Math.floor(l / 55);
+        $('.s-cp-m', CP).innerHTML = MD.map(function (x) { return '<button type="button" role="radio" aria-checked="' + (x === m) + '" data-cp="' + x + '">' + x.replace('-2p', '').replace('x', '×') + '</button>'; }).join('');
+        $('.s-cp-r', CP).innerHTML = '<p class="tf-cabe-big"><b>unos ' + litros.toLocaleString('es-ES') + ' litros</b></p><p>de espacio en un canapé de ' + txt(m) + ', con ' + fo + ' cm de fondo.</p>' +
+          '<ul class="tf-lista"><li>' + LM.ico('box') + 'Caben unas <b>' + maletas + ' maletas de cabina</b> tumbadas.</li><li>' + LM.ico('layers') + 'Mantas, edredones y ropa de otra temporada, a mano.</li></ul>';
+      };
+      CP.cabe = cabe;
+      CP.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-cp]'); if (b) { cabe(b.getAttribute('data-cp')); LM.track('canape_cabe', { medida: b.getAttribute('data-cp'), desde: 'paseo' }); return; }
+        if (e.target.closest('[data-cp-ver]')) { cerrarCanapePop(); marcarInteres('canape'); $('#reserva').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' }); return; }
+        if (e.target.closest('#s-cp-x') || e.target === CP) cerrarCanapePop();
+      });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && CP && !CP.hidden) cerrarCanapePop(); });
+    }
+    var m0 = LM.medidaInicial(); if (MD.indexOf(m0) < 0) m0 = MD.indexOf('150x190') > -1 ? '150x190' : MD[0];
+    CP.cabe(m0);
+    $('#s-cp-k').textContent = 'Canapé · ' + (cama.t ? 'el del ' + cama.t : 'abatible de madera');
+    cpVolver = desde || document.activeElement;
+    CP.hidden = false; document.documentElement.classList.add('s-cm-open');
+    $('.s-cp-in', CP).scrollTop = 0; $('#s-cp-x').focus({ preventScroll: true });
+    LM.track('showroom_canape_pop', { cama: k });
+  }
+  function cerrarCanapePop() {
+    CP.hidden = true; document.documentElement.classList.remove('s-cm-open');
+    if (cpVolver && cpVolver.focus) cpVolver.focus({ preventScroll: true });
   }
 
   LM.fill(document);
