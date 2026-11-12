@@ -662,9 +662,9 @@
         '<div class="s-cp-in">' +
           '<section class="s-cp-sec"><h3 class="s-cp-t" id="s-cp-t">¿Qué te cabe dentro?</h3><p class="s-cp-s">Elige la medida y te decimos cuánto espacio tienes debajo de la cama.</p>' +
             '<div class="tf-cabe-m s-cp-m" role="radiogroup" aria-label="Medida del canapé"></div>' +
-            '<div class="s-cp-cabe"><div class="s-cp-r" aria-live="polite"></div><figure><img src="../img/tienda/' + T.colores[3].fotos[1] + '-700.webp" alt="Canapé abatible abierto con un edredón dentro" width="700" height="700" loading="lazy"></figure></div></section>' +
+            // Paco, 12/11: una sola imagen, la del plano con las medidas
+            '<div class="s-cp-cabe"><div class="s-cp-r" aria-live="polite"></div><figure class="s-cp-plano"><img src="../img/tienda/' + T.medidasImg + '-700.webp" alt="Plano del canapé: ' + T.cotas.alto + ' cm de alto, ' + T.cotas.fondo + ' cm de fondo y ' + T.cotas.apertura + ' cm con la tapa abierta" width="700" height="700" loading="lazy"></figure></div></section>' +
           '<section class="s-cp-sec"><h3 class="s-cp-t">Ficha técnica</h3>' +
-            '<figure class="s-cp-plano"><img src="../img/tienda/' + T.medidasImg + '-700.webp" alt="Plano del canapé: ' + T.cotas.alto + ' cm de alto, ' + T.cotas.fondo + ' cm de fondo y ' + T.cotas.apertura + ' cm con la tapa abierta" width="700" height="700" loading="lazy"></figure>' +
             '<dl class="p-tech-dl s-cp-dl">' + [
               ['Alto', T.cotas.alto + ' cm'], ['Fondo del arcón', T.cotas.fondo + ' cm'], ['Altura con la tapa abierta', T.cotas.apertura + ' cm'],
               ['Acabados', 'Blanco, Nórdico, Roble y Nogal'], ['Apertura', 'Abatible, con frenos de seguridad'], ['Tapa', 'Antideslizante. Partida en 180 × 200 y 200 × 200 cm'],

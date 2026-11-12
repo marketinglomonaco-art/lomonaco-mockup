@@ -2608,3 +2608,4 @@ body[data-page="cuenta"] { background: var(--bg2); }
 .tf-cabe-mini b { display: block; margin-top: 2px; font-size: 22px; font-weight: 800; letter-spacing: -.01em; color: var(--acc); }
 .tf-cabe-mini em { display: block; font-style: normal; font-size: 14.5px; color: var(--mute); }
 .tf-cabe-mini-go { width: 20px; height: 20px; color: var(--acc); }
+.s-cp-cabe .s-cp-plano { max-width: none; margin: 0; justify-self: stretch; }
