@@ -2549,3 +2549,8 @@ body[data-page="cuenta"] { background: var(--bg2); }
 @media (prefers-reduced-motion: reduce) { .p-esc-frase { transition: none; } }
 .p-esc:not(.p-ind) .p-esc-pasos { top: 18px; bottom: auto; }
 @media (max-width: 900px) { .p-esc-frase { display: none; } } /* en el móvil la frase va en el texto de debajo de la foto */
+
+/* Paco, 12/11 (2.ª vuelta): vuelven los globos de las zonas y «Columna recta»; fuera la frase blanca y la capa oscura */
+.p-esc:not(.p-ind) .p-esc-cap, .p-esc:not(.p-ind) .p-esc-lab { display: inline-flex !important; }
+.p-esc-frase, .p-esc-velo { display: none !important; }
+@media (max-width: 900px) { .p-esc:not(.p-ind) .p-esc-cap, .p-esc:not(.p-ind) .p-esc-lab { display: none !important; } }

@@ -154,25 +154,26 @@
     esc.innerHTML = '<div class="p-esc-stick"><div class="p-esc-img">' +
         '<div class="p-esc-zoom">' +
           '<img src="' + s(1200) + '" srcset="' + s(800) + ' 800w, ' + s(1200) + ' ' + E.w + 'w" sizes="(max-width: 1320px) 100vw, 1320px" alt="Persona durmiendo de lado sobre el ' + P.titulo + ', con la columna recta" width="' + E.w + '" height="' + E.h + '" loading="lazy">' +
-          // Paco, 12/11: sin brillos granates ni pastillas de zona; capa negra al 10 % y la frase grande en blanco
-          '<i class="p-esc-velo" aria-hidden="true"></i>' +
+          // Paco, 12/11: sin brillos rojos. Los globos de las zonas y «Columna recta», como en la versión inicial
           '<svg class="p-esc-col" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="p-esc-sp"/></svg>' +
+          E.zonas.map(function (z, i) { return '<p class="p-esc-cap" data-z="' + i + '" style="left:' + z[0] + '%">' + z[2] + '</p>'; }).join('') +
+          '<p class="p-esc-lab" style="left:' + E.etiqueta[0] + '%;top:' + E.etiqueta[1] + '%">' + LM.ico('check') + 'Columna recta</p>' +
         '</div>' +
-        '<p class="p-esc-frase">' + (E.frase || 'Tu espalda, siempre recta.') + '</p>' +
         '<ol class="p-esc-pasos" aria-hidden="true"><li></li><li></li><li></li></ol>' +
         // Paco, 09/11: aviso integrado, como el de «Por dentro» (sin «Recreación ilustrativa»)
         '<p class="p-esc-aviso"><span class="p-scrub-mouse" aria-hidden="true"><i></i></span><span>Sigue bajando<small>y verás cómo se queda recta tu espalda</small></span></p></div>' +
         txtMovil('Columna recta', 'El colchón cede donde hace falta y sujeta donde lo necesitas, para que tu espalda descanse recta.') + '</div>';
     esc.hidden = false;
     var zoom = $('.p-esc-zoom', esc), sp = $('.p-esc-sp', esc), pasos = $$('.p-esc-pasos li', esc);
-    var frase = $('.p-esc-frase', esc), aviso = $('.p-esc-aviso', esc), stick = $('.p-esc-stick', esc);
+    var caps = $$('.p-esc-cap', esc), lab = $('.p-esc-lab', esc), aviso = $('.p-esc-aviso', esc), stick = $('.p-esc-stick', esc);
     var movil = matchMedia('(max-width: 900px)');
     function lim(v) { return Math.max(0, Math.min(1, v)); }
     function pintar(p) {
       // 0–0,2: se dibuja la columna (curvada) · 0,2–0,7: zonas · 0,7–0,95: se endereza · acercamiento suave todo el rato
       var dib = lim(p / .2), rect = lim((p - .7) / .25), N = 24, d = '';
       for (var i = 0; i <= N; i++) {
-        var u = i / N, x = C.x0 + (C.x1 - C.x0) * u, y = C.y + C.curva * Math.sin(Math.PI * u) * (1 - rect);
+        var y0 = C.y0 != null ? C.y0 : C.y, y1 = C.y1 != null ? C.y1 : C.y;
+        var u = i / N, x = C.x0 + (C.x1 - C.x0) * u, y = y0 + (y1 - y0) * u + C.curva * Math.sin(Math.PI * u) * (1 - rect);
         if (u > dib + 1e-6) break;
         d += (i ? ' L' : 'M') + x.toFixed(2) + ' ' + y.toFixed(2);
       }
@@ -180,12 +181,15 @@
       // Puntos blancos con halo: empiezan grandes y se hacen pequeños hasta su tamaño final al quedar recta
       var w0 = movil.matches ? 10 : 15, w = w0 * (1 + .9 * (1 - lim(p / .95)));
       sp.style.strokeWidth = w.toFixed(2); sp.style.strokeDasharray = '.1 ' + (w * 1.6).toFixed(2);
-      frase.classList.toggle('is-on', rect > .6);
+      var tramo = .5 / E.zonas.length, activa = -1;
+      E.zonas.forEach(function (z, k) { var a = .2 + k * tramo; if (p >= a && p < a + tramo) activa = k; });
+      caps.forEach(function (c, k) { c.classList.toggle('is-on', k === activa); });
+      lab.classList.toggle('is-on', rect > .85);
       aviso.classList.toggle('is-off', p > .82);
       var paso = p < .2 ? 0 : p < .7 ? 1 : 2;
       pasos.forEach(function (l, k) { l.classList.toggle('is-on', k <= paso && p > .02); });
       zoom.style.transform = 'scale(' + (1 + .07 * p).toFixed(4) + ')';
-      txtSincro(esc, paso, paso < 2 ? E.zonas[Math.min(E.zonas.length - 1, Math.floor(lim((p - .2) / .5) * E.zonas.length))][2] : E.frase);
+      txtSincro(esc, paso);
     }
     // Paco, 12/11: el bloque fijo, centrado en la altura de la pantalla (sin quedar bajo la cabecera)
     function centrar() {
