@@ -2532,3 +2532,20 @@ body[data-page="cuenta"] { background: var(--bg2); }
 .pkc-lista { margin-top: 6px; }
 .pkc-lista .pkl-li { grid-template-columns: 64px minmax(0, 1fr) auto; gap: 12px; }
 .pkc-lista .pkl-li img { width: 64px; height: 64px; }
+
+/* Paco, 12/11 · «Columna recta»: foto nueva 1200 × 750, puntos blancos con halo, frase grande en blanco y sin marcas rojas */
+.p-esc:not(.p-ind) .p-esc-img { aspect-ratio: 1200 / 750; width: min(100%, calc((100vh - 150px) * 1.6)); }
+.p-esc:not(.p-ind) .p-esc-zoom { transform-origin: 49% 30%; }
+.p-esc:not(.p-ind) .p-esc-sp { stroke: #fff; filter: drop-shadow(0 0 4px rgba(255,255,255,.95)) drop-shadow(0 0 10px rgba(255,255,255,.6)); transition: none; }
+.p-esc-velo { position: absolute; inset: 0; background: rgba(0,0,0,.1); pointer-events: none; }
+.p-esc-glow, .p-esc:not(.p-ind) .p-esc-cap, .p-esc:not(.p-ind) .p-esc-lab { display: none !important; }
+.p-esc-frase { position: absolute; left: 4%; right: 4%; bottom: 3.5%; z-index: 2; margin: 0; text-align: center; font: 700 clamp(22px, 2.9vw, 44px)/1.1 'Albert Sans', var(--font); letter-spacing: -.015em; color: #fff; opacity: 0; transform: translateY(10px); transition: opacity .5s var(--ease), transform .5s var(--ease); pointer-events: none; }
+.p-esc-frase.is-on { opacity: 1; transform: none; }
+@media (max-width: 900px) {
+  .p-esc:not(.p-ind) .p-esc-img { width: 100%; aspect-ratio: 1 / 1.02; }
+  .p-esc:not(.p-ind) .p-esc-zoom { aspect-ratio: 1200 / 750; }
+  .p-esc-frase { bottom: 4%; font-size: 21px; }
+}
+@media (prefers-reduced-motion: reduce) { .p-esc-frase { transition: none; } }
+.p-esc:not(.p-ind) .p-esc-pasos { top: 18px; bottom: auto; }
+@media (max-width: 900px) { .p-esc-frase { display: none; } } /* en el móvil la frase va en el texto de debajo de la foto */

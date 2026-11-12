@@ -253,9 +253,11 @@ LM.ESCENA_PAREJA = {
   ondas: [43.5, 57], lado: [26, 8.5, 50.8, 92], limite: [50.8, 22, 90], etiqueta: [66, 44],
   textos: [[37, 'Tu pareja se mueve…'], [50.8, '…pero cada muelle trabaja solo', '…pero el colchón absorbe el movimiento']]
 };
+/* Paco, 12/11: foto nueva (pulido/capturas/1211-07b-columna-recta-nueva.jpg), recortada a 1200 × 750 */
 LM.ESCENA_CORTE = {
-  img: '../img/escena-espalda', w: 1134, h: 599,
-  columna: { x0: 31, x1: 67, y: 32.7, curva: 3 }, etiqueta: [49, 19],
+  img: '../img/escena-espalda2', w: 1200, h: 750,
+  columna: { x0: 30, x1: 68, y: 27.5, curva: 3 }, etiqueta: [49, 19],
+  frase: 'Con un colchón LOMONACO, tu espalda siempre recta.',
   zonas: [[38, 44, 'El hombro se hunde lo justo'], [50, 45.5, 'La cintura, con apoyo'], [62, 44.5, 'La cadera reparte el peso']]
 };
 /* Paco, 29/10: foto nueva de cada modelo SOLO en el bloque de la home donde eliges colchón (ficha y listas sin cambios) */

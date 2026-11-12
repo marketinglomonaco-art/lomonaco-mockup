@@ -143,9 +143,9 @@
     return '<div class="p-esc-txt"><p class="p-esc-txt-k">' + k + ' · <span class="p-esc-txt-n">Paso 1 de 3</span></p>' +
       '<p class="p-esc-txt-t" aria-live="polite"></p><p class="p-esc-txt-p">' + expl + '</p></div>';
   }
-  function txtSincro(el, paso) {
-    var on = $('.p-esc-lab.is-on', el) || $('.p-esc-cap.is-on', el), t = $('.p-esc-txt-t', el), n = $('.p-esc-txt-n', el);
-    var v = on ? on.textContent : (t.textContent || $('.p-esc-cap', el).textContent);
+  function txtSincro(el, paso, txt) {
+    var on = $('.p-esc-lab.is-on', el) || $('.p-esc-cap.is-on', el), t = $('.p-esc-txt-t', el), n = $('.p-esc-txt-n', el), cap = $('.p-esc-cap', el);
+    var v = txt || (on ? on.textContent : (t.textContent || (cap ? cap.textContent : '')));
     if (t.textContent !== v) t.textContent = v;
     var nv = 'Paso ' + (paso + 1) + ' de 3'; if (n.textContent !== nv) n.textContent = nv;
   }
@@ -154,18 +154,19 @@
     esc.innerHTML = '<div class="p-esc-stick"><div class="p-esc-img">' +
         '<div class="p-esc-zoom">' +
           '<img src="' + s(1200) + '" srcset="' + s(800) + ' 800w, ' + s(1200) + ' ' + E.w + 'w" sizes="(max-width: 1320px) 100vw, 1320px" alt="Persona durmiendo de lado sobre el ' + P.titulo + ', con la columna recta" width="' + E.w + '" height="' + E.h + '" loading="lazy">' +
-          E.zonas.map(function (z, i) { return '<i class="p-esc-glow" data-z="' + i + '" style="left:' + z[0] + '%;top:' + z[1] + '%" aria-hidden="true"></i>'; }).join('') +
+          // Paco, 12/11: sin brillos granates ni pastillas de zona; capa negra al 10 % y la frase grande en blanco
+          '<i class="p-esc-velo" aria-hidden="true"></i>' +
           '<svg class="p-esc-col" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="p-esc-sp"/></svg>' +
-          E.zonas.map(function (z, i) { return '<p class="p-esc-cap" data-z="' + i + '" style="left:' + z[0] + '%">' + z[2] + '</p>'; }).join('') +
-          '<p class="p-esc-lab" style="left:' + E.etiqueta[0] + '%;top:' + E.etiqueta[1] + '%">' + LM.ico('check') + 'Columna recta</p>' +
         '</div>' +
+        '<p class="p-esc-frase">' + (E.frase || 'Tu espalda, siempre recta.') + '</p>' +
         '<ol class="p-esc-pasos" aria-hidden="true"><li></li><li></li><li></li></ol>' +
         // Paco, 09/11: aviso integrado, como el de «Por dentro» (sin «Recreación ilustrativa»)
         '<p class="p-esc-aviso"><span class="p-scrub-mouse" aria-hidden="true"><i></i></span><span>Sigue bajando<small>y verás cómo se queda recta tu espalda</small></span></p></div>' +
         txtMovil('Columna recta', 'El colchón cede donde hace falta y sujeta donde lo necesitas, para que tu espalda descanse recta.') + '</div>';
     esc.hidden = false;
-    var zoom = $('.p-esc-zoom', esc), sp = $('.p-esc-sp', esc), lab = $('.p-esc-lab', esc), pasos = $$('.p-esc-pasos li', esc);
-    var glows = $$('.p-esc-glow', esc), caps = $$('.p-esc-cap', esc), aviso = $('.p-esc-aviso', esc);
+    var zoom = $('.p-esc-zoom', esc), sp = $('.p-esc-sp', esc), pasos = $$('.p-esc-pasos li', esc);
+    var frase = $('.p-esc-frase', esc), aviso = $('.p-esc-aviso', esc), stick = $('.p-esc-stick', esc);
+    var movil = matchMedia('(max-width: 900px)');
     function lim(v) { return Math.max(0, Math.min(1, v)); }
     function pintar(p) {
       // 0–0,2: se dibuja la columna (curvada) · 0,2–0,7: zonas · 0,7–0,95: se endereza · acercamiento suave todo el rato
@@ -176,19 +177,22 @@
         d += (i ? ' L' : 'M') + x.toFixed(2) + ' ' + y.toFixed(2);
       }
       sp.setAttribute('d', d || 'M0 0');
-      var c1 = [255, 255, 255], c2 = [124, 25, 25];
-      sp.style.stroke = 'rgb(' + c1.map(function (v, k) { return Math.round(v + (c2[k] - v) * rect); }).join(',') + ')';
-      var tramo = .5 / E.zonas.length, activa = -1;
-      E.zonas.forEach(function (z, k) { var a = .2 + k * tramo; if (p >= a && p < a + tramo) activa = k; });
-      glows.forEach(function (g, k) { g.classList.toggle('is-on', k === activa); });
-      caps.forEach(function (c, k) { c.classList.toggle('is-on', k === activa); });
-      lab.classList.toggle('is-on', rect > .85);
+      // Puntos blancos con halo: empiezan grandes y se hacen pequeños hasta su tamaño final al quedar recta
+      var w0 = movil.matches ? 10 : 15, w = w0 * (1 + .9 * (1 - lim(p / .95)));
+      sp.style.strokeWidth = w.toFixed(2); sp.style.strokeDasharray = '.1 ' + (w * 1.6).toFixed(2);
+      frase.classList.toggle('is-on', rect > .6);
       aviso.classList.toggle('is-off', p > .82);
       var paso = p < .2 ? 0 : p < .7 ? 1 : 2;
       pasos.forEach(function (l, k) { l.classList.toggle('is-on', k <= paso && p > .02); });
       zoom.style.transform = 'scale(' + (1 + .07 * p).toFixed(4) + ')';
-      txtSincro(esc, paso);
+      txtSincro(esc, paso, paso < 2 ? E.zonas[Math.min(E.zonas.length - 1, Math.floor(lim((p - .2) / .5) * E.zonas.length))][2] : E.frase);
     }
+    // Paco, 12/11: el bloque fijo, centrado en la altura de la pantalla (sin quedar bajo la cabecera)
+    function centrar() {
+      var cab = document.querySelector('.lm-head'), hb = cab ? Math.max(0, cab.getBoundingClientRect().bottom) : 70;
+      stick.style.top = Math.max(hb + 12, (innerHeight - stick.offsetHeight) / 2) + 'px';
+    }
+    centrar(); addEventListener('resize', centrar);
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) { pintar(1); return; }
     esc.classList.add('is-story');
     var pendiente = false;
