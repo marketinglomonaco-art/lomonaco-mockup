@@ -613,7 +613,7 @@
 })();
 
 /* Paco, 12/11 · Avatar «en línea» (abajo a la derecha). Al pasar el ratón salen bocadillos con dudas típicas;
-   cada uno lleva a reservar la videollamada. La foto es provisional hasta tener la de un asesor del showroom. */
+   cada uno lleva a reservar la videollamada. Foto de Paco (12/11), recortada a la cara. */
 (function () {
   var C = LM.CONFIG, ahora = new Date(), d = ahora.getDay(), h = ahora.getHours() + ahora.getMinutes() / 60;
   var online = d > 0 && d < 6 && h >= 9 && h < 18; // horario: lunes a viernes de 9:00 a 18:00
@@ -623,7 +623,6 @@
     ['¿Cuánto cuesta?', LM.c('videollamada') + '.'],
     ['¿Qué necesito?', 'Un móvil con WhatsApp o un ordenador con cámara.']
   ];
-  var SIL = '<svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" fill="#ececee"/><circle cx="60" cy="47" r="21" fill="#c9c9ce"/><path d="M20 120c2-26 19-40 40-40s38 14 40 40z" fill="#c9c9ce"/></svg>';
   var w = document.createElement('div');
   w.className = 'sl-av' + (online ? ' is-online' : '');
   w.innerHTML =
@@ -632,9 +631,9 @@
       '<a class="lm-btn lm-btn--video sl-av-cta" href="#reserva" style="--i:' + DUDAS.length + '">' + LM.ico('video') + 'Quiero hacer una videollamada</a>' +
     '</div>' +
     '<button type="button" class="sl-av-btn" aria-expanded="false" aria-controls="sl-av-pop" aria-label="Habla con un asesor del showroom">' +
-      '<span class="sl-av-ph">' + SIL + '</span>' +
+      '<span class="sl-av-ph"><img src="../img/avatar-showroom-192.webp" srcset="../img/avatar-showroom-192.webp 192w, ../img/avatar-showroom-384.webp 384w" sizes="96px" width="192" height="192" alt="" loading="lazy"></span>' +
       '<span class="sl-av-st"><i></i>' + (online ? 'En línea' : 'Reserva tu hora') + '</span>' +
-    '</button>' + LM.pend('foto real de un asesor del showroom (recortada, mirando a cámara)');
+    '</button>';
   document.body.appendChild(w);
   var b = w.querySelector('.sl-av-btn');
   function abrir(on) { w.classList.toggle('is-open', on); b.setAttribute('aria-expanded', on); }
