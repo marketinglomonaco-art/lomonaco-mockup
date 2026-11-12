@@ -2459,3 +2459,9 @@ body[data-page="cuenta"] { background: var(--bg2); }
 @media (max-width: 900px) { .sl-av-btn, .sl-av-ph { width: 92px; } .sl-av-ph { height: 92px; border-radius: 20px; } .sl-av-st { font-size: 11.5px; padding: 4px 9px; } }
 /* Paco, 12/11 · Paseo virtual: fuera el plano del panel gris (queda la lista de vistas y la reserva) */
 .s-sv-wrap .s-pl-map, .s-sv-wrap .s-pl-tog { display: none !important; }
+/* Paco, 12/11 · «Packs colchón + canapé o base» sin marco: igual que el resto de opciones del menú */
+.lm-nl.lm-nl-packs { margin-left: 0; min-height: 0; padding: 10px 10px; border-radius: 8px; background: none; box-shadow: none; color: inherit; font-size: 14.5px; font-weight: 500; }
+.lm-nl.lm-nl-packs:hover, .lm-nl.lm-nl-packs[aria-expanded="true"] { background: none; color: var(--acc); }
+@media (max-width: 1280px) { .lm-nl.lm-nl-packs { padding: 10px 7px; font-size: 14px; } }
+/* Paco, 12/11 · Banner nuevo en móvil: el sello más pequeño y más abajo, para no tapar la tripa (el centro de la foto) */
+@media (max-width: 767px) { .h4 .h-hero-img img { object-position: 50% 0%; } .h4-sello { width: 29vw; top: auto; bottom: 34%; right: 3%; } }
