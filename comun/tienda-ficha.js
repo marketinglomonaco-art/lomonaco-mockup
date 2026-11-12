@@ -281,14 +281,17 @@
       ['Alto', LM.mark({ estado: 'confirmar', nota: 'Plano de medidas de la web actual' }, P.cotas.alto + ' cm')], ['Fondo del arcón', P.cotas.fondo + ' cm'], ['Altura con la tapa abierta', P.cotas.apertura + ' cm'],
       ['Acabados', 'Blanco, Nórdico, Roble y Nogal'], ['Apertura', 'Abatible, con frenos de seguridad'], ['Tapa', 'Antideslizante. Partida en 180 × 200 y 200 × 200 cm'],
       ['Material', 'Madera de alta calidad'], ['Medidas', medidasTxt], ['Montaje', 'Lo montas tú, con las instrucciones paso a paso de esta página'], ['Garantía', garantia], ['Entrega', esc(P.entrega)], ['Retirada del viejo', 'Base o canapé: 49,01 €. Base y colchón: 89 €. Se retira la base si está desmontada.']
+    // Paco, 12/11 (cambio 26): en las bases, los datos en el mismo orden que la ficha técnica de los packs:
+    // modelo y altura, después los materiales, y al final medidas, garantía, entrega y retirada
     ] : K === 'base3d' ? [
-      ['Tejido', 'Airflow® 3D antideslizante, con microceldas tridimensionales'], ['Tablero', 'Reforzado, de 8 mm'], ['Refuerzo', '5 barras transversales de acero de 30 × 30 mm'],
-      ['Patas', 'De madera wengué, incluidas'], ['Altura de las patas', LM.mark({ estado: 'confirmar', nota: P.patasNota }, P.patas + ' cm')], ['Colores', 'Chocolate y Blanco'],
-      ['Medidas', medidasTxt], ['En 2 partes', '160, 180 y 200 cm de ancho'], ['Garantía', garantia], ['Entrega', esc(P.entrega)], ['Retirada del viejo', 'Base o canapé: 49,01 €. Base y colchón: 89 €.']
-    ] : [
-      ['Tejido', 'Tapizado AirFresh, transpirable'], ['Estructura', 'Bastidor de madera maciza'], ['Colores', 'Beige, Gris Claro, Chocolate y Antracita'],
-      ['Medidas', medidasTxt], ['En 2 partes', '160, 180 y 200 cm de ancho'], ['Patas', LM.pend('altura de las patas')],
+      ['Modelo', esc(P.nombre || P.titulo)], ['Altura de las patas', LM.mark({ estado: 'confirmar', nota: P.patasNota }, P.patas + ' cm')], ['Tejido', 'Airflow® 3D antideslizante, con microceldas tridimensionales'],
+      ['Tablero', 'Reforzado, de 8 mm'], ['Refuerzo', '5 barras transversales de acero de 30 × 30 mm'], ['Patas', 'De madera wengué, incluidas'],
+      ['Colores', 'Chocolate y Blanco'], ['Medidas', medidasTxt], ['En 2 partes', '160, 180 y 200 cm de ancho'],
       ['Garantía', garantia], ['Entrega', esc(P.entrega)], ['Retirada del viejo', 'Base o canapé: 49,01 €. Base y colchón: 89 €.']
+    ] : [
+      ['Modelo', esc(P.nombre || P.titulo)], ['Patas', LM.pend('altura de las patas')], ['Tejido', 'Tapizado AirFresh, transpirable'],
+      ['Estructura', 'Bastidor de madera maciza'], ['Colores', 'Beige, Gris Claro, Chocolate y Antracita'], ['Medidas', medidasTxt],
+      ['En 2 partes', '160, 180 y 200 cm de ancho'], ['Garantía', garantia], ['Entrega', esc(P.entrega)], ['Retirada del viejo', 'Base o canapé: 49,01 €. Base y colchón: 89 €.']
     ];
     H.push(ficha(filas, TIPO === 'canape' ? '<figure class="tf-plano">' + img(P.medidasImg, { alt: 'Plano del canapé: 32 cm de alto, 28 cm de fondo y 103 cm con la tapa abierta' }) + '</figure>' : ''));
     H.push(detalle(TIPO === 'canape' ? 'Pensado para <em>durar.</em>' : 'Calidad que <em>se nota.</em>'));
