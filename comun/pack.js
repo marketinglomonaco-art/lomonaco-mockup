@@ -45,6 +45,8 @@
   var MINI = { canape: '../img/canape-760.webp', base: '../img/base-3d-760.webp' };
   // Regalos (Paco, 30/10): foto + valor tachado + «Gratis», siempre a la vista
   var VALOR = LM.REGALOS.filter(function (r) { return !PKD || PKD.regalos.indexOf(r[2]) > -1; }).reduce(function (t, r) { return t + r[4]; }, 0);
+  // Paco, 12/11: el valor de los regalos, el real de la tienda para la medida elegida (el mismo que el listado «Qué te llevas»)
+  function valor() { var D = PKD && LM.packDesglose(document.body.getAttribute('data-pk'), st.medida, st.color[st.base]); return D ? D.valorRegalos : VALOR; }
   function gratis(v) { return '<span class="pk-gval"><s>' + LM.eur(v) + '</s><strong>Gratis</strong></span>'; }
   function fotoRegalo(r) { return '<img class="pk-gimg" src="' + r[3] + '" alt="' + r[0] + ' de regalo" width="160" height="160" loading="lazy">'; }
 
@@ -56,14 +58,14 @@
       var fc = PKD.fotoColor[st.color[st.base]] || PKD.fotoColor[Object.keys(PKD.fotoColor)[0]];
       var ex = PKD.galeria.filter(function (n) { return n !== fc; });
       gal.innerHTML = '<figure class="is-main pk-main">' + LM.tfImg(fc, { alt: nombrePack() + ', ' + st.color[st.base], eager: true, sizes: '(max-width: 900px) 100vw, 64vw' }) +
-        '<span class="pk-regalo-chip">' + IC.regalo + regalosPK().map(function (r) { return r[0]; }).join(', ').replace(/, ([^,]*)$/, ' y $1') + ' · <s>' + LM.eur(VALOR) + '</s> <b>Gratis</b></span></figure>' +
+        '<span class="pk-regalo-chip">' + IC.regalo + regalosPK().map(function (r) { return r[0]; }).join(', ').replace(/, ([^,]*)$/, ' y $1') + ' · <s>' + LM.eur(valor()) + '</s> <b>Gratis</b></span></figure>' +
         ex.map(function (n, i) { return '<figure' + (i + 1 >= VIS ? ' class="is-mas"' : '') + '>' + LM.tfImg(n, { alt: nombrePack() + ' (foto ' + (i + 2) + ')', sizes: '(max-width: 900px) 100vw, 32vw' }) + '</figure>'; }).join('') +
         alts.map(function (a, i) { return '<figure class="is-mas"><img src="../img/' + a[0] + '-947.webp" srcset="../img/' + a[0] + '-560.webp 560w, ../img/' + a[0] + '-947.webp 947w" sizes="(max-width: 900px) 100vw, 32vw" width="947" height="947" alt="' + P.titulo + ': ' + a[1] + '" loading="lazy"></figure>'; }).join('');
       return;
     }
     var f = base().img;
     gal.innerHTML = '<figure class="is-main pk-main"><img src="' + f + '-1200.webp" srcset="' + f + '-700.webp 700w, ' + f + '-1200.webp 1200w" sizes="(max-width: 900px) 100vw, 64vw" width="1200" height="896" alt="' + nombrePack() + '" fetchpriority="high">' +
-      '<span class="pk-regalo-chip">' + IC.regalo + 'Almohadas, edredón y protector · <s>' + LM.eur(VALOR) + '</s> <b>Gratis</b></span></figure>' +
+      '<span class="pk-regalo-chip">' + IC.regalo + 'Almohadas, edredón y protector · <s>' + LM.eur(valor()) + '</s> <b>Gratis</b></span></figure>' +
       alts.map(function (a, i) { return '<figure' + (i + 1 >= VIS ? ' class="is-mas"' : '') + '><img src="../img/' + a[0] + '-947.webp" srcset="../img/' + a[0] + '-560.webp 560w, ../img/' + a[0] + '-947.webp 947w" sizes="(max-width: 900px) 100vw, 32vw" width="947" height="947" alt="' + P.titulo + ': ' + a[1] + '" loading="lazy"></figure>'; }).join('');
   }
   // Paco, 09/11: la foto del pack + 4 a la vista; el resto con «Ver más fotos» (en el móvil, carrusel con todas)
@@ -109,12 +111,34 @@
   function regalos() {
     return regalosPK().map(function (r) { return '<li>' + fotoRegalo(r) + '<span><b>' + r[0] + '</b><small>' + r[1] + '</small></span>' + gratis(r[4]) + '</li>'; }).join('');
   }
-  if (!B) {
+  var PKL = LM.TIENDA && LM.TIENDA.packs, PKK = document.body.getAttribute('data-pk');
+  if (PKD && !B) {
+    cfg.innerHTML =
+      '<div class="pkc-seg" role="group" aria-label="Canapé o base">' + ['canape', 'base'].map(function (b) {
+        var pk = PKL[PKD.colchon + (b === 'canape' ? 'Canape' : 'Base')];
+        return '<a class="pkc-seg-b" href="' + pk.pagina + '" data-pkgo="' + b + '"' + (b === PKD.base ? ' aria-current="page"' : '') + '>' + (b === 'canape' ? 'Con canapé' : 'Con base antideslizante') + '</a>';
+      }).join('') + '</div>' +
+      '<p class="pkc-k">Elige tu colchón</p><div class="pkc-cols">' + LM.PACK_CONF.colchones.map(function (c) {
+        var pk = PKL[c.k + (PKD.base === 'canape' ? 'Canape' : 'Base')];
+        return '<a class="pkc-col" href="' + pk.pagina + '" data-pkgo="' + PKD.base + '"' + (c.k === PKD.colchon ? ' aria-current="page"' : '') + '><b>' + c.t + '</b><small>' + c.d + '</small></a>';
+      }).join('') + '</div>' +
+      '<div class="p-size" id="p-size" data-testid="size-selector"></div>' +
+      '<fieldset class="p-opt"><legend>Color: <b id="pk-color-n"></b></legend><div id="pk-colores"></div></fieldset>' +
+      '<div class="pkc-lista"><p class="pkc-k">Qué te llevas</p><div id="pk-lista"></div></div>' +
+      '<div id="pk-bases" hidden></div>';
+    // Al cambiar de pack se conserva la medida; el color, solo si es el mismo tipo de base
+    cfg.addEventListener('click', function (e) {
+      var a = e.target.closest('[data-pkgo]'); if (!a) return;
+      e.preventDefault(); LM.store.set('lm_medida', st.medida);
+      var c = st.color[st.base].toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      location.href = a.getAttribute('href') + (a.getAttribute('data-pkgo') === PKD.base ? '?color=' + encodeURIComponent(c) : '');
+    });
+  } else if (!B) {
     cfg.innerHTML =
       '<div class="p-size" id="p-size" data-testid="size-selector"></div>' +
       '<fieldset class="p-opt"><legend>' + (PKD ? 'Tu pack lleva' : '¿Canapé o base?') + '</legend><div class="p-opt-list" id="pk-bases"></div></fieldset>' +
       '<fieldset class="p-opt"><legend>Color: <b id="pk-color-n"></b></legend><div id="pk-colores"></div></fieldset>' +
-      '<div class="pk-gift"><p class="pk-gift-k"><span class="pk-gi">' + IC.regalo + '</span><span>De regalo con tu pack<small>Valorados en <s>' + LM.eur(VALOR) + '</s> · <strong>Gratis</strong></small></span></p><ul>' + regalos() + '</ul></div>';
+      '<div class="pk-gift"><p class="pk-gift-k"><span class="pk-gi">' + IC.regalo + '</span><span>De regalo con tu pack<small>Valorados en <s>' + LM.eur(valor()) + '</s> · <strong>Gratis</strong></small></span></p><ul>' + regalos() + '</ul></div>';
   } else {
     cfg.innerHTML =
       '<div class="pk-build"><p class="pk-build-k">Monta tu pack en 3 pasos</p><ol class="pk-steps">' +
@@ -133,12 +157,13 @@
     $('#pk-bases').innerHTML = opcionesBase();
     $('#pk-colores').innerHTML = muestras();
     if (!B) $('#pk-color-n').textContent = st.color[st.base];
+    if ($('#pk-lista')) $('#pk-lista').innerHTML = LM.packLista(LM.packDesglose(PKK, st.medida, st.color[st.base]), { precio: false });
     else {
       $('#pk-v1').textContent = LM.medidaTxt(st.medida); $('#pk-v2').textContent = base().t; $('#pk-v3').textContent = st.color[st.base];
       $('#pk-ticket').innerHTML =
         '<li><span class="pk-ti">' + LM.ico('check') + '</span><span><b>Colchón ' + P.nombre + '</b><small>' + LM.medidaTxt(st.medida) + ' · ' + P.nucleo + '</small></span></li>' +
         '<li><span class="pk-ti">' + LM.ico('check') + '</span><span><b>' + base().t + ' ' + st.color[st.base] + '</b><small>' + base().d + '</small></span></li>' +
-        '<li class="pk-ticket-reg"><span class="pk-ti pk-ti--acc">' + IC.regalo + '</span><span><b>De regalo con tu pack</b><small>Valorados en <s>' + LM.eur(VALOR) + '</s> · <strong>Gratis</strong></small></span></li>' +
+        '<li class="pk-ticket-reg"><span class="pk-ti pk-ti--acc">' + IC.regalo + '</span><span><b>De regalo con tu pack</b><small>Valorados en <s>' + LM.eur(valor()) + '</s> · <strong>Gratis</strong></small></span></li>' +
         regalosPK().map(function (r) { return '<li class="is-regalo">' + fotoRegalo(r) + '<span><b>' + r[0] + '</b><small>' + r[1] + '</small></span>' + gratis(r[4]) + '</li>'; }).join('') +
         '<li class="pk-ticket-tot"><span>Total del pack</span><b>' + (d ? LM.eur(d.p + (st.recogida ? LM.RECOGIDA.p : 0)) : '—') + '</b></li>';
     }

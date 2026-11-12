@@ -2516,3 +2516,19 @@ body[data-page="cuenta"] { background: var(--bg2); }
 .h-prod-med button:hover { box-shadow: inset 0 0 0 1.5px var(--ink); }
 .h-prod-med button[aria-checked="true"] { background: var(--acc); box-shadow: none; color: #fff; }
 @media (max-width: 600px) { .h-prod-med > span { width: 100%; } .h-prod-med button { flex: 1; padding: 0 8px; font-size: 14px; } }
+
+/* Paco, 12/11 · Ficha de pack: el configurador de la home dentro de la caja de compra */
+.pkc-seg { display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--bg2); }
+.pkc-seg-b { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: 999px; font-size: 14.5px; font-weight: 600; color: var(--ink); text-decoration: none; }
+.pkc-seg-b:hover { background: #fff; }
+.pkc-seg-b[aria-current] { background: var(--acc); color: #fff; }
+.pkc-k { margin: 18px 0 8px; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+.pkc-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.pkc-col { display: grid; gap: 2px; padding: 12px 14px; border-radius: 12px; background: #fff; box-shadow: inset 0 0 0 1.5px var(--line); color: var(--ink); text-decoration: none; }
+.pkc-col b { font-size: 15.5px; }
+.pkc-col small { font-size: 13px; color: var(--mute); }
+.pkc-col:hover { box-shadow: inset 0 0 0 1.5px var(--ink); }
+.pkc-col[aria-current] { box-shadow: inset 0 0 0 2px var(--acc); }
+.pkc-lista { margin-top: 6px; }
+.pkc-lista .pkl-li { grid-template-columns: 64px minmax(0, 1fr) auto; gap: 12px; }
+.pkc-lista .pkl-li img { width: 64px; height: 64px; }

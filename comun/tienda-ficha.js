@@ -333,7 +333,7 @@
   if (PKD) {
     H = H
       .map(function (h) { return h.replace('Las ventajas del <em>canapé abatible.</em>', 'Las ventajas <em>de tu canapé.</em>').replace(/Las ventajas de la <em>[^<]*<\/em>/, 'Las ventajas <em>de tu base.</em>'); });
-    H.unshift(sec('incluye', 'tf-inc-sec', 'Qué te llevas', 'Todo tu equipo, <em>en un pack.</em>', '<div class="tf-inc" id="tf-inc"></div>'));
+    // Paco, 12/11: «Qué te llevas» va dentro de la caja de compra (comun/pack.js), ya no como módulo aparte
   }
   mods.innerHTML = H.join('');
   LM.fill(mods);
@@ -375,6 +375,7 @@
   if (PKD) {
     var inc = $('#tf-inc'), RG = LM.REGALOS.filter(function (r) { return PKD.regalos.indexOf(r[2]) > -1; });
     function pintarInc() {
+      if (!inc) return;
       var pe = LM.packEstado(), col = LM.PRODUCTOS[PKD.colchon], dc = LM.PRECIOS[PKD.colchon][pe.medida], db = fila(st.medida, pe.color);
       var cfoto = COLS ? (colorObj() || COLS[0]).fotos[TIPO === 'canape' ? 1 : 0] : null;
       var vreg = RG.reduce(function (t, r) { return t + r[4]; }, 0), suma = (dc ? dc.p : 0) + (db ? db.p : 0), dif = Math.round((suma - pe.precio) * 100) / 100;
