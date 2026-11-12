@@ -138,8 +138,11 @@
 
   function comprar(src) {
     var d = actual(); if (!d) return;
-    LM.cart.add({ id: d.id, pid: P.packs[st.base].pid, nombre: nombrePack() + ' (' + st.color[st.base] + ')', medida: st.medida,
-      extra: 'De regalo: almohadas, edredón y protector' + (st.recogida ? ' · Con retirada del colchón viejo' : ''), precio: d.p + (st.recogida ? LM.RECOGIDA.p : 0) }, src);
+    // Paco, 12/11: regalos reales de cada pack (antes ponía «almohadas, edredón y protector» en todos)
+    LM.cart.add({ id: d.id, pid: P.packs[st.base].pid, k: K, tipo: 'pack', base: st.base, nombre: nombrePack(), medida: st.medida,
+      color: st.color[st.base], precio: d.p, ref: d.r, img: P.packs[st.base].img,
+      url: location.pathname.split('/').pop() + '?base=' + st.base,
+      regalos: LM.regalosPack(K, st.base).map(function (r) { return [r[0], r[4], r[3]]; }) }, src);
   }
   $('#p-cta').addEventListener('click', function () { comprar('main'); });
   $('#p-stick-cta').addEventListener('click', function () { comprar('sticky'); });

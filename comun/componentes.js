@@ -78,6 +78,7 @@
     body: '<path d="M4 18c2-6 5-9 8-9s6 3 8 9"/><path d="M2 18h20"/>',
     couple: '<circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 20a6 6 0 0 1 12 0M10 20a6 6 0 0 1 12 0"/>',
     thermo: '<path d="M14 14.8V5a2 2 0 0 0-4 0v9.8a4 4 0 1 0 4 0z"/><path d="M12 10v7"/>',
+    lock: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
     gift: '<path d="M4 11h16v9H4zM3 7h18v4H3zM12 7v13"/><path d="M12 7c-1.5-3-5-3.5-5-1s3 1 5 1c2 0 5 1.5 5-1s-3.5-2-5 1"/>'
   };
   LM.ico = function (n, cls) {
@@ -344,7 +345,36 @@
     return '<a class="lm-mc" href="' + p.url.replace('colchon-', 'pack-') + '?base=canape"><img src="' + p.packs.canape.img + '" alt="" width="120" height="120" loading="lazy">' +
       '<span><small>Colchón + canapé</small><b>Pack ' + esc(p.nombre) + '</b><em>Desde ' + LM.eur(d.p) + '</em></span></a>';
   }
+  /* ---------- cabecera y pie del checkout (Paco, 12/11) ----------
+     Fuga n.º 1 de la web actual: en el checkout salen dos cabeceras con todo el menú y el pie completo (171 enlaces que sacan de la compra).
+     Aquí: logo, pasos, «Compra segura» y teléfono. Nada más. */
+  LM.headerCompra = function (el, pg) {
+    var paso = pg === 'confirmado' ? 3 : 2;
+    var pasos = [['Carrito', 'carrito.html'], ['Datos y pago', 'finalizar-compra.html'], ['Confirmación', '']];
+    el.innerHTML = '<header class="lm-ck-head"><div class="lm-w lm-ck-head-in">' +
+      '<a class="lm-logo" href="index.html"><img src="' + LOGO + '" alt="LOMONACO" width="128" height="19"></a>' +
+      '<ol class="lm-ck-steps" aria-label="Pasos de la compra">' + pasos.map(function (p, i) {
+        var n = i + 1, st = n < paso ? 'is-done' : n === paso ? 'is-on' : '';
+        var dentro = '<i aria-hidden="true">' + (n < paso ? LM.ico('check') : n) + '</i><span>' + p[0] + '</span>';
+        return '<li class="' + st + '"' + (n === paso ? ' aria-current="step"' : '') + '>' + (n < paso && paso < 3 && p[1] ? '<a href="' + p[1] + '">' + dentro + '</a>' : dentro) + '</li>';
+      }).join('') + '</ol>' +
+      '<div class="lm-ck-help"><span class="lm-ck-safe">' + LM.ico('lock') + 'Compra segura</span>' +
+        '<a class="lm-ck-tel" href="tel:' + C.telefono.tel + '" data-lead="checkout-cabecera">' + LM.ico('phone') + '<span><small>¿Dudas? Te ayudamos</small><b>' + LM.mark(C.telefono, C.telefono.v) + '</b></span></a></div>' +
+      '</div></header>';
+  };
+  LM.footerCompra = function (el) {
+    var l = [['Envíos y entregas', '/envios/'], ['Garantías y devoluciones', '/devoluciones/'], ['Métodos de pago', '/metodos-de-pago/'],
+             ['Términos y condiciones', '/terminos-condiciones-venta/'], ['Política de privacidad', '/politica-de-privacidad/']];
+    el.innerHTML = '<footer class="lm-ck-foot"><div class="lm-w">' + LM.pagos() +
+      '<ul class="lm-ck-foot-l">' + l.map(function (x) { return '<li><a href="' + LM.WEB + x[1] + '" target="_blank" rel="noopener">' + x[0] + '</a></li>'; }).join('') + '</ul>' +
+      '<p class="lm-foot-fin" id="lm-legal">* ' + esc(C.legalFinanciacion.v) + '</p>' +
+      '<p class="lm-ck-copy">© LM DESCANSO SL · ' + esc(C.horario.v) + ' · <a href="tel:' + C.telefono.tel + '" data-lead="checkout-pie">' + LM.mark(C.telefono, C.telefono.v) + '</a></p>' +
+      '</div></footer>';
+  };
+
   LM.header = function (el) {
+    var PG = document.body.getAttribute('data-page');
+    if (PG === 'checkout' || PG === 'confirmado') { LM.headerCompra(el, PG); return; }
     var active = el.getAttribute('data-active') || '';
     var tel = LM.mark(C.telefono, C.telefono.v);
     var OPB = document.body.getAttribute('data-op') === 'b';
@@ -540,12 +570,15 @@
     ['Mastercard', '0 0 52 34', '<defs><clipPath id="lm-mc"><circle cx="19" cy="17" r="15"/></clipPath></defs><circle cx="19" cy="17" r="15" fill="#eb001b"/><circle cx="33" cy="17" r="15" fill="#f79e1b"/><circle cx="33" cy="17" r="15" fill="#ff5f00" clip-path="url(#lm-mc)"/>'],
     ['Bizum', '0 0 104 34', '<path d="M5 6l6 6M5 28l14-14M15 24l5 5" fill="none" stroke="#05b9cf" stroke-width="4.2" stroke-linecap="round"/><text x="28" y="24.5" font-size="24" font-weight="600" letter-spacing="-.3" fill="#05b9cf">bizum</text>']
   ];
+  LM.PAGOS_SVG = PAGOS;
   LM.pagos = function () {
     return '<div class="lm-foot-pagos"><p class="lm-foot-sellos-t">Paga como prefieras</p><ul>' + PAGOS.map(function (p) {
       return '<li><svg viewBox="' + p[1] + '" role="img" aria-label="' + p[0] + '">' + p[2] + '</svg></li>';
     }).join('') + '</ul></div>';
   };
   LM.footer = function (el) {
+    var PG = document.body.getAttribute('data-page');
+    if (PG === 'checkout' || PG === 'confirmado') { LM.footerCompra(el); return; }
     var li = function (l) { return '<li><a href="' + LM.href(l[1]) + '"' + (l[2] ? ' rel="nofollow noopener" target="_blank"' : '') + '>' + l[0] + '</a></li>'; };
     var col = function (t, links, cls) { return '<div class="lm-fc' + (cls ? ' ' + cls : '') + '"><p>' + t + '</p><ul>' + links.map(li).join('') + '</ul></div>'; };
     var medCol = LM.MEDIDAS.map(function (m) { var a = m.split('x'); return ['Colchón ' + m, '/colchon-' + a[0] + '-x-' + a[1] + '/']; });
@@ -641,9 +674,21 @@
     }
   };
 
-  /* ---------- carrito lateral (maqueta) ---------- */
+  /* ---------- carrito (Paco, 12/11: proceso de compra completo en la maqueta) ----------
+     El carrito se guarda en la sesión del navegador: pasa de la ficha al carrito, al checkout y a la confirmación.
+     Cada línea: { id, pid, k, tipo, nombre, medida, color, precio, ref, img, url, regalos: [[nombre, valor, foto]], cant }.
+     Los regalos van dentro de su producto y no se pueden tocar (en la web actual salen como otra línea con + y −). */
   LM.cart = {
     items: [], el: null,
+    load: function () {
+      try { this.items = JSON.parse(sessionStorage.getItem('lm_cart') || '[]'); } catch (e) { this.items = []; }
+      this.items = this.items.filter(function (i) { return i && i.id && i.precio; });
+    },
+    save: function () {
+      try { sessionStorage.setItem('lm_cart', JSON.stringify(this.items)); } catch (e) {}
+      this.update();
+      try { document.dispatchEvent(new CustomEvent('lm:cart')); } catch (e) {}
+    },
     build: function () {
       var d = document.createElement('div');
       d.className = 'lm-sheet lm-sheet--cart'; d.hidden = true;
@@ -651,39 +696,86 @@
         '<button class="lm-sheet-x" type="button" data-close aria-label="Cerrar">' + LM.ico('close') + '</button>' +
         '<h2 id="lm-cart-t">Tu carrito</h2><div class="lm-cart-body"></div></aside>';
       document.body.appendChild(d);
-      d.addEventListener('click', function (e) { if (e.target.closest('[data-close]')) LM.cart.close(); });
+      d.addEventListener('click', function (e) {
+        if (e.target.closest('[data-close]')) { e.preventDefault(); LM.cart.close(); return; }
+        var q = e.target.closest('[data-q]');
+        if (q) { LM.cart.setCant(+q.getAttribute('data-i'), +q.getAttribute('data-q')); LM.cart.open(); }
+      });
       d.addEventListener('keydown', function (e) { if (e.key === 'Escape') LM.cart.close(); });
       this.el = d;
     },
     add: function (it, source) {
-      this.items.push(it);
-      LM.track('add_to_cart', { value: it.precio, currency: 'EUR', source: source || 'main', items: [{ item_id: it.id, item_name: it.nombre, item_variant: it.medida, price: it.precio }] });
-      this.update(); this.open(true);
+      it.cant = it.cant || 1;
+      var same = this.items.filter(function (i) { return i.id === it.id && (i.color || '') === (it.color || ''); })[0];
+      if (same) same.cant = Math.min(9, same.cant + it.cant); else this.items.push(it);
+      LM.track('add_to_cart', { value: it.precio, currency: 'EUR', source: source || 'main', items: [{ item_id: it.id, item_name: it.nombre, item_variant: it.medida + (it.color ? ' · ' + it.color : ''), price: it.precio, quantity: it.cant }] });
+      this.save(); this.open(true);
     },
-    total: function () { return this.items.reduce(function (s, i) { return s + i.precio; }, 0); },
+    setCant: function (i, n) {
+      var it = this.items[i]; if (!it) return;
+      if (n < 1) { this.items.splice(i, 1); LM.track('remove_from_cart', { item_id: it.id, item_name: it.nombre }); }
+      else it.cant = Math.min(n, 9);
+      this.save();
+    },
+    count: function () { return this.items.reduce(function (s, i) { return s + i.cant; }, 0); },
+    total: function () { return this.items.reduce(function (s, i) { return s + i.precio * i.cant; }, 0); },
+    regalos: function () { return this.items.reduce(function (s, i) { return s + (i.regalos || []).reduce(function (t, r) { return t + r[1]; }, 0) * i.cant; }, 0); },
+    ahorro: function () { return this.items.reduce(function (s, i) { return s + Math.max(0, (i.ref || i.precio) - i.precio) * i.cant; }, 0) + this.regalos(); },
     update: function () {
-      $$('.lm-cart-n').forEach(function (b) { b.textContent = LM.cart.items.length; });
+      $$('.lm-cart-n').forEach(function (b) { b.textContent = LM.cart.count(); });
       $$('.lm-cart-t').forEach(function (b) { b.textContent = LM.eur(LM.cart.total()); });
+    },
+    /* Línea de producto, la misma en el panel, el carrito y el resumen del checkout */
+    linea: function (it, i, o) {
+      o = o || {};
+      var reg = (it.regalos || []).map(function (r) {
+        return '<li><img src="' + r[2] + '" alt="" width="40" height="40" loading="lazy"><span>' + esc(r[0]) + (it.cant > 1 ? ' × ' + it.cant : '') + '</span><span class="lm-li-gv"><s>' + LM.eur(r[1] * it.cant) + '</s> Gratis</span></li>';
+      }).join('');
+      // Resumen del checkout: regalos en una sola línea, para que el total se vea sin bajar
+      if (o.compact && (it.regalos || []).length) reg = '';
+      var regc = o.compact && (it.regalos || []).length ? '<p class="lm-li-regc">' + LM.ico('gift') + '<span>De regalo: ' + esc(it.regalos.map(function (r, j) { return j ? r[0].toLowerCase() : r[0]; }).join(', ').replace(/, ([^,]*)$/, ' y $1')) + '</span></p>' : '';
+      var q = o.cant === false ? (o.badge ? '' : '<span class="lm-li-qn">Cantidad: ' + it.cant + '</span>') :
+        '<span class="lm-qty" role="group" aria-label="Cantidad de ' + esc(it.nombre) + '">' +
+          // En la página del carrito hay «Eliminar» aparte: el − se queda en 1. En el panel, el − en 1 es una × que lo quita
+          '<button type="button" data-q="' + (it.cant - 1) + '" data-i="' + i + '" aria-label="' + (it.cant > 1 ? 'Quitar uno' : 'Eliminar del carrito') + '"' + (it.cant < 2 && o.quitar ? ' disabled' : '') + '>' + (it.cant > 1 || o.quitar ? '−' : LM.ico('close')) + '</button>' +
+          '<b aria-live="polite">' + it.cant + '</b>' +
+          '<button type="button" data-q="' + (it.cant + 1) + '" data-i="' + i + '" aria-label="Añadir uno"' + (it.cant >= 9 ? ' disabled' : '') + '>+</button></span>';
+      return '<li class="lm-li" data-testid="cart-line">' +
+        '<a class="lm-li-img" href="' + esc(it.url || '#') + '"' + (o.links === false ? ' tabindex="-1" aria-hidden="true"' : '') + '><img src="' + esc(it.img) + '" alt="" width="96" height="96" loading="lazy">' + (o.badge ? '<b class="lm-li-badge">' + it.cant + '</b>' : '') + '</a>' +
+        '<div class="lm-li-b"><p class="lm-li-n">' + (o.links === false ? esc(it.nombre) : '<a href="' + esc(it.url || '#') + '">' + esc(it.nombre) + '</a>') + '</p>' +
+          '<p class="lm-li-v">' + (it.vtxt ? esc(it.vtxt) : LM.medidaTxt(it.medida)) + (it.color ? ' · Acabado ' + esc(it.color) : '') + '</p>' + q + regc +
+          (o.quitar ? '<button class="lm-li-x" type="button" data-q="0" data-i="' + i + '">Eliminar</button>' : '') + '</div>' +
+        '<div class="lm-li-p">' + (it.ref > it.precio ? '<s>' + LM.eur(it.ref * it.cant) + '</s>' : '') + '<b>' + LM.eur(it.precio * it.cant) + '</b></div>' +
+        (reg ? '<ul class="lm-li-reg" aria-label="De regalo con este producto"><li class="lm-li-rt">' + LM.ico('gift') + 'De regalo, ya incluido</li>' + reg + '</ul>' : '') +
+      '</li>';
     },
     open: function (added) {
       if (!this.el) this.build();
-      var body = $('.lm-cart-body', this.el), last = this.items[this.items.length - 1];
+      var body = $('.lm-cart-body', this.el), n = this.count();
+      $('#lm-cart-t', this.el).textContent = 'Tu carrito' + (n ? ' (' + n + ')' : '');
       body.innerHTML = !this.items.length ? '<p>Tu carrito está vacío.</p><a class="lm-btn" href="colchones.html">Ver colchones</a>' :
         (added ? '<p class="lm-cart-ok">' + LM.ico('check') + 'Añadido a tu carrito</p>' : '') +
-        this.items.map(function (i) { return '<div class="lm-cart-it"><b>' + esc(i.nombre) + '</b><span>' + LM.medidaTxt(i.medida) + (i.extra ? ' · ' + esc(i.extra) : '') + '</span><em>' + LM.eur(i.precio) + '</em></div>'; }).join('') +
-        '<div class="lm-cart-tot"><span>Total con IVA</span><b>' + LM.eur(this.total()) + '</b></div>' +
+        '<ul class="lm-lis">' + this.items.map(function (it, i) { return LM.cart.linea(it, i); }).join('') + '</ul>' +
+        '<div class="lm-cart-tot"><span>Total <small>IVA incluido</small></span><b>' + LM.eur(this.total()) + '</b></div>' +
         '<p class="lm-cart-fee">' + LM.cuotaTxt(this.total()) + '</p>' +
+        '<a class="lm-btn lm-btn--buy lm-btn--full" href="finalizar-compra.html" data-testid="cart-checkout">' + LM.ico('lock') + 'Finalizar compra</a>' +
+        '<div class="lm-cart-2"><a class="lm-btn lm-btn--line" href="carrito.html">Ver carrito</a><button class="lm-btn lm-btn--line" type="button" data-close>Seguir comprando</button></div>' +
         LM.confianza() +
-        '<a class="lm-btn lm-btn--buy" href="' + LM.WEB + '/?add-to-cart=' + last.pid + '&variation_id=' + last.id + '" data-testid="cart-checkout">Finalizar compra</a>' +
-        '<p class="lm-note">Maqueta: el botón añade el producto en la web actual.</p>' +
         LM.llamar('cart', { label: '¿Prefieres comprar por teléfono?' });
-      this.el.hidden = false;
-      document.documentElement.classList.add('lm-noscroll');
-      $('.lm-sheet-p', this.el).focus();
-      LM.track('view_cart', { value: this.total(), currency: 'EUR' });
+      if (this.el.hidden) {
+        this.last = document.activeElement;
+        this.el.hidden = false;
+        document.documentElement.classList.add('lm-noscroll');
+        $('.lm-sheet-p', this.el).focus();
+        LM.track('view_cart', { value: this.total(), currency: 'EUR', source: 'panel' });
+      }
     },
-    close: function () { this.el.hidden = true; document.documentElement.classList.remove('lm-noscroll'); }
+    close: function () {
+      this.el.hidden = true; document.documentElement.classList.remove('lm-noscroll');
+      if (this.last && this.last.focus) this.last.focus();
+    }
   };
+  LM.cart.load();
 
   /* ---------- aparición al hacer scroll (P2: solo opacidad, sin mover el layout) ---------- */
   LM.reveal = function () {
@@ -712,6 +804,7 @@
   LM.init = function () {
     var h = $('#lm-header'); if (h) LM.header(h);
     var f = $('#lm-footer'); if (f) LM.footer(f);
+    LM.cart.update();
     LM.fill(document);
     marksToggle();
     document.addEventListener('click', function (e) {

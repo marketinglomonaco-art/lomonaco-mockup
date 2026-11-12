@@ -441,3 +441,48 @@ LM.GALERIA = {
   visibles: 5   // la grande + 4; el resto, con «Ver más fotos»
 };
 LM.galeria = function (k) { return LM.GALERIA.modelo[k] || LM.GALERIA.todas; };
+
+/* =========================================================================
+   Proceso de compra (Paco, 12/11): datos sacados del checkout de la web actual el 12/11/2026.
+   ========================================================================= */
+/* Métodos de envío del checkout actual (los dos, gratis). Con pack no se pudo comprobar:
+   al añadir un pack al carrito la web actual da error 500 (12/11). */
+LM.ENVIOS = {
+  colchon: [
+    { k: 'mrw', t: 'Colchón enrollado, a la puerta de casa', d: 'Te llega en 5 a 6 días con MRW', p: 0 },
+    { k: 'abierto', t: 'Colchón abierto', d: 'Te llega en 14 a 20 días', p: 0 }
+  ],
+  pack: [
+    { k: 'abierto', t: 'Entrega y montaje en casa', d: 'Te llega en 14 a 20 días', p: 0, nota: 'Método de envío de los packs: no se pudo comprobar en la web actual (el pack da error al añadirlo al carrito)' }
+  ]
+};
+/* Retirada de lo viejo: la de colchón (49,01 €) y las dos de las fichas de pack de la web actual */
+LM.RETIRADAS = {
+  colchon: [{ k: 'colchon', t: 'Nos llevamos tu colchón viejo', p: 49.01 }],
+  pack: [{ k: 'base', t: 'Nos llevamos tu base o canapé antiguo', p: 49.01 },
+         { k: 'base-colchon', t: 'Nos llevamos tu base y tu colchón antiguos', p: 89 }]
+};
+/* «Completa tu descanso» en el carrito: los 3 productos que recomienda el carrito actual, con el precio de cada medida
+   (Store API de WooCommerce, 12/11/2026). Se añaden sin salir del carrito (en la web actual llevan a su ficha). */
+LM.COMPLEMENTOS = [
+  { k: 'almohada', n: 'Almohada Látex', d: 'Ergonómica, 100% látex', img: '../img/almohada-latex-760.webp', regalo: null,
+    elegir: true, medidas: [['70 cm', 16438, 103, 128.75], ['75 cm', 39609, 109, 136.25], ['90 cm', 16439, 120, 150], ['135 cm', 39610, 164, 205]],
+    porCama: function (ancho) { return ancho <= 105 ? '90 cm' : '135 cm'; } },
+  { k: 'bajera', n: 'Bajera impermeable', d: 'Protege tu colchón de la humedad', img: '../img/protector-regalo-760.webp', regalo: 'Protector de colchón',
+    medidas: [['90x190', 2112, 48, 53.34], ['90x200', 2113, 48, 53.34], ['105x190', 2114, 53, 58.89], ['105x200', 2115, 53, 58.89],
+              ['135x180', 2116, 63, 70], ['135x190', 2117, 63, 70], ['140x200', 2118, 67, 74.44], ['150x190', 2119, 67, 74.44],
+              ['150x200', 2120, 67, 74.44], ['160x200', 2121, 72, 80.01], ['180x200', 2122, 77, 85.56], ['200x200', 2123, 85.99, 95.55]],
+    porCama: function (ancho, medida) { return medida; } },
+  { k: 'edredon', n: 'Edredón nórdico Duo Rest', d: 'Doble capa, para todo el año', img: '../img/edredon-regalo-760.webp', regalo: 'Edredón nórdico',
+    medidas: [['150 × 220 cm', 21016, 144, 288, 90], ['180 × 220 cm', 21017, 154, 308.01, 105], ['220 × 220 cm', 21018, 186, 372, 140],
+              ['240 × 220 cm', 21019, 197, 394, 160], ['260 × 240 cm', 21020, 211, 422, 180], ['280 × 240 cm', 39577, 243, 486, 200]],
+    porCama: function (ancho) { var m = LM.COMPLEMENTOS[2].medidas.filter(function (x) { return ancho <= x[4]; })[0]; return m ? m[0] : null; } }
+];
+/* Provincia a partir de los 2 primeros números del código postal (los nombres, como en el desplegable de la web actual) */
+LM.PROVINCIAS = { '01': 'Álava', '02': 'Albacete', '03': 'Alicante', '04': 'Almería', '05': 'Ávila', '06': 'Badajoz', '07': 'Baleares', '08': 'Barcelona',
+  '09': 'Burgos', '10': 'Cáceres', '11': 'Cádiz', '12': 'Castellón', '13': 'Ciudad Real', '14': 'Córdoba', '15': 'La Coruña', '16': 'Cuenca',
+  '17': 'Gerona', '18': 'Granada', '19': 'Guadalajara', '20': 'Guipúzcoa', '21': 'Huelva', '22': 'Huesca', '23': 'Jaén', '24': 'León',
+  '25': 'Lérida', '26': 'La Rioja', '27': 'Lugo', '28': 'Madrid', '29': 'Málaga', '30': 'Murcia', '31': 'Navarra', '32': 'Orense',
+  '33': 'Asturias', '34': 'Palencia', '35': 'Las Palmas', '36': 'Pontevedra', '37': 'Salamanca', '38': 'Santa Cruz de Tenerife', '39': 'Cantabria',
+  '40': 'Segovia', '41': 'Sevilla', '42': 'Soria', '43': 'Tarragona', '44': 'Teruel', '45': 'Toledo', '46': 'Valencia', '47': 'Valladolid',
+  '48': 'Vizcaya', '49': 'Zamora', '50': 'Zaragoza', '51': 'Ceuta', '52': 'Melilla' };

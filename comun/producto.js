@@ -99,8 +99,14 @@
   /* Compra [F6, F11] y segunda vía [F12] */
   function comprar(src) {
     var d = actual(); if (!d) return;
-    LM.cart.add({ id: d.id, pid: B().pid, nombre: B().k === 'solo' ? P.titulo : B().t + ' ' + P.nombre, medida: st.medida,
-      extra: st.recogida ? 'Con retirada del colchón viejo' : '', precio: d.p + (st.recogida ? LM.RECOGIDA.p : 0) }, src);
+    var b = B(), solo = b.k === 'solo';
+    // Paco, 12/11: la línea del carrito lleva foto, precio tachado y los regalos de verdad (colchón: almohadas; pack: los de LM.PACK_CONF)
+    LM.cart.add({ id: d.id, pid: b.pid, k: K, tipo: solo ? 'colchon' : 'pack', base: b.k,
+      nombre: solo ? P.titulo : 'Pack ' + P.nombre + ' + ' + LM.PACK_BASES[b.k].corto, medida: st.medida, color: '',
+      precio: d.p, ref: d.r, img: solo ? '../img/' + LM.FOTO_HOME[K] + '-480.webp' : P.packs[b.k].img,
+      url: location.pathname.split('/').pop(),
+      regalos: solo ? [['Almohadas', LM.REGALO_SOLO.valor, '../img/regalo-almohada-2-320.webp']] :
+        LM.regalosPack(K, b.k).map(function (r) { return [r[0], r[4], r[3]]; }) }, src);
   }
   $('#p-cta').addEventListener('click', function () { comprar('main'); });
   $('#p-stick-cta').addEventListener('click', function () { comprar('sticky'); });
