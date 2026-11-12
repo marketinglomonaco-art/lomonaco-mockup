@@ -337,60 +337,7 @@
   .prueba div:last-child { background: var(--lm); color: #fff; }
 
 
-  /* 09 Aplicaciones · estructura principal: granate + logo blanco */
-  .apl { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-  .apl figure { margin: 0; display: grid; gap: 10px; align-content: start; }
-  .apl figcaption { font-size: 13px; color: var(--mute); } .apl figcaption b { display: block; color: var(--ink); font-weight: 600; font-size: 15px; }
-  .ap-lm { background: var(--lm); color: #fff; }
-  .ap-lm .logo { color: #fff; }
-  .slide { position: relative; aspect-ratio: 16/9; border-radius: var(--r-sm); overflow: hidden; container-type: inline-size; }
-  .slide .logo { position: absolute; top: 7cqw; left: 7cqw; width: 26cqw; }
-  .slide h4 { position: absolute; left: 7cqw; bottom: 9cqw; font-size: 7.2cqw; font-weight: 600; letter-spacing: -.01em; line-height: 1; }
-  .slide h4 em { display: block; font: italic 600 1.08em/1.05 var(--serif); }
-  .slide .fe { position: absolute; right: 7cqw; bottom: 9.6cqw; font-size: 2.1cqw; opacity: .8; }
-  .slide .num { position: absolute; left: 7cqw; top: 7cqw; font-size: 2.2cqw; font-weight: 700; letter-spacing: .08em; opacity: .8; }
-  .slide .big { position: absolute; left: 7cqw; bottom: 8cqw; font-size: 11cqw; font-weight: 700; letter-spacing: -.04em; line-height: .9; }
-  .slide .mono { position: absolute; right: 7cqw; top: 7cqw; width: 5cqw; fill: #fff; padding: 0; background: none; display: block; }
-  .slide--con { background: var(--bg); border: 1px solid var(--line); }
-  .slide--con .band { position: absolute; inset: 0 0 auto 0; height: 15cqw; background: var(--lm); }
-  .slide--con .band .logo { top: 50%; transform: translateY(-50%); width: 18cqw; left: 6cqw; }
-  .slide--con .band span { position: absolute; right: 6cqw; top: 50%; transform: translateY(-50%); font-size: 2cqw; color: #fff; opacity: .85; }
-  .slide--con h5 { margin: 0; position: absolute; left: 6cqw; top: 21cqw; font-size: 4.6cqw; font-weight: 700; letter-spacing: -.02em; }
-  .slide--con ul { position: absolute; left: 6cqw; top: 30cqw; margin: 0; padding: 0; list-style: none; display: grid; gap: 1.6cqw; font-size: 2.3cqw; color: var(--mute); }
-  .slide--con li::before { content: ''; display: inline-block; width: 1.2cqw; height: 1.2cqw; border-radius: 50%; background: var(--lm); margin-right: 1.6cqw; vertical-align: .2cqw; }
-  .slide--con .ph { position: absolute; right: 6cqw; top: 21cqw; width: 38cqw; aspect-ratio: 16/11; border-radius: 1.8cqw; background: url(img/vida-lectura.webp) center/cover; }
-  .tarj { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .tarj > div { position: relative; aspect-ratio: 85/55; border-radius: 10px; overflow: hidden; container-type: inline-size; box-shadow: 0 1px 0 var(--line); }
-  .tarj .ap-lm .logo { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 62cqw; }
-  .tarj .dorso { background: var(--bg2); border: 1px solid var(--line); }
-  .tarj .dorso b { position: absolute; left: 9cqw; top: 12cqw; font-size: 7cqw; font-weight: 700; letter-spacing: -.01em; }
-  .tarj .dorso i { position: absolute; left: 9cqw; top: 23cqw; font-style: normal; font-size: 4.4cqw; color: var(--mute); }
-  .tarj .dorso p { position: absolute; left: 9cqw; bottom: 10cqw; margin: 0; font-size: 4.4cqw; line-height: 1.45; }
-  .tarj .dorso .mono { position: absolute; right: 9cqw; bottom: 10cqw; width: 9cqw; fill: var(--lm); padding: 0; background: none; display: block; }
-  .firma { display: grid; grid-template-columns: auto 1fr; border-radius: var(--r-sm); overflow: hidden; background: var(--bg2); border: 1px solid var(--line); }
-  .firma .ap-lm { display: grid; place-items: center; padding: 22px 26px; }
-  .firma .ap-lm svg { width: 46px; fill: #fff; }
-  .firma div:last-child { padding: 18px 22px; font-size: 14px; line-height: 1.5; color: var(--mute); }
-  .firma div:last-child b { display: block; color: var(--ink); font-size: 16px; }
-  .firma div:last-child a { color: var(--lm); font-weight: 600; text-decoration: none; }
-  .redes { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; padding: 18px; border-radius: var(--r-sm); background: var(--bg2); border: 1px solid var(--line); }
-  .redes .av { width: 84px; height: 84px; border-radius: 50%; display: grid; place-items: center; }
-  .redes .av svg { width: 32px; fill: #fff; }
-  .redes .cab { position: relative; aspect-ratio: 3/1; border-radius: 12px; overflow: hidden; container-type: inline-size; }
-  .redes .cab .logo { position: absolute; left: 7cqw; top: 50%; transform: translateY(-50%); width: 40cqw; }
-  .redes .cab span { position: absolute; right: 7cqw; top: 50%; transform: translateY(-50%); font: italic 600 4.8cqw/1 var(--serif); }
-  .doc { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .doc > div { position: relative; aspect-ratio: 210/297; border-radius: 10px; overflow: hidden; container-type: inline-size; background: var(--bg2); border: 1px solid var(--line); }
-  .doc .ap-lm.dtop { position: absolute; inset: 0 0 52% 0; }
-  .doc .ap-lm.dtop .logo { position: absolute; left: 10cqw; top: 12cqw; width: 52cqw; }
-  .doc .ap-lm.dtop h6 { position: absolute; left: 10cqw; bottom: 10cqw; margin: 0; font-size: 9cqw; font-weight: 600; line-height: 1.02; }
-  .doc .ap-lm.dtop h6 em { display: block; font: italic 600 1.08em/1.05 var(--serif); }
-  .doc .pie-doc { position: absolute; left: 10cqw; right: 10cqw; bottom: 10cqw; font-size: 3.4cqw; color: var(--mute); display: flex; justify-content: space-between; }
-  .doc .carta .band { position: absolute; inset: 0 0 auto 0; height: 13cqw; background: var(--lm); }
-  .doc .carta .band .logo { position: absolute; left: 10cqw; top: 50%; transform: translateY(-50%); width: 34cqw; color: #fff; }
-  .doc .carta .ln { position: absolute; left: 10cqw; right: 10cqw; height: 1.6cqw; border-radius: 1cqw; background: #e6e6ea; }
-
-  /* 08 Resumen */
+  /* 09 Resumen */
   .resumen { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r-sm); overflow: hidden; }
   .resumen div { padding: 24px; background: #fff; }
   .resumen b { display: block; font-size: 13px; font-weight: 700; color: var(--lm); letter-spacing: .08em; margin-bottom: 10px; }
@@ -449,7 +396,6 @@
     .glos, .glos tbody, .glos tr, .glos td { display: block; } .glos thead { display: none; }
     .glos tr { padding: 14px 0; border-top: 1px solid var(--line); } .glos td { border: 0; padding: 2px 0; }
     .mono { grid-template-columns: 1fr; }
-    .apl, .doc { grid-template-columns: 1fr; }
     .pareja, .comp, .iuso, .icards, .prueba, .ianat { grid-template-columns: 1fr; }
     .cx--foto .cx-l { align-content: start; min-height: 560px; }
     .cx--foto .cx-l img { object-position: 30% 100%; }
@@ -484,7 +430,7 @@
   <a class="logo" href="#portada" aria-label="LOMONACO · inicio del manual"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></a>
   <nav aria-label="Secciones">
     <a href="#marca"><b>01</b>Marca</a><a href="#logotipo"><b>02</b>Logotipo</a><a href="#color"><b>03</b>Color</a><a href="#tipografia"><b>04</b>Tipografía</a>
-    <a href="#iconos"><b>05</b>Iconos</a><a href="#tono"><b>06</b>Tono</a><a href="#fotografia"><b>07</b>Fotografía</a><a href="#elementos"><b>08</b>Elementos</a><a href="#aplicaciones"><b>09</b>Aplicaciones</a><a href="#resumen"><b>10</b>Resumen</a>
+    <a href="#iconos"><b>05</b>Iconos</a><a href="#tono"><b>06</b>Tono</a><a href="#fotografia"><b>07</b>Fotografía</a><a href="#elementos"><b>08</b>Elementos</a><a href="#resumen"><b>09</b>Resumen</a>
   </nav>
 </header>
 
@@ -504,7 +450,7 @@
       <span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span>
       <h1>Manual<br>de <em>marca</em></h1>
       <div class="meta">
-        <span><b>Versión</b>2.1</span><span><b>Fecha</b>11 de noviembre de 2026</span><span><b>Para</b>Web, redes y piezas</span>
+        <span><b>Versión</b>2.2</span><span><b>Fecha</b>12 de noviembre de 2026</span><span><b>Para</b>Web, redes y piezas</span>
       </div>
     </div>
     <div class="cover-f"><img src="img/casa-estirarse.webp" alt="Mujer estirándose y riendo al despertar sobre un colchón Natura Látex de LOMONACO" fetchpriority="high"></div>
@@ -938,49 +884,9 @@
     </div>
   </section>
 
-  <!-- 09 APLICACIONES -->
-  <section class="s" id="aplicaciones">
-    <div class="s-h"><span class="s-n">09</span><h2>Aplicaciones</h2></div>
-    <div class="s-b">
-      <p class="lead">La estructura principal: <em>fondo granate y logo blanco</em>. Es la cara de la marca en todo lo corporativo.</p>
-
-      <div class="bloque">
-        <span class="k">Presentaciones</span>
-        <div class="apl">
-          <figure><div class="slide ap-lm"><span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span><h4>Presentación<em>de marca</em></h4><span class="fe">Noviembre 2026</span></div><figcaption><b>Portada</b>Granate a sangre, logo blanco arriba a la izquierda y título con su remate en cursiva</figcaption></figure>
-          <figure><div class="slide ap-lm"><span class="num">SECCIÓN</span><svg class="mono" viewBox="0 0 376 440" aria-hidden="true"><use href="#mono"/></svg><span class="big">02 Color</span></div><figcaption><b>Separador de sección</b>Número y título grandes en blanco; monograma arriba a la derecha</figcaption></figure>
-          <figure style="grid-column:1/-1"><div class="slide slide--con"><div class="band"><span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span><span>Presentación de marca · 03</span></div><h5>Contenido</h5><ul><li>Fondo gris claro para leer</li><li>Banda granate con el logo en blanco</li><li>Una foto real, sin filtros</li></ul><div class="ph"></div></div><figcaption><b>Diapositiva de contenido</b>Fondo gris claro, banda superior granate con el logo blanco: el granate siempre presente</figcaption></figure>
-        </div>
-      </div>
-
-      <div class="bloque">
-        <span class="k">Tarjeta de visita · 85 × 55 mm</span>
-        <div class="tarj">
-          <div class="ap-lm"><span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span></div>
-          <div class="dorso"><b>Nombre Apellido</b><i>Cargo</i><p>868 28 67 52<br>grupolomonaco.com</p><svg class="mono" viewBox="0 0 376 440" aria-hidden="true"><use href="#mono"/></svg></div>
-        </div>
-      </div>
-
-      <div class="apl">
-        <figure><div class="firma"><div class="ap-lm"><svg viewBox="0 0 376 440" aria-hidden="true"><use href="#mono"/></svg></div><div><b>Nombre Apellido</b>Cargo · Lo Monaco<br>868 28 67 52 · <a href="#aplicaciones">grupolomonaco.com</a></div></div><figcaption><b>Firma de email</b>Monograma blanco sobre granate y datos en gris</figcaption></figure>
-        <figure><div class="redes"><div class="av ap-lm"><svg viewBox="0 0 376 440" aria-hidden="true"><use href="#mono"/></svg></div><div class="cab ap-lm"><span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span><span>toda la vida</span></div></div><figcaption><b>Redes sociales</b>Foto de perfil: monograma blanco sobre granate. Cabecera: logo blanco sobre granate</figcaption></figure>
-      </div>
-
-      <div class="bloque">
-        <span class="k">Documentos · A4</span>
-        <div class="doc">
-          <div><div class="ap-lm dtop"><span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span><h6>Informe<em>anual</em></h6></div><div class="pie-doc"><span>Lo Monaco · LM Descanso SL</span><span>2026</span></div></div>
-          <div class="carta"><div class="band"><span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span></div><div class="ln" style="top:24cqw;width:40cqw"></div><div class="ln" style="top:34cqw"></div><div class="ln" style="top:39cqw"></div><div class="ln" style="top:44cqw;right:30cqw"></div><div class="ln" style="top:54cqw"></div><div class="ln" style="top:59cqw"></div><div class="ln" style="top:64cqw;right:46cqw"></div><div class="pie-doc"><span>868 28 67 52</span><span>grupolomonaco.com</span></div></div>
-        </div>
-        <p class="txt">Portada de documento con la mitad superior en granate; carta y documentos internos con banda granate y logo blanco.</p>
-      </div>
-      <p class="nota">Nombres, cargos y títulos son de ejemplo para mostrar la composición.</p>
-    </div>
-  </section>
-
-  <!-- 10 RESUMEN -->
+  <!-- 09 RESUMEN -->
   <section class="s s--lm" id="resumen">
-    <div class="s-h"><span class="s-n">10</span><h2>En una página</h2></div>
+    <div class="s-h"><span class="s-n">09</span><h2>En una página</h2></div>
     <div class="s-b">
       <div class="resumen">
         <div><b>LOGO</b><p>Principal: blanco sobre granate. En la web, granate sobre gris; sobre foto, siempre blanco. Mínimo 100 px.</p></div>
@@ -996,7 +902,7 @@
 
 <footer class="pie">
   <span class="logo"><svg viewBox="0 0 2931.33 426.24" role="img" aria-label="LOMONACO"><use href="#logo"/></svg></span>
-  <p>Manual de marca · Versión 2.1 · 11/11/2026<br>Lo Monaco · LM Descanso SL</p>
+  <p>Manual de marca · Versión 2.2 · 12/11/2026<br>Lo Monaco · LM Descanso SL</p>
 </footer>
 
 <div class="vplayer" id="vplayer" hidden>
