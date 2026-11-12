@@ -2465,3 +2465,7 @@ body[data-page="cuenta"] { background: var(--bg2); }
 @media (max-width: 1280px) { .lm-nl.lm-nl-packs { padding: 10px 7px; font-size: 14px; } }
 /* Paco, 12/11 · Banner nuevo en móvil: el sello más pequeño y más abajo, para no tapar la tripa (el centro de la foto) */
 @media (max-width: 767px) { .h4 .h-hero-img img { object-position: 50% 0%; } .h4-sello { width: 29vw; top: auto; bottom: 34%; right: 3%; } }
+/* Paco, 12/11 · Listado del pack: fotos más grandes */
+.pkl-li { grid-template-columns: 92px minmax(0, 1fr) auto; gap: 16px; padding: 8px 14px 8px 8px; border-radius: 14px; }
+.pkl-li img { width: 92px; height: 92px; border-radius: 10px; }
+@media (max-width: 600px) { .pkl-li { grid-template-columns: 72px minmax(0, 1fr) auto; gap: 12px; } .pkl-li img { width: 72px; height: 72px; } }
