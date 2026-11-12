@@ -35,8 +35,8 @@
         '<a class="lm-talk-o lm-talk-wa" href="' + WA + '" target="_blank" rel="noopener" data-lead="whatsapp" tabindex="-1">' + WA_SVG + 'WhatsApp</a>' +
         '<button class="lm-talk-o lm-talk-call" type="button" aria-controls="lm-talk-pop" aria-expanded="false" tabindex="-1">' + LM.ico('phone') + 'Te llamamos</button>' +
       '</div>' +
-      // Paco, 09/11: la burbuja, en verde WhatsApp y con su icono
-      '<button class="lm-talk-main" type="button" aria-expanded="false">' + WA_SVG + '¿Hablamos?</button>';
+      // Paco, 09/11: la burbuja, en verde WhatsApp. 12/11: solo el icono de teléfono
+      '<button class="lm-talk-main" type="button" aria-expanded="false" aria-label="¿Hablamos? WhatsApp o te llamamos">' + LM.ico('phone') + '</button>';
     document.body.appendChild(b);
 
     var main = b.querySelector('.lm-talk-main'), opts = LM.$$('.lm-talk-o', b), pop = b.querySelector('.lm-talk-pop'), call = b.querySelector('.lm-talk-call');
@@ -70,7 +70,7 @@
 
     // Aparece cuando la cabecera pasa a la franja LM (= hemos pasado el banner)
     var cab = document.getElementById('lm-header');
-    function ver() { var on = !cab || cab.classList.contains('is-valores'); b.classList.toggle('is-on', on); if (!on) { verPop(false); abrir(false); } }
+    function ver() { var on = true; /* Paco, 12/11: visible desde el principio */ b.classList.toggle('is-on', on); if (!on) { verPop(false); abrir(false); } }
     if (cab) new MutationObserver(ver).observe(cab, { attributes: true, attributeFilter: ['class'] });
     ver();
   })();

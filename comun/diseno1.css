@@ -1612,21 +1612,21 @@ html.s-cm-open { overflow: hidden; }
 .h4p-info-l { display: inline-block; margin-top: 10px; font-weight: 600; color: var(--acc); text-underline-offset: 3px; }
 
 /* B · Franja LM sin horario ni teléfono: «Ofertas en packs» en el centro */
-body[data-op="b"] .lm-top-in.lm-top-a { justify-content: center; }
+.lm-top-in.lm-top-a { justify-content: center; }
 
 /* B · Botón de packs del menú, con su submenú */
 .lm-nl.lm-nl-packs { margin-left: 6px; min-height: 38px; padding: 0 12px 0 16px; border-radius: 10px; background: var(--acc); color: #fff; font-weight: 600; }
 .lm-nl.lm-nl-packs:hover, .lm-nl.lm-nl-packs[aria-expanded="true"] { color: #fff; background: var(--acc-d); }
 .lm-ni-packs .lm-mega-in .lm-mc img { object-fit: cover; }
 @media (min-width: 1024px) and (max-width: 1320px) {
-  body[data-op="b"] .lm-head-tel small { display: none; }
-  body[data-op="b"] .lm-nl.lm-nl-packs { padding: 0 8px 0 12px; font-size: 13px; }
+  .lm-head-tel small { display: none; }
+  .lm-nl.lm-nl-packs { padding: 0 8px 0 12px; font-size: 13px; }
 }
 
 /* ===== Paco, 12/11 · Proceso de compra: carrito, checkout y confirmación (comun/compra.js) =====
    Mismos pasos y campos que el checkout actual; estética LM. Fondo de página gris, paneles blancos. */
 body[data-page="carrito"], body[data-page="checkout"], body[data-page="confirmado"] { background: var(--bg2); }
-body[data-page="checkout"] .lm-talk, body[data-page="confirmado"] .lm-talk { display: none; }
+/* 12/11: la burbuja de teléfono se ve también en el checkout (Paco: «en toda la web») */
 .ck-page { padding: 32px 0 80px; background: var(--bg2); }
 .ck-card { background: #fff; border-radius: var(--r); padding: 24px; border: 1px solid var(--card-bd); box-shadow: var(--shadow); }
 .ck-card h2 { font-size: 20px; font-weight: 700; letter-spacing: -.01em; }
@@ -2315,3 +2315,79 @@ body[data-page="cuenta"] { background: var(--bg2); }
 .mc-ok[hidden] { display: none; }
 @media (max-width: 1000px) { .mc-acc-in, .mc-panel { grid-template-columns: 1fr; } .mc-nav { position: static; grid-auto-flow: column; overflow-x: auto; } .mc-nav button { border-top: 0; margin: 0; } }
 @media (max-width: 700px) { .mc-grid { grid-template-columns: 1fr; } .mc-track { grid-template-columns: 1fr 1fr; row-gap: 14px; } .mc-track li::after { display: none; } .mc-rep-g { grid-template-columns: 1fr 1fr 1fr; } .mc-tabla th:nth-child(2), .mc-tabla td:nth-child(2) { display: none; } }
+
+/* Paco, 12/11 · Botón «Versiones» (sustituye a «Ver marcas de revisión» y al selector A / B) */
+.lm-vers-w { position: fixed; left: 12px; bottom: 12px; z-index: 125; font-family: var(--font); }
+.lm-has-stick .lm-vers-w { bottom: 84px; }
+.lm-vers-btn { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 0 12px; border-radius: 999px; background: rgba(29,29,31,.86); color: #fff; font-size: 12.5px; font-weight: 600; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+.lm-vers-btn .lm-i { width: 15px; height: 15px; }
+.lm-vers-btn:hover, .lm-vers-btn[aria-expanded="true"] { background: #1d1d1f; }
+.lm-vers-p { position: absolute; left: 0; bottom: 44px; width: min(320px, calc(100vw - 24px)); max-height: 70vh; overflow-y: auto; padding: 14px; border-radius: 16px; background: #fff; box-shadow: 0 12px 40px rgba(0,0,0,.22); }
+.lm-vers-p[hidden] { display: none; }
+.lm-vers-t { margin: 0 0 8px; font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
+.lm-vers-p ol { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.lm-vers-p li { display: flex; align-items: stretch; gap: 4px; }
+.lm-vers-p li > a:first-child, .lm-vers-p li.is-on { flex: 1; display: grid; gap: 1px; padding: 8px 10px; border-radius: 10px; color: var(--ink); text-decoration: none; }
+.lm-vers-p li > a:first-child:hover { background: var(--bg2); }
+.lm-vers-p li.is-on { background: var(--bg2); }
+.lm-vers-p b { font-size: 13.5px; }
+.lm-vers-p span { font-size: 12.5px; color: var(--mute); line-height: 1.35; }
+.lm-vers-b { display: grid; place-items: center; width: 34px; border-radius: 10px; background: var(--bg2); color: var(--ink); font-size: 12px; font-weight: 700; text-decoration: none; }
+.lm-vers-b:hover { background: var(--acc); color: #fff; }
+.lm-vers-m { display: flex; align-items: center; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 13.5px; cursor: pointer; }
+.lm-vers-m input { width: 18px; height: 18px; accent-color: var(--acc); }
+
+/* Paco, 12/11 · Desglose del pack en lista: cada pieza y cada regalo con su precio (home, categoría y ficha de pack) */
+.pkl { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.pkl-li { display: grid; grid-template-columns: 52px minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 8px 12px 8px 8px; border-radius: 12px; background: #fff; box-shadow: inset 0 0 0 1px var(--line); }
+.pkl-li img { width: 52px; height: 52px; border-radius: 8px; object-fit: cover; background: var(--bg2); }
+.pkl-li b { display: block; font-size: 15px; line-height: 1.25; }
+.pkl-li small { display: block; font-size: 12.5px; color: var(--mute); }
+.pkl-li em { font-style: normal; font-weight: 700; white-space: nowrap; text-align: right; }
+.pkl-li.is-regalo { background: var(--bg2); box-shadow: none; }
+.pkl-li.is-regalo em { display: grid; justify-items: end; line-height: 1.2; }
+.pkl-li.is-regalo s { font-weight: 400; font-size: 13px; color: var(--mute); }
+.pkl-li.is-regalo strong { color: var(--acc); }
+.pkl-k { display: flex; align-items: center; gap: 6px; margin: 8px 0 2px; font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--acc); }
+.pkl-k .lm-i { width: 16px; height: 16px; }
+.pkl-tot { display: grid; gap: 6px; margin: 14px 0 0; padding-top: 12px; border-top: 1px solid var(--line); font-size: 15px; }
+.pkl-tot > div { display: flex; justify-content: space-between; gap: 10px; }
+.pkl-tot dt { color: var(--mute); }
+.pkl-tot dd { margin: 0; }
+.pkl-tot s { color: var(--mute); }
+.pkl-tot strong { color: var(--acc); }
+.pkl-pk { padding-top: 8px; font-size: 20px; font-weight: 700; }
+.pkl-pk dt { color: var(--ink) !important; }
+.pkl-ah { display: flex; align-items: center; gap: 8px; margin-top: 10px; padding: 10px 12px; border-radius: 10px; background: var(--acc); color: #fff; font-size: 14.5px; }
+.pkl-ah .lm-i { width: 18px; height: 18px; flex: none; }
+
+/* Paco, 12/11 · Packs de la home sin foto: configurador a la izquierda y lista de lo que te llevas a la derecha */
+.h4p--lista .h4p-in { display: block; }
+.h4p--lista .h4p-box { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(24px, 3.4vw, 56px); align-items: start; }
+.h4p--lista .h4p-l-cfg { display: flex; flex-direction: column; gap: 14px; }
+.h4p--lista .h4p-foot { margin-top: 10px; padding: 20px; border-radius: 14px; background: var(--bg2); }
+.h4p-det .pkl-tot { font-size: 14.5px; }
+@media (max-width: 900px) { .h4p--lista .h4p-box { grid-template-columns: 1fr; gap: 14px; } .h4p--lista .h4p-l-cfg { display: contents; } .h4p--lista .h4p-l-det { order: 1; } .h4p--lista .h4p-foot { order: 2; } }
+
+/* Paco, 12/11 · Checkout: «Te recogemos tu colchón viejo» como botón «Añadir · +49 €» */
+.ck-ret-t { margin: 18px 0 10px; font-size: 15px; font-weight: 700; }
+.ck-rec { display: grid; gap: 8px; }
+.ck-rec-i { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; padding: 12px 12px 12px 16px; border: 1.5px solid var(--line); border-radius: 12px; background: #fff; }
+.ck-rec-i > .lm-i { width: 26px; height: 26px; color: var(--acc); }
+.ck-rec-i b { display: block; font-size: 15px; line-height: 1.3; }
+.ck-rec-i small { display: block; font-size: 13px; color: var(--mute); line-height: 1.35; }
+.ck-rec-i.is-on { border-color: var(--acc); }
+.ck-rec-b { display: inline-flex; align-items: center; gap: 6px; min-height: 40px; padding: 0 14px; border-radius: 999px; border: 1.5px solid var(--acc); background: #fff; color: var(--acc); font-size: 14px; font-weight: 700; white-space: nowrap; cursor: pointer; }
+.ck-rec-b:hover { background: var(--acc); color: #fff; }
+.ck-rec-b[aria-pressed="true"] { background: var(--acc); color: #fff; }
+.ck-rec-b .lm-i { width: 16px; height: 16px; }
+@media (max-width: 600px) { .ck-rec-i { grid-template-columns: auto minmax(0, 1fr); } .ck-rec-b { grid-column: 1 / -1; justify-content: center; } }
+
+/* Paco, 12/11 · Burbuja de contacto: solo un icono de teléfono, redondo, en el lateral derecho y visible desde el principio */
+.lm-talk, .lm-talk.is-on, .lm-has-stick .lm-talk { top: 50%; bottom: auto; right: 14px; transform: translateY(-50%); }
+.lm-talk-main { width: 56px; height: 56px; min-height: 0; padding: 0; justify-content: center; }
+.lm-talk-main .lm-i { width: 24px; height: 24px; }
+@media (max-width: 900px) { .lm-talk, .lm-talk.is-on, .lm-has-stick .lm-talk { right: 10px; } .lm-talk-main { width: 50px; height: 50px; min-height: 0; padding: 0; } }
+
+/* Paco, 12/11 · Paseo virtual: el CTA de la videollamada, en el panel gris de la derecha */
+.s-pl-cta { margin-top: 14px; }

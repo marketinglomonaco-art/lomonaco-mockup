@@ -90,7 +90,10 @@
     drop: '<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>',
     tool: '<path d="M14.5 5.5a4 4 0 0 0-5 5L4 16l4 4 5.5-5.5a4 4 0 0 0 5-5l-2.5 2.5-2.5-.5-.5-2.5z"/>',
     pdf: '<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/>',
-    cube: '<path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/>'
+    cube: '<path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/>',
+    canape: '<path d="M3 13h18v6H3z"/><path d="M3 16h18"/><path d="M3 13 17.5 5.5l.9 1.8L5.6 13"/>',
+    recoger: '<rect x="2.5" y="10" width="13" height="7" rx="1.5"/><path d="M2.5 13.5h13"/><path d="M17.5 13.5h4m-2-2 2 2-2 2"/>',
+    base: '<rect x="2.5" y="9.5" width="19" height="5" rx="1.5"/><path d="M5.5 14.5V18M18.5 14.5V18M2.5 12h19"/>'
   };
   LM.ico = function (n, cls) {
     return '<svg class="lm-i ' + (cls || '') + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + P[n] + '</svg>';
@@ -121,6 +124,58 @@
       '<p class="tf-pk-reg">' + LM.ico('gift') + 'De regalo: ' + pk.regalos.map(function (r, i) { return i ? R[r][0].toLowerCase() : R[r][0]; }).join(', ').replace(/, ([^,]*)$/, ' y $1') + '</p>' +
       '<div class="lm-card-f">' + LM.precio(d, { desde: true }) + '<span class="lm-btn lm-btn--full" aria-hidden="true">Ver pack</span></div></div></article>';
   };
+  /* Desglose de un pack (Paco, 12/11): cada pieza con su precio real para esa medida y color, y los regalos valorados
+     con el precio de la tienda para esa medida (almohadas: 120 €, dato de Paco; edredón según el ancho de la cama;
+     bajera de la misma medida). Lo usan el configurador de packs (home y categoría) y la caja de compra de la ficha de pack */
+  function filaT(t, m, c) {
+    if (!t) return null;
+    var f = t[m] || t[m + '-2p'] || (m === '135x180' ? t['135x182'] : null); if (!f) return null;
+    return f[c] || f['-'] || f[Object.keys(f)[0]];
+  }
+  LM.valorRegalo = function (k, m) {
+    var ancho = +String(m).split('x')[0], T = LM.TIENDA || {};
+    if (k === 'almohada') return LM.REGALO_SOLO.valor;
+    if (k === 'protector') { var b = filaT(T.bajera && T.bajera.tabla, m, '-'); return b ? b.p : 48; }
+    if (k === 'edredon' && T.edredon) {
+      var tope = { 90: '150x220|cama 80 y 90', 105: '180x220|cama 105', 140: '220x220|cama 120-135-140', 160: '240x220|cama 150-160', 180: '260x240|cama 180', 200: '280x240|cama 200' };
+      var lim = [90, 105, 140, 160, 180, 200].filter(function (x) { return ancho <= x; })[0] || 200;
+      var e = T.edredon.tabla[tope[lim]]; return e ? e['-'].p : 144;
+    }
+    return 0;
+  };
+  LM.packDesglose = function (pkKey, m, color) {
+    var pk = LM.TIENDA.packs[pkKey]; if (!pk) return null;
+    var P = LM.PRODUCTOS[pk.colchon], canape = pk.base === 'canape';
+    color = color || (canape ? 'Nogal' : 'Chocolate');
+    var dp = filaT(pk.tabla, m, color), dc = LM.PRECIOS[pk.colchon][m], db = filaT((canape ? LM.TIENDA.canape : LM.TIENDA.base3d).tabla, m, color);
+    if (!dp || !dc) return null;
+    var cfoto = canape ? LM.TIENDA.canape.colores.filter(function (x) { return x.k === color; })[0] : LM.TIENDA.base3d.colores.filter(function (x) { return x.k === color; })[0];
+    var lineas = [
+      { t: 'Colchón ' + P.nombre, sub: LM.medidaTxt(m) + ' · ' + P.nucleo, img: '../img/' + LM.FOTO_HOME[pk.colchon] + '-480.webp', p: dc.p },
+      { t: canape ? 'Canapé abatible de madera' : 'Base tapizada antideslizante', sub: 'Acabado ' + color, img: cfoto ? '../img/tienda/' + cfoto.fotos[canape ? 1 : 0] + '-700.webp' : '', p: db ? db.p : null }
+    ];
+    var regalos = LM.REGALOS.filter(function (r) { return pk.regalos.indexOf(r[2]) > -1; }).map(function (r) {
+      return { t: r[0], sub: r[1], img: r[3], p: LM.valorRegalo(r[2], m), regalo: true };
+    });
+    var piezas = lineas.reduce(function (s, l) { return s + (l.p || 0); }, 0), vReg = regalos.reduce(function (s, l) { return s + l.p; }, 0);
+    var suelto = Math.round((piezas + vReg) * 100) / 100, ahorro = Math.round((suelto - dp.p) * 100) / 100;
+    return { pk: pk, m: m, color: color, d: dp, lineas: lineas, regalos: regalos, valorRegalos: vReg, suelto: suelto, ahorro: ahorro };
+  };
+  /* El listado: una línea por pieza y por regalo, con su precio; al final, por separado, el pack y lo que te ahorras */
+  LM.packLista = function (D, o) {
+    o = o || {};
+    if (!D) return '<p class="c-na">Este pack no se hace en esta medida.</p>';
+    var li = function (l) {
+      return '<li class="pkl-li' + (l.regalo ? ' is-regalo' : '') + '"><img src="' + l.img + '" alt="" width="64" height="64" loading="lazy"><span><b>' + esc(l.t) + '</b><small>' + esc(l.sub) + '</small></span>' +
+        (l.regalo ? '<em><s>' + LM.eur(l.p) + '</s><strong>Gratis</strong></em>' : '<em>' + (l.p != null ? LM.eur(l.p) : '—') + '</em>') + '</li>';
+    };
+    return '<ul class="pkl" aria-label="Qué te llevas">' + D.lineas.map(li).join('') +
+      (D.regalos.length ? '<li class="pkl-k">' + LM.ico('gift') + 'De regalo con tu pack</li>' + D.regalos.map(li).join('') : '') + '</ul>' +
+      '<dl class="pkl-tot"><div><dt>Por separado</dt><dd><s>' + LM.eur(D.suelto) + '</s></dd></div>' +
+      '<div><dt>Regalos</dt><dd><s>' + LM.eur(D.valorRegalos) + '</s> <strong>Gratis</strong></dd></div>' +
+      (o.precio !== false ? '<div class="pkl-pk"><dt>Tu pack · ' + LM.medidaTxt(D.m) + '</dt><dd>' + LM.eur(D.d.p) + '</dd></div>' : '') +
+      '</dl>' + (D.ahorro >= 1 ? '<p class="pkl-ah">' + LM.ico('check') + 'Te ahorras <b>' + LM.eur(D.ahorro) + '</b> frente a comprarlo todo por separado</p>' : '');
+  };
   LM.stars = function (val) {
     var v = parseFloat(String(val).replace(',', '.')), h = '';
     for (var i = 1; i <= 5; i++) {
@@ -140,24 +195,16 @@
     var c = Math.round(p * (1 + coste) / n * 100) / 100;
     return c < F.cuotaMin ? null : c;
   };
-  LM.cuota = function (p) { return LM.cuotaPlazo(p, 12); };
-  // «63,93 € al mes en 12 meses» o, desde 1.200 €, «… en 12 meses sin intereses»
+  /* Paco, 12/11: la cuota que se enseña es SIEMPRE a 36 meses, con el coste de 36 meses de la calculadora (24,91 %),
+     aunque la calculadora no ofrezca ese plazo para ese importe («fuérzalo»). Ej.: 449,49 € → 15,60 € al mes */
+  LM.cuota36 = function (p) { return p > 0 ? Math.round(p * (1 + LM.FINANCIACION.plazos[36].coste) / 36 * 100) / 100 : null; };
+  LM.cuota = LM.cuota36;
   LM.cuotaFrase = function (p) {
-    var c = LM.cuota(p); if (c == null) return '';
-    return '<b>' + LM.eur(c) + ' al mes</b> en 12 meses' + (LM.sinIntereses(p) ? ' sin intereses' : '') + LM.ast;
+    var c = LM.cuota36(p); if (c == null) return '';
+    return '<b>' + LM.eur(c) + ' al mes</b> en 36 meses' + LM.ast;
   };
-  /* Paco, 10/11: en la recomendación, siempre la cuota más baja que da la calculadora (hoy, 36 meses) */
-  LM.cuotaBaja = function (p) {
-    var best = null;
-    Object.keys(LM.FINANCIACION.plazos).forEach(function (n) {
-      var c = LM.cuotaPlazo(p, +n); if (c != null && (!best || c < best.c)) best = { c: c, n: +n };
-    });
-    return best;
-  };
-  LM.cuotaBajaFrase = function (p) {
-    var b = LM.cuotaBaja(p); if (!b) return '';
-    return '<b>' + LM.eur(b.c) + ' al mes</b> en ' + b.n + ' meses' + (b.n === 12 && LM.sinIntereses(p) ? ' sin intereses' : '') + LM.ast;
-  };
+  LM.cuotaBaja = function (p) { var c = LM.cuota36(p); return c == null ? null : { c: c, n: 36 }; };
+  LM.cuotaBajaFrase = LM.cuotaFrase;
   LM.ast = '<a class="lm-ast" href="#lm-legal" aria-label="Ver condiciones de la financiación">*</a>';
   LM.cuotaTxt = function (p) { var f = LM.cuotaFrase(p); return f ? 'o ' + f : ''; };
   LM.precio = function (d, o) {
@@ -194,7 +241,7 @@
 
   /* ---------- tarjeta estándar de colchón (Paco, 05/11) ----------
      La de la home es la estándar del ecommerce: home, categoría y cualquier página que liste colchones.
-     Precio para la medida elegida (por defecto 150 × 190), cuota a 12 meses y almohadas de regalo bajo el botón. */
+     Precio para la medida elegida (por defecto 150 × 190), cuota a 36 meses (12/11) y almohadas de regalo bajo el botón. */
   LM.selloOcu = function (k, cls) {
     var p = LM.PRODUCTOS[k]; if (!p || !p.ocu) return '';
     return '<span class="lm-ocu' + (cls ? ' ' + cls : '') + '"><img src="' + LM.SELLO_OCU.img + '" alt="' + LM.SELLO_OCU.alt + '" width="160" height="160" loading="lazy"><span>' + LM.SELLO_OCU.t + '</span></span>';
@@ -431,7 +478,8 @@
     if (PG === 'checkout' || PG === 'confirmado') { LM.headerCompra(el, PG); return; }
     var active = el.getAttribute('data-active') || '';
     var tel = LM.mark(C.telefono, C.telefono.v);
-    var OPB = document.body.getAttribute('data-op') === 'b';
+    // Paco, 12/11: queda solo el diseño A, con la cabecera que tenía la B (franja sin horario ni teléfono y botón «Packs» con su submenú)
+    var OPB = true;
     var nav = LM.MENU.map(function (it, i) {
       var cards = it.destacados ? it.destacados.map(megaCard).join('') : (it.fichas || []).map(fichaCard).join('');
       return '<li class="lm-ni' + (active === it.t ? ' is-active' : '') + '">' +
@@ -676,7 +724,7 @@
       ['¿Qué pasa si el colchón me parece demasiado duro?', 'Tienes ' + LM.c('prueba') + ' para probarlo en tu cama. Los primeros días el cuerpo se acostumbra. Si no te adaptas, llámanos al ' + tel + ' y te ayudamos. Si aun así no te convence, puedes devolverlo dentro de ese plazo.'],
       ['¿Puedo devolverlo si no me adapto?', 'Sí. ' + LM.c('devolucionCond')],
       ['¿Quién recoge el colchón y quién paga la recogida?', 'Lo recogemos nosotros, en la misma dirección donde te lo entregamos. Se pueden descontar los gastos de envío y recogida cuando la ley lo permite. Si el colchón llegó dañado o equivocado, te devolvemos todo, sin descontar nada.'],
-      ['¿Cuánto tardará en llegar a mi casa?', 'Normalmente ' + (p && p.entrega ? LM.mark({ estado: 'confirmar', nota: 'Plazo de este modelo' }, p.entrega) : LM.c('entrega')) + '. Si pides montaje, ' + LM.c('entregaMontaje') + '.'],
+      ['¿Cuánto tardará en llegar a mi casa?', 'Normalmente ' + (p && p.entrega ? LM.mark({ estado: 'confirmar', nota: 'Plazo de este modelo' }, p.entrega) : LM.c('entrega')) + '.'],
       ['¿Qué cubre la garantía y qué no?', 'Tu colchón tiene ' + LM.c('garantia') + ' de garantía. ' + LM.c('garantiaCubre')],
       ['¿Puedo pagarlo a plazos?', 'Sí. Puedes financiarlo ' + LM.c('financiacion') + '. ' + LM.c('financiacionLarga')],
       ['¿Qué necesito para elegir la medida correcta?', 'Mide por dentro tu cama o tu canapé: el ancho y el largo. Tu colchón debe tener esa misma medida. Si dudas, llámanos al ' + tel + ' y te ayudamos.'],
@@ -840,17 +888,30 @@
   };
 
   /* ---------- interruptor de marcas de revisión ---------- */
+  /* Paco, 12/11: fuera las pastillas «Ver marcas de revisión» y «Opción A / B». Queda un botón pequeño, abajo a la izquierda,
+     que despliega el histórico de versiones (LM.HISTORICO, comun/historico.js) y, dentro, el interruptor de las marcas */
   function marksToggle() {
-    var b = document.createElement('button');
-    b.type = 'button'; b.className = 'lm-marks';
-    var on = LM.store.get('lm_marcas') === '1'; // 29/10: para enseñar la maqueta, las marcas empiezan ocultas
-    function set() {
-      document.documentElement.classList.toggle('lm-nomarks', !on);
-      b.innerHTML = LM.ico('info') + (on ? 'Ocultar marcas de revisión' : 'Ver marcas de revisión');
-      b.setAttribute('aria-pressed', on);
-    }
-    b.addEventListener('click', function () { on = !on; LM.store.set('lm_marcas', on ? '1' : '0'); set(); });
-    set(); document.body.appendChild(b);
+    var on = LM.store.get('lm_marcas') === '1'; // las marcas empiezan ocultas
+    var pag = location.pathname.split('/').pop() || 'index.html', H = LM.HISTORICO || [];
+    var URL = 'https://marketinglomonaco-art.github.io/lomonaco-mockup/historico/';
+    var w = document.createElement('div');
+    w.className = 'lm-vers-w';
+    w.innerHTML = '<button type="button" class="lm-vers-btn" aria-expanded="false" aria-controls="lm-vers-p" aria-label="Versiones de la maqueta">' + LM.ico('layers') + '<span>Versiones</span></button>' +
+      '<div class="lm-vers-p" id="lm-vers-p" hidden><p class="lm-vers-t">Versiones de la maqueta</p><ol>' +
+      '<li class="is-on"><b>Actual</b><span>La que estás viendo</span></li>' +
+      H.map(function (v) {
+        var p = v.pags.indexOf(pag) > -1 ? pag : 'index.html';
+        return '<li><a href="' + URL + v.id + '/diseno1-a/' + p + '"><b>' + esc(v.fecha) + '</b><span>' + esc(v.titulo) + '</span></a>' +
+          (v.b ? '<a class="lm-vers-b" href="' + URL + v.id + '/diseno1-b/' + p + '" aria-label="Opción B del ' + esc(v.fecha) + '">B</a>' : '') + '</li>';
+      }).join('') + '</ol>' +
+      '<label class="lm-vers-m"><input type="checkbox"' + (on ? ' checked' : '') + '><span>Ver marcas de revisión</span></label></div>';
+    document.body.appendChild(w);
+    var b = w.querySelector('.lm-vers-btn'), p = w.querySelector('.lm-vers-p');
+    function set() { document.documentElement.classList.toggle('lm-nomarks', !on); }
+    b.addEventListener('click', function () { p.hidden = !p.hidden; b.setAttribute('aria-expanded', !p.hidden); });
+    document.addEventListener('click', function (e) { if (!w.contains(e.target)) { p.hidden = true; b.setAttribute('aria-expanded', 'false'); } });
+    w.querySelector('.lm-vers-m input').addEventListener('change', function () { on = this.checked; LM.store.set('lm_marcas', on ? '1' : '0'); set(); });
+    set();
   }
 
   /* ---------- arranque común ---------- */

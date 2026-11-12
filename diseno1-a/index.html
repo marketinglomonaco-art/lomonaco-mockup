@@ -11,10 +11,10 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300..800&family=Playfair+Display:ital,wght@1,400;1,500&display=swap">
 <link rel="preload" as="image" href="../img/hero-movil-860.webp" media="(max-width: 767px)">
 <link rel="preload" as="image" href="../img/hero-1800.webp" imagesrcset="../img/hero-960.webp 960w, ../img/hero-1800.webp 1800w" imagesizes="100vw" media="(min-width: 768px)">
-<link rel="stylesheet" href="../comun/base.css?v=1794470594">
-<link rel="stylesheet" href="../comun/paginas.css?v=1794470594">
-<link rel="stylesheet" href="../comun/diseno1.css?v=1794470594">
-<link rel="stylesheet" href="../comun/rojo.css?v=1794470594">
+<link rel="stylesheet" href="../comun/base.css?v=1794474333">
+<link rel="stylesheet" href="../comun/paginas.css?v=1794474333">
+<link rel="stylesheet" href="../comun/diseno1.css?v=1794474333">
+<link rel="stylesheet" href="../comun/rojo.css?v=1794474333">
 </head>
 <body data-page="home" data-opcion="diseno1-a" data-variante="a" data-op="a" data-producto="" data-version="4">
 <a class="lm-skip" href="#main">Saltar al contenido</a>
@@ -131,31 +131,32 @@
   <div class="h4c-dots" id="h4c-dots" aria-hidden="true"></div>
 </section>
 
-<!-- PACKS · Paco, 05/11: solo los packs reales (canapé con regalos / base antideslizante con descuento),
-     precio de cada producto por separado y el ahorro del conjunto. Título: «Llévate toda la cama» -->
-<section class="lm-sec lm-alt h4p" id="packs" aria-labelledby="h4p-t">
+<!-- PACKS · Paco, 05/11: solo los packs reales. Título: «Llévate toda la cama».
+     Paco, 12/11: sin foto de ambiente; todo lo que te llevas (colchón, canapé o base y cada regalo) en una lista, cada línea con su precio,
+     y al final lo que cuesta por separado, lo que sale gratis y lo que te ahorras (LM.packDesglose / LM.packLista) -->
+<section class="lm-sec lm-alt h4p h4p--lista" id="packs" aria-labelledby="h4p-t">
   <div class="lm-w">
     <div class="h4p-head">
       <div>
         <p class="lm-eyebrow">Packs de descanso</p>
         <h2 class="lm-h2" id="h4p-t">Llévate toda la cama.</h2>
       </div>
-      <p class="lm-sub">Colchón y canapé abatible o base tapizada, en una sola compra. Con canapé, te regalamos la ropa de cama.</p>
+      <p class="lm-sub">Colchón y canapé abatible o base tapizada, en una sola compra, con regalos.</p>
     </div>
     <div class="h4p-in" id="h4p" data-testid="pack-config">
-      <figure class="h4p-img">
-        <img id="h4p-img" src="../img/pack-conf-canape-1200.webp" srcset="../img/pack-conf-canape-700.webp 700w, ../img/pack-conf-canape-1200.webp 1200w" sizes="(max-width: 900px) 100vw, 55vw" width="1200" height="896" alt="" loading="lazy">
-        <!-- 06/11 (Paco): sin etiqueta sobre la foto; el total de regalos y el ahorro ya salen al lado -->
-      </figure>
       <div class="h4p-box">
-        <div class="h4p-seg" role="radiogroup" aria-label="Tipo de base" id="h4p-base"></div>
-        <p class="h4p-k" id="h4p-ck">Elige tu colchón</p>
-        <div class="h4p-cols" role="radiogroup" aria-labelledby="h4p-ck" id="h4p-col"></div>
-        <p class="h4p-k" id="h4p-dk">Qué te llevas</p>
-        <ul class="h4p-det" id="h4p-det" aria-labelledby="h4p-dk"></ul>
-        <div class="h4p-foot">
-          <div class="h4p-price" id="h4p-price" aria-live="polite"></div>
-          <a class="lm-btn h4p-go" id="h4p-go" href="#">Ver el pack <svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <div class="h4p-l-cfg">
+          <div class="h4p-seg" role="radiogroup" aria-label="Tipo de base" id="h4p-base"></div>
+          <p class="h4p-k" id="h4p-ck">Elige tu colchón</p>
+          <div class="h4p-cols" role="radiogroup" aria-labelledby="h4p-ck" id="h4p-col"></div>
+          <div class="h4p-foot">
+            <div class="h4p-price" id="h4p-price" aria-live="polite"></div>
+            <a class="lm-btn h4p-go" id="h4p-go" href="#">Ver el pack <svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </div>
+        <div class="h4p-l-det">
+          <p class="h4p-k" id="h4p-dk">Qué te llevas</p>
+          <div class="h4p-det" id="h4p-det" aria-labelledby="h4p-dk"></div>
         </div>
       </div>
     </div>
@@ -176,21 +177,20 @@
 
 </main>
 <div id="lm-footer"></div>
-<script src="../comun/datos.js?v=1794470594"></script>
-<script src="../comun/tienda.js?v=1794470594"></script>
-<script src="../comun/componentes.js?v=1794470594"></script>
+<script src="../comun/datos.js?v=1794474333"></script>
+<script src="../comun/tienda.js?v=1794474333"></script>
+<script src="../comun/historico.js?v=1794474333"></script>
+<script src="../comun/componentes.js?v=1794474333"></script>
 <script>LM.init();</script>
-<script src="../comun/compromisos.js?v=1794470594"></script>
-<script src="../comun/packs.js?v=1794470594"></script>
-<script src="../comun/canape3d.js?v=1794470594"></script>
-<script src="../comun/home.js?v=1794470594"></script>
-<script src="../comun/pack.js?v=1794470594"></script>
-<script src="../comun/asistente.js?v=1794470594"></script>
-<script src="../comun/presion.js?v=1794470594"></script>
+<script src="../comun/compromisos.js?v=1794474333"></script>
+<script src="../comun/packs.js?v=1794474333"></script>
+<script src="../comun/home.js?v=1794474333"></script>
+<script src="../comun/pack.js?v=1794474333"></script>
+<script src="../comun/asistente.js?v=1794474333"></script>
+<script src="../comun/presion.js?v=1794474333"></script>
 <!-- Paco, 09/11: fuera el módulo «Así se adaptan los muelles» (comun/muelles.js se conserva, sin cargar) -->
-<script src="../comun/animaciones.js?v=1794470594"></script>
-<script src="../comun/v4.js?v=1794470594"></script>
-<script src="../comun/cuestionario.js?v=1794470594"></script>
-<script src="../comun/ab.js?v=1794470594"></script>
+<script src="../comun/animaciones.js?v=1794474333"></script>
+<script src="../comun/v4.js?v=1794474333"></script>
+<script src="../comun/cuestionario.js?v=1794474333"></script>
 </body>
 </html>

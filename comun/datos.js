@@ -19,12 +19,12 @@ LM.CONFIG = {
   /* Garantía, devolución, envío y pago: textos de /devoluciones/, /envios/ y /metodos-de-pago/ (28/10/2026) */
   garantia:     { v: '10 años', estado: 'ok' },
   garantiaCubre:{ v: 'Cubre los defectos de fabricación y el núcleo del colchón (espuma, muelles o látex). No cubre manchas, humedad, golpes, mal uso, usarlo sin una base adecuada ni el asentamiento normal de las capas (hasta 2 cm).', estado: 'ok' },
-  envio:        { v: 'Envío y montaje gratis en la península', estado: 'ok' },
-  envioDevolucion: { v: 'Envío y montaje gratis', estado: 'ok' },
+  envio:        { v: 'Envío gratis en la península', estado: 'ok' }, /* Paco, 12/11: no se monta gratis */
+  envioDevolucion: { v: 'Envío gratis', estado: 'ok' },
   devolucion:   { v: 'Lo recogemos en tu casa', estado: 'ok' },
   devolucionCond:{ v: 'Puedes devolverlo durante las 150 noches de prueba, desde que lo recibes. Debe estar en perfecto estado y con su embalaje original o uno parecido. Te devolvemos el dinero por transferencia en 10 días hábiles desde que llega a nuestro almacén. Se pueden descontar los gastos de envío y recogida cuando la ley lo permite.', estado: 'ok' },
   clientes:     { v: '750.000', estado: 'ok' },
-  fundacion:    { v: '1977', estado: 'confirmar', nota: 'La web dice «desde 1977» y «más de 25 años»' },
+  fundacion:    { v: '1996', estado: 'ok' } /* Paco, 12/11: fundada en 1996 */,
   fabricacion:  { v: 'Fabricación propia en España', estado: 'confirmar' },
   entrega:      { v: '5 a 7 días laborables', estado: 'ok' },
   entregaMontaje:{ v: '20 a 25 días laborables', estado: 'confirmar', nota: 'Página de envíos: 20 a 25 días laborables; fichas de producto: 15 a 20 días' },
@@ -48,7 +48,7 @@ LM.CONFIG = {
   showroomDir:  { v: null, estado: 'pendiente', nota: 'dirección del showroom, si se puede visitar' },
   /* V4 · cambios de la home del 29/10 */
   cuotaBanner:  { v: '15 €', estado: 'ok' },
-  trayectoria:  { v: 'Casi 30 años', estado: 'confirmar', nota: 'Choca con «Desde 1977» (casi 50 años). La web también dice «más de 25 años»' },
+  trayectoria:  { v: '30 años', estado: 'ok' } /* Paco, 12/11: desde 1996 */,
   compraGarantizada: { v: 'Protección al comprador de Trusted Shops', estado: 'confirmar', nota: 'Solo si el sello Trusted Shops Guarantee está activo' },
   financiacion36: { meses: 36, estado: 'ok', nota: 'Plazo máximo de 36 meses (Paco, 29/10). Coste por plazo en LM.FINANCIACION (calculadora de Paco, 06/11)' }
 };
@@ -452,14 +452,15 @@ LM.ENVIOS = {
     { k: 'abierto', t: 'Colchón abierto', d: 'Te llega en 14 a 20 días', p: 0 }
   ],
   pack: [
-    { k: 'abierto', t: 'Entrega y montaje en casa', d: 'Te llega en 14 a 20 días', p: 0, nota: 'Método de envío de los packs: no se pudo comprobar en la web actual (el pack da error al añadirlo al carrito)' }
+    { k: 'abierto', t: 'Entrega en casa', d: 'Te llega en 14 a 20 días', p: 0, nota: 'Método de envío de los packs: no se pudo comprobar en la web actual (el pack da error al añadirlo al carrito)' }
   ]
 };
 /* Retirada de lo viejo: la de colchón (49,01 €) y las dos de las fichas de pack de la web actual */
+/* Paco, 12/11: «Te recogemos el colchón» por 49 € (botón en el checkout) */
 LM.RETIRADAS = {
-  colchon: [{ k: 'colchon', t: 'Nos llevamos tu colchón viejo', p: 49.01 }],
-  pack: [{ k: 'base', t: 'Nos llevamos tu base o canapé antiguo', p: 49.01 },
-         { k: 'base-colchon', t: 'Nos llevamos tu base y tu colchón antiguos', p: 89 }]
+  colchon: [{ k: 'colchon', t: 'Te recogemos tu colchón viejo', d: 'Cuando te llevemos el nuevo, nos llevamos el viejo.', p: 49 }],
+  pack: [{ k: 'base', t: 'Te recogemos tu base o canapé viejo', d: 'El mismo día de la entrega.', p: 49.01 },
+         { k: 'base-colchon', t: 'Te recogemos la base y el colchón viejos', d: 'Los dos, el mismo día de la entrega.', p: 89 }]
 };
 /* «Completa tu descanso» en el carrito: los 3 productos que recomienda el carrito actual, con el precio de cada medida
    (Store API de WooCommerce, 12/11/2026). Se añaden sin salir del carrito (en la web actual llevan a su ficha). */

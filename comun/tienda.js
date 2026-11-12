@@ -13,9 +13,9 @@ LM.TIENDA = {
   "nombre": "Canapé abatible de madera",
   "corto": "Canapé abatible",
   "lema": "La solución de almacenamiento ideal: aprovecha el espacio con estilo.",
-  "desc": "Un gran arcón bajo tu cama, de madera de alta calidad y con apertura suave. Elige entre cuatro acabados y te lo montamos gratis.",
+  "desc": "Un gran arcón bajo tu cama, de madera de alta calidad y con apertura suave. Elige entre cuatro acabados y móntalo con nuestras instrucciones paso a paso.",
   "garantia": "3 años",
-  "entrega": "Entrega de 5 a 7 días; con montaje, de 15 a 20 días",
+  "entrega": "Entrega de 5 a 7 días",
   "colorLabel": "Acabado",
   "colorDef": "Nogal",
   "colores": [
@@ -95,7 +95,7 @@ LM.TIENDA = {
    [
     "palette",
     "Diseño que combina",
-    "En blanco, roble, nogal o nórdico, para un dormitorio ordenado y con estilo. Y te lo montamos gratis."
+    "En blanco, roble, nogal o nórdico, para un dormitorio ordenado y con estilo."
    ]
   ],
   "detalle": [
@@ -376,7 +376,7 @@ LM.TIENDA = {
   "lema": "Una alternativa sofisticada, con acabados de alta gama, que une diseño y funcionalidad.",
   "desc": "Tapizada en tela, con bastidor de madera maciza y una altura pensada para que pase el robot de limpieza por debajo.",
   "garantia": "3 años",
-  "entrega": "Entrega de 5 a 7 días; con montaje, de 15 a 20 días",
+  "entrega": "Entrega de 5 a 7 días",
   "colorLabel": "Color",
   "colorDef": "Beige",
   "colores": [
@@ -746,7 +746,7 @@ LM.TIENDA = {
   "desc": "Tejido Airflow® 3D antideslizante, tablero reforzado y barras de acero. Compatible con cualquier colchón y con una relación calidad-precio excepcional.",
   "garantia": "3 años",
   "garantiaNota": "El sello de la web dice 3 años; el texto de la ficha dice 5 años",
-  "entrega": "Entrega de 5 a 7 días; con montaje, de 15 a 20 días",
+  "entrega": "Entrega de 5 a 7 días",
   "colorLabel": "Color",
   "colorDef": "Chocolate",
   "colores": [

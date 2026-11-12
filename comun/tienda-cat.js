@@ -53,7 +53,7 @@
     html += seccion('elegir', 'Cómo elegir', '¿Canapé o <em>base tapizada?</em>',
       '<div class="tc-vs"><a class="tc-vs-c" href="canape.html">' + LM.tfImg(T.canape.colores[3].fotos[1], { alt: 'Canapé abatible abierto' }) + '<b>Canapé abatible</b><span>Guardas mantas, edredones y maletas en un arcón de 28 cm de fondo. Con frenos de seguridad.</span></a>' +
       '<a class="tc-vs-c" href="bases.html">' + LM.tfImg(T.base3d.colores[0].fotos[0], { alt: 'Base tapizada 3D' }) + '<b>Base tapizada</b><span>Estructura fija, más ligera y sin almacenaje. Sobre patas: el aire circula y pasa el robot aspirador.</span></a></div>' +
-      '<p class="tc-vs-n">Las dos, en las mismas medidas y compatibles con cualquiera de nuestros colchones. Te las montamos gratis.</p>', 'lm-alt');
+      '<p class="tc-vs-n">Las dos, en las mismas medidas y compatibles con cualquiera de nuestros colchones.</p>', 'lm-alt');
   }
   if (CAT === 'almohadas') {
     html += seccion('elegir', 'Cómo elegir', '¿Látex o <em>viscoelástica?</em>',

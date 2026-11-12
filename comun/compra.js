@@ -36,7 +36,7 @@
       '<div><dt>Productos</dt><dd>' + LM.eur(c.ref) + '</dd></div>' +
       (c.dto > 0 ? '<div class="ck-tot-dto"><dt>Descuento</dt><dd>−' + LM.eur(c.dto) + '</dd></div>' : '') +
       (c.regalos ? '<div class="ck-tot-reg"><dt>' + LM.ico('gift') + 'Regalos incluidos</dt><dd><s>' + LM.eur(c.regalos) + '</s> Gratis</dd></div>' : '') +
-      '<div><dt>Envío y montaje</dt><dd class="ck-gratis">Gratis</dd></div>' +
+      '<div><dt>Envío</dt><dd class="ck-gratis">Gratis</dd></div>' +
       (o.ret ? '<div><dt>' + esc(o.ret.t) + '</dt><dd>' + LM.eur(o.ret.p) + '</dd></div>' : '') +
       '<div class="ck-tot-t"><dt>Total</dt><dd>' + LM.eur(c.total) + '</dd></div>' +
       '</dl><p class="ck-iva">IVA incluido (' + LM.eur(Math.round(iva(c.total) * 100) / 100) + ')</p>' +
@@ -146,7 +146,7 @@
         '<div class="ck-ok-b"><a class="lm-btn" href="index.html">Volver a la tienda</a></div>' +
       '</div><aside class="ck-side"><div class="ck-card ck-sum"><h2>Tu pedido</h2><ul class="lm-lis">' +
         ped.items.map(function (it, i) { return CART.linea(it, i, { cant: false, links: false, compact: true }); }).join('') + '</ul>' +
-        '<dl class="ck-tot"><div><dt>Envío y montaje</dt><dd class="ck-gratis">Gratis</dd></div>' + (ped.ret ? '<div><dt>' + esc(ped.ret.t) + '</dt><dd>' + LM.eur(ped.ret.p) + '</dd></div>' : '') +
+        '<dl class="ck-tot"><div><dt>Envío</dt><dd class="ck-gratis">Gratis</dd></div>' + (ped.ret ? '<div><dt>' + esc(ped.ret.t) + '</dt><dd>' + LM.eur(ped.ret.p) + '</dd></div>' : '') +
         '<div><dt>Pago</dt><dd>' + esc(ped.pagoT) + '</dd></div><div class="ck-tot-t"><dt>Total</dt><dd>' + LM.eur(ped.total) + '</dd></div></dl>' +
         '<p class="ck-iva">IVA incluido</p></div>' + LM.llamar('confirmado', { label: '¿Alguna duda con tu pedido?' }) + '</aside></div>' +
       '<p class="ck-maq">' + LM.pend('maqueta: número de pedido de ejemplo; no se ha cobrado nada') + '</p>';
@@ -161,7 +161,7 @@
   var guardado = get('lm_ck') || {};
   var soloComp = CART.items.every(function (i) { return i.tipo === 'complemento'; });
   var ENV = soloComp ? [{ k: 'casa', t: 'Envío a domicilio', d: 'Te llega en ' + C.entrega.v, p: 0, nota: 'Método de envío cuando solo hay complementos: confirmar en la tienda' }] : hayPack() ? LM.ENVIOS.pack : LM.ENVIOS.colchon;
-  var RET = (hayPack() ? LM.RETIRADAS.pack : []).concat(CART.items.some(function (i) { return i.tipo === 'colchon'; }) ? LM.RETIRADAS.colchon : []);
+  var RET = (hayColchon() ? LM.RETIRADAS.colchon : []).concat(hayPack() ? LM.RETIRADAS.pack : []);
   var st = { envio: guardado.envio && ENV.some(function (x) { return x.k === guardado.envio; }) ? guardado.envio : ENV[0].k, ret: guardado.ret || '', pago: guardado.pago || 'fin' };
 
   function campo(id, label, o) {
@@ -185,15 +185,20 @@
   if (!pagos.some(function (p) { return p.k === st.pago; })) st.pago = pagos[0].k;
   function detallePago(k, total) {
     if (k === 'fin') {
-      var b = LM.cuotaBaja(total), c12 = LM.cuotaPlazo(total, 12);
+      var b = LM.cuotaBaja(total);
       return (b ? '<p class="ck-pd-big">Desde <b>' + LM.eur(b.c) + ' al mes</b> en ' + b.n + ' meses' + LM.ast + '</p>' : '') +
-        (c12 && (!b || b.n !== 12) ? '<p>o ' + LM.eur(c12) + ' al mes en 12 meses' + (LM.sinIntereses(total) ? ' <b>sin intereses</b>' : '') + '.</p>' : '') +
         '<p>Eliges el plazo de 3 a 36 meses al hacer la solicitud con Pepper. ' + LM.c('financiacionLarga') + '</p>';
     }
     if (k === 'tarjeta') return '<p>Pago seguro con tu tarjeta. Tus datos van cifrados y no los guardamos.</p>';
     if (k === 'bizum') return '<p>Confirmas el pago desde la app de tu banco.</p>';
     if (k === 'sequra') return '<p class="ck-pd-big"><b>3 plazos de ' + LM.eur(Math.ceil(total / 3 * 100) / 100) + '</b>, sin coste.</p><p>Con seQura. Pagas el primero hoy.</p>';
     return '<p>Te enviamos los datos de la cuenta por email. Preparamos tu pedido cuando nos llega el pago.</p>';
+  }
+  /* Paco, 12/11: cada retirada es un botón «Añadir»; solo una a la vez (vuelve a pulsar para quitarla) */
+  function botonRet(r) {
+    var on = r.k === st.ret;
+    return '<div class="ck-rec-i' + (on ? ' is-on' : '') + '">' + LM.ico('recoger') + '<span><b>' + esc(r.t) + '</b><small>' + esc(r.d || '') + '</small></span>' +
+      '<button type="button" class="ck-rec-b" data-ret="' + r.k + '" aria-pressed="' + on + '">' + (on ? LM.ico('check') + 'Añadido' : 'Añadir · +' + LM.eur(r.p)) + '</button></div>';
   }
   function retSel() { return RET.filter(function (r) { return r.k === st.ret; })[0] || null; }
   function envSel() { return ENV.filter(function (x) { return x.k === st.envio; })[0]; }
@@ -236,10 +241,7 @@
         return '<label class="ck-op"><input type="radio" name="envio" value="' + x.k + '"' + (x.k === st.envio ? ' checked' : '') + '>' +
           '<span class="ck-op-t">' + LM.ico('truck') + '<span><b>' + esc(x.t) + '</b><small>' + esc(x.d) + (x.nota ? ' ' + LM.mark({ estado: 'confirmar', nota: x.nota }, '') : '') + '</small></span></span><span class="ck-gratis">Gratis</span></label>';
       }).join('') + '</div>' +
-      (RET.length ? '<fieldset class="ck-ret"><legend>¿Nos llevamos lo viejo?</legend><div class="ck-ops">' +
-        '<label class="ck-op ck-op--s"><input type="radio" name="ret" value=""' + (!st.ret ? ' checked' : '') + '><span class="ck-op-t"><span><b>No, gracias</b></span></span></label>' +
-        RET.map(function (r) { return '<label class="ck-op ck-op--s"><input type="radio" name="ret" value="' + r.k + '"' + (r.k === st.ret ? ' checked' : '') + '><span class="ck-op-t"><span><b>' + esc(r.t) + '</b></span></span><span>+' + LM.eur(r.p) + '</span></label>'; }).join('') +
-        '</div></fieldset>' : '') +
+      (RET.length ? '<div class="ck-ret"><p class="ck-ret-t">¿Nos llevamos lo viejo?</p><input type="hidden" name="ret" value="' + esc(st.ret) + '"><div class="ck-rec">' + RET.map(botonRet).join('') + '</div></div>' : '') +
     '</section>' +
     /* 4 · Pago */
     '<section class="ck-card ck-sec" aria-labelledby="ck-s4"><h2 id="ck-s4"><i>4</i>Pago</h2><p class="ck-seg">' + LM.ico('lock') + 'Todas las transacciones son seguras y van cifradas.</p>' +
@@ -352,6 +354,12 @@
     guardar();
   });
   form.addEventListener('click', function (e) {
+    var rb = e.target.closest('[data-ret]');
+    if (rb) {
+      var k = rb.getAttribute('data-ret'); st.ret = st.ret === k ? '' : k;
+      $('.ck-rec', form).innerHTML = RET.map(botonRet).join(''); $('input[name="ret"]', form).value = st.ret;
+      LM.track('select_retirada', { retirada: st.ret || 'no' }); pintarResumen(); guardar();
+    }
     var s = e.target.closest('[data-sug]');
     if (s) { $('#ck-email').value = s.getAttribute('data-sug'); $('#ck-email-s').hidden = true; validar('email'); guardar(); LM.track('email_suggest_accept'); }
     if (e.target.closest('[data-noaviso]')) { $('#ck-aviso').innerHTML = 'Hecho: no te enviaremos recordatorios de este pedido.'; LM.track('cart_reminder_optout'); }

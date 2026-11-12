@@ -81,7 +81,7 @@
   /* ================= Seguimiento ================= */
   function seguimiento(p) {
     var f0 = new Date(p.fecha), plazo = /14 a 20/.test(p.envio.d) ? 20 : 6, hoy = Date.now(), entrega = dias(plazo, f0);
-    var pasos = [['Pedido confirmado', fecha(f0)], ['Preparando tu pedido', fecha(dias(2, f0))], ['En reparto', 'Te llamamos antes de ir'], ['Entregado' + (/montaje/i.test(p.envio.t) ? ' y montado' : ''), 'Hacia el ' + fecha(entrega)]];
+    var pasos = [['Pedido confirmado', fecha(f0)], ['Preparando tu pedido', fecha(dias(2, f0))], ['En reparto', 'Te llamamos antes de ir'], ['Entregado', 'Hacia el ' + fecha(entrega)]];
     var dTrans = (hoy - f0) / 864e5, actual = dTrans < 2 ? 0 : dTrans < plazo - 2 ? 1 : dTrans < plazo ? 2 : 3;
     return '<ol class="mc-track">' + pasos.map(function (x, i) { return '<li class="' + (i < actual ? 'is-done' : i === actual ? 'is-on' : '') + '"><i>' + (i < actual ? LM.ico('check') : i + 1) + '</i><span><b>' + x[0] + '</b><small>' + x[1] + '</small></span></li>'; }).join('') + '</ol>' +
       '<p class="mc-muted">' + esc(p.envio.t) + '. ' + esc(p.envio.d) + '. ' + LM.pend('maqueta: estados de ejemplo; en producción, los del transportista') + '</p>';

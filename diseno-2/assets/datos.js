@@ -19,12 +19,12 @@ LM.CONFIG = {
   /* Garantía, devolución, envío y pago: textos de /devoluciones/, /envios/ y /metodos-de-pago/ (28/10/2026) */
   garantia:     { v: '10 años', estado: 'ok' },
   garantiaCubre:{ v: 'Cubre los defectos de fabricación y el núcleo del colchón (espuma, muelles o látex). No cubre manchas, humedad, golpes, mal uso, usarlo sin una base adecuada ni el asentamiento normal de las capas (hasta 2 cm).', estado: 'ok' },
-  envio:        { v: 'Envío y montaje gratis en la península', estado: 'ok' },
-  envioDevolucion: { v: 'Envío y montaje gratis', estado: 'ok' },
+  envio:        { v: 'Envío gratis en la península', estado: 'ok' },
+  envioDevolucion: { v: 'Envío gratis', estado: 'ok' },
   devolucion:   { v: 'Lo recogemos en tu casa', estado: 'ok' },
   devolucionCond:{ v: 'Puedes devolverlo durante las 14 noches de prueba, desde que lo recibes. Debe estar en perfecto estado y con su embalaje original o uno parecido. Te devolvemos el dinero por transferencia en 10 días hábiles desde que llega a nuestro almacén. Se pueden descontar los gastos de envío y recogida cuando la ley lo permite.', estado: 'ok' },
   clientes:     { v: '750.000', estado: 'ok' },
-  fundacion:    { v: '1977', estado: 'confirmar', nota: 'La web dice «desde 1977» y «más de 25 años»' },
+  fundacion:    { v: '1996', estado: 'ok' } /* Paco, 12/11: fundada en 1996 */,
   fabricacion:  { v: 'Fabricación propia en España', estado: 'confirmar' },
   entrega:      { v: '5 a 7 días laborables', estado: 'ok' },
   entregaMontaje:{ v: '20 a 25 días laborables', estado: 'confirmar', nota: 'Página de envíos: 20 a 25 días laborables; fichas de producto: 15 a 20 días' },
@@ -44,7 +44,7 @@ LM.CONFIG = {
   showroomDir:  { v: null, estado: 'pendiente', nota: 'dirección del showroom, si se puede visitar' },
   /* V4 · cambios de la home del 29/10 */
   cuotaBanner:  { v: '15 €', estado: 'confirmar', nota: 'Cuota del banner de Paco: falta la TAE y las condiciones (obligatorias en publicidad de financiación). La cuota confirmada es 3 pagos sin intereses' },
-  trayectoria:  { v: 'Casi 30 años', estado: 'confirmar', nota: 'Choca con «Desde 1977» (casi 50 años). La web también dice «más de 25 años»' },
+  trayectoria:  { v: '30 años', estado: 'ok' } /* Paco, 12/11: desde 1996 */,
   compraGarantizada: { v: 'Protección al comprador de Trusted Shops', estado: 'confirmar', nota: 'Solo si el sello Trusted Shops Guarantee está activo' },
   financiacion36: { meses: 36, estado: 'confirmar', nota: 'Plazo máximo de 36 meses (Paco, 29/10). Falta la TAE y el coste: la cuota está calculada sin intereses, con el precio de la medida más pequeña' }
 };

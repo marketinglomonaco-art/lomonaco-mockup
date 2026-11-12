@@ -106,12 +106,20 @@
 
   /* Galería: la grande + el resto (en el móvil, carrusel) */
   var gal = $('#tf-gal');
+  // Paco, 12/11: siempre 5 fotos a la vista (la grande + 4). Si faltan, se repiten; si sobran, «Ver más fotos»
+  LM.cincoFotos = function (f) { var o = f.slice(); for (var i = 0; o.length < 5 && f.length; i++) o.push(f[i % f.length]); return o; };
   function pintarGaleria() {
-    var f = fotos();
-    gal.innerHTML = f.map(function (n, i) { return '<figure' + (i ? '' : ' class="is-main is-square"') + '>' + img(n, { alt: P.nombre + (COLS ? ', acabado ' + st.color : '') + ' (foto ' + (i + 1) + ')', eager: !i, sizes: i ? '(max-width: 900px) 100vw, 32vw' : '(max-width: 900px) 100vw, 64vw' }) + '</figure>'; }).join('');
+    var f = LM.cincoFotos(fotos());
+    var b = gal.nextElementSibling; if (b && b.classList.contains('p-gal-mas')) b.remove();
+    gal.classList.remove('is-todas');
+    if (f.length > 5) {
+      gal.insertAdjacentHTML('afterend', '<button type="button" class="p-gal-mas" aria-expanded="false">Ver más fotos (' + (f.length - 5) + ')</button>');
+      gal.nextElementSibling.addEventListener('click', function () { var on = gal.classList.toggle('is-todas'); this.setAttribute('aria-expanded', on); this.textContent = on ? 'Ver menos fotos' : 'Ver más fotos (' + (f.length - 5) + ')'; });
+    }
+    gal.innerHTML = f.map(function (n, i) { return '<figure' + (i ? (i >= 5 ? ' class="is-mas"' : '') : ' class="is-main is-square"') + '>' + img(n, { alt: P.nombre + (COLS ? ', acabado ' + st.color : '') + ' (foto ' + (i + 1) + ')', eager: !i, sizes: i ? '(max-width: 900px) 100vw, 32vw' : '(max-width: 900px) 100vw, 64vw' }) + '</figure>'; }).join('');
     $('#tf-gal-count').textContent = '1 / ' + f.length;
   }
-  gal.addEventListener('scroll', function () { $('#tf-gal-count').textContent = (Math.round(gal.scrollLeft / (gal.clientWidth || 1)) + 1) + ' / ' + fotos().length; }, { passive: true });
+  gal.addEventListener('scroll', function () { $('#tf-gal-count').textContent = (Math.round(gal.scrollLeft / (gal.clientWidth || 1)) + 1) + ' / ' + LM.cincoFotos(fotos()).length; }, { passive: true });
 
   function pintarPrecio() {
     var d = actual();
@@ -211,24 +219,6 @@
   /* ---------------- CANAPÉ ---------------- */
   if (TIPO === 'canape') {
     var CT = P.cotas;
-    H.push(sec('abrelo', 'tf-3d-sec', 'Ábrelo', 'Así es tu canapé <em>por dentro.</em>',
-      '<div class="tf-3d" id="tf-3d" data-testid="canape-3d">' +
-        '<div class="tf-3d-view" id="tf-3d-view"><div class="tf-3d-load">' + LM.ico('cube') + 'Cargando el canapé en 3D…</div></div>' +
-        '<div class="tf-3d-ui">' +
-          '<p class="tf-3d-hint"><span class="p-scrub-mouse" aria-hidden="true"><i></i></span><span>Arrastra para girarlo<small>y pulsa «Abrir» para ver el arcón</small></span></p>' +
-          '<div class="tf-3d-ctl">' +
-            '<button class="lm-btn" type="button" id="tf-3d-abrir" aria-pressed="false">' + LM.ico('lift') + 'Abrir el canapé</button>' +
-            '<div class="tf-3d-sw" role="radiogroup" aria-label="Acabado">' + P.colores.map(function (c) { return '<button type="button" role="radio" class="tf-sw-b" data-col="' + esc(c.k) + '" data-src="3d" aria-checked="' + (c.k === st.color) + '" title="' + esc(c.k) + '"><img src="../img/tienda/' + c.sw + '-700.webp" alt="" width="40" height="40" loading="lazy"><span>' + esc(c.k) + '</span></button>'; }).join('') + '</div>' +
-          '</div>' +
-          '<ol class="tf-3d-pts" id="tf-3d-pts">' +
-            '<li data-pt="arcon"><b>Arcón de ' + CT.fondo + ' cm de fondo</b><span>Para mantas, edredones y maletas.</span></li>' +
-            '<li data-pt="frenos"><b>Frenos de seguridad</b><span>La tapa sube y baja sin esfuerzo y sin golpes.</span></li>' +
-            '<li data-pt="tapa"><b>Tapa antideslizante</b><span>El colchón no se mueve al abrir y cerrar.</span></li>' +
-            '<li data-pt="madera"><b>Madera robusta</b><span>Firmeza y estabilidad para tu colchón.</span></li>' +
-          '</ol>' +
-        '</div>' +
-      '</div>',
-      { sub: 'Gíralo, ábrelo y cambia la madera. Medidas reales: ' + CT.alto + ' cm de alto y ' + CT.apertura + ' cm con la tapa abierta.' }));
     H.push(ventajas('Las ventajas del <em>canapé abatible.</em>'));
     H.push(sec('cabe', 'lm-alt tf-cabe-sec', 'Almacenaje', '¿Qué te <em>cabe dentro?</em>',
       '<div class="tf-cabe"><div class="tf-cabe-m" role="radiogroup" aria-label="Medida del canapé" id="tf-cabe-m"></div>' +
@@ -256,26 +246,21 @@
       '<ol class="tf-capas-l">' + P.capas.map(function (c) { return '<li><b>' + esc(c[0]) + '</b><span>' + esc(c[1]) + '</span></li>'; }).join('') + '</ol></div>'));
     H.push(ventajas('Las ventajas de la <em>' + esc(P.corto.toLowerCase()) + '.</em>'));
     H.push(sec('robot', 'lm-alt tf-robot-sec', 'Limpieza fácil', 'Pasa el robot <em>por debajo.</em>',
-      '<div class="tf-robot"><svg viewBox="0 0 640 260" role="img" aria-label="Base de perfil con un robot aspirador pasando por debajo">' +
+      '<div class="tf-robot"><svg viewBox="0 0 720 260" role="img" aria-label="Base de perfil con un robot aspirador pasando por debajo">' +
         '<rect x="70" y="40" width="500" height="44" rx="8" class="tf-rb-col"/><rect x="60" y="84" width="520" height="34" rx="6" class="tf-rb-base"/>' +
         '<path d="M90 118v100M550 118v100" class="tf-rb-pata"/><path d="M20 218H620" class="tf-rb-suelo"/>' +
         '<g class="tf-rb-robot"><rect x="250" y="186" width="130" height="30" rx="15"/><circle cx="315" cy="195" r="4"/></g>' +
         '<path d="M600 118v100" class="tf-rb-cota"/><path d="M594 118h12M594 218h12" class="tf-rb-cota"/>' +
-        '<text x="592" y="173" text-anchor="end" class="tf-rb-t">' + (P.patas ? P.patas + ' cm' : '') + '</text></svg>' +
+        '<text x="618" y="175" class="tf-rb-t">' + (P.patas ? P.patas + ' cm' : '') + '</text></svg>' +
       '<div><p>' + (P.patas ? 'Sus patas dejan ' + LM.mark({ estado: 'confirmar', nota: P.patasNota }, P.patas + ' cm') + ' libres bajo la base.' : 'Está elevada sobre patas, a una altura pensada para que pase el robot de limpieza. ' + LM.pend('altura libre bajo la base de tela')) +
         ' La mayoría de robots aspiradores miden menos de 10 cm de alto: pasan por debajo sin problema.</p>' +
         '<p>Y como el aire circula, el colchón se mantiene más fresco y seco.</p></div></div>'));
-    H.push(sec('colores', 'tf-colores-sec', 'Elige color', 'Tela a juego con <em>tu dormitorio.</em>',
-      '<div class="tf-colores">' + P.colores.map(function (c) {
-        return '<button type="button" class="tf-col-c" data-col="' + esc(c.k) + '" data-src="colores"><span class="tf-col-tx">' + img(c.sw, { alt: '' }) + '</span>' +
-          '<span class="tf-col-ph">' + img(c.fotos[0], { alt: P.nombre + ' en color ' + c.k }) + '</span><b>' + esc(c.k) + '</b></button>';
-      }).join('') + '</div>', { sub: 'Toca un color: la ficha se pone en ese color.' }));
   }
 
   /* ---------------- CANAPÉ y BASES: montaje, ficha, combina ---------------- */
   if (esMueble) {
     if (TIPO === 'canape') {
-      H.push(sec('montaje', 'lm-alt tf-mont-sec', 'Montaje', 'Te lo montamos <em>gratis.</em>',
+      H.push(sec('montaje', 'lm-alt tf-mont-sec', 'Montaje', 'Te ayudamos <em>a que lo montes.</em>',
         '<div class="tf-mont" id="tf-mont">' +
           '<div class="tf-mont-tabs" role="tablist"><button role="tab" type="button" data-v="normal" aria-selected="true">Tapa entera</button><button role="tab" type="button" data-v="partida" aria-selected="false">Tapa partida (180 y 200)</button></div>' +
           '<div class="tf-mont-g"><figure class="tf-mont-f"><img id="tf-mont-img" src="../img/montaje/canape-normal-03.webp" alt="" width="900" height="1270" loading="lazy">' +
@@ -290,40 +275,32 @@
             '<div class="tf-mont-pdf"><a class="lm-btn lm-btn--line" href="../img/montaje/instrucciones-canape-abatible.pdf" target="_blank" rel="noopener">' + LM.ico('pdf') + 'Instrucciones tapa entera (PDF)</a>' +
             '<a class="lm-btn lm-btn--line" href="../img/montaje/instrucciones-canape-abatible-tapa-partida.pdf" target="_blank" rel="noopener">' + LM.ico('pdf') + 'Instrucciones tapa partida (PDF)</a></div>' +
             '<p class="tf-mont-dudas">¿Dudas con el montaje? Escríbenos a <a href="mailto:gestion@lomonaco.es">gestion@lomonaco.es</a> o llámanos al <a href="tel:' + C.telefono.tel + '" data-lead="montaje">' + LM.mark(C.telefono, C.telefono.v) + '</a>.</p>' +
-          '</div></div></div>', { sub: 'Y si prefieres montarlo tú, aquí tienes los pasos de las instrucciones oficiales.' }));
-    } else {
-      H.push(sec('montaje', 'lm-alt tf-mont-sec', 'Montaje', 'Te la montamos <em>gratis.</em>',
-        '<div class="tf-mont-pend"><p>La dejamos montada en tu dormitorio el día de la entrega. Si prefieres montarla tú, tendrás aquí las instrucciones paso a paso.</p><p>' + LM.pend('instrucciones de montaje de la base (PDF del fabricante)') + '</p></div>'));
+          '</div></div></div>', { sub: 'Paso a paso, con las instrucciones oficiales. Y si te atascas, te ayudamos por teléfono o por email.' }));
     }
     var filas = TIPO === 'canape' ? [
       ['Alto', LM.mark({ estado: 'confirmar', nota: 'Plano de medidas de la web actual' }, P.cotas.alto + ' cm')], ['Fondo del arcón', P.cotas.fondo + ' cm'], ['Altura con la tapa abierta', P.cotas.apertura + ' cm'],
       ['Acabados', 'Blanco, Nórdico, Roble y Nogal'], ['Apertura', 'Abatible, con frenos de seguridad'], ['Tapa', 'Antideslizante. Partida en 180 × 200 y 200 × 200 cm'],
-      ['Material', 'Madera de alta calidad'], ['Medidas', medidasTxt], ['Montaje', 'Gratis al entregarlo'], ['Garantía', garantia], ['Entrega', esc(P.entrega)], ['Retirada del viejo', 'Base o canapé: 49,01 €. Base y colchón: 89 €. Se retira la base si está desmontada.']
+      ['Material', 'Madera de alta calidad'], ['Medidas', medidasTxt], ['Montaje', 'Lo montas tú, con las instrucciones paso a paso de esta página'], ['Garantía', garantia], ['Entrega', esc(P.entrega)], ['Retirada del viejo', 'Base o canapé: 49,01 €. Base y colchón: 89 €. Se retira la base si está desmontada.']
     ] : K === 'base3d' ? [
       ['Tejido', 'Airflow® 3D antideslizante, con microceldas tridimensionales'], ['Tablero', 'Reforzado, de 8 mm'], ['Refuerzo', '5 barras transversales de acero de 30 × 30 mm'],
       ['Patas', 'De madera wengué, incluidas'], ['Altura de las patas', LM.mark({ estado: 'confirmar', nota: P.patasNota }, P.patas + ' cm')], ['Colores', 'Chocolate y Blanco'],
-      ['Medidas', medidasTxt], ['En 2 partes', '160, 180 y 200 cm de ancho'], ['Montaje', 'Gratis al entregarla'], ['Garantía', garantia], ['Entrega', esc(P.entrega)], ['Retirada del viejo', 'Base o canapé: 49,01 €. Base y colchón: 89 €.']
+      ['Medidas', medidasTxt], ['En 2 partes', '160, 180 y 200 cm de ancho'], ['Garantía', garantia], ['Entrega', esc(P.entrega)], ['Retirada del viejo', 'Base o canapé: 49,01 €. Base y colchón: 89 €.']
     ] : [
       ['Tejido', 'Tapizado AirFresh, transpirable'], ['Estructura', 'Bastidor de madera maciza'], ['Colores', 'Beige, Gris Claro, Chocolate y Antracita'],
-      ['Medidas', medidasTxt], ['En 2 partes', '160, 180 y 200 cm de ancho'], ['Patas', LM.pend('altura de las patas')], ['Montaje', 'Gratis al entregarla'],
+      ['Medidas', medidasTxt], ['En 2 partes', '160, 180 y 200 cm de ancho'], ['Patas', LM.pend('altura de las patas')],
       ['Garantía', garantia], ['Entrega', esc(P.entrega)], ['Retirada del viejo', 'Base o canapé: 49,01 €. Base y colchón: 89 €.']
     ];
     H.push(ficha(filas, TIPO === 'canape' ? '<figure class="tf-plano">' + img(P.medidasImg, { alt: 'Plano del canapé: 32 cm de alto, 28 cm de fondo y 103 cm con la tapa abierta' }) + '</figure>' : ''));
     H.push(detalle(TIPO === 'canape' ? 'Pensado para <em>durar.</em>' : 'Calidad que <em>se nota.</em>'));
-    var pks = packsCon(function (p) { return TIPO === 'canape' ? p.base === 'canape' : p.base === 'base'; });
-    H.push(sec('pack', 'tf-pack-sec', 'Llévatelo en pack', TIPO === 'canape' ? 'Con colchón, <em>sale mejor.</em>' : 'Colchón y base, <em>con regalos.</em>',
-      '<div class="tf-pk-g">' + pks.map(LM.tfPackCard).join('') + '</div>',
-      { sub: 'En pack te llevas el colchón ' + (TIPO === 'canape' ? 'y el canapé' : 'y la base antideslizante') + ' a mejor precio, con regalos incluidos.' }));
     H.push(opiniones());
     var F = TIPO === 'canape' ? [
       ['¿Cuánto cabe dentro?', 'El arcón tiene ' + P.cotas.fondo + ' cm de fondo en toda la superficie de la cama. En la sección «¿Qué te cabe dentro?» calculas el espacio para tu medida.'],
-      ['¿Me lo montáis?', 'Sí. Te lo montamos gratis el día de la entrega. Si prefieres hacerlo tú, tienes las instrucciones en esta página.'],
+      ['¿Cómo se monta?', 'Con las instrucciones paso a paso de esta página (tapa entera o partida, según la medida). Si tienes dudas, escríbenos a gestion@lomonaco.es o llámanos y te ayudamos.'],
       ['¿Qué medidas llevan la tapa partida?', 'La 180 × 200 y la 200 × 200 cm: la tapa viene en dos partes de 90 o 100 cm.'],
       ['¿Cuánto mide con la tapa abierta?', P.cotas.apertura + ' cm de alto. Cerrado mide ' + P.cotas.alto + ' cm.'],
       ['¿Os lleváis mi canapé viejo?', 'Sí. La retirada de tu base o canapé antiguo cuesta 49,01 € y la de base y colchón, 89 €. Lo eliges al finalizar la compra. La base solo se retira si está desmontada.'],
       ['¿Cómo lo limpio?', 'Con un paño un poco húmedo, solo con agua. Sin jabón ni otros productos.']
     ] : [
-      ['¿Me la montáis?', 'Sí. Te la montamos gratis el día de la entrega.'],
       ['¿Vale para cualquier colchón?', 'Sí. Es compatible con cualquier colchón y reparte el peso por igual.'],
       ['¿Qué medidas vienen en dos partes?', 'Las de 160, 180 y 200 cm de ancho vienen en dos piezas: más fáciles de subir a casa.'],
       ['¿Pasa el robot aspirador por debajo?', 'Sí. Está elevada sobre patas para que el robot de limpieza pase por debajo.'],
@@ -342,18 +319,19 @@
       : [['70 y 75 cm', 'Almohada individual: para camas individuales, o dos en una cama de matrimonio'], ['90 cm', 'Para camas individuales'], ['135 cm', 'Una para los dos, en camas de matrimonio']];
     H.push(sec('medida', 'tf-guia-sec', '¿Qué medida necesito?', K === 'edredon' ? 'Cada medida, <em>para su cama.</em>' : K === 'bajera' ? 'La de <em>tu colchón.</em>' : 'Elige el largo <em>según tu cama.</em>',
       '<dl class="tf-guia">' + guia.map(function (g) { return '<div><dt>' + g[0] + '</dt><dd>' + g[1] + '</dd></div>'; }).join('') + '</dl>'));
-    var regaloDe = { almLatex: 'almohada', almVisco: 'almohada', edredon: 'edredon', bajera: 'protector' }[K];
-    var pkr = packsCon(function (p) { return p.regalos.indexOf(regaloDe) > -1; }).slice(0, 4);
-    if (pkr.length) H.push(sec('regalo', 'lm-alt tf-pack-sec', 'De regalo', 'Con un pack, <em>te lo regalamos.</em>',
-      '<div class="tf-pk-g">' + pkr.map(LM.tfPackCard).join('') + '</div>',
-      { sub: (K === 'almVisco' || K === 'almLatex' ? 'Las almohadas' : K === 'edredon' ? 'El edredón' : 'La bajera impermeable') + ' van de regalo en estos packs de colchón con canapé o base.' }));
     if (P.mant) H.push(sec('cuidados', 'tf-cuid-sec', 'Cuidados', 'Para que te dure <em>muchos años.</em>', '<ul class="tf-lista">' + P.mant.map(function (x) { return '<li>' + LM.ico('check') + esc(x) + '</li>'; }).join('') + '</ul>'));
     H.push(opiniones());
   }
 
+  /* Paco, 12/11: orden de los módulos de cada ficha */
+  var ORDEN = PKD ? (TIPO === 'canape' ? ['cabe', 'ventajas', 'tapa', 'montaje'] : ['ventajas', 'robot', 'hecha'])
+    : TIPO === 'canape' ? ['cabe', 'ficha', 'ventajas', 'tapa', 'montaje', 'detalle', 'opiniones', 'dudas']
+    : TIPO === 'base' ? ['ventajas', 'robot', 'hecha', 'ficha', 'detalle', 'opiniones', 'dudas']
+    : ['ventajas', 'detalle', 'medida', 'cuidados', 'opiniones'];
+  var porId = {}; H.forEach(function (h) { var m = h.match(/ id="([\w-]+)"/); if (m) porId[m[1]] = h; });
+  H = ORDEN.filter(function (k) { return porId[k]; }).map(function (k) { return porId[k]; });
   if (PKD) {
-    var VALE = ['ventajas', 'abrelo', 'cabe', 'tapa', 'montaje', 'hecha', 'robot'];
-    H = H.filter(function (h) { var m = h.match(/ id="([\w-]+)"/); return m && VALE.indexOf(m[1]) > -1; })
+    H = H
       .map(function (h) { return h.replace('Las ventajas del <em>canapé abatible.</em>', 'Las ventajas <em>de tu canapé.</em>').replace(/Las ventajas de la <em>[^<]*<\/em>/, 'Las ventajas <em>de tu base.</em>'); });
     H.unshift(sec('incluye', 'tf-inc-sec', 'Qué te llevas', 'Todo tu equipo, <em>en un pack.</em>', '<div class="tf-inc" id="tf-inc"></div>'));
   }
@@ -393,7 +371,6 @@
     hoja();
 
     /* Visor 3D: se carga al acercarse */
-    if (LM.canape3d) LM.canape3d($('#tf-3d'), { colores: P.colores, color: st.color, medida: function () { return st.medida; }, cotas: P.cotas });
   }
   if (PKD) {
     var inc = $('#tf-inc'), RG = LM.REGALOS.filter(function (r) { return PKD.regalos.indexOf(r[2]) > -1; });

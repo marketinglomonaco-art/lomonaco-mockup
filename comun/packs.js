@@ -33,7 +33,7 @@
   addEventListener('resize', recolocar);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(recolocar);
   colB.innerHTML = PC.colchones.map(function (c) { return '<button type="button" role="radio" data-col="' + c.k + '"><b>' + c.t + '</b><small>' + c.d + '</small></button>'; }).join('');
-  var img = $('#h4p-img'), ultimaFoto = 'canape';
+  var img = $('#h4p-img'), ultimaFoto = 'canape'; // 12/11: la home ya no lleva foto (img = null)
   /* Paco, 10/11 · Categoría (versión reducida): que no se elija el colchón a ciegas. Bajo los botones,
      qué es el colchón elegido, cómo se siente, sus tres puntos fuertes y el enlace a su ficha */
   var info = null;
@@ -67,30 +67,14 @@
     deslizar();
     $$('[data-col]', colB).forEach(function (b) { var on = b.getAttribute('data-col') === st.col; b.setAttribute('aria-checked', on); b.tabIndex = on ? 0 : -1; });
     foto(); pintarInfo();
-    var m = medida(st.col, st.base), pack = tabla(st.col, st.base)[m], colchon = LM.PRECIOS[st.col][m];
-    var G = LM.regalosPack(st.col, st.base), vReg = G.reduce(function (s, r) { return s + r[4]; }, 0);
-    var go = $('#h4p-go'), h, precio;
-    if (st.base === 'canape') {
-      // Canapé: colchón + canapé por separado y los regalos tachados. En la tienda, el pack cuesta lo mismo que colchón + canapé:
-      // el ahorro son los regalos
-      // (diferencias de céntimos entre el pack y colchón + canapé son redondeos de la tienda: se ignoran)
-      var can = LM.PRECIO_CANAPE[m], dif = red(colchon.p + can.p - pack.p);
-      if (Math.abs(dif) < 1) dif = 0;
-      var suelto = red(pack.p + dif + vReg), ahorro = red(suelto - pack.p);
-      h = fila('Colchón ' + col.t, LM.eur(colchon.p)) + fila('Canapé abatible de madera', LM.eur(can.p)) +
-        regalos(G, vReg) +
-        fila('Por separado', '<s>' + LM.eur(suelto) + '</s>', 'h4p-sum');
-      precio = '<p class="h4p-from">Pack para ' + LM.medidaTxt(m) + '</p><p class="h4p-now">' + LM.eur(pack.p) + '</p>' +
-        (ahorro > 0 ? '<p class="h4p-save">Te ahorras ' + LM.eur(ahorro) + '</p>' : '');
-    } else {
-      // Base antideslizante: no se vende suelta. El pack lleva el descuento en el precio y las almohadas de regalo
-      // Paco, 06/11: con base también se regalan las almohadas
-      h = fila('Colchón ' + col.t, LM.eur(colchon.p)) + fila('Base tapizada antideslizante <small>con patas de 30 cm</small>', 'Incluida') +
-        (G.length ? regalos(G, vReg) : '') +
-        fila('Precio del pack sin descuento', '<s>' + LM.eur(pack.r) + '</s>', 'h4p-sum');
-      precio = '<p class="h4p-from">Pack para ' + LM.medidaTxt(m) + ' <span class="lm-price-off">-' + off(pack) + ' %</span></p><p class="h4p-now">' + LM.eur(pack.p) + '</p>' +
-        '<p class="h4p-save">Te ahorras ' + LM.eur(red(pack.r - pack.p)) + '</p>';
-    }
+    // Paco, 12/11: lista con cada pieza y cada regalo con su precio real para la medida; al final, por separado y lo que te ahorras
+    var pkKey = st.col + (st.base === 'canape' ? 'Canape' : 'Base');
+    var m = LM.medidaInicial(), D = LM.packDesglose(pkKey, m);
+    if (!D) { m = M; D = LM.packDesglose(pkKey, m); }
+    var pack = D.d, go = $('#h4p-go');
+    var h = LM.packLista(D, { precio: false });
+    var precio = '<p class="h4p-from">Pack para ' + LM.medidaTxt(m) + '</p><p class="h4p-now">' + LM.eur(pack.p) + '</p>' +
+      (D.ahorro >= 1 ? '<p class="h4p-save">Te ahorras ' + LM.eur(D.ahorro) + '</p>' : '');
     $('#h4p-det').innerHTML = h;
     $('#h4p-price').innerHTML = precio + '<p class="lm-price-fee">' + LM.cuotaTxt(pack.p) + '</p>';
     go.innerHTML = CTA_HTML;

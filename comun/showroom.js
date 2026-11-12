@@ -46,8 +46,7 @@
     '<p class="s-sv-hint" id="s-hint"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V12"/><path d="M11 11.5v-2a1.5 1.5 0 0 1 3 0V12"/><path d="M14 10.5a1.5 1.5 0 0 1 3 0V12"/><path d="M17 11.5a1.5 1.5 0 0 1 3 0V16a5 5 0 0 1-5 5h-2.5a5 5 0 0 1-4.3-2.5L5.4 15a1.5 1.5 0 0 1 2.6-1.5L8 14"/></svg>Arrastra para mirar</p>' +
     '<button class="s-sv-nav s-sv-prev" type="button" data-go="-1" aria-label="Punto de vista anterior">' + flecha(-1) + '</button>' +
     '<button class="s-sv-nav s-sv-next" type="button" data-go="1" aria-label="Siguiente punto de vista">' + flecha(1) + '</button>' +
-    '<button class="s-sv-full" type="button" id="s-sv-full" aria-label="Pantalla completa"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>' +
-    '<div class="s-sv-cta"><a class="lm-btn lm-btn--buy" href="#reserva">Verlo en directo por videollamada</a></div>';
+    '<button class="s-sv-full" type="button" id="s-sv-full" aria-label="Pantalla completa"><svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>';
   /* Paco, 10/11: «Desde dónde mirar» como un plano del showroom hecho por un arquitecto: línea granate, muy limpio.
      Pared con el panel iluminado, las 3 camas con su cabecero, almohadas, mesillas y alfombras, y la estantería.
      Cada punto de vista: punto numerado; el elegido, con su cono de visión y una línea de puntos. Al lado, la lista. */
@@ -89,7 +88,8 @@
     }).join('') + '</div>' +
     '<div class="s-pl-side"><p class="lm-eyebrow">Elige desde dónde mirar</p><ul class="s-pl-list">' + SALA.map(function (e, i) {
       return '<li><button type="button" class="s-pl-op" data-i="' + i + '" aria-pressed="false"><img class="s-pl-th" src="../img/sr2-' + e.img + '-900.webp" alt="" width="900" height="600" decoding="async"><b>' + (i < 9 ? '0' : '') + (i + 1) + '</b><span>' + e.t + '<small>' + e.s + '</small></span></button></li>';
-    }).join('') + '</ul><p class="s-pl-nota">Pincha en un número del plano, o en el suelo de la foto para acercarte a una cama.</p></div>' +
+    }).join('') + '</ul><p class="s-pl-nota">Pincha en un número del plano, o en el suelo de la foto para acercarte a una cama.</p>' +
+      '<a class="lm-btn lm-btn--buy lm-btn--full s-pl-cta" href="#reserva">Quiero hacer una videollamada</a></div>' +
     '<p class="s-pl-now" aria-live="polite"><small>Estás viendo</small><b></b></p></div>');
   /* Paco, 10/11 · tres propuestas para integrar el plano (sin rosa). Se eligen con ?plano=1, 2 o 3:
      1 · panel gris a la altura de la foto · 2 · con miniaturas de cada vista · 3 · plano pequeño dentro de la foto */

@@ -41,7 +41,7 @@
   var tel = C.telefono;
   $('#hd').innerHTML =
     '<div class="bar"><div class="w bar-in"><span class="bar-h">' + C.horario.v + '</span>' +
-      '<ul><li>Envío y montaje gratis</li><li>14 noches de prueba</li><li>3 pagos sin intereses</li></ul>' +
+      '<ul><li>Envío gratis</li><li>14 noches de prueba</li><li>3 pagos sin intereses</li></ul>' +
       '<a href="tel:' + tel.tel + '" data-lead="franja">' + tel.v + '</a></div></div>' +
     '<header class="hd"><div class="w hd-in">' +
       '<a class="hd-logo" href="index.html" aria-label="Lo Monaco, inicio"><img src="https://www.grupolomonaco.com/wp-content/uploads/2024/04/LOMONACO-LOGO.svg" alt="LOMONACO" width="128" height="19"></a>' +
@@ -65,7 +65,7 @@
       '<div class="drawer-h"><b>Tu cesta</b><button class="drawer-x" type="button" data-x aria-label="Cerrar">×</button></div>' +
       (it ? '<p class="drawer-ok">✓ Añadido a tu cesta</p>' : '') +
       (cesta.length ? cesta.map(function (x) { return '<div class="drawer-it"><img src="' + x.img + '" alt=""><div><b>' + x.nombre + '</b><small>' + x.detalle + '</small><b class="num">' + eur(x.precio) + '</b></div></div>'; }).join('') : '<p class="drawer-note">Tu cesta está vacía.</p>') +
-      (cesta.length ? '<div class="drawer-tot"><span>Total</span><span class="num">' + eur(tot) + '</span></div><p class="drawer-note">o 3 pagos de ' + eur(cuota(tot)) + ' sin intereses · Envío y montaje gratis en la península</p>' +
+      (cesta.length ? '<div class="drawer-tot"><span>Total</span><span class="num">' + eur(tot) + '</span></div><p class="drawer-note">o 3 pagos de ' + eur(cuota(tot)) + ' sin intereses · Envío gratis en la península</p>' +
         '<a class="b b--full" href="' + LM.WEB + '/?add-to-cart=' + cesta[cesta.length - 1].pid + '&variation_id=' + cesta[cesta.length - 1].id + '" data-checkout>Finalizar compra <i>' + ARROW + '</i></a>' : '') +
       '<button class="u" type="button" data-x style="justify-self:start">Seguir mirando</button>' +
       '<p class="drawer-note">¿Alguna duda antes de pagar? <a href="tel:' + tel.tel + '" data-lead="cesta">' + tel.v + '</a></p></aside>';
