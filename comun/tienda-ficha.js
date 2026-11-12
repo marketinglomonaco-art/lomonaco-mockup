@@ -101,6 +101,8 @@
           (esMueble ? '<li>' + LM.ico('back') + '<span>¿Tienes uno viejo? Nos lo llevamos: lo eliges al finalizar la compra.</span></li>' : '') +
           '<li>' + LM.ico('card') + '<span id="tf-cuota">Paga a plazos de 3 a 36 meses.</span></li>' +
         '</ul>' +
+        // Paco, 12/11 (CRO): en el canapé, lo que te cabe en la medida elegida, junto al botón de compra
+        (TIPO === 'canape' ? '<a class="tf-cabe-mini" id="tf-cabe-mini" href="#cabe"></a>' : '') +
       '</div></div></section>' +
     '<div id="tf-mods"></div>';
 
@@ -353,7 +355,18 @@
         '<ul class="tf-lista"><li>' + LM.ico('box') + 'Caben unas <b>' + maletas + ' maletas de cabina</b> tumbadas.</li><li>' + LM.ico('layers') + 'Mantas, edredones y ropa de otra temporada, a mano.</li></ul>';
     }
     cm.addEventListener('click', function (e) { var b = e.target.closest('[data-cabe]'); if (b) { cabe(b.getAttribute('data-cabe')); LM.track('canape_cabe', { medida: b.getAttribute('data-cabe') }); } });
-    document.addEventListener('tf:medida', function () { cabe(st.medida); });
+    document.addEventListener('tf:medida', function () { cabe(st.medida); cabeMini(); });
+    function cabeMini() {
+      var el = $('#tf-cabe-mini'); if (!el) return;
+      var a = st.medida.replace('-2p', '').split('x'), w = +a[0] - 4, l = +a[1] - 4, f = P.cotas.fondo;
+      var litros = Math.round(w * l * f / 1000 / 10) * 10, maletas = Math.floor(w / 40) * Math.floor(l / 55);
+      el.innerHTML = '<span class="tf-cabe-mini-i">' + LM.ico('box') + '</span><span><small>Lo que te cabe en ' + lbl(st.medida).replace(' (2 partes)', '') + '</small>' +
+        '<b>' + LM.mark({ estado: 'confirmar', nota: 'Cálculo aproximado: interior estimado con 2 cm de pared y 28 cm de fondo' }, 'Unos ' + litros.toLocaleString('es-ES') + ' litros') + '</b>' +
+        '<em>Caben unas ' + maletas + ' maletas de cabina tumbadas</em></span>' + LM.ico('right', 'tf-cabe-mini-go');
+    }
+    cabeMini();
+    var cmi = $('#tf-cabe-mini');
+    if (cmi) cmi.addEventListener('click', function (e) { var t = $('#cabe'); if (!t) return; e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); LM.track('canape_cabe_mini', { medida: st.medida }); });
     cabe(st.medida);
 
     /* Montaje: hojas de las instrucciones reales (p. 2 a 14 del PDF) */

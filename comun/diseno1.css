@@ -2598,3 +2598,13 @@ body[data-page="cuenta"] { background: var(--bg2); }
 .tf-capas { grid-template-columns: 1fr; }
 .tf-capas-l { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
 .tf-capas-l li { padding: 18px 18px 18px 56px; }
+
+/* Paco, 12/11 · Ficha del canapé: «Lo que te cabe» en la medida elegida, en la caja de compra */
+.tf-cabe-mini { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px; margin-top: 16px; padding: 16px 18px; border-radius: 14px; background: #fff; box-shadow: inset 0 0 0 1px var(--line); color: var(--ink); text-decoration: none; transition: box-shadow .2s; }
+.tf-cabe-mini:hover { box-shadow: inset 0 0 0 1.5px var(--acc); }
+.tf-cabe-mini-i { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 12px; background: var(--bg2); color: var(--acc); }
+.tf-cabe-mini-i .lm-i { width: 26px; height: 26px; }
+.tf-cabe-mini small { display: block; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--mute); }
+.tf-cabe-mini b { display: block; margin-top: 2px; font-size: 22px; font-weight: 800; letter-spacing: -.01em; color: var(--acc); }
+.tf-cabe-mini em { display: block; font-style: normal; font-size: 14.5px; color: var(--mute); }
+.tf-cabe-mini-go { width: 20px; height: 20px; color: var(--acc); }
