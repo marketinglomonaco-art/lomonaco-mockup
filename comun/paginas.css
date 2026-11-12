@@ -618,3 +618,8 @@ body[data-variante="b"] .p-card-imgs { align-items: center; }
 .p-card-tipo .lm-i { width: 24px; height: 24px; }
 .p-card-tipo small { display: block; font-size: 9.5px; font-weight: 700; line-height: 1; letter-spacing: .02em; color: var(--acc); }
 @media (max-width: 600px) { .p-card-tipo { width: 52px; height: 52px; } .p-card-tipo .lm-i { width: 26px; height: 26px; } }
+
+/* Paco, 12/11 · Casilla del canapé / base: solo el icono, y un «+» entre ella y los regalos */
+.p-card-tipo .lm-i { width: 30px; height: 30px; }
+.p-card .p-card-mas { display: grid; place-items: center; align-self: center; padding: 0 2px; font-size: 20px; font-weight: 800; line-height: 1; color: var(--acc); }
+@media (max-width: 600px) { .p-card-tipo .lm-i { width: 32px; height: 32px; } }
