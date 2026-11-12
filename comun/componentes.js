@@ -257,6 +257,24 @@
     var p = LM.PRODUCTOS[k]; if (!p || !p.ocu) return '';
     return '<span class="lm-ocu' + (cls ? ' ' + cls : '') + '"><img src="' + LM.SELLO_OCU.img + '" alt="' + LM.SELLO_OCU.alt + '" width="160" height="160" loading="lazy"><span>' + LM.SELLO_OCU.t + '</span></span>';
   };
+  /* Paco, 12/11: filtro de medidas de la home, común a todas las categorías */
+  LM.MEDIDAS_FILTRO = ['90x190', '150x190', '180x200'];
+  LM.medidaFiltro = function () { var m = LM.medidaInicial(); return LM.MEDIDAS_FILTRO.indexOf(m) > -1 ? m : '150x190'; };
+  LM.filtroMedidas = function (el, onChange) {
+    var m = LM.medidaFiltro();
+    function pintar() {
+      el.className = 'h-prod-med'; el.setAttribute('role', 'radiogroup'); el.setAttribute('aria-label', 'Elige tu medida');
+      el.innerHTML = '<span>Precio para</span>' + LM.MEDIDAS_FILTRO.map(function (x) { return '<button type="button" role="radio" data-hm="' + x + '" aria-checked="' + (x === m) + '">' + LM.medidaTxt(x) + '</button>'; }).join('');
+    }
+    pintar();
+    el.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-hm]'); if (!b) return;
+      m = b.getAttribute('data-hm'); LM.store.set('lm_medida', m); pintar();
+      var n = el.querySelector('[data-hm="' + m + '"]'); if (n) n.focus({ preventScroll: true });
+      onChange(m); LM.track('cat_medida', { medida: m });
+    });
+    return { medida: function () { return m; } };
+  };
   LM.tarjeta = function (k, o) {
     o = o || {};
     var p = LM.PRODUCTOS[k], m = o.medida || LM.medidaInicial(), d = LM.PRECIOS[k][m], href = LM.href(p.url);

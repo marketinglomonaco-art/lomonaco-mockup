@@ -25,7 +25,11 @@
   colB.insertAdjacentHTML('afterend', '<p class="h4p-k" id="h4p-mk">Elige tu medida</p><label class="h4p-med"><span class="lm-sr">Medida del colchón</span><select id="h4p-med" aria-labelledby="h4p-mk"></select></label>');
   var medSel = $('#h4p-med');
   st.medida = LM.medidaInicial();
-  medSel.addEventListener('change', function () { st.medida = this.value; LM.store.set('lm_medida', st.medida); pintarPack(); LM.track('pack_medida', { medida: st.medida }); });
+  medSel.addEventListener('change', function () {
+    st.medida = this.value; LM.store.set('lm_medida', st.medida); pintarPack(); LM.track('pack_medida', { medida: st.medida });
+    // el filtro de medidas de la página (si lo hay) marca la misma
+    LM.$$('[data-hm]').forEach(function (x) { x.setAttribute('aria-checked', x.getAttribute('data-hm') === st.medida); });
+  });
   // Paco, 06/11: la pastilla granate se desliza de una opción a la otra (h4p-seg-ind)
   segB.innerHTML = '<span class="h4p-seg-ind" aria-hidden="true"></span>' +
     PC.orden.map(function (b) { return '<button type="button" role="radio" data-base="' + b + '">' + PC.bases[b].t + '</button>'; }).join('');

@@ -80,6 +80,7 @@
     if ($('#c-table')) $('#c-table').innerHTML = h;
   }
 
+  if ($('#c-hmed')) { state.medida = LM.medidaFiltro(); LM.filtroMedidas($('#c-hmed'), function (m) { state.medida = m; render(); }); }
   chips($('#c-medidas'), LM.MEDIDAS.map(function (m) { return [m, m.replace('x', '×')]; }), 'medida');
   chips($('#c-sens'), SENS, 'sens');
   chips($('#c-tipo'), TIPO, 'tipo');

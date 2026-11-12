@@ -2685,3 +2685,9 @@ body[data-cat="packs"] #tc-h4p .h4p-head { display: none; }
 .h4p-med select:hover { border-color: var(--ink); }
 .h4p-med select:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
 .lm-news-img img { object-position: 58% 45%; } /* la pareja, en el centro del recorte */
+
+/* Paco, 12/11 · Filtro de medidas en las categorías (mismo que el de la home) */
+#c-hmed.h-prod-med, #tc-hmed.h-prod-med { margin: 4px 0 18px; }
+.tc-nota { margin: -4px 0 10px; font-size: 13px; color: var(--mute); }
+/* Paco, 12/11 · Configurador de packs: los precios no van pegados al borde de cada línea */
+.h4p .pkl-li { padding: 8px 18px 8px 8px; }

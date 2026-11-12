@@ -13,17 +13,29 @@
   function packs(f) { return Object.keys(T.packs).map(function (k) { return T.packs[k]; }).filter(f || function () { return true; }); }
   var slugCol = function (k) { return k.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/\s+/g, '-'); };
 
+  /* Paco, 12/11: precio de cada producto para la medida de cama elegida en el filtro */
+  var MED = LM.medidaFiltro();
+  function paraCama(k, m) {
+    var P = T[k], t = P.tabla, ancho = +m.split('x')[0], key = null, nota = '';
+    if (k === 'almLatex' || k === 'almVisco') { key = ancho <= 105 ? '90 cm' : '135 cm'; nota = 'Almohada de ' + key; }
+    else if (k === 'edredon') {
+      var tope = { 90: '150x220|cama 80 y 90', 105: '180x220|cama 105', 140: '220x220|cama 120-135-140', 160: '240x220|cama 150-160', 180: '260x240|cama 180', 200: '280x240|cama 200' };
+      key = tope[[90, 105, 140, 160, 180, 200].filter(function (x) { return ancho <= x; })[0] || 200]; nota = 'Edredón de ' + key.split('|')[0].replace('x', ' × ') + ' cm';
+    } else key = t[m] ? m : t[m + '-2p'] ? m + '-2p' : (m === '135x180' && t['135x182'] ? '135x182' : null);
+    var row = key && t[key]; if (!row) return null;
+    return { d: row['-'] || row[Object.keys(row)[0]], nota: nota };
+  }
   /* Tarjeta de producto de la tienda (canapé, bases, complementos) */
   function tarjeta(k, o) {
     o = o || {};
     var P = T[k], c = o.color ? P.colores.filter(function (x) { return x.k === o.color; })[0] : (P.colores ? P.colores[0] : null);
-    var foto = c ? c.fotos[0] : P.fotos[0], d = desde(P.tabla), href = P.pagina + (o.color ? '?color=' + slugCol(o.color) : '');
+    var pc = paraCama(k, MED), foto = c ? c.fotos[0] : P.fotos[0], d = pc ? pc.d : desde(P.tabla), href = P.pagina + (o.color ? '?color=' + slugCol(o.color) : '');
     var nombre = o.color ? P.corto + ' ' + o.color : P.nombre;
     return '<article class="lm-card tc-card" data-testid="cat-card"><div class="lm-card-img">' + LM.tfImg(foto, { alt: nombre, sizes: '(max-width: 700px) 100vw, 33vw' }) + '</div>' +
       '<div class="lm-card-b"><p class="lm-card-k">' + esc(P.para || P.colorLabel && (P.colores.length + (P.tipo === 'canape' ? ' acabados' : ' colores')) || '') + '</p>' +
       '<h3><a class="lm-stretch" href="' + href + '">' + esc(nombre) + '</a></h3><p class="lm-card-d">' + esc(P.lema) + '</p>' +
       (P.colores && !o.color ? '<p class="tc-dots" aria-label="Colores">' + P.colores.map(function (x) { return '<img src="../img/tienda/' + x.sw + '-700.webp" alt="" title="' + esc(x.k) + '" width="22" height="22" loading="lazy">'; }).join('') + '</p>' : '') +
-      '<div class="lm-card-f">' + LM.precio(d, { desde: true }) + '<span class="lm-btn lm-btn--full" aria-hidden="true">Ver ' + (P.tipo === 'complemento' ? 'producto' : P.tipo === 'canape' ? 'canapé' : 'base') + '</span></div></div></article>';
+      '<div class="lm-card-f">' + (pc ? LM.precio(d, { medida: MED }) + (pc.nota ? '<p class="tc-nota">' + pc.nota + '</p>' : '') : LM.precio(d, { desde: true })) + '<span class="lm-btn lm-btn--full" aria-hidden="true">Ver ' + (P.tipo === 'complemento' ? 'producto' : P.tipo === 'canape' ? 'canapé' : 'base') + '</span></div></div></article>';
   }
   function seccion(id, eyebrow, titulo, cuerpo, cls) {
     return '<section class="lm-sec tc-sec ' + (cls || '') + '" id="' + id + '" aria-labelledby="' + id + '-t"><div class="lm-w"><div class="tf-head"><p class="lm-eyebrow">' + eyebrow + '</p><h2 class="lm-h2" id="' + id + '-t">' + titulo + '</h2></div>' + cuerpo + '</div></section>';
@@ -37,13 +49,16 @@
   /* ---------- listado ---------- */
   if (CAT === 'packs') {
     // Paco, 12/11: en vez de los 8 packs, el configurador de la home
-    html += '<div id="tc-h4p"></div>';
+    html += '<div class="lm-w"><div id="tc-hmed"></div></div><div id="tc-h4p"></div>';
   } else {
-    var lista = CAT === 'canape' ? T.canape.colores.map(function (c) { return tarjeta('canape', { color: c.k }); })
-      : CAT === 'bases' ? [tarjeta('base3d'), tarjeta('baseTela')]
-      : CAT === 'almohadas' ? [tarjeta('almLatex'), tarjeta('almVisco')]
-      : [tarjeta('edredon'), tarjeta('bajera')];
-    html += '<section class="c-list tc-list"><div class="lm-w"><p class="c-count">' + lista.length + (CAT === 'canape' ? ' acabados del canapé abatible de madera' : ' productos') + '</p><div class="tc-grid' + (lista.length > 2 ? ' tc-grid--4' : '') + '">' + lista.join('') + '</div></div></section>';
+    var listaHTML = function () {
+      return (CAT === 'canape' ? T.canape.colores.map(function (c) { return tarjeta('canape', { color: c.k }); })
+        : CAT === 'bases' ? [tarjeta('base3d'), tarjeta('baseTela')]
+        : CAT === 'almohadas' ? [tarjeta('almLatex'), tarjeta('almVisco')]
+        : [tarjeta('edredon'), tarjeta('bajera')]);
+    };
+    var lista = listaHTML();
+    html += '<section class="c-list tc-list"><div class="lm-w"><div id="tc-hmed"></div><p class="c-count">' + lista.length + (CAT === 'canape' ? ' acabados del canapé abatible de madera' : ' productos') + '</p><div class="tc-grid' + (lista.length > 2 ? ' tc-grid--4' : '') + '" id="tc-lista">' + lista.join('') + '</div></div></section>';
   }
 
   /* ---------- bloques de ayuda según la categoría ---------- */
@@ -86,6 +101,12 @@
   root.innerHTML = html;
   LM.fill(root);
 
+  /* Filtro de medidas: cambia los precios de la lista (o del configurador, en packs) */
+  if ($('#tc-hmed')) LM.filtroMedidas($('#tc-hmed'), function (m) {
+    MED = m;
+    if (CAT === 'packs') { if (LM.repintarPacks) LM.repintarPacks(); return; }
+    var g = $('#tc-lista'); if (g) { g.innerHTML = listaHTML().join(''); LM.fill(g); }
+  });
   /* Packs: el configurador de la home (plantilla #tpl-h4p de la página) */
   if (CAT === 'packs') {
     var montar = function () {
