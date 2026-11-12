@@ -2593,3 +2593,8 @@ body[data-page="cuenta"] { background: var(--bg2); }
 .pkl-pr s { font-weight: 400; font-size: 13px; color: var(--mute); }
 .pkl-pr .lm-price-off { font-size: 12px; padding: 2px 6px; }
 .pkl-pr b { font-size: 17px; }
+/* Paco, 12/11 · «Así está hecha» (bases): fuera el dibujo; las capas, en tarjetas a todo el ancho */
+.tf-capas-svg { display: none !important; }
+.tf-capas { grid-template-columns: 1fr; }
+.tf-capas-l { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+.tf-capas-l li { padding: 18px 18px 18px 56px; }
