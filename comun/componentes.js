@@ -897,22 +897,22 @@
     var pag = location.pathname.split('/').pop() || 'index.html', H = LM.HISTORICO || [];
     var URL = 'https://marketinglomonaco-art.github.io/lomonaco-mockup/historico/';
     var w = document.createElement('div');
-    w.className = 'lm-vers-w';
-    w.innerHTML = '<button type="button" class="lm-vers-btn" aria-expanded="false" aria-controls="lm-vers-p" aria-label="Versiones de la maqueta">' + LM.ico('layers') + '<span>Versiones</span></button>' +
-      '<div class="lm-vers-p" id="lm-vers-p" hidden><p class="lm-vers-t">Versiones de la maqueta</p><ol>' +
+    w.className = 'lm-hist-w';
+    w.innerHTML = '<button type="button" class="lm-hist-btn" aria-expanded="false" aria-controls="lm-hist-p" aria-label="Versiones de la maqueta">' + LM.ico('layers') + '<span>Versiones</span></button>' +
+      '<div class="lm-hist-p" id="lm-hist-p" hidden><p class="lm-hist-t">Versiones de la maqueta</p><ol>' +
       '<li class="is-on"><b>Actual</b><span>La que estás viendo</span></li>' +
       H.map(function (v) {
         var p = v.pags.indexOf(pag) > -1 ? pag : 'index.html';
         return '<li><a href="' + URL + v.id + '/diseno1-a/' + p + '"><b>' + esc(v.fecha) + '</b><span>' + esc(v.titulo) + '</span></a>' +
-          (v.b ? '<a class="lm-vers-b" href="' + URL + v.id + '/diseno1-b/' + p + '" aria-label="Opción B del ' + esc(v.fecha) + '">B</a>' : '') + '</li>';
+          (v.b ? '<a class="lm-hist-b" href="' + URL + v.id + '/diseno1-b/' + p + '" aria-label="Opción B del ' + esc(v.fecha) + '">B</a>' : '') + '</li>';
       }).join('') + '</ol>' +
-      '<label class="lm-vers-m"><input type="checkbox"' + (on ? ' checked' : '') + '><span>Ver marcas de revisión</span></label></div>';
+      '<label class="lm-hist-m"><input type="checkbox"' + (on ? ' checked' : '') + '><span>Ver marcas de revisión</span></label></div>';
     document.body.appendChild(w);
-    var b = w.querySelector('.lm-vers-btn'), p = w.querySelector('.lm-vers-p');
+    var b = w.querySelector('.lm-hist-btn'), p = w.querySelector('.lm-hist-p');
     function set() { document.documentElement.classList.toggle('lm-nomarks', !on); }
     b.addEventListener('click', function () { p.hidden = !p.hidden; b.setAttribute('aria-expanded', !p.hidden); });
     document.addEventListener('click', function (e) { if (!w.contains(e.target)) { p.hidden = true; b.setAttribute('aria-expanded', 'false'); } });
-    w.querySelector('.lm-vers-m input').addEventListener('change', function () { on = this.checked; LM.store.set('lm_marcas', on ? '1' : '0'); set(); });
+    w.querySelector('.lm-hist-m input').addEventListener('change', function () { on = this.checked; LM.store.set('lm_marcas', on ? '1' : '0'); set(); });
     set();
   }
 

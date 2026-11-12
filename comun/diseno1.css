@@ -2317,25 +2317,25 @@ body[data-page="cuenta"] { background: var(--bg2); }
 @media (max-width: 700px) { .mc-grid { grid-template-columns: 1fr; } .mc-track { grid-template-columns: 1fr 1fr; row-gap: 14px; } .mc-track li::after { display: none; } .mc-rep-g { grid-template-columns: 1fr 1fr 1fr; } .mc-tabla th:nth-child(2), .mc-tabla td:nth-child(2) { display: none; } }
 
 /* Paco, 12/11 · Botón «Versiones» (sustituye a «Ver marcas de revisión» y al selector A / B) */
-.lm-vers-w { position: fixed; left: 12px; bottom: 12px; z-index: 125; font-family: var(--font); }
-.lm-has-stick .lm-vers-w { bottom: 84px; }
-.lm-vers-btn { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 0 12px; border-radius: 999px; background: rgba(29,29,31,.86); color: #fff; font-size: 12.5px; font-weight: 600; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
-.lm-vers-btn .lm-i { width: 15px; height: 15px; }
-.lm-vers-btn:hover, .lm-vers-btn[aria-expanded="true"] { background: #1d1d1f; }
-.lm-vers-p { position: absolute; left: 0; bottom: 44px; width: min(320px, calc(100vw - 24px)); max-height: 70vh; overflow-y: auto; padding: 14px; border-radius: 16px; background: #fff; box-shadow: 0 12px 40px rgba(0,0,0,.22); }
-.lm-vers-p[hidden] { display: none; }
-.lm-vers-t { margin: 0 0 8px; font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
-.lm-vers-p ol { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
-.lm-vers-p li { display: flex; align-items: stretch; gap: 4px; }
-.lm-vers-p li > a:first-child, .lm-vers-p li.is-on { flex: 1; display: grid; gap: 1px; padding: 8px 10px; border-radius: 10px; color: var(--ink); text-decoration: none; }
-.lm-vers-p li > a:first-child:hover { background: var(--bg2); }
-.lm-vers-p li.is-on { background: var(--bg2); }
-.lm-vers-p b { font-size: 13.5px; }
-.lm-vers-p span { font-size: 12.5px; color: var(--mute); line-height: 1.35; }
-.lm-vers-b { display: grid; place-items: center; width: 34px; border-radius: 10px; background: var(--bg2); color: var(--ink); font-size: 12px; font-weight: 700; text-decoration: none; }
-.lm-vers-b:hover { background: var(--acc); color: #fff; }
-.lm-vers-m { display: flex; align-items: center; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 13.5px; cursor: pointer; }
-.lm-vers-m input { width: 18px; height: 18px; accent-color: var(--acc); }
+.lm-hist-w { position: fixed; left: 12px; bottom: 12px; z-index: 125; font-family: var(--font); }
+.lm-has-stick .lm-hist-w { bottom: 84px; }
+.lm-hist-btn { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 0 12px; border-radius: 999px; background: rgba(29,29,31,.86); color: #fff; font-size: 12.5px; font-weight: 600; box-shadow: 0 4px 14px rgba(0,0,0,.18); }
+.lm-hist-btn .lm-i { width: 15px; height: 15px; }
+.lm-hist-btn:hover, .lm-hist-btn[aria-expanded="true"] { background: #1d1d1f; }
+.lm-hist-p { position: absolute; left: 0; bottom: 44px; width: min(320px, calc(100vw - 24px)); max-height: 70vh; overflow-y: auto; padding: 14px; border-radius: 16px; background: #fff; box-shadow: 0 12px 40px rgba(0,0,0,.22); }
+.lm-hist-p[hidden] { display: none; }
+.lm-hist-t { margin: 0 0 8px; font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
+.lm-hist-p ol { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.lm-hist-p li { display: flex; align-items: stretch; gap: 4px; }
+.lm-hist-p li > a:first-child, .lm-hist-p li.is-on { flex: 1; display: grid; gap: 1px; padding: 8px 10px; border-radius: 10px; color: var(--ink); text-decoration: none; }
+.lm-hist-p li > a:first-child:hover { background: var(--bg2); }
+.lm-hist-p li.is-on { background: var(--bg2); }
+.lm-hist-p b { font-size: 13.5px; }
+.lm-hist-p span { font-size: 12.5px; color: var(--mute); line-height: 1.35; }
+.lm-hist-b { display: grid; place-items: center; width: 34px; border-radius: 10px; background: var(--bg2); color: var(--ink); font-size: 12px; font-weight: 700; text-decoration: none; }
+.lm-hist-b:hover { background: var(--acc); color: #fff; }
+.lm-hist-m { display: flex; align-items: center; gap: 8px; margin-top: 10px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 13.5px; cursor: pointer; }
+.lm-hist-m input { width: 18px; height: 18px; accent-color: var(--acc); }
 
 /* Paco, 12/11 · Desglose del pack en lista: cada pieza y cada regalo con su precio (home, categoría y ficha de pack) */
 .pkl { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
