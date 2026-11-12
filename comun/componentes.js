@@ -543,7 +543,8 @@
             return '<li><a href="' + LM.href(p.url) + '"><img src="' + p.img + '" alt="" width="56" height="56" loading="lazy"><span><b>' + esc(p.titulo) + '</b><small>' + esc(p.nucleo) + ' · desde ' + LM.eur(d.p) + '</small></span></a></li>';
           }).join('') + '</ul>' : '';
           return '<details class="lm-dacc"><summary>' + esc(it.t) + LM.ico('down') + '</summary><a class="lm-dall" href="' + LM.href(it.href) + '">Ver todo ' + esc(it.t.toLowerCase()) + '</a>' +
-            modelos + it.grupos.map(function (g) { return '<p>' + esc(g.t) + '</p><ul' + (g.cols === 2 ? ' class="lm-d2"' : '') + '>' + g.links.map(function (l) { return '<li><a href="' + LM.href(l[1]) + '">' + esc(l[0]) + '</a></li>'; }).join('') + '</ul>'; }).join('') +
+            // Paco, 12/11: en el móvil, fuera los grupos de medidas (colchones, canapé y almohadas); en escritorio y en el pie se quedan
+            modelos + it.grupos.filter(function (g) { return !/medida/i.test(g.t); }).map(function (g) { return '<p>' + esc(g.t) + '</p><ul' + (g.cols === 2 ? ' class="lm-d2"' : '') + '>' + g.links.map(function (l) { return '<li><a href="' + LM.href(l[1]) + '">' + esc(l[0]) + '</a></li>'; }).join('') + '</ul>'; }).join('') +
             '</details>';
         }).join('') +
         (!OPB ? '' : '<details class="lm-dacc lm-dacc-packs"><summary>Packs' + LM.ico('down') + '</summary>' +

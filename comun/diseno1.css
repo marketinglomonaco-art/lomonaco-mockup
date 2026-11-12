@@ -2508,3 +2508,11 @@ body[data-page="cuenta"] { background: var(--bg2); }
 .lm-cart-trust b { display: block; font-size: 13.5px; color: var(--ink); }
 .lm-sheet--cart .lm-call--cart { width: 100%; }
 .lm-sheet--cart .lm-lis { margin-top: 0; }
+
+/* Paco, 12/11 · Home: selector de medidas encima de las 4 tarjetas de colchones */
+.h-prod-med { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 22px; }
+.h-prod-med > span { margin-right: 4px; font-size: 14px; font-weight: 600; color: var(--mute); }
+.h-prod-med button { min-height: 42px; padding: 0 18px; border-radius: 999px; background: #fff; box-shadow: inset 0 0 0 1.5px var(--line); font-size: 15px; font-weight: 600; color: var(--ink); cursor: pointer; }
+.h-prod-med button:hover { box-shadow: inset 0 0 0 1.5px var(--ink); }
+.h-prod-med button[aria-checked="true"] { background: var(--acc); box-shadow: none; color: #fff; }
+@media (max-width: 600px) { .h-prod-med > span { width: 100%; } .h-prod-med button { flex: 1; padding: 0 8px; font-size: 14px; } }

@@ -46,7 +46,23 @@
   var g = $('#h-productos');
   if (g) {
     // Paco, 05/11: la tarjeta estándar del ecommerce (comun/componentes.js · LM.tarjeta), con precio para 150 × 190
-    g.innerHTML = LM.ORDEN.map(function (k) { return LM.tarjeta(k); }).join('');
+    var MED = ['90x190', '150x190', '180x200'], selM = $('#h-prod-med');
+    var med = MED.indexOf(LM.medidaInicial()) > -1 ? LM.medidaInicial() : '150x190';
+    function pintarTarjetas() {
+      g.innerHTML = LM.ORDEN.map(function (k) { return LM.tarjeta(k, { medida: med }); }).join('');
+      if (selM) selM.innerHTML = '<span>Precio para</span>' + MED.map(function (m) {
+        return '<button type="button" role="radio" data-hm="' + m + '" aria-checked="' + (m === med) + '">' + LM.medidaTxt(m) + '</button>';
+      }).join('');
+      LM.fill(g);
+    }
+    pintarTarjetas();
+    if (selM) selM.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-hm]'); if (!b) return;
+      med = b.getAttribute('data-hm'); LM.store.set('lm_medida', med); pintarTarjetas();
+      var n = selM.querySelector('[data-hm="' + med + '"]'); if (n) n.focus({ preventScroll: true });
+      if (LM.repintarPacks) LM.repintarPacks();
+      LM.track('home_medida', { medida: med });
+    });
     g.addEventListener('click', function (e) {
       var a = e.target.closest('a[href]'); if (!a) return;
       var c = e.target.closest('[data-testid^="product-card-"]');

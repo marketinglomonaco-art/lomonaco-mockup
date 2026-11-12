@@ -107,6 +107,7 @@
     var n = $('#h4p-det [data-pkc="' + st.color + '"]'); if (n) n.focus({ preventScroll: true });
     LM.track('pack_color', { color: st.color, base: st.base });
   });
+  LM.repintarPacks = pintarPack; // la home lo llama al cambiar la medida de las tarjetas
   radios(segB, 'data-base', function (v) { st.base = v; });
   radios(colB, 'data-col', function (v) { st.col = v; });
   $('#h4p-go').addEventListener('click', function () { if (this.hasAttribute('data-pid')) LM.track('select_item', { item_list_name: 'home_pack_config', item_id: +this.getAttribute('data-pid') }); });
