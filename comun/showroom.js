@@ -89,7 +89,7 @@
     '<div class="s-pl-side"><p class="lm-eyebrow">Elige desde dónde mirar</p><ul class="s-pl-list">' + SALA.map(function (e, i) {
       return '<li><button type="button" class="s-pl-op" data-i="' + i + '" aria-pressed="false"><img class="s-pl-th" src="../img/sr2-' + e.img + '-900.webp" alt="" width="900" height="600" decoding="async"><b>' + (i < 9 ? '0' : '') + (i + 1) + '</b><span>' + e.t + '<small>' + e.s + '</small></span></button></li>';
     }).join('') + '</ul><p class="s-pl-nota">Pincha en un número del plano, o en el suelo de la foto para acercarte a una cama.</p>' +
-      '<a class="lm-btn lm-btn--buy lm-btn--full s-pl-cta" href="#reserva">Quiero hacer una videollamada</a></div>' +
+      '<a class="lm-btn lm-btn--video lm-btn--full s-pl-cta" href="#reserva">' + LM.ico('video') + 'Quiero hacer una videollamada</a></div>' +
     '<p class="s-pl-now" aria-live="polite"><small>Estás viendo</small><b></b></p></div>');
   /* Paco, 10/11 · tres propuestas para integrar el plano (sin rosa). Se eligen con ?plano=1, 2 o 3:
      1 · panel gris a la altura de la foto · 2 · con miniaturas de cada vista · 3 · plano pequeño dentro de la foto */
@@ -314,17 +314,17 @@
         '<p class="s-side-t">Se levanta con su mecanismo de pistones y deja todo el hueco libre para guardar. ' + f.d + '.</p>' +
         LM.precio({ p: f.p, r: f.r }, { desde: true, cuota: false }) +
         '<button class="lm-btn lm-btn--line lm-btn--full" type="button" data-cerrar>Cerrar el canapé</button>' +
-        '<button class="lm-btn lm-btn--buy lm-btn--full" type="button" data-ver="bases">Quiero verlo en videollamada</button>';
+        '<button class="lm-btn lm-btn--video lm-btn--full" type="button" data-ver="bases">Quiero verlo en videollamada</button>';
     } else if (p) {
       h = '<p class="lm-eyebrow">En el showroom</p><h3>' + p.titulo + '</h3><p class="s-card-d">' + c.donde + '</p>' +
         '<p class="s-side-t">' + p.diferencia + '</p>' +
         /* Paco, 10/11: fuera el esquema de capas de la ficha lateral (ya sale en la ventana «Capas» en 3D) */
-        '<button class="lm-btn lm-btn--buy lm-btn--full" type="button" data-ver="' + k + '">Quiero verlo en videollamada</button>' +
+        '<button class="lm-btn lm-btn--video lm-btn--full" type="button" data-ver="' + k + '">Quiero verlo en videollamada</button>' +
         '<a class="lm-link" href="' + LM.href(p.url) + '">Ver la ficha del colchón</a>';
     } else {
       h = '<p class="lm-eyebrow">En el showroom</p><h3>' + c.t + '</h3><p class="s-card-d">' + c.donde + '</p>' +
         '<p class="s-side-t">Almohadas de látex y viscoelásticas, y el edredón que regalamos con los packs de colchón y canapé.</p>' +
-        '<button class="lm-btn lm-btn--buy lm-btn--full" type="button" data-ver="almohadas">Quiero verlas en videollamada</button>' +
+        '<button class="lm-btn lm-btn--video lm-btn--full" type="button" data-ver="almohadas">Quiero verlas en videollamada</button>' +
         '<a class="lm-link" href="' + LM.href(c.url) + '">Ver almohadas</a>';
     }
     side.innerHTML = h;
@@ -598,4 +598,47 @@
   }
 
   LM.fill(document);
+})();
+
+/* Paco, 12/11 · Avatar «en línea» (abajo a la derecha). Al pasar el ratón salen bocadillos con dudas típicas;
+   cada uno lleva a reservar la videollamada. La foto es provisional hasta tener la de un asesor del showroom. */
+(function () {
+  var C = LM.CONFIG, ahora = new Date(), d = ahora.getDay(), h = ahora.getHours() + ahora.getMinutes() / 60;
+  var online = d > 0 && d < 6 && h >= 9 && h < 18; // horario: lunes a viernes de 9:00 a 18:00
+  var DUDAS = [
+    ['¿Puedo verlo sin ir a la tienda?', 'Sí. Te enseñamos el showroom en directo.'],
+    ['¿Me abrís el canapé?', 'Claro. Lo abrimos y ves todo lo que cabe.'],
+    ['¿Cuánto cuesta?', LM.c('videollamada') + '.'],
+    ['¿Qué necesito?', 'Un móvil con WhatsApp o un ordenador con cámara.']
+  ];
+  var SIL = '<svg viewBox="0 0 120 120" aria-hidden="true"><rect width="120" height="120" fill="#ececee"/><circle cx="60" cy="47" r="21" fill="#c9c9ce"/><path d="M20 120c2-26 19-40 40-40s38 14 40 40z" fill="#c9c9ce"/></svg>';
+  var w = document.createElement('div');
+  w.className = 'sl-av' + (online ? ' is-online' : '');
+  w.innerHTML =
+    '<div class="sl-av-pop" id="sl-av-pop">' +
+      DUDAS.map(function (q, i) { return '<a class="sl-av-b" href="#reserva" style="--i:' + i + '" data-duda="' + i + '"><b>' + q[0] + '</b><span>' + q[1] + '</span></a>'; }).join('') +
+      '<a class="lm-btn lm-btn--video sl-av-cta" href="#reserva" style="--i:' + DUDAS.length + '">' + LM.ico('video') + 'Quiero hacer una videollamada</a>' +
+    '</div>' +
+    '<button type="button" class="sl-av-btn" aria-expanded="false" aria-controls="sl-av-pop" aria-label="Habla con un asesor del showroom">' +
+      '<span class="sl-av-ph">' + SIL + '</span>' +
+      '<span class="sl-av-st"><i></i>' + (online ? 'En línea' : 'Reserva tu hora') + '</span>' +
+    '</button>' + LM.pend('foto real de un asesor del showroom (recortada, mirando a cámara)');
+  document.body.appendChild(w);
+  var b = w.querySelector('.sl-av-btn');
+  function abrir(on) { w.classList.toggle('is-open', on); b.setAttribute('aria-expanded', on); }
+  if (!matchMedia('(hover: none)').matches) {
+    w.addEventListener('mouseenter', function () { abrir(true); });
+    w.addEventListener('mouseleave', function () { abrir(false); });
+  }
+  b.addEventListener('click', function () { abrir(!w.classList.contains('is-open')); });
+  document.addEventListener('click', function (e) { if (!w.contains(e.target)) abrir(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') abrir(false); });
+  w.addEventListener('focusout', function (e) { if (!w.contains(e.relatedTarget)) abrir(false); });
+  w.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href="#reserva"]'); if (!a) return;
+    LM.track('generate_lead_intent', { source: 'avatar_showroom', duda: a.getAttribute('data-duda') || 'cta' }); abrir(false);
+  });
+  // Mientras se ve el formulario de reserva no hace falta
+  var res = document.getElementById('reserva');
+  if (res && 'IntersectionObserver' in window) new IntersectionObserver(function (en) { w.classList.toggle('is-off', en[0].isIntersecting); }, { threshold: .25 }).observe(res);
 })();

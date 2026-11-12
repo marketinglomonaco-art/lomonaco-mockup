@@ -2391,3 +2391,36 @@ body[data-page="cuenta"] { background: var(--bg2); }
 
 /* Paco, 12/11 · Paseo virtual: el CTA de la videollamada, en el panel gris de la derecha */
 .s-pl-cta { margin-top: 14px; }
+
+/* Paco, 12/11 · Showroom Live: avatar «en línea» abajo a la derecha, con bocadillos de dudas que llevan a la videollamada */
+.sl-av { position: fixed; right: 18px; bottom: 18px; z-index: 124; display: flex; flex-direction: column; align-items: flex-end; font-family: var(--font); transition: opacity .3s, transform .3s var(--ease); }
+.lm-has-stick .sl-av { bottom: 84px; }
+.sl-av.is-off { opacity: 0; transform: translateY(12px); pointer-events: none; }
+.sl-av-btn { position: relative; display: block; width: 96px; padding: 0; border: 0; background: none; cursor: pointer; }
+.sl-av-ph { display: block; width: 96px; height: 96px; border-radius: 22px; overflow: hidden; background: #fff; box-shadow: 0 0 0 4px #fff, 0 12px 30px rgba(0,0,0,.18); }
+.sl-av-ph svg, .sl-av-ph img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.sl-av-st { position: absolute; left: 50%; bottom: -12px; transform: translateX(-50%); display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 999px; background: #fff; color: var(--ink); font-size: 12px; font-weight: 700; white-space: nowrap; box-shadow: 0 4px 14px rgba(0,0,0,.14); }
+.sl-av-st i { width: 8px; height: 8px; border-radius: 50%; background: var(--mute); }
+.sl-av.is-online .sl-av-st i { background: #1e9e4a; box-shadow: 0 0 0 3px rgba(30,158,74,.18); }
+.sl-av-pop { position: absolute; right: 0; bottom: calc(100% + 18px); display: grid; justify-items: end; gap: 8px; width: max-content; max-width: min(300px, calc(100vw - 36px)); pointer-events: none; }
+.sl-av-b, .sl-av-cta { opacity: 0; transform: translateY(8px); transition: opacity .25s, transform .3s var(--ease); transition-delay: calc(var(--i) * 45ms); }
+.sl-av.is-open .sl-av-pop { pointer-events: auto; }
+.sl-av.is-open .sl-av-b, .sl-av.is-open .sl-av-cta { opacity: 1; transform: none; }
+.sl-av-b { position: relative; display: grid; gap: 2px; padding: 10px 14px; border-radius: 16px 16px 4px 16px; background: #fff; color: var(--ink); text-decoration: none; box-shadow: 0 8px 24px rgba(0,0,0,.14); }
+.sl-av-b b { font-size: 14px; line-height: 1.3; color: var(--acc); }
+.sl-av-b span { font-size: 13px; line-height: 1.35; color: var(--mute); }
+.sl-av-b:hover { box-shadow: inset 0 0 0 1.5px var(--acc), 0 8px 24px rgba(0,0,0,.14); }
+.sl-av-cta { box-shadow: 0 10px 26px rgba(0,0,0,.2); }
+.sl-av-cta .lm-i { width: 18px; height: 18px; }
+@media (max-width: 900px) { .sl-av { right: 12px; bottom: 14px; } .sl-av-btn, .sl-av-ph { width: 72px; } .sl-av-ph { height: 72px; border-radius: 18px; } .sl-av-st { font-size: 11px; padding: 4px 8px; } }
+@media (prefers-reduced-motion: reduce) { .sl-av-b, .sl-av-cta { transition: none; } }
+
+/* Paco, 12/11 · CTA de la videollamada en verde (más visible), con icono de cámara. Verde oscuro para que el texto blanco se lea bien */
+.lm-btn.lm-btn--video { display: inline-flex; align-items: center; justify-content: center; gap: 9px; background: #17853d; border-color: #17853d; color: #fff; box-shadow: 0 8px 22px rgba(23,133,61,.28); }
+.lm-btn.lm-btn--video:hover { background: #126c31; border-color: #126c31; color: #fff; }
+.lm-btn.lm-btn--video .lm-i { width: 20px; height: 20px; flex: none; }
+/* 12/11 · ajustes del avatar: por encima de la burbuja de teléfono al abrirse, el CTA en una línea y la etiqueta sin cortar */
+.sl-av { z-index: 126; bottom: 28px; }
+.sl-av-pop { max-width: min(340px, calc(100vw - 24px)); }
+.sl-av-cta { white-space: nowrap; }
+@media (max-width: 900px) { .sl-av { bottom: 24px; } .sl-av-cta { white-space: normal; } }

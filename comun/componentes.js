@@ -92,6 +92,7 @@
     pdf: '<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/>',
     cube: '<path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/>',
     canape: '<path d="M3 13h18v6H3z"/><path d="M3 16h18"/><path d="M3 13 17.5 5.5l.9 1.8L5.6 13"/>',
+    video: '<rect x="2.5" y="6" width="13" height="12" rx="2.5"/><path d="m15.5 10.5 6-3.5v10l-6-3.5"/>',
     recoger: '<rect x="2.5" y="10" width="13" height="7" rx="1.5"/><path d="M2.5 13.5h13"/><path d="M17.5 13.5h4m-2-2 2 2-2 2"/>',
     base: '<rect x="2.5" y="9.5" width="19" height="5" rx="1.5"/><path d="M5.5 14.5V18M18.5 14.5V18M2.5 12h19"/>'
   };
