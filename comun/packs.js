@@ -94,7 +94,7 @@
     $('#h4p-det').innerHTML = h;
     $('#h4p-price').innerHTML = precio + '<p class="lm-price-fee">' + LM.cuotaTxt(pack.p) + '</p>';
     go.innerHTML = CTA_HTML;
-    go.href = LM.PRODUCTOS[st.col].url.replace('colchon-', 'pack-') + '?base=' + st.base;
+    go.href = LM.packPagina(st.col, st.base);
     go.setAttribute('data-pid', PC.packs[st.col + (st.base === 'canape' ? 'Canape' : 'Base')].pid);
     go.setAttribute('aria-label', 'Ver el pack ' + col.t + ' ' + PC.bases[st.base].t.toLowerCase());
   }

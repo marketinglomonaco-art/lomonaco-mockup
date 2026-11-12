@@ -106,7 +106,7 @@ LM.MENU = [
     ], fichas: ['bajera', 'edredon'] }
 ];
 // 29/10: el botón rojo del menú lleva a la ficha de pack de la maqueta (Natura Gold, el más vendido)
-LM.MENU_PACKS = { t: 'Packs colchón + canapé o base', href: 'pack-natura-gold.html' };
+LM.MENU_PACKS = { t: 'Packs colchón + canapé o base', href: 'packs.html' }; // 12/11: a la categoría de packs
 
 /* Medidas en el orden de la web */
 /* Calculadora de cuotas de Lo Monaco (Paco, 06/11), columna «Normal» (coste para el cliente).
@@ -128,7 +128,7 @@ LM.PRODUCTOS = {
   visco: {
     pagina: 'colchon-natura-visco.html',
     packs: { canape: { pid: 73610, tabla: 'viscoCanape', d: 'Canapé abatible + almohadas y protector de regalo', img: '../img/pack-visco-canape-760.webp' },
-             base: { pid: 73467, tabla: 'viscoBase', d: 'Base tapizada antideslizante + almohadas de regalo', img: '../img/base-3d-760.webp' } },
+             base: { pid: 73467, tabla: 'viscoBase', d: 'Base tapizada antideslizante + regalos', img: '../img/base-3d-760.webp' } },
     vp: 'Viscoelástica con un núcleo firme. Se adapta a la forma de tu cuerpo y te da un soporte firme y silencioso.',
     beneficios: [['shield', 'Soporte firme', 'El núcleo HR reparte tu peso y cuida tu postura.'],
                  ['body', 'Se adapta a ti', 'La visco se amolda a tu forma y alivia la presión.'],
@@ -151,7 +151,7 @@ LM.PRODUCTOS = {
   gold: {
     pagina: 'colchon-natura-gold.html',
     packs: { canape: { pid: 73488, tabla: 'goldCanape', d: 'Canapé abatible + almohadas, edredón y protector de regalo', img: '../img/pack-gold-canape-760.webp' },
-             base: { pid: 73446, tabla: 'goldBase', d: 'Base tapizada antideslizante + almohadas de regalo', img: '../img/base-3d-760.webp' } },
+             base: { pid: 73446, tabla: 'goldBase', d: 'Base tapizada antideslizante + regalos', img: '../img/base-3d-760.webp' } },
     vp: 'Muelles ensacados con visco. Firmeza media: te acoge, te sujeta y apenas notas a tu pareja.',
     beneficios: [['couple', 'No notas a tu pareja', 'Cada muelle trabaja solo y reduce los movimientos.'],
                  ['body', 'Te acoge', 'La visco alivia la presión en hombros y caderas.'],
@@ -174,7 +174,7 @@ LM.PRODUCTOS = {
   latex: {
     pagina: 'colchon-natura-latex.html',
     packs: { canape: { pid: 64601, tabla: 'latexCanape', d: 'Canapé abatible + almohadas, edredón y protector de regalo', img: '../img/pack-latex-canape-760.webp' },
-             base: { pid: 73424, tabla: 'latexBase', d: 'Base tapizada antideslizante + almohadas de regalo', img: '../img/pack-latex-base-760.webp' } },
+             base: { pid: 73424, tabla: 'latexBase', d: 'Base tapizada antideslizante + regalos', img: '../img/pack-latex-base-760.webp' } },
     fotosPropias: true,
     vp: 'Látex natural sobre muelles ensacados. Te recibe suave, te sujeta bien y no pasas calor.',
     beneficios: [['waves', 'No pasas calor', 'El tejido y el látex dejan pasar el aire. La superficie se mantiene fresca.'],
@@ -198,7 +198,7 @@ LM.PRODUCTOS = {
   gran: {
     pagina: 'colchon-gran-natura.html',
     packs: { canape: { pid: 69133, tabla: 'granCanape', d: 'Canapé abatible + almohadas, edredón y protector de regalo', img: '../img/pack-gran-natura-canape-760.webp' },
-             base: { pid: 72445, tabla: 'granBase', d: 'Base tapizada antideslizante + almohadas de regalo', img: '../img/base-3d-760.webp' } },
+             base: { pid: 72445, tabla: 'granBase', d: 'Base tapizada antideslizante + regalos', img: '../img/base-3d-760.webp' } },
     vp: 'Núcleo 100% látex. Se adapta a todo tu cuerpo y reduce la presión en hombros, espalda y cadera.',
     beneficios: [['body', '100% adaptable', 'El látex reduce la presión en hombros, espalda y cadera.'],
                  ['couple', 'No notas a tu pareja', 'Si tu pareja se gira o se levanta, tu lado sigue quieto.'],
@@ -380,10 +380,10 @@ LM.PACK_CONF = {
     latexCanape: { pid: 64601, inc: ['Canapé abatible de madera'], regalos: ['almohada', 'edredon', 'protector'], url: '/pack-colchon-y-canape-almohadas-bajera-edredon/' },
     goldCanape:  { pid: 73488, inc: ['Canapé abatible de madera'], regalos: ['almohada', 'edredon', 'protector'], url: '/pack-colchon-natura-gold-y-canape-almohadas-bajera-edredon/' },
     viscoCanape: { pid: 73610, inc: ['Canapé abatible de madera'], regalos: ['almohada', 'protector'], url: '/pack-colchon-natura-visco-canape-almohadas-bajera/' },
-    granBase:    { pid: 72445, inc: ['Base tapizada antideslizante con patas de 30 cm'], regalos: ['almohada'], url: '/pack-colchon-gran-natura-y-base-tapizada-antideslizante/' },
-    latexBase:   { pid: 73424, inc: ['Base tapizada antideslizante con patas de 30 cm'], regalos: ['almohada'], url: '/pack-colchon-natura-latex-base-tapizada-antideslizante/' },
-    goldBase:    { pid: 73446, inc: ['Base tapizada antideslizante con patas de 30 cm'], regalos: ['almohada'], url: '/pack-colchon-natura-gold-base-tapizada-antideslizante/' },
-    viscoBase:   { pid: 73467, inc: ['Base tapizada antideslizante con patas de 30 cm'], regalos: ['almohada'], url: '/pack-colchon-natura-visco-base-tapizada-antideslizante/' }
+    granBase:    { pid: 72445, inc: ['Base tapizada antideslizante con patas de 30 cm'], regalos: ['almohada', 'edredon', 'protector'], url: '/pack-colchon-gran-natura-y-base-tapizada-antideslizante/' },
+    latexBase:   { pid: 73424, inc: ['Base tapizada antideslizante con patas de 30 cm'], regalos: ['almohada', 'edredon', 'protector'], url: '/pack-colchon-natura-latex-base-tapizada-antideslizante/' },
+    goldBase:    { pid: 73446, inc: ['Base tapizada antideslizante con patas de 30 cm'], regalos: ['almohada', 'edredon', 'protector'], url: '/pack-colchon-natura-gold-base-tapizada-antideslizante/' },
+    viscoBase:   { pid: 73467, inc: ['Base tapizada antideslizante con patas de 30 cm'], regalos: ['almohada', 'protector'], url: '/pack-colchon-natura-visco-base-tapizada-antideslizante/' }
   }
 };
 
@@ -424,8 +424,7 @@ LM.PACK_BASES = {
   canape: { t: 'Canapé abatible', corto: 'canapé', d: 'De madera, con mucho espacio para guardar', img: '../img/pack-conf-canape', tabla: 'Canape',
             colores: [['Blanco', '#f1eee8'], ['Nórdico', '#dcc6a2'], ['Roble', '#b5875a'], ['Nogal', '#5b3d2c']], porDefecto: 'Nogal', foto: 'Nogal' },
   base:   { t: 'Base tapizada', corto: 'base tapizada', d: 'Antideslizante, con patas de 30 cm', img: '../img/pack-conf-patas', tabla: 'Base',
-            colores: [['Antracita', '#3b3c40'], ['Beige', '#d8cbb3'], ['Chocolate', '#4a3427'], ['Gris claro', '#c8c8cc']], porDefecto: 'Antracita', foto: 'Antracita',
-            pend: 'la base del pack en la tienda solo tiene Blanco y Chocolate; los 4 colores son de la base tapizada de tela' }
+            colores: [['Chocolate', '#4a3427'], ['Blanco', '#ecebe6']], porDefecto: 'Chocolate', foto: 'Chocolate' } /* 12/11: los 2 colores de la tienda */
 };
 
 /* Galería de las fichas (Paco, 09/11): fotos de producto nuevas (img/fp-0N-1400|947|560.webp, cuadradas).
@@ -435,7 +434,7 @@ LM.PACK_BASES = {
    Igual en todos los modelos (el Gold ya no usa sus fotos del showroom, img/fpg-*, que se conservan) */
 LM.GALERIA = {
   todas: [['fp-07', 'de frente en la habitación, sobre canapé de madera'], ['fp-06', 'esquina con la cinta Lomonaco'],
-          ['fp-05', 'sus capas por dentro, sobre el canapé'], ['fp-04', 'superficie acolchada de cerca'], ['fp-03', 'detalle del asa con la M'],
+          ['fp-05b', 'abierto con la mano: todas sus capas por dentro'], ['fp-04', 'superficie acolchada de cerca'], ['fp-03', 'detalle del asa con la M'],
           ['fp-02', 'esquina sobre canapé de madera, con el nombre del modelo'], ['fp-01', 'detalle de la etiqueta']],
   modelo: {},   // Paco, 09/11: las 7 fotos y este orden, en todos los modelos (también el Gold)
   visibles: 5   // la grande + 4; el resto, con «Ver más fotos»

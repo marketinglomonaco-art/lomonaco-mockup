@@ -79,10 +79,47 @@
     couple: '<circle cx="8" cy="8" r="3"/><circle cx="16" cy="8" r="3"/><path d="M2 20a6 6 0 0 1 12 0M10 20a6 6 0 0 1 12 0"/>',
     thermo: '<path d="M14 14.8V5a2 2 0 0 0-4 0v9.8a4 4 0 1 0 4 0z"/><path d="M12 10v7"/>',
     lock: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
-    gift: '<path d="M4 11h16v9H4zM3 7h18v4H3zM12 7v13"/><path d="M12 7c-1.5-3-5-3.5-5-1s3 1 5 1c2 0 5 1.5 5-1s-3.5-2-5 1"/>'
+    gift: '<path d="M4 11h16v9H4zM3 7h18v4H3zM12 7v13"/><path d="M12 7c-1.5-3-5-3.5-5-1s3 1 5 1c2 0 5 1.5 5-1s-3.5-2-5 1"/>',
+    /* 12/11: iconos de canapé, bases y complementos */
+    box: '<path d="M3 9h18v10H3z"/><path d="M3 9 6 5h12l3 4"/><path d="M9 13h6"/>',
+    lift: '<path d="M3 19h18"/><path d="M4 19V15h16v4"/><path d="M4 15 17 6"/><path d="M9 15l4-6"/>',
+    grip: '<rect x="3" y="7" width="18" height="10" rx="2"/><path d="M7 11h.01M11 11h.01M15 11h.01M9 14h.01M13 14h.01M17 14h.01"/>',
+    palette: '<path d="M12 3a9 9 0 1 0 0 18c1.2 0 1.6-1 1-2-.7-1.2 0-2.5 1.4-2.5H17a4 4 0 0 0 4-4c0-5-4-9.5-9-9.5z"/><circle cx="7.5" cy="11" r="1"/><circle cx="10" cy="7" r="1"/><circle cx="15" cy="7.5" r="1"/>',
+    robot: '<path d="M3 16a9 4 0 0 0 18 0v-1a9 4 0 0 0-18 0z"/><path d="M3 15a9 4 0 0 1 18 0"/><circle cx="12" cy="14" r="1"/><path d="M2 9h20M5 9V6M19 9V6"/>',
+    layers: '<path d="m12 4 9 4.5-9 4.5-9-4.5z"/><path d="m3 13 9 4.5 9-4.5"/>',
+    drop: '<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>',
+    tool: '<path d="M14.5 5.5a4 4 0 0 0-5 5L4 16l4 4 5.5-5.5a4 4 0 0 0 5-5l-2.5 2.5-2.5-.5-.5-2.5z"/>',
+    pdf: '<path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/>',
+    cube: '<path d="m12 3 8 4.5v9L12 21l-8-4.5v-9z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9"/>'
   };
   LM.ico = function (n, cls) {
     return '<svg class="lm-i ' + (cls || '') + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + P[n] + '</svg>';
+  };
+  /* Fotos de la tienda (img/tienda/, 12/11): -700.webp y, si existe, -1400.webp */
+  /* Página de cada pack (8, como la tienda): colchón + canapé o base (12/11) */
+  LM.packPagina = function (k, base) { var p = LM.TIENDA && LM.TIENDA.packs[k + (base === 'base' ? 'Base' : 'Canape')]; return p ? p.pagina : 'packs.html'; };
+  LM.tfImg = function (n, o) {
+    o = o || {};
+    if (!LM._gr) { LM._gr = {}; (LM.TIENDA_GRANDES || []).forEach(function (x) { LM._gr[x] = 1; }); }
+    var b = '../img/tienda/' + n;
+    return '<img src="' + b + '-700.webp"' + (LM._gr[n] ? ' srcset="' + b + '-700.webp 700w, ' + b + '-1400.webp 1400w" sizes="' + (o.sizes || '(max-width: 900px) 100vw, 50vw') + '"' : '') +
+      ' alt="' + esc(o.alt || '') + '" width="700" height="700"' + (o.eager ? ' fetchpriority="high"' : ' loading="lazy"') + (o.cls ? ' class="' + o.cls + '"' : '') + '>';
+  };
+  /* Tarjeta de pack de la tienda (fichas, categorías y venta cruzada, 12/11) */
+  LM.desdePack = function (pk) {
+    var best = null;
+    Object.keys(pk.tabla).forEach(function (m) { Object.keys(pk.tabla[m]).forEach(function (c) { var d = pk.tabla[m][c]; if (!best || d.p < best.p) best = d; }); });
+    return best;
+  };
+  var desdePack = LM.desdePack;
+  LM.tfPackCard = function (pk) {
+    var d = desdePack(pk), foto = pk.fotoColor[Object.keys(pk.fotoColor)[0]], R = LM.REGALOS_TIENDA;
+    var col = LM.PRODUCTOS[pk.colchon];
+    return '<article class="lm-card tf-pk"><div class="lm-card-img">' + LM.tfImg(foto, { alt: pk.nombre, sizes: '(max-width: 900px) 100vw, 25vw' }) + '<span class="lm-pill">Regalos incluidos</span></div>' +
+      '<div class="lm-card-b"><p class="lm-card-k">' + esc(col.nombre) + ' + ' + (pk.base === 'canape' ? 'canapé' : 'base antideslizante') + '</p>' +
+      '<h3><a class="lm-stretch" href="' + pk.pagina + '">' + esc(pk.nombre) + '</a></h3>' +
+      '<p class="tf-pk-reg">' + LM.ico('gift') + 'De regalo: ' + pk.regalos.map(function (r, i) { return i ? R[r][0].toLowerCase() : R[r][0]; }).join(', ').replace(/, ([^,]*)$/, ' y $1') + '</p>' +
+      '<div class="lm-card-f">' + LM.precio(d, { desde: true }) + '<span class="lm-btn lm-btn--full" aria-hidden="true">Ver pack</span></div></div></article>';
   };
   LM.stars = function (val) {
     var v = parseFloat(String(val).replace(',', '.')), h = '';
@@ -238,7 +275,11 @@
   LM.medidaInicial = function () { return LM.store.get('lm_medida') || C.medidaInicial.v; };
   LM.selector = function (el, opts) {
     // opts: { tabla: fn() -> objeto de precios activo, medida, onChange(m) }
-    var sel = opts.medida, def = C.medidaInicial.v;
+    var sel = opts.medida, def = opts.def || C.medidaInicial.v;
+    // 12/11: también para canapé, bases y complementos: su lista de medidas, su texto y sin «Ayúdame a elegir»
+    var MED = opts.medidas || LM.MEDIDAS, TXT = opts.label || function (m) { return m.replace('x', ' × ') + ' cm'; };
+    var CORTO = opts.corto || function (m) { return m.replace('x', '×'); }, TIT = opts.titulo || 'Elige tu medida';
+    var AYUDA = opts.ayuda === false ? '' : '<button type="button" class="lm-size-help" data-asistente aria-haspopup="dialog">' + LM.ico('chat') + 'Ayúdame a elegir</button>';
     // Ficha · comentario 4 (29/10): Opción A = desplegable; Opción B = botones pequeños. En las dos, sin precio
     var desplegable = document.body.getAttribute('data-variante') === 'a';
     function render() {
@@ -247,28 +288,26 @@
         // Paco, 06/11: al desplegar las medidas se ve el precio de cada una (con el tachado), en una lista propia
         var precioDe = function (d) { return '<span class="lm-dd-pr">' + (d.r > d.p ? '<s>' + LM.eur(d.r) + '</s> ' : '') + '<b>' + LM.eur(d.p) + '</b></span>'; };
         var cur = t[sel];
-        el.innerHTML = '<div class="lm-size-head"><span class="lm-size-lbl" id="lm-size-lbl">Elige tu medida</span>' +
-          '<button type="button" class="lm-size-help" data-asistente aria-haspopup="dialog">' + LM.ico('chat') + 'Ayúdame a elegir</button></div>' +
+        el.innerHTML = '<div class="lm-size-head"><span class="lm-size-lbl" id="lm-size-lbl">' + TIT + '</span>' + AYUDA + '</div>' +
           '<div class="lm-size-dd lm-dd"><button type="button" class="lm-dd-btn" id="lm-size-btn" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="lm-size-lbl lm-size-btn" data-testid="size-dropdown">' +
-          '<span class="lm-dd-m">' + sel.replace('x', ' × ') + ' cm</span>' + (cur ? precioDe(cur) : '') + LM.ico('down') + '</button>' +
+          '<span class="lm-dd-m">' + TXT(sel) + '</span>' + (cur ? precioDe(cur) : '') + LM.ico('down') + '</button>' +
           '<ul class="lm-dd-list" role="listbox" aria-labelledby="lm-size-lbl" hidden>' +
-          LM.MEDIDAS.map(function (m) {
+          MED.map(function (m) {
             var d = t[m], st = !d ? 'na' : (!d.s ? 'out' : 'ok');
             return '<li role="option" tabindex="-1" data-m="' + m + '" aria-selected="' + (m === sel) + '"' + (st !== 'ok' ? ' aria-disabled="true"' : '') + '>' +
-              '<span class="lm-dd-m">' + m.replace('x', ' × ') + ' cm</span>' +
+              '<span class="lm-dd-m">' + TXT(m) + '</span>' +
               (st === 'ok' ? precioDe(d) : '<small>' + (st === 'na' ? 'No disponible' : 'Agotada') + '</small>') + '</li>';
           }).join('') + '</ul></div>';
         return;
       }
-      el.innerHTML = '<div class="lm-size-head"><span class="lm-size-lbl" id="lm-size-lbl">Elige tu medida</span>' +
-        '<button type="button" class="lm-size-help" data-asistente aria-haspopup="dialog">' + LM.ico('chat') + 'Ayúdame a elegir</button></div>' +
+      el.innerHTML = '<div class="lm-size-head"><span class="lm-size-lbl" id="lm-size-lbl">' + TIT + '</span>' + AYUDA + '</div>' +
         '<div class="lm-size-grid" role="radiogroup" aria-labelledby="lm-size-lbl">' +
-        LM.MEDIDAS.map(function (m) {
+        MED.map(function (m) {
           var d = t[m], st = !d ? 'na' : (!d.s ? 'out' : 'ok');
           var on = m === sel && st === 'ok';
           return '<button type="button" role="radio" class="lm-sz' + (m === def ? ' is-default' : '') + (st !== 'ok' ? ' is-' + st : '') + '"' +
             ' data-m="' + m + '" aria-checked="' + on + '"' + (st !== 'ok' ? ' aria-disabled="true"' : '') + ' tabindex="' + (on ? 0 : -1) + '">' +
-            '<span>' + m.replace('x', '×') + '</span>' +
+            '<span>' + CORTO(m) + '</span>' +
             (st === 'ok' ? '' : '<small>' + (st === 'na' ? 'No disponible' : 'Agotada') + '</small>') + '</button>';
         }).join('') + '</div>';
       if (!$('[aria-checked="true"]', el)) { var f = $('.lm-sz:not(.is-na):not(.is-out)', el); if (f) f.tabIndex = 0; }
@@ -336,18 +375,33 @@
   var PK_ORDEN = ['gran', 'latex', 'gold', 'visco'];
   function packsMenu() {
     var g = function (base, t) {
-      return { t: t, links: PK_ORDEN.map(function (k) { return ['Pack ' + LM.PRODUCTOS[k].nombre + (base === 'canape' ? ' + canapé' : ' + base'), LM.PRODUCTOS[k].url.replace('colchon-', 'pack-') + '?base=' + base]; }) };
+      return { t: t, links: PK_ORDEN.map(function (k) { return ['Pack ' + LM.PRODUCTOS[k].nombre + (base === 'canape' ? ' + canapé' : ' + base'), LM.packPagina(k, base)]; }) };
     };
     return { t: LM.MENU_PACKS.t, href: LM.MENU_PACKS.href, grupos: [g('canape', 'Packs con canapé abatible'), g('base', 'Packs con base antideslizante')] };
   }
   function packCard(k) {
     var p = LM.PRODUCTOS[k], d = LM.desdeTabla(LM.PRECIOS[p.packs.canape.tabla]);
-    return '<a class="lm-mc" href="' + p.url.replace('colchon-', 'pack-') + '?base=canape"><img src="' + p.packs.canape.img + '" alt="" width="120" height="120" loading="lazy">' +
+    return '<a class="lm-mc" href="' + LM.packPagina(k, 'canape') + '"><img src="' + p.packs.canape.img + '" alt="" width="120" height="120" loading="lazy">' +
       '<span><small>Colchón + canapé</small><b>Pack ' + esc(p.nombre) + '</b><em>Desde ' + LM.eur(d.p) + '</em></span></a>';
   }
   /* ---------- cabecera y pie del checkout (Paco, 12/11) ----------
      Fuga n.º 1 de la web actual: en el checkout salen dos cabeceras con todo el menú y el pie completo (171 enlaces que sacan de la compra).
      Aquí: logo, pasos, «Compra segura» y teléfono. Nada más. */
+  /* Ruta de la maqueta para un enlace de la web actual. Devuelve el mismo enlace si ya es de la maqueta (o teléfono, WhatsApp…),
+     la página equivalente si existe y null si la maqueta no la tiene */
+  LM.ruta = function (h) {
+    if (!h || /^(tel:|mailto:|#)/.test(h) || /wa\.me/.test(h) || /^[\w-]+\.html([?#].*)?$/.test(h)) return h;
+    if (/^https?:/.test(h) && h.indexOf(LM.WEB) !== 0) return h;
+    var u = h.replace(LM.WEB, ''), path = u.split('?')[0], q = u.split('?')[1] || '', R = LM.RUTAS || {};
+    if (R[path]) {
+      var col = (q.match(/attribute_pa_color=([\w-]+)/) || [])[1];
+      return R[path] + (col ? '?color=' + col : '');
+    }
+    var cm = path.match(/^\/canape-(\d+)-x-(\d+)\/$/);
+    if (cm && R['/canape-abatible-de-madera/']) return R['/canape-abatible-de-madera/'] + '?medida=' + cm[1] + 'x' + cm[2];
+    if (/^\/almohadas?-(70|75|90|135)\/$/.test(path)) return 'almohadas.html';
+    return null;
+  };
   LM.headerCompra = function (el, pg) {
     var paso = pg === 'confirmado' ? 3 : 2;
     var pasos = [['Carrito', 'carrito.html'], ['Datos y pago', 'finalizar-compra.html'], ['Confirmación', '']];
@@ -444,12 +498,10 @@
 
     // 29/10 · Maqueta: el menú se ve igual, pero todo enlace a la web real (categorías, packs, productos que no tenemos)
     // lleva a la categoría que estamos maquetando. Se respetan las páginas propias de la maqueta, el teléfono y WhatsApp.
+    // 12/11: canapé, bases, packs, complementos, blog y Mi cuenta ya tienen su página (LM.RUTAS, en comun/tienda.js)
     $$('a[href]', el).forEach(function (a) {
-      var h = a.getAttribute('href');
-      if (/^(tel:|mailto:|#)/.test(h) || /wa\.me/.test(h)) return;
-      if (/\/mi-cuenta\//.test(h)) { a.setAttribute('href', '#'); return; }
-      if (/^[\w-]+\.html([?#].*)?$/.test(h)) return; // páginas de la maqueta (home, fichas, Showroom Live, categoría)
-      a.setAttribute('href', 'colchones.html');
+      var h = a.getAttribute('href'), r = LM.ruta(h);
+      if (r !== h) a.setAttribute('href', r || 'colchones.html');
     });
 
     var burger = $('.lm-burger', el), drawer = $('.lm-drawer', el);
@@ -608,6 +660,7 @@
       '<span>© LM DESCANSO SL</span>' +
       '<a href="' + LM.WEB + '/aviso-legal/">Aviso legal</a><a href="' + LM.WEB + '/politica-de-privacidad/">Política privacidad</a><a href="' + LM.WEB + '/politica-de-cookies/">Política cookies</a></div>' +
       '</div></footer>';
+    $$('a[href]', el).forEach(function (a) { var h = a.getAttribute('href'), r = LM.ruta(h); if (r && r !== h) a.setAttribute('href', r); });
   };
 
   /* ---------- reseñas reales ---------- */

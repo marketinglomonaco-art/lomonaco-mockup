@@ -17,7 +17,8 @@
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function iva(t) { return t - t / 1.21; }
   function ancho(m) { return +String(m).split('x')[0]; }
-  function hayPack() { return CART.items.some(function (i) { return i.tipo === 'pack'; }); }
+  // 12/11: el canapé y las bases se envían y se montan como los packs; los complementos solos, a domicilio
+  function hayPack() { return CART.items.some(function (i) { return ['pack', 'canape', 'base'].indexOf(i.tipo) > -1; }); }
   function hayColchon() { return CART.items.some(function (i) { return i.tipo === 'colchon' || i.tipo === 'pack'; }); }
   var get = function (k) { try { return JSON.parse(sessionStorage.getItem(k) || 'null'); } catch (e) { return null; } };
   var put = function (k, v) { try { sessionStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
@@ -55,7 +56,7 @@
   });
 
   var vacio = '<div class="ck-vacio">' + LM.ico('cart') + '<h1>Tu carrito está vacío</h1><p>Elige tu colchón o un pack con regalos.</p>' +
-    '<div class="ck-vacio-b"><a class="lm-btn" href="colchones.html">Ver colchones</a><a class="lm-btn lm-btn--line" href="pack-natura-gold.html">Ver packs</a></div></div>';
+    '<div class="ck-vacio-b"><a class="lm-btn" href="colchones.html">Ver colchones</a><a class="lm-btn lm-btn--line" href="packs.html">Ver packs</a></div></div>';
 
   /* =======================================================================
      1 · CARRITO
@@ -158,7 +159,8 @@
   var form = $('#ck-form');
   if (!CART.items.length) { $('#ck-checkout').innerHTML = vacio; return; }
   var guardado = get('lm_ck') || {};
-  var ENV = hayPack() ? LM.ENVIOS.pack : LM.ENVIOS.colchon;
+  var soloComp = CART.items.every(function (i) { return i.tipo === 'complemento'; });
+  var ENV = soloComp ? [{ k: 'casa', t: 'Envío a domicilio', d: 'Te llega en ' + C.entrega.v, p: 0, nota: 'Método de envío cuando solo hay complementos: confirmar en la tienda' }] : hayPack() ? LM.ENVIOS.pack : LM.ENVIOS.colchon;
   var RET = (hayPack() ? LM.RETIRADAS.pack : []).concat(CART.items.some(function (i) { return i.tipo === 'colchon'; }) ? LM.RETIRADAS.colchon : []);
   var st = { envio: guardado.envio && ENV.some(function (x) { return x.k === guardado.envio; }) ? guardado.envio : ENV[0].k, ret: guardado.ret || '', pago: guardado.pago || 'fin' };
 
