@@ -2609,3 +2609,7 @@ body[data-page="cuenta"] { background: var(--bg2); }
 .tf-cabe-mini em { display: block; font-style: normal; font-size: 14.5px; color: var(--mute); }
 .tf-cabe-mini-go { width: 20px; height: 20px; color: var(--acc); }
 .s-cp-cabe .s-cp-plano { max-width: none; margin: 0; justify-self: stretch; }
+
+/* Paco, 12/11 · Fichas de la tienda (canapé, bases y complementos) con el mismo ancho de foto y caja de compra que la del colchón */
+body[data-page="tienda"] .p-top { padding-top: clamp(16px, 2vw, 28px); background: var(--bg); }
+@media (min-width: 901px) { body[data-page="tienda"] .p-top-in { grid-template-columns: minmax(0, 65fr) minmax(320px, 35fr); } }

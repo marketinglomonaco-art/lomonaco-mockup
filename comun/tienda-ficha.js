@@ -78,10 +78,11 @@
   if (PKD) root.innerHTML = '<div id="tf-mods"></div>';
   else {
   root.innerHTML =
-    '<nav class="lm-w c-crumbs" aria-label="Estás aquí"><a href="index.html">Inicio</a><span aria-hidden="true">/</span><a href="' + CAT[1] + '">' + CAT[0] + '</a><span aria-hidden="true">/</span><span aria-current="page">' + esc(P.nombre) + '</span></nav>' +
     '<section class="p-top tf-top" aria-label="Comprar ' + esc(P.nombre) + '"><div class="p-top-in">' +
       '<div class="p-gal" data-testid="gallery"><div class="p-gal-track" id="tf-gal" tabindex="0" aria-label="Fotos"></div><p class="p-gal-count" id="tf-gal-count" aria-hidden="true"></p></div>' +
       '<div class="p-buy lm-buy" id="p-buy" data-testid="buy-box">' +
+        // Paco, 12/11: migas dentro de la caja de compra, encima del título (como en la ficha de colchón)
+        '<nav class="c-crumbs p-crumbs p-crumbs--box" aria-label="Estás aquí"><a href="index.html">Inicio</a><span aria-hidden="true">/</span><a href="' + CAT[1] + '">' + CAT[0] + '</a><span aria-hidden="true">/</span><span aria-current="page">' + esc(P.nombre) + '</span></nav>' +
         '<div class="p-buy-head">' + (P.para ? '<span class="lm-pill lm-pill--soft">' + esc(P.para) + '</span>' : '') +
           '<h1 class="p-h1">' + esc(P.nombre) + '</h1><p>' + LM.rating() + '</p></div>' +
         '<p class="p-vp">' + esc(P.lema) + '</p>' +
