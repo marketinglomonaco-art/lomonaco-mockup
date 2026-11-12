@@ -2629,3 +2629,11 @@ body[data-page="tienda"] .p-top { padding-top: clamp(16px, 2vw, 28px); backgroun
 /* 12/11 · las líneas con negrita en medio no se parten en columnas (móvil) */
 .tf-lista li { display: block; position: relative; padding-left: 30px; }
 .tf-lista li > .lm-i { position: absolute; left: 0; top: .15em; }
+
+/* Paco, 12/11 · «¿Qué te cabe dentro?» más compacto: sin marco, vistas en paralelo y menos aire */
+.tf-cabe-sec.lm-sec { padding: clamp(40px, 5vw, 64px) 0; }
+.tf-cabe { gap: 18px 40px; }
+.tf-cabe-f.tf-cad { padding: 0; border-radius: 0; background: none; box-shadow: none; }
+.tf-cad svg { max-width: none; }
+.tf-cabe-big { font-size: clamp(32px, 3.6vw, 48px); }
+.tf-cabe .tf-lista { margin-top: 14px; }
