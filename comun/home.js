@@ -108,7 +108,7 @@
   w.setAttribute('role', 'dialog'); w.setAttribute('aria-modal', 'true'); w.setAttribute('aria-labelledby', 'lm-news-t');
   w.innerHTML = '<div class="lm-news-box">' +
     '<button type="button" class="lm-news-x" aria-label="Cerrar">' + LM.ico('close') + '</button>' +
-    '<figure class="lm-news-img"><img src="../img/hero2-1000.webp" alt="" width="1000" height="488" loading="lazy"></figure>' +
+    '<figure class="lm-news-img"><img src="../img/newsletter-pareja-800.webp" srcset="../img/newsletter-pareja-800.webp 800w, ../img/newsletter-pareja-1400.webp 1400w" sizes="(max-width: 700px) 100vw, 420px" alt="" width="800" height="506" loading="lazy"></figure>' + // Paco, 12/11: foto de la pareja leyendo en la cama
     '<div class="lm-news-b">' +
       '<form class="lm-news-f" novalidate>' +
         '<p class="lm-eyebrow">Newsletter LOMONACO</p>' +
