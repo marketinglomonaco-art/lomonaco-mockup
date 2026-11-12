@@ -152,8 +152,8 @@
     if (!dp || !dc) return null;
     var cfoto = canape ? LM.TIENDA.canape.colores.filter(function (x) { return x.k === color; })[0] : LM.TIENDA.base3d.colores.filter(function (x) { return x.k === color; })[0];
     var lineas = [
-      { t: 'Colchón ' + P.nombre, sub: LM.medidaTxt(m) + ' · ' + P.nucleo, img: '../img/' + LM.FOTO_HOME[pk.colchon] + '-480.webp', p: dc.p },
-      { t: canape ? 'Canapé abatible de madera' : 'Base tapizada antideslizante', sub: 'Acabado ' + color, img: cfoto ? '../img/tienda/' + cfoto.fotos[canape ? 1 : 0] + '-700.webp' : '', p: db ? db.p : null }
+      { t: 'Colchón ' + P.nombre, sub: LM.medidaTxt(m) + ' · ' + P.nucleo, img: '../img/' + LM.FOTO_HOME[pk.colchon] + '-480.webp', p: dc.p, r: dc.r },
+      { t: canape ? 'Canapé abatible de madera' : 'Base tapizada antideslizante', sub: 'Acabado ' + color, img: cfoto ? '../img/tienda/' + cfoto.fotos[canape ? 1 : 0] + '-700.webp' : '', p: db ? db.p : null, r: db ? db.r : null }
     ];
     var regalos = LM.REGALOS.filter(function (r) { return pk.regalos.indexOf(r[2]) > -1; }).map(function (r) {
       return { t: r[0], sub: r[1], img: r[3], p: LM.valorRegalo(r[2], m), regalo: true };
@@ -175,7 +175,10 @@
     };
     var li = function (l, i) {
       return '<li class="pkl-li' + (l.regalo ? ' is-regalo' : '') + '"><img src="' + l.img + '" alt="" width="64" height="64" loading="lazy"><span><b>' + esc(l.t) + '</b><small>' + esc(l.sub) + '</small>' + (o.colores && !l.regalo && i === 1 ? sw() : '') + '</span>' +
-        (l.regalo ? '<em><s>' + LM.eur(l.p) + '</s><strong>Gratis</strong></em>' : '<em>' + (l.p != null ? LM.eur(l.p) : '—') + '</em>') + '</li>';
+        (l.regalo ? '<em><s>' + LM.eur(l.p) + '</s><strong>Gratis</strong></em>'
+        // Paco, 12/11: cada pieza con su precio de antes tachado, el precio con descuento y el % de descuento
+        : l.r > l.p ? '<em class="pkl-pr"><span><s>' + LM.eur(l.r) + '</s><span class="lm-price-off">-' + Math.round((1 - l.p / l.r) * 100) + ' %</span></span><b>' + LM.eur(l.p) + '</b></em>'
+        : '<em>' + (l.p != null ? LM.eur(l.p) : '—') + '</em>') + '</li>';
     };
     return '<ul class="pkl" aria-label="Qué te llevas">' + D.lineas.map(li).join('') +
       (D.regalos.length ? '<li class="pkl-k">' + LM.ico('gift') + 'De regalo con tu pack</li>' + D.regalos.map(li).join('') : '') + '</ul>' +
