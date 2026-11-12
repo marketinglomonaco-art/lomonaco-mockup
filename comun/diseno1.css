@@ -2424,3 +2424,28 @@ body[data-page="cuenta"] { background: var(--bg2); }
 .sl-av-pop { max-width: min(340px, calc(100vw - 24px)); }
 .sl-av-cta { white-space: nowrap; }
 @media (max-width: 900px) { .sl-av { bottom: 24px; } .sl-av-cta { white-space: normal; } }
+
+/* Paco, 12/11 · Paseo virtual: reserva de la videollamada dentro del panel gris */
+.s-pl-res { display: grid; gap: 10px; margin-top: 18px; padding: 16px; border-radius: 14px; background: #fff; box-shadow: inset 0 0 0 1px var(--line); }
+.s-pl-res-t { display: flex; align-items: center; gap: 8px; margin: 0; font-size: 17px; font-weight: 800; color: var(--ink); }
+.s-pl-res-t .lm-i { width: 22px; height: 22px; color: #17853d; }
+.s-pl-res-s { margin: -4px 0 0; font-size: 13.5px; line-height: 1.4; color: var(--mute); }
+.s-pl-res-cu { display: flex; flex-wrap: wrap; gap: 6px; }
+.s-pl-res-cu label { cursor: pointer; }
+.s-pl-res-cu input { position: absolute; opacity: 0; pointer-events: none; }
+.s-pl-res-cu span { display: inline-flex; align-items: center; min-height: 34px; padding: 0 12px; border-radius: 999px; border: 1.5px solid var(--line); font-size: 13px; font-weight: 600; }
+.s-pl-res-cu input:checked + span { border-color: #17853d; background: #17853d; color: #fff; }
+.s-pl-res-cu input:focus-visible + span { outline: 2px solid #17853d; outline-offset: 2px; }
+.s-pl-res-l input { width: 100%; min-height: 48px; padding: 0 14px; border-radius: 10px; border: 1.5px solid var(--line); font: 500 16px var(--font); color: var(--ink); background: #fff; }
+.s-pl-res-l input:focus { outline: none; border-color: #17853d; box-shadow: 0 0 0 3px rgba(23,133,61,.15); }
+.s-pl-res-l input[aria-invalid="true"] { border-color: #b42318; }
+.s-pl-res-e { font-style: normal; font-size: 13px; color: #b42318; }
+.s-pl-res-n { margin: 0; font-size: 12px; color: var(--mute); }
+.s-pl-res-n:empty { display: none; }
+.s-pl-res-ok { display: flex; gap: 10px; align-items: flex-start; margin-top: 18px; padding: 16px; border-radius: 14px; background: #fff; font-size: 14.5px; line-height: 1.4; }
+.s-pl-res-ok .lm-i { width: 22px; height: 22px; flex: none; color: #17853d; }
+.s-pl-res-ok[hidden] { display: none; }
+.s-sv-wrap[data-plano="1"] .s-pl-nota { margin-top: 14px; }
+/* Paco, 12/11 · El botón «Packs colchón + canapé o base» del menú no va en rojo: contorno oscuro, fondo transparente */
+.lm-nl.lm-nl-packs { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
+.lm-nl.lm-nl-packs:hover, .lm-nl.lm-nl-packs[aria-expanded="true"] { background: var(--bg2); color: var(--ink); }

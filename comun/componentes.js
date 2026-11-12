@@ -628,10 +628,10 @@
     ocu: '<image href="' + LM.SELLO_OCU.img + '" x="31" y="31" width="38" height="38"/>',
     oeko: '<path d="M50 30c-11 4-16 13-14 26 9 1 17-3 21-12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/><path d="M36 56c5-8 11-14 20-18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>' +
       '<text x="50" y="68" text-anchor="middle" font-size="11" font-weight="800" fill="currentColor">100</text>',
-    iso: '<text x="50" y="53" text-anchor="middle" font-size="19" font-weight="800" letter-spacing="1" fill="currentColor">ISO</text><text x="50" y="66" text-anchor="middle" font-size="10" font-weight="700" letter-spacing="1.5" fill="currentColor">9001</text>',
+    noches: '<text x="50" y="56" text-anchor="middle" font-size="20" font-weight="800" fill="currentColor">150</text><text x="50" y="67" text-anchor="middle" font-size="8.5" font-weight="800" letter-spacing="1.4" fill="currentColor">NOCHES</text>',
     top: '<path d="M36 64c-6-6-7-15-3-22M64 64c6-6 7-15 3-22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>' +
       '<path d="M33 50l-4-2M32 57l-4 0M35 44l-3-4M67 50l4-2M68 57l4 0M65 44l3-4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>' +
-      '<path d="M50 38l3.3 6.8 7.5 1-5.4 5.2 1.3 7.4L50 54.9l-6.7 3.5 1.3-7.4-5.4-5.2 7.5-1z" fill="currentColor"/><text x="50" y="69" text-anchor="middle" font-size="8.5" font-weight="800" letter-spacing="1.2" fill="currentColor">TOP</text>',
+      '<path d="M50 41l3.3 6.8 7.5 1-5.4 5.2 1.3 7.4L50 57.9l-6.7 3.5 1.3-7.4-5.4-5.2 7.5-1z" fill="currentColor"/>',
     trusted: '<text x="50" y="56" text-anchor="middle" font-size="17" font-weight="800" fill="currentColor">4,39</text>' +
       [0, 1, 2, 3, 4].map(function (i) { return '<path transform="translate(' + (31.5 + i * 8.2) + ' 61) scale(.32)" d="M10 0l3 6.2 6.8.9-5 4.7 1.2 6.7L10 15.3 4 18.5l1.2-6.7-5-4.7 6.8-.9z" fill="currentColor"' + (i === 4 ? ' opacity=".35"' : '') + '/>'; }).join(''),
     garantia: '<text x="50" y="57" text-anchor="middle" font-size="22" font-weight="800" fill="currentColor">10</text><text x="50" y="68" text-anchor="middle" font-size="8.5" font-weight="800" letter-spacing="1.4" fill="currentColor">AÑOS</text>',
@@ -642,8 +642,9 @@
   var SELLOS = [
     ['ocu', 'ANALIZADO POR', 'LA OCU', 'Colchón Natura Visco analizado por la OCU'],
     ['oeko', 'OEKO-TEX®', 'STANDARD 100', 'Tejidos con certificado OEKO-TEX Standard 100'],
-    ['iso', 'CALIDAD CERTIFICADA', 'GESTIÓN ISO', 'Gestión de calidad certificada ISO 9001'],
-    ['top', 'TOP MARCAS', 'DE DESCANSO', 'Top Marcas de Descanso'],
+    // Paco, 12/11: fuera ISO, entra 150 noches de prueba; «Top marcas» pasa a marca preferida por el consumidor
+    ['noches', 'PRUÉBALO EN CASA', 'DE PRUEBA', '150 noches de prueba en casa'],
+    ['top', 'MARCA PREFERIDA', 'POR EL CONSUMIDOR', 'Marca reconocida y preferida por el consumidor'],
     ['trusted', 'TIENDA VERIFICADA', 'TRUSTED SHOPS', 'Tienda verificada por Trusted Shops: ' + C.valoracion.media + ' de 5'],
     ['calidad', 'PRODUCTO DE CALIDAD', 'GARANTIZADA', 'Producto de calidad garantizada'],
     // Paco, 09/11: dos más

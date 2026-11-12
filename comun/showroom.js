@@ -88,8 +88,20 @@
     }).join('') + '</div>' +
     '<div class="s-pl-side"><p class="lm-eyebrow">Elige desde dónde mirar</p><ul class="s-pl-list">' + SALA.map(function (e, i) {
       return '<li><button type="button" class="s-pl-op" data-i="' + i + '" aria-pressed="false"><img class="s-pl-th" src="../img/sr2-' + e.img + '-900.webp" alt="" width="900" height="600" decoding="async"><b>' + (i < 9 ? '0' : '') + (i + 1) + '</b><span>' + e.t + '<small>' + e.s + '</small></span></button></li>';
-    }).join('') + '</ul><p class="s-pl-nota">Pincha en un número del plano, o en el suelo de la foto para acercarte a una cama.</p>' +
-      '<a class="lm-btn lm-btn--video lm-btn--full s-pl-cta" href="#reserva">' + LM.ico('video') + 'Quiero hacer una videollamada</a></div>' +
+    }).join('') + '</ul>' +
+      // Paco, 12/11: reserva rápida de la videollamada dentro del panel
+      '<form class="s-pl-res" novalidate><p class="s-pl-res-t">' + LM.ico('video') + 'Reserva tu videollamada</p>' +
+        '<p class="s-pl-res-s">Te enseñamos estos colchones en directo. ' + LM.c('videollamada') + '.</p>' +
+        '<div class="s-pl-res-cu" role="radiogroup" aria-label="Cuándo te viene bien">' +
+          ['Lo antes posible', 'Por la mañana', 'Por la tarde'].map(function (t, i) { return '<label><input type="radio" name="cuando" value="' + t + '"' + (i ? '' : ' checked') + '><span>' + t + '</span></label>'; }).join('') +
+        '</div>' +
+        '<label class="s-pl-res-l"><span class="lm-sr">Tu teléfono</span><input type="tel" name="tel" inputmode="tel" autocomplete="tel" placeholder="Tu teléfono" required></label>' +
+        '<em class="s-pl-res-e" hidden>Revisa el teléfono: tiene que tener 9 cifras.</em>' +
+        '<button class="lm-btn lm-btn--video lm-btn--full" type="submit">' + LM.ico('video') + 'Reservar videollamada</button>' +
+        '<p class="s-pl-res-n">' + LM.pend('maqueta: la reserva no se envía; conectar con el call center') + '</p>' +
+      '</form>' +
+      '<p class="s-pl-res-ok" hidden>' + LM.ico('check') + '<span><b>¡Reservada!</b> Te llamamos ' + LM.c('horario').toLowerCase().replace('lunes', 'de lunes') + ' para empezar la videollamada.</span></p>' +
+      '<p class="s-pl-nota">Pincha en un número del plano, o en el suelo de la foto para acercarte a una cama.</p></div>' +
     '<p class="s-pl-now" aria-live="polite"><small>Estás viendo</small><b></b></p></div>');
   /* Paco, 10/11 · tres propuestas para integrar el plano (sin rosa). Se eligen con ?plano=1, 2 o 3:
      1 · panel gris a la altura de la foto · 2 · con miniaturas de cada vista · 3 · plano pequeño dentro de la foto */
@@ -641,4 +653,17 @@
   // Mientras se ve el formulario de reserva no hace falta
   var res = document.getElementById('reserva');
   if (res && 'IntersectionObserver' in window) new IntersectionObserver(function (en) { w.classList.toggle('is-off', en[0].isIntersecting); }, { threshold: .25 }).observe(res);
+})();
+
+/* Paco, 12/11 · Reserva rápida de la videollamada en el panel del paseo */
+(function () {
+  var fm = document.querySelector('.s-pl-res'); if (!fm) return;
+  fm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var inp = fm.tel, v = inp.value.replace(/\D/g, '').replace(/^34(?=\d{9}$)/, ''), ok = /^[6789]\d{8}$/.test(v);
+    fm.querySelector('.s-pl-res-e').hidden = ok; inp.setAttribute('aria-invalid', !ok);
+    if (!ok) { inp.focus(); return; }
+    LM.track('generate_lead', { method: 'videollamada', source: 'showroom_paseo', cuando: fm.cuando.value });
+    fm.hidden = true; fm.nextElementSibling.hidden = false;
+  });
 })();
