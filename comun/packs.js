@@ -21,6 +21,11 @@
   var CTA_HTML = $('#h4p-go').innerHTML;
 
   var segB = $('#h4p-base'), colB = $('#h4p-col');
+  // Paco, 12/11: selector de medida del colchón, debajo de «Elige tu colchón»
+  colB.insertAdjacentHTML('afterend', '<p class="h4p-k" id="h4p-mk">Elige tu medida</p><label class="h4p-med"><span class="lm-sr">Medida del colchón</span><select id="h4p-med" aria-labelledby="h4p-mk"></select></label>');
+  var medSel = $('#h4p-med');
+  st.medida = LM.medidaInicial();
+  medSel.addEventListener('change', function () { st.medida = this.value; LM.store.set('lm_medida', st.medida); pintarPack(); LM.track('pack_medida', { medida: st.medida }); });
   // Paco, 06/11: la pastilla granate se desliza de una opción a la otra (h4p-seg-ind)
   segB.innerHTML = '<span class="h4p-seg-ind" aria-hidden="true"></span>' +
     PC.orden.map(function (b) { return '<button type="button" role="radio" data-base="' + b + '">' + PC.bases[b].t + '</button>'; }).join('');
@@ -74,7 +79,11 @@
     var pkKey = st.col + (st.base === 'canape' ? 'Canape' : 'Base');
     var COLS = (st.base === 'canape' ? LM.TIENDA.canape : LM.TIENDA.base3d).colores;
     if (!COLS.some(function (x) { return x.k === st.color; })) st.color = st.base === 'canape' ? 'Nogal' : 'Chocolate';
-    var m = LM.medidaInicial(), D = LM.packDesglose(pkKey, m, st.color);
+    // Medidas de este pack (sin repetir las de 2 partes), en el orden de siempre
+    var MP = LM.MEDIDAS.filter(function (x) { var t = LM.TIENDA.packs[pkKey].tabla; return t[x] || t[x + '-2p']; });
+    if (MP.indexOf(st.medida) < 0) st.medida = MP.indexOf(M) > -1 ? M : MP[0];
+    medSel.innerHTML = MP.map(function (x) { return '<option value="' + x + '"' + (x === st.medida ? ' selected' : '') + '>' + LM.medidaTxt(x) + '</option>'; }).join('');
+    var m = st.medida, D = LM.packDesglose(pkKey, m, st.color);
     if (!D) { m = M; D = LM.packDesglose(pkKey, m, st.color); }
     var pack = D.d, go = $('#h4p-go');
     var h = LM.packLista(D, { precio: false, colores: true });
@@ -110,7 +119,7 @@
     var n = $('#h4p-det [data-pkc="' + st.color + '"]'); if (n) n.focus({ preventScroll: true });
     LM.track('pack_color', { color: st.color, base: st.base });
   });
-  LM.repintarPacks = pintarPack; // la home lo llama al cambiar la medida de las tarjetas
+  LM.repintarPacks = function () { st.medida = LM.medidaInicial(); pintarPack(); }; // la home lo llama al cambiar la medida de las tarjetas
   radios(segB, 'data-base', function (v) { st.base = v; });
   radios(colB, 'data-col', function (v) { st.col = v; });
   $('#h4p-go').addEventListener('click', function () { if (this.hasAttribute('data-pid')) LM.track('select_item', { item_list_name: 'home_pack_config', item_id: +this.getAttribute('data-pid') }); });

@@ -2677,3 +2677,10 @@ body[data-cat="packs"] #tc-h4p .h4p-head { display: none; }
   .lm-news-b { padding: 22px 18px 26px; }
 }
 @media (prefers-reduced-motion: reduce) { .lm-news { animation: none; } }
+
+/* Paco, 12/11 · Configurador de packs: selector de medida */
+.h4p-med { display: block; position: relative; }
+.h4p-med select { width: 100%; min-height: 52px; padding: 0 44px 0 16px; border-radius: 12px; border: 1.5px solid var(--line); background: #fff; font: 600 16px var(--font); color: var(--ink); appearance: none; -webkit-appearance: none; cursor: pointer; }
+.h4p-med::after { content: ""; position: absolute; right: 18px; top: 50%; width: 9px; height: 9px; margin-top: -7px; border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: rotate(45deg); pointer-events: none; }
+.h4p-med select:hover { border-color: var(--ink); }
+.h4p-med select:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
