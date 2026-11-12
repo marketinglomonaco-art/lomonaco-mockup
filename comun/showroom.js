@@ -651,17 +651,21 @@
     var a = e.target.closest('a[href="#reserva"]'); if (!a) return;
     LM.track('generate_lead_intent', { source: 'avatar_showroom', duda: a.getAttribute('data-duda') || 'cta' }); abrir(false);
   });
-  // Mientras se ve el formulario de reserva no hace falta
-  var res = document.getElementById('reserva');
-  // y tampoco mientras se ve la reserva del panel del paseo (si no, la tapa)
-  var vistos = new Set(), mini = document.querySelector('.s-pl-res');
-  if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (en) {
-      en.forEach(function (x) { if (x.isIntersecting) vistos.add(x.target); else vistos.delete(x.target); });
-      w.classList.toggle('is-off', vistos.size > 0);
-    }, { threshold: .25 });
-    [res, mini].forEach(function (el) { if (el) io.observe(el); });
+  // Paco, 12/11: aparece a los 2,5 s de entrar. Se aparta solo cuando se ve el formulario de reserva
+  // o cuando taparía de verdad la reserva del panel del paseo
+  w.classList.add('is-wait');
+  setTimeout(function () { w.classList.remove('is-wait'); }, 2500);
+  var res = document.getElementById('reserva'), mini = document.querySelector('.s-pl-res'), resVisto = false, tick = false;
+  function choca(a, b) { return a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top; }
+  function revisar() {
+    tick = false;
+    var b = w.querySelector('.sl-av-btn').getBoundingClientRect(), tapa = mini && !mini.hidden && choca(b, mini.getBoundingClientRect());
+    w.classList.toggle('is-off', resVisto || !!tapa);
   }
+  if (res && 'IntersectionObserver' in window) new IntersectionObserver(function (en) { resVisto = en[0].isIntersecting; revisar(); }, { threshold: .25 }).observe(res);
+  addEventListener('scroll', function () { if (!tick) { tick = true; requestAnimationFrame(revisar); } }, { passive: true });
+  addEventListener('resize', revisar);
+  revisar();
 })();
 
 /* Paco, 12/11 · Reserva rápida de la videollamada en el panel del paseo */

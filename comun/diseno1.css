@@ -2554,3 +2554,11 @@ body[data-page="cuenta"] { background: var(--bg2); }
 .p-esc:not(.p-ind) .p-esc-cap, .p-esc:not(.p-ind) .p-esc-lab { display: inline-flex !important; }
 .p-esc-frase, .p-esc-velo { display: none !important; }
 @media (max-width: 900px) { .p-esc:not(.p-ind) .p-esc-cap, .p-esc:not(.p-ind) .p-esc-lab { display: none !important; } }
+
+/* Paco, 12/11 · Avatar: entra a los 2,5 s y tiene efecto al pasar el ratón */
+.sl-av.is-wait { opacity: 0; transform: translateY(16px); pointer-events: none; }
+.sl-av-ph { transition: transform .35s var(--ease), box-shadow .35s var(--ease); }
+.sl-av-ph img { transition: transform .5s var(--ease); }
+.sl-av:hover .sl-av-ph, .sl-av.is-open .sl-av-ph { transform: translateY(-4px); box-shadow: 0 0 0 4px #fff, 0 0 0 7px var(--acc), 0 18px 40px rgba(0,0,0,.24); }
+.sl-av:hover .sl-av-ph img, .sl-av.is-open .sl-av-ph img { transform: scale(1.07); }
+@media (prefers-reduced-motion: reduce) { .sl-av-ph, .sl-av-ph img { transition: none; } .sl-av:hover .sl-av-ph img { transform: none; } }
