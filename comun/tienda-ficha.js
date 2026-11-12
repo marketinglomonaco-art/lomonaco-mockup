@@ -226,7 +226,7 @@
     H.push(sec('cabe', 'lm-alt tf-cabe-sec', 'Almacenaje', '¿Qué te <em>cabe dentro?</em>',
       '<div class="tf-cabe"><div class="tf-cabe-m" role="radiogroup" aria-label="Medida del canapé" id="tf-cabe-m"></div>' +
       '<div class="tf-cabe-r" id="tf-cabe-r" aria-live="polite"></div>' +
-      '<figure class="tf-cabe-f">' + img(P.colores[3].fotos[1], { alt: 'Canapé abatible abierto con un edredón dentro' }) + '</figure></div>',
+      '<figure class="tf-cabe-f tf-cad" id="tf-cad"></figure></div>',
       { sub: 'Elige la medida y te decimos cuánto espacio tienes debajo de la cama.' }));
     H.push(sec('tapa', 'tf-tapa-sec', 'Tapa entera o partida', 'Las medidas grandes, <em>en dos partes.</em>',
       '<div class="tf-tapa"><figure><svg viewBox="0 0 220 260" aria-hidden="true"><rect x="40" y="20" width="150" height="190" rx="10" class="tf-tapa-b"/><rect x="48" y="28" width="134" height="174" rx="6" class="tf-tapa-t"/><text x="115" y="240">150 × 190 cm</text></svg>' +
@@ -347,7 +347,33 @@
   /* ---------- ¿Qué te cabe? (canapé) ---------- */
   if (TIPO === 'canape') {
     var cm = $('#tf-cabe-m'), cr = $('#tf-cabe-r'), MC = MED.slice();
+    /* Plano estilo CAD (Paco, 12/11): vista frontal cerrada y vista lateral con la tapa abierta, en granate LM */
+    function cad(m) {
+      var a = m.replace('-2p', '').split('x'), W = +a[0], L = +a[1], H = P.cotas.alto, F = P.cotas.fondo, A = P.cotas.apertura, k = 1.45, CX = 215;
+      var t = function (x, y, txt, cls, rot) { return '<text x="' + x.toFixed(1) + '" y="' + y.toFixed(1) + '" class="' + (cls || 'cad-t') + '"' + (rot ? ' transform="rotate(-90 ' + x.toFixed(1) + ' ' + y.toFixed(1) + ')"' : '') + '>' + txt + '</text>'; };
+      var cotaH = function (x1, x2, y, txt) { return '<path class="cad-c" d="M' + x1 + ' ' + (y - 6) + 'V' + (y + 6) + 'M' + x2 + ' ' + (y - 6) + 'V' + (y + 6) + 'M' + x1 + ' ' + y + 'H' + x2 + 'M' + (x1 - 4) + ' ' + (y + 4) + 'l8 -8M' + (x2 - 4) + ' ' + (y + 4) + 'l8 -8"/>' + t((x1 + x2) / 2, y + 17, txt); };
+      var cotaV = function (x, y1, y2, txt, izq) { return '<path class="cad-c" d="M' + (x - 6) + ' ' + y1 + 'H' + (x + 6) + 'M' + (x - 6) + ' ' + y2 + 'H' + (x + 6) + 'M' + x + ' ' + y1 + 'V' + y2 + 'M' + (x - 4) + ' ' + (y1 + 4) + 'l8 -8M' + (x - 4) + ' ' + (y2 + 4) + 'l8 -8"/>' + t(x + (izq ? -11 : 13), (y1 + y2) / 2, txt, 'cad-t', true); };
+      // Vista frontal (arriba): cerrado, ancho × alto, el arcón en discontinuo y la tapa partida si la lleva
+      var G1 = 100, fw = W * k, fh = H * k, fx = CX - fw / 2, fy = G1 - fh;
+      var front = '<path class="cad-s" d="M20 ' + G1 + 'H410"/><rect class="cad-o" x="' + fx + '" y="' + fy + '" width="' + fw + '" height="' + fh + '" rx="3"/>' +
+        '<path class="cad-l" d="M' + fx + ' ' + (fy + 6) + 'H' + (fx + fw) + '"/>' +
+        '<rect class="cad-d" x="' + (fx + 7) + '" y="' + (fy + 10) + '" width="' + (fw - 14) + '" height="' + (F * k - 8) + '"/>' +
+        (/-2p/.test(m) ? '<path class="cad-d" d="M' + CX + ' ' + fy + 'V' + (fy + 6) + '"/>' : '') +
+        cotaH(fx, fx + fw, G1 + 20, W + ' cm') + cotaV(fx + fw + 20, G1, fy, H + ' cm') + t(CX, G1 + 58, 'VISTA FRONTAL', 'cad-v');
+      // Vista lateral (abajo): la tapa abierta desde la cabecera, el fondo del arcón y la altura con la tapa abierta
+      var G2 = 335, sl = L * k, sh = H * k, sx = CX - sl / 2 - 6, sy = G2 - sh;
+      var ang = Math.asin(Math.min(.95, (A - H) / L)), hx = sx + 5, hy = sy, ex = hx + sl * Math.cos(ang), ey = G2 - A * k;
+      var nx = Math.sin(ang) * 6, ny = Math.cos(ang) * 6;
+      var lid = '<path class="cad-o" d="M' + hx + ' ' + hy + 'L' + ex.toFixed(1) + ' ' + ey.toFixed(1) + 'L' + (ex + nx).toFixed(1) + ' ' + (ey + ny).toFixed(1) + 'L' + (hx + nx).toFixed(1) + ' ' + (hy + ny).toFixed(1) + 'Z"/>';
+      var px = function (u) { return [hx + sl * u * Math.cos(ang) + nx, hy - sl * u * Math.sin(ang) + ny]; }, p1 = px(.42), p2 = px(.6);
+      var side = '<path class="cad-s" d="M20 ' + G2 + 'H410"/><rect class="cad-o" x="' + sx + '" y="' + sy + '" width="' + sl + '" height="' + sh + '" rx="3"/>' +
+        '<rect class="cad-d" x="' + (sx + 7) + '" y="' + sy + '" width="' + (sl - 14) + '" height="' + (F * k) + '"/>' + lid +
+        '<path class="cad-l" d="M' + (sx + sl * .30) + ' ' + (G2 - 7) + 'L' + p1[0].toFixed(1) + ' ' + p1[1].toFixed(1) + 'M' + (sx + sl * .47) + ' ' + (G2 - 7) + 'L' + p2[0].toFixed(1) + ' ' + p2[1].toFixed(1) + '"/>' +
+        cotaH(sx, sx + sl, G2 + 20, L + ' cm') + cotaV(sx - 18, sy, sy + F * k, F + ' cm', true) + cotaV(ex + 24, G2, ey, A + ' cm') + t(CX, G2 + 58, 'VISTA LATERAL · TAPA ABIERTA', 'cad-v');
+      $('#tf-cad').innerHTML = '<svg viewBox="0 20 430 380" role="img" aria-label="Plano del canapé de ' + W + ' × ' + L + ' cm: ' + H + ' cm de alto, arcón de ' + F + ' cm de fondo y ' + A + ' cm con la tapa abierta">' + front + side + '</svg>';
+    }
     function cabe(m) {
+      cad(m);
       var a = m.replace('-2p', '').split('x'), w = +a[0] - 4, l = +a[1] - 4, f = P.cotas.fondo;
       var litros = Math.round(w * l * f / 1000 / 10) * 10, maletas = Math.floor(w / 40) * Math.floor(l / 55);
       cm.innerHTML = MC.map(function (x) { return '<button type="button" role="radio" aria-checked="' + (x === m) + '" data-cabe="' + x + '">' + corto(x).replace('·2p', '') + '</button>'; }).join('');

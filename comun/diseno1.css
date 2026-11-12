@@ -2613,3 +2613,19 @@ body[data-page="cuenta"] { background: var(--bg2); }
 /* Paco, 12/11 · Fichas de la tienda (canapé, bases y complementos) con el mismo ancho de foto y caja de compra que la del colchón */
 body[data-page="tienda"] .p-top { padding-top: clamp(16px, 2vw, 28px); background: var(--bg); }
 @media (min-width: 901px) { body[data-page="tienda"] .p-top-in { grid-template-columns: minmax(0, 65fr) minmax(320px, 35fr); } }
+
+/* Paco, 12/11 · «¿Qué te cabe dentro?»: plano estilo CAD en granate LM (vista frontal y lateral abierta) */
+.tf-cad { display: grid; place-items: center; padding: clamp(14px, 2vw, 26px); border-radius: var(--r); background: #fff; box-shadow: inset 0 0 0 1px var(--line); }
+.tf-cad svg { display: block; width: 100%; height: auto; overflow: visible; font-family: 'Albert Sans', var(--font); }
+.tf-cad .cad-o { fill: #fff; stroke: var(--acc); stroke-width: 1.6; stroke-linejoin: round; }
+.tf-cad .cad-l { fill: none; stroke: var(--acc); stroke-width: 1.2; }
+.tf-cad .cad-d { fill: rgba(124,25,25,.04); stroke: var(--acc); stroke-width: 1; stroke-dasharray: 4 3; }
+.tf-cad .cad-c { fill: none; stroke: var(--ink); stroke-width: .8; opacity: .55; }
+.tf-cad .cad-s { stroke: var(--line); stroke-width: 1.2; }
+.tf-cad .cad-t { font-size: 12.5px; font-weight: 600; fill: var(--ink); text-anchor: middle; dominant-baseline: middle; }
+.tf-cad .cad-v { font-size: 10.5px; font-weight: 700; letter-spacing: .12em; fill: var(--acc); text-anchor: middle; }
+.tf-cabe-f.tf-cad { aspect-ratio: auto; overflow: visible; }
+.tf-cad svg { max-width: 520px; }
+/* 12/11 · las líneas con negrita en medio no se parten en columnas (móvil) */
+.tf-lista li { display: block; position: relative; padding-left: 30px; }
+.tf-lista li > .lm-i { position: absolute; left: 0; top: .15em; }
