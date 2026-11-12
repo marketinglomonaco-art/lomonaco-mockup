@@ -2641,3 +2641,39 @@ body[data-page="tienda"] .p-top { padding-top: clamp(16px, 2vw, 28px); backgroun
 /* Paco, 12/11 · Categoría de packs: el configurador de la home bajo el título (sin repetir su cabecera) */
 body[data-cat="packs"] #tc-h4p .h4p { padding-top: 8px; background: none; }
 body[data-cat="packs"] #tc-h4p .h4p-head { display: none; }
+
+/* Paco, 12/11 · Pop-up de newsletter de la home (10 % en el próximo colchón) */
+.lm-news { position: fixed; inset: 0; z-index: 300; display: grid; place-items: center; padding: 16px; background: rgba(20,14,12,.55); animation: lm-news-in .3s var(--ease); }
+.lm-news[hidden] { display: none; }
+@keyframes lm-news-in { from { opacity: 0; } }
+.lm-news-box { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); width: min(860px, 100%); max-height: calc(100svh - 32px); overflow: auto; border-radius: calc(var(--r) + 4px); background: #F6F6F6; box-shadow: 0 30px 80px rgba(0,0,0,.3); }
+.lm-news-img { margin: 0; min-height: 100%; background: #ddd; }
+.lm-news-img img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 55% 50%; }
+.lm-news-b { padding: clamp(24px, 3.4vw, 44px); align-self: center; }
+.lm-news-x { position: absolute; top: 12px; right: 12px; z-index: 1; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; box-shadow: 0 4px 14px rgba(0,0,0,.12); }
+.lm-news-x .lm-i { width: 20px; height: 20px; }
+.lm-news-f { display: grid; gap: 12px; }
+.lm-news-f .lm-eyebrow { margin: 0; }
+.lm-news-t { margin: 0; font-size: clamp(26px, 2.8vw, 36px); font-weight: 800; line-height: 1.1; letter-spacing: -.02em; color: var(--ink); }
+.lm-news-t em { font-style: normal; color: var(--acc); }
+.lm-news-s { margin: 0; font-size: 15.5px; line-height: 1.5; color: var(--mute); }
+.lm-news-l input { width: 100%; min-height: 52px; padding: 0 16px; border-radius: 12px; border: 1.5px solid var(--line); background: #fff; font: 500 16px var(--font); color: var(--ink); }
+.lm-news-l input:focus { outline: none; border-color: var(--acc); box-shadow: 0 0 0 3px rgba(124,25,25,.14); }
+.lm-news-l input[aria-invalid="true"] { border-color: #b42318; }
+.lm-news-e { font-style: normal; font-size: 13px; color: #b42318; margin-top: -6px; }
+.lm-news-chk { display: flex; align-items: flex-start; gap: 10px; font-size: 13.5px; color: var(--mute); cursor: pointer; }
+.lm-news-chk input { width: 18px; height: 18px; margin: 1px 0 0; flex: none; accent-color: var(--acc); }
+.lm-news-chk a { color: var(--acc); }
+.lm-news-no { justify-self: center; padding: 4px 8px; background: none; font-size: 14px; font-weight: 600; color: var(--mute); text-decoration: underline; cursor: pointer; }
+.lm-news-n { margin: 0; font-size: 12px; }
+.lm-news-n:empty { display: none; }
+.lm-news-ok { display: grid; gap: 12px; justify-items: start; }
+.lm-news-ok[hidden] { display: none; }
+.lm-news-ok > .lm-i { width: 44px; height: 44px; padding: 10px; border-radius: 50%; background: var(--acc); color: #fff; }
+@media (max-width: 700px) {
+  .lm-news { align-items: end; padding: 0; }
+  .lm-news-box { grid-template-columns: 1fr; border-radius: 22px 22px 0 0; max-height: 92svh; }
+  .lm-news-img { height: 160px; min-height: 0; }
+  .lm-news-b { padding: 22px 18px 26px; }
+}
+@media (prefers-reduced-motion: reduce) { .lm-news { animation: none; } }
