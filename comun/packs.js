@@ -7,8 +7,11 @@
 (function () {
   'use strict';
   var $ = LM.$, $$ = LM.$$;
+  // Paco, 12/11: se puede arrancar más tarde (la categoría de packs lo coloca después de cargar)
+  function iniciar() {
   var pc = $('#h4p');
-  if (!pc) return;
+  if (!pc || pc.getAttribute('data-on')) return;
+  pc.setAttribute('data-on', '1');
   var PC = LM.PACK_CONF, st = { base: 'canape', col: 'gran' };
   var M = LM.CONFIG.medidaInicial.v;
   function off(d) { return Math.round((1 - d.p / d.r) * 100); }
@@ -114,4 +117,7 @@
   pintarPack();
   // Las fotos de las bases se precargan para que el cambio sea instantáneo
   if (img) PC.orden.forEach(function (b) { var i = new Image(); i.src = PC.bases[b].img + '-1200.webp'; });
+  }
+  LM.iniciarPacks = iniciar;
+  iniciar();
 })();

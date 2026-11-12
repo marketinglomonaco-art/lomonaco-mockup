@@ -36,10 +36,8 @@
 
   /* ---------- listado ---------- */
   if (CAT === 'packs') {
-    html += '<section class="c-list tc-list"><div class="lm-w">' +
-      '<div class="tc-filtros" role="group" aria-label="Filtrar packs"><span>Con</span>' + [['todos', 'Todos'], ['canape', 'Canapé abatible'], ['base', 'Base antideslizante']].map(function (f, i) { return '<button type="button" data-fb="' + f[0] + '" aria-pressed="' + !i + '">' + f[1] + '</button>'; }).join('') +
-        '<span class="tc-sep">Colchón</span>' + [['todos', 'Todos']].concat(LM.ORDEN.map(function (k) { return [k, LM.PRODUCTOS[k].nombre]; })).map(function (f, i) { return '<button type="button" data-fc="' + f[0] + '" aria-pressed="' + !i + '">' + f[1] + '</button>'; }).join('') + '</div>' +
-      '<p class="c-count" id="tc-count" aria-live="polite"></p><div class="tc-grid tc-grid--4" id="tc-grid"></div></div></section>';
+    // Paco, 12/11: en vez de los 8 packs, el configurador de la home
+    html += '<div id="tc-h4p"></div>';
   } else {
     var lista = CAT === 'canape' ? T.canape.colores.map(function (c) { return tarjeta('canape', { color: c.k }); })
       : CAT === 'bases' ? [tarjeta('base3d'), tarjeta('baseTela')]
@@ -88,22 +86,13 @@
   root.innerHTML = html;
   LM.fill(root);
 
-  /* Packs: filtros por base y colchón */
+  /* Packs: el configurador de la home (plantilla #tpl-h4p de la página) */
   if (CAT === 'packs') {
-    var fb = 'todos', fc = 'todos';
-    function pintar() {
-      var l = packs(function (p) { return (fb === 'todos' || p.base === fb) && (fc === 'todos' || p.colchon === fc); });
-      $('#tc-grid').innerHTML = l.map(LM.tfPackCard).join('');
-      $('#tc-count').textContent = l.length + (l.length === 1 ? ' pack' : ' packs');
-    }
-    root.addEventListener('click', function (e) {
-      var b = e.target.closest('[data-fb],[data-fc]'); if (!b) return;
-      var attr = b.hasAttribute('data-fb') ? 'data-fb' : 'data-fc';
-      $$('[' + attr + ']', root).forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
-      if (attr === 'data-fb') fb = b.getAttribute(attr); else fc = b.getAttribute(attr);
-      pintar(); LM.track('filter_packs', { base: fb, colchon: fc });
-    });
-    pintar();
+    var montar = function () {
+      var tp = document.getElementById('tpl-h4p'), dest = $('#tc-h4p'); if (!tp || !dest || dest.firstChild) return !!(dest && dest.firstChild);
+      dest.appendChild(tp.content.cloneNode(true)); LM.fill(dest); if (LM.iniciarPacks) LM.iniciarPacks(); return true;
+    };
+    if (!montar()) document.addEventListener('DOMContentLoaded', montar);
   }
   var mas = $('.tc-seo-mas'), seo = $('#tc-seo');
   mas.addEventListener('click', function () { var on = seo.classList.toggle('is-open'); mas.setAttribute('aria-expanded', on); mas.textContent = on ? 'Leer menos' : 'Leer más'; });

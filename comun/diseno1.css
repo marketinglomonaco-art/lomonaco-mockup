@@ -2637,3 +2637,7 @@ body[data-page="tienda"] .p-top { padding-top: clamp(16px, 2vw, 28px); backgroun
 .tf-cad svg { max-width: none; }
 .tf-cabe-big { font-size: clamp(32px, 3.6vw, 48px); }
 .tf-cabe .tf-lista { margin-top: 14px; }
+
+/* Paco, 12/11 · Categoría de packs: el configurador de la home bajo el título (sin repetir su cabecera) */
+body[data-cat="packs"] #tc-h4p .h4p { padding-top: 8px; background: none; }
+body[data-cat="packs"] #tc-h4p .h4p-head { display: none; }
