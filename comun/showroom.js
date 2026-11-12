@@ -101,7 +101,7 @@
         '<p class="s-pl-res-n">' + LM.pend('maqueta: la reserva no se envía; conectar con el call center') + '</p>' +
       '</form>' +
       '<p class="s-pl-res-ok" hidden>' + LM.ico('check') + '<span><b>¡Reservada!</b> Te llamamos ' + LM.c('horario').toLowerCase().replace('lunes', 'de lunes') + ' para empezar la videollamada.</span></p>' +
-      '<p class="s-pl-nota">Pincha en un número del plano, o en el suelo de la foto para acercarte a una cama.</p></div>' +
+      '<p class="s-pl-nota">Elige un colchón de la lista, o pincha en el suelo de la foto para acercarte a una cama.</p></div>' +
     '<p class="s-pl-now" aria-live="polite"><small>Estás viendo</small><b></b></p></div>');
   /* Paco, 10/11 · tres propuestas para integrar el plano (sin rosa). Se eligen con ?plano=1, 2 o 3:
      1 · panel gris a la altura de la foto · 2 · con miniaturas de cada vista · 3 · plano pequeño dentro de la foto */
@@ -631,15 +631,17 @@
       '<a class="lm-btn lm-btn--video sl-av-cta" href="#reserva" style="--i:' + DUDAS.length + '">' + LM.ico('video') + 'Quiero hacer una videollamada</a>' +
     '</div>' +
     '<button type="button" class="sl-av-btn" aria-expanded="false" aria-controls="sl-av-pop" aria-label="Habla con un asesor del showroom">' +
-      '<span class="sl-av-ph"><img src="../img/avatar-showroom-192.webp" srcset="../img/avatar-showroom-192.webp 192w, ../img/avatar-showroom-384.webp 384w" sizes="96px" width="192" height="192" alt="" loading="lazy"></span>' +
+      '<span class="sl-av-ph"><img src="../img/avatar-showroom-192.webp" srcset="../img/avatar-showroom-192.webp 192w, ../img/avatar-showroom-384.webp 384w" sizes="128px" width="192" height="192" alt="" loading="lazy"></span>' +
       '<span class="sl-av-st"><i></i>' + (online ? 'En línea' : 'Reserva tu hora') + '</span>' +
     '</button>';
   document.body.appendChild(w);
   var b = w.querySelector('.sl-av-btn');
   function abrir(on) { w.classList.toggle('is-open', on); b.setAttribute('aria-expanded', on); }
   if (!matchMedia('(hover: none)').matches) {
-    w.addEventListener('mouseenter', function () { abrir(true); });
-    w.addEventListener('mouseleave', function () { abrir(false); });
+    // Un pequeño margen antes de cerrar, para poder llegar a los bocadillos sin que se cierren
+    var tCierre;
+    w.addEventListener('mouseenter', function () { clearTimeout(tCierre); abrir(true); });
+    w.addEventListener('mouseleave', function () { tCierre = setTimeout(function () { abrir(false); }, 450); });
   }
   b.addEventListener('click', function () { abrir(!w.classList.contains('is-open')); });
   document.addEventListener('click', function (e) { if (!w.contains(e.target)) abrir(false); });
@@ -651,7 +653,15 @@
   });
   // Mientras se ve el formulario de reserva no hace falta
   var res = document.getElementById('reserva');
-  if (res && 'IntersectionObserver' in window) new IntersectionObserver(function (en) { w.classList.toggle('is-off', en[0].isIntersecting); }, { threshold: .25 }).observe(res);
+  // y tampoco mientras se ve la reserva del panel del paseo (si no, la tapa)
+  var vistos = new Set(), mini = document.querySelector('.s-pl-res');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (en) {
+      en.forEach(function (x) { if (x.isIntersecting) vistos.add(x.target); else vistos.delete(x.target); });
+      w.classList.toggle('is-off', vistos.size > 0);
+    }, { threshold: .25 });
+    [res, mini].forEach(function (el) { if (el) io.observe(el); });
+  }
 })();
 
 /* Paco, 12/11 · Reserva rápida de la videollamada en el panel del paseo */

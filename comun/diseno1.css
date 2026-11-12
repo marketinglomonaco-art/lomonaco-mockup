@@ -2449,3 +2449,13 @@ body[data-page="cuenta"] { background: var(--bg2); }
 /* Paco, 12/11 · El botón «Packs colchón + canapé o base» del menú no va en rojo: contorno oscuro, fondo transparente */
 .lm-nl.lm-nl-packs { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink); }
 .lm-nl.lm-nl-packs:hover, .lm-nl.lm-nl-packs[aria-expanded="true"] { background: var(--bg2); color: var(--ink); }
+
+/* Paco, 12/11 · Avatar más grande. El hueco entre la foto y los bocadillos forma parte del panel (padding),
+   así el ratón no «sale» del avatar al ir hacia ellos */
+.sl-av-btn { width: 128px; }
+.sl-av-ph { width: 128px; height: 128px; border-radius: 26px; }
+.sl-av-st { font-size: 13px; padding: 6px 12px; }
+.sl-av-pop { bottom: 100%; padding-bottom: 20px; }
+@media (max-width: 900px) { .sl-av-btn, .sl-av-ph { width: 92px; } .sl-av-ph { height: 92px; border-radius: 20px; } .sl-av-st { font-size: 11.5px; padding: 4px 9px; } }
+/* Paco, 12/11 · Paseo virtual: fuera el plano del panel gris (queda la lista de vistas y la reserva) */
+.s-sv-wrap .s-pl-map, .s-sv-wrap .s-pl-tog { display: none !important; }
