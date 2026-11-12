@@ -34,16 +34,14 @@
       '<section class="bl-top"><div class="lm-w"><a class="bl-dest" href="' + top.pagina + '">' + foto(top, 1200, 'bl-dest-img') +
         '<span class="bl-dest-b"><span class="bl-cat">' + esc(top.cats[0]) + ' · Lo último</span><b>' + esc(top.titulo) + '</b><span class="bl-ext">' + esc(top.extracto.slice(0, 220)) + '…</span>' +
         '<span class="bl-meta">' + LM.fechaLarga(top.fecha) + ' · ' + top.min + ' min de lectura</span><span class="lm-btn">Leer la guía' + LM.ico('right') + '</span></span></a></div></section>' +
-      '<section class="bl-list"><div class="lm-w"><div class="tc-filtros" role="group" aria-label="Categorías"><span>Temas</span>' +
-        ['Todas'].concat(orden).map(function (c) { return '<button type="button" data-cat="' + esc(c) + '" aria-pressed="' + (c === cat) + '">' + esc(c) + (c === 'Todas' ? '' : ' <small>' + cats[c] + '</small>') + '</button>'; }).join('') + '</div>' +
-        '<p class="c-count" id="bl-count" aria-live="polite"></p><div class="bl-grid" id="bl-grid"></div>' +
+      // Paco, 12/11: fuera la fila de «Temas» y el contador. La lista con su propia rejilla (antes compartía .bl-grid con la entrada y la del medio salía enorme)
+      '<section class="bl-list"><div class="lm-w"><div class="bl-lista" id="bl-grid"></div>' +
         '<button type="button" class="lm-btn lm-btn--line bl-mas" id="bl-mas">Ver más artículos</button></div></section>' +
       '<section class="lm-sec bl-help"><div class="lm-w bl-help-in"><div><p class="lm-eyebrow">¿Buscas colchón?</p><h2 class="lm-h2">Te ayudamos <em>a elegir.</em></h2>' +
-        '<p class="lm-sub">Responde 5 preguntas y te decimos qué colchón va contigo. O llámanos y te asesoramos.</p><a class="lm-btn" href="index.html#h4q">Hacer el test</a></div>' + LM.llamar('blog') + '</div></section>';
+        '<p class="lm-sub">Responde unas preguntas rápidas y te decimos qué colchón va contigo. O llámanos y te asesoramos.</p><a class="lm-btn" href="index.html#h4q">Hacer el test</a></div>' + LM.llamar('blog') + '</div></section>';
     function pintar() {
       var l = LM.BLOG.filter(function (e, i) { return (cat === 'Todas' ? i > 0 : e.cats.indexOf(cat) > -1); });
       $('#bl-grid').innerHTML = l.slice(0, vistos).map(tarjeta).join('');
-      $('#bl-count').textContent = (cat === 'Todas' ? LM.BLOG.length : l.length) + ' artículos';
       $('#bl-mas').hidden = l.length <= vistos;
     }
     root.addEventListener('click', function (e) {
@@ -74,7 +72,7 @@
     $$('.bl-body h2[id]', art).forEach(function (h) { io.observe(h); });
   }
   // Ayuda para elegir (lateral) y relacionadas del mismo tema
-  $('#bl-side').innerHTML = '<div class="bl-side-c"><p class="lm-eyebrow">¿Buscas colchón?</p><p class="bl-side-t">Te decimos cuál va contigo en 5 preguntas.</p><a class="lm-btn lm-btn--full" href="index.html#h4q">Hacer el test</a></div>' +
+  $('#bl-side').innerHTML = '<div class="bl-side-c"><p class="lm-eyebrow">¿Buscas colchón?</p><p class="bl-side-t">Te decimos cuál va contigo en un minuto.</p><a class="lm-btn lm-btn--full" href="index.html#h4q">Hacer el test</a></div>' +
     '<div class="bl-side-c">' + LM.llamar('blog-entrada', { label: '¿Prefieres que te lo expliquemos?' }) + '</div>' +
     '<a class="bl-side-pk" href="packs.html">' + LM.ico('gift') + '<span><b>Packs con regalos</b><small>Colchón y canapé o base, con almohadas y más de regalo</small></span></a>';
   var rel = LM.BLOG.filter(function (e) { return e.slug !== slug && yo && e.cats[0] === yo.cats[0]; }).slice(0, 3);

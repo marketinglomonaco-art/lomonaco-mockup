@@ -2469,3 +2469,17 @@ body[data-page="cuenta"] { background: var(--bg2); }
 .pkl-li { grid-template-columns: 92px minmax(0, 1fr) auto; gap: 16px; padding: 8px 14px 8px 8px; border-radius: 14px; }
 .pkl-li img { width: 92px; height: 92px; border-radius: 10px; }
 @media (max-width: 600px) { .pkl-li { grid-template-columns: 72px minmax(0, 1fr) auto; gap: 12px; } .pkl-li img { width: 72px; height: 72px; } }
+
+/* Paco, 12/11 · Blog: todas las entradas del mismo tamaño (3, 2 o 1 columnas) */
+.bl-lista { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: 8px; }
+@media (max-width: 1000px) { .bl-lista { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 620px) { .bl-lista { grid-template-columns: 1fr; } }
+
+/* Paco, 12/11 · Test con el Excel: listas largas de respuestas en 2 columnas, y en pareja «Tú» y «Tu pareja» en la misma pantalla */
+.h4q-ops--lista { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-top: 14px; }
+.h4q-ops--lista .h4q-op { min-height: 52px; font-size: 15px; }
+.h4q-par .h4q-ops { margin-top: 8px; }
+.h4q-quien { margin: 18px 0 0; font-size: 13px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--acc); }
+.h4q-sig { margin-top: 18px; }
+.h4q-sig:disabled { opacity: .45; cursor: not-allowed; }
+@media (max-width: 560px) { .h4q-ops--lista { grid-template-columns: 1fr; } }
