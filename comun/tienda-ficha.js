@@ -89,7 +89,8 @@
         '<ul class="p-facts">' + facts.map(function (f) { return '<li>' + esc(f) + '</li>'; }).join('') + '</ul>' +
         '<div class="p-price" id="tf-price" aria-live="polite"></div>' +
         // Paco, 13/11 (CRO): en el canapé, el montaje gratis justo debajo del precio: suma valor a lo que pagas. Lleva al módulo de montaje
-        (TIPO === 'canape' ? '<a class="tf-montaje" href="#montaje">' + LM.ico('tool') + '<span><b>Montaje gratis incluido.</b> Te lo dejamos montado en casa.</span>' + LM.ico('right', 'tf-montaje-f') + '</a>' : '') +
+        (TIPO === 'canape' ? '<a class="tf-montaje" href="#montaje">' + LM.ico('tool') + '<span><b>Montaje gratis incluido.</b> Te lo dejamos montado en casa.</span>' + LM.ico('right', 'tf-montaje-f') + '</a>'
+          : TIPO === 'base' ? '<p class="tf-montaje">' + LM.ico('tool') + '<span><b>Montaje gratis incluido.</b> Te la dejamos montada en casa.</span></p>' : '') +
         (COLS ? '<fieldset class="tf-cols"><legend>' + esc(P.colorLabel) + ': <b id="tf-col-n">' + esc(st.color) + '</b></legend><div class="tf-sw" role="radiogroup" aria-label="' + esc(P.colorLabel) + '">' +
           COLS.map(function (c) { return '<button type="button" role="radio" class="tf-sw-b" data-col="' + esc(c.k) + '" aria-checked="' + (c.k === st.color) + '" aria-label="' + esc(c.k) + '" title="' + esc(c.k) + '"><img src="../img/tienda/' + c.sw + '-700.webp" alt="" width="56" height="56" loading="lazy"></button>'; }).join('') +
           '</div></fieldset>' : '') +
@@ -298,11 +299,11 @@
       ['Modelo', esc(P.nombre || P.titulo)], ['Altura de las patas', LM.mark({ estado: 'confirmar', nota: P.patasNota }, P.patas + ' cm')], ['Tejido', 'Airflow® 3D antideslizante, con microceldas tridimensionales'],
       ['Tablero', 'Reforzado, de 8 mm'], ['Refuerzo', '5 barras transversales de acero de 30 × 30 mm'], ['Patas', 'De madera wengué, incluidas'],
       ['Colores', 'Chocolate y Blanco'], ['Medidas', medidasTxt], ['En 2 partes', '160, 180 y 200 cm de ancho'],
-      ['Garantía', garantia], ['Entrega', esc(P.entrega)], ['Retirada del viejo', 'Base o canapé: 49,01 €. Base y colchón: 89 €.']
+      ['Montaje', 'Gratis: te la montamos en casa'], ['Garantía', garantia], ['Entrega', esc(P.entrega)], ['Retirada del viejo', 'Base o canapé: 49,01 €. Base y colchón: 89 €.']
     ] : [
       ['Modelo', esc(P.nombre || P.titulo)], ['Patas', LM.pend('altura de las patas')], ['Tejido', 'Tapizado AirFresh, transpirable'],
       ['Estructura', 'Bastidor de madera maciza'], ['Colores', 'Beige, Gris Claro, Chocolate y Antracita'], ['Medidas', medidasTxt],
-      ['En 2 partes', '160, 180 y 200 cm de ancho'], ['Garantía', garantia], ['Entrega', esc(P.entrega)], ['Retirada del viejo', 'Base o canapé: 49,01 €. Base y colchón: 89 €.']
+      ['En 2 partes', '160, 180 y 200 cm de ancho'], ['Montaje', 'Gratis: te la montamos en casa'], ['Garantía', garantia], ['Entrega', esc(P.entrega)], ['Retirada del viejo', 'Base o canapé: 49,01 €. Base y colchón: 89 €.']
     ];
     H.push(ficha(filas, TIPO === 'canape' ? '<figure class="tf-plano">' + img(P.medidasImg, { alt: 'Plano del canapé: 32 cm de alto, 28 cm de fondo y 103 cm con la tapa abierta' }) + '</figure>' : ''));
     H.push(detalle(TIPO === 'canape' ? 'Pensado para <em>durar.</em>' : 'Calidad que <em>se nota.</em>'));

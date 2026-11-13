@@ -36,7 +36,7 @@
       '<div><dt>Productos</dt><dd>' + LM.eur(c.ref) + '</dd></div>' +
       (c.dto > 0 ? '<div class="ck-tot-dto"><dt>Descuento</dt><dd>−' + LM.eur(c.dto) + '</dd></div>' : '') +
       (c.regalos ? '<div class="ck-tot-reg"><dt>' + LM.ico('gift') + 'Regalos incluidos</dt><dd><s>' + LM.eur(c.regalos) + '</s> Gratis</dd></div>' : '') +
-      '<div><dt>Envío</dt><dd class="ck-gratis">Gratis</dd></div>' +
+      '<div><dt>' + (hayPack() ? 'Envío y montaje' : 'Envío') + '</dt><dd class="ck-gratis">Gratis</dd></div>' +
       (o.ret ? '<div><dt>' + esc(o.ret.t) + '</dt><dd>' + LM.eur(o.ret.p) + '</dd></div>' : '') +
       '<div class="ck-tot-t"><dt>Total</dt><dd>' + LM.eur(c.total) + '</dd></div>' +
       '</dl><p class="ck-iva">IVA incluido (' + LM.eur(Math.round(iva(c.total) * 100) / 100) + ')</p>' +
@@ -146,7 +146,7 @@
         '<div class="ck-ok-b"><a class="lm-btn" href="index.html">Volver a la tienda</a></div>' +
       '</div><aside class="ck-side"><div class="ck-card ck-sum"><h2>Tu pedido</h2><ul class="lm-lis">' +
         ped.items.map(function (it, i) { return CART.linea(it, i, { cant: false, links: false, compact: true }); }).join('') + '</ul>' +
-        '<dl class="ck-tot"><div><dt>Envío</dt><dd class="ck-gratis">Gratis</dd></div>' + (ped.ret ? '<div><dt>' + esc(ped.ret.t) + '</dt><dd>' + LM.eur(ped.ret.p) + '</dd></div>' : '') +
+        '<dl class="ck-tot"><div><dt>' + (ped.items.some(function (i) { return ['pack', 'canape', 'base'].indexOf(i.tipo) > -1; }) ? 'Envío y montaje' : 'Envío') + '</dt><dd class="ck-gratis">Gratis</dd></div>' + (ped.ret ? '<div><dt>' + esc(ped.ret.t) + '</dt><dd>' + LM.eur(ped.ret.p) + '</dd></div>' : '') +
         '<div><dt>Pago</dt><dd>' + esc(ped.pagoT) + '</dd></div><div class="ck-tot-t"><dt>Total</dt><dd>' + LM.eur(ped.total) + '</dd></div></dl>' +
         '<p class="ck-iva">IVA incluido</p></div>' + LM.llamar('confirmado', { label: '¿Alguna duda con tu pedido?' }) + '</aside></div>' +
       '<p class="ck-maq">' + LM.pend('maqueta: número de pedido de ejemplo; no se ha cobrado nada') + '</p>';

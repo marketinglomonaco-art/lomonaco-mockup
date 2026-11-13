@@ -154,6 +154,10 @@
     $('#pk-h1').textContent = nombrePack(); $('#pk-crumb').textContent = nombrePack();
     $('#pk-vp-b').textContent = base().t.toLowerCase();
     $('#p-price').innerHTML = d ? LM.precio(d, { medida: st.medida, cls: 'lm-price--big' }) : '<p class="c-na">Este pack no se hace en ' + LM.medidaTxt(st.medida) + '.</p>';
+    // Paco, 13/11: el montaje gratis, justo debajo del precio (con canapé, lleva al módulo de montaje)
+    if (!$('#pk-montaje')) $('#p-price').insertAdjacentHTML('afterend', st.base === 'canape'
+      ? '<a class="tf-montaje" id="pk-montaje" href="#montaje">' + LM.ico('tool') + '<span><b>Montaje gratis incluido.</b> Te lo dejamos todo montado en casa.</span>' + LM.ico('right', 'tf-montaje-f') + '</a>'
+      : '<p class="tf-montaje" id="pk-montaje">' + LM.ico('tool') + '<span><b>Montaje gratis incluido.</b> Te lo dejamos todo montado en casa.</span></p>');
     $('#pk-bases').innerHTML = opcionesBase();
     $('#pk-colores').innerHTML = muestras();
     if (!B) $('#pk-color-n').textContent = st.color[st.base];

@@ -19,8 +19,9 @@ LM.CONFIG = {
   /* Garantía, devolución, envío y pago: textos de /devoluciones/, /envios/ y /metodos-de-pago/ (28/10/2026) */
   garantia:     { v: '10 años', estado: 'ok' },
   garantiaCubre:{ v: 'Cubre los defectos de fabricación y el núcleo del colchón (espuma, muelles o látex). No cubre manchas, humedad, golpes, mal uso, usarlo sin una base adecuada ni el asentamiento normal de las capas (hasta 2 cm).', estado: 'ok' },
-  envio:        { v: 'Envío gratis en la península', estado: 'ok' }, /* Paco, 12/11: no se monta gratis */
-  envioDevolucion: { v: 'Envío gratis', estado: 'ok' },
+  /* Paco, 13/11: el montaje SIEMPRE es gratis (cambia lo del 12/11) */
+  envio:        { v: 'Envío y montaje gratis en la península', estado: 'ok' },
+  envioDevolucion: { v: 'Envío y montaje gratis', estado: 'ok' },
   devolucion:   { v: 'Lo recogemos en tu casa', estado: 'ok' },
   devolucionCond:{ v: 'Puedes devolverlo durante las 150 noches de prueba, desde que lo recibes. Debe estar en perfecto estado y con su embalaje original o uno parecido. Te devolvemos el dinero por transferencia en 10 días hábiles desde que llega a nuestro almacén. Se pueden descontar los gastos de envío y recogida cuando la ley lo permite.', estado: 'ok' },
   clientes:     { v: '750.000', estado: 'ok' },
@@ -454,7 +455,7 @@ LM.ENVIOS = {
     { k: 'abierto', t: 'Colchón abierto', d: 'Te llega en 14 a 20 días', p: 0 }
   ],
   pack: [
-    { k: 'abierto', t: 'Entrega en casa', d: 'Te llega en 14 a 20 días', p: 0, nota: 'Método de envío de los packs: no se pudo comprobar en la web actual (el pack da error al añadirlo al carrito)' }
+    { k: 'abierto', t: 'Entrega y montaje en casa', d: 'Te lo dejamos montado. Te llega en 14 a 20 días', p: 0, nota: 'Método de envío de los packs: no se pudo comprobar en la web actual (el pack da error al añadirlo al carrito)' }
   ]
 };
 /* Retirada de lo viejo: la de colchón (49,01 €) y las dos de las fichas de pack de la web actual */
