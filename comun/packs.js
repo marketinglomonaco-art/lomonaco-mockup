@@ -33,11 +33,12 @@
   // Paco, 13/11: en el configurador grande, canapé o base se elige con su foto
   var FOTOS = segB.classList.contains('h4p-tipo'), NUEVO = !!$('#h4p-sel');
   if (FOTOS) {
+    // Paco, 13/11: foto del canapé o de la base sola (sin colchón), sobre gris, y debajo su selector de acabados
     segB.innerHTML = PC.orden.map(function (b) {
       var f = PC.bases[b];
-      return '<button type="button" role="radio" data-base="' + b + '" aria-label="' + f.t + '">' +
-        '<img src="' + f.img + '-700.webp" alt="" width="700" height="523" loading="lazy">' +
-        '<span>' + LM.ico('check', 'h4p-tipo-ok') + f.t + '</span></button>';
+      return '<div class="h4p-tipo-c"><button type="button" role="radio" data-base="' + b + '" aria-label="' + f.t + '">' +
+        '<img src="../img/pack-tipo-' + b + '-700.webp" srcset="../img/pack-tipo-' + b + '-700.webp 700w, ../img/pack-tipo-' + b + '-1200.webp 1200w" sizes="(max-width: 900px) 50vw, 25vw" alt="" width="700" height="438" loading="lazy">' +
+        '<span>' + LM.ico('check', 'h4p-tipo-ok') + f.t + '</span></button><div class="h4p-tipo-sw" data-sw-base="' + b + '"></div></div>';
     }).join('');
   } else {
   // Paco, 06/11: la pastilla granate se desliza de una opción a la otra (h4p-seg-ind)
@@ -56,7 +57,8 @@
   function recolocar() { segB.classList.add('is-sin'); deslizar(); requestAnimationFrame(function () { segB.classList.toggle('is-sin', false); }); }
   addEventListener('resize', recolocar);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(recolocar);
-  colB.innerHTML = PC.colchones.map(function (c) { return '<button type="button" role="radio" data-col="' + c.k + '"><b>' + c.t + '</b><small>' + c.d + '</small></button>'; }).join('');
+  // Paco, 13/11: en el configurador grande, cada colchón con su foto
+  colB.innerHTML = PC.colchones.map(function (c) { return '<button type="button" role="radio" data-col="' + c.k + '">' + (FOTOS ? '<img src="../img/' + LM.FOTO_HOME[c.k] + '-480.webp" alt="" width="480" height="480" loading="lazy">' : '') + '<b>' + c.t + '</b><small>' + c.d + '</small></button>'; }).join('');
   var img = $('#h4p-img'), ultimaFoto = 'canape'; // 12/11: la home ya no lleva foto (img = null)
   /* Paco, 10/11 · Categoría (versión reducida): que no se elija el colchón a ciegas. Bajo los botones,
      qué es el colchón elegido, cómo se siente, sus tres puntos fuertes y el enlace a su ficha */
@@ -85,6 +87,16 @@
   }
   function fila(nombre, precio, cls) { return '<li' + (cls ? ' class="' + cls + '"' : '') + '><span>' + nombre + '</span><b>' + precio + '</b></li>'; }
 
+  function pintarAcabados() {
+    if (!FOTOS) return;
+    PC.orden.forEach(function (b) {
+      var box = $('[data-sw-base="' + b + '"]', segB); if (!box) return;
+      var COLS = (b === 'canape' ? LM.TIENDA.canape : LM.TIENDA.base3d).colores, sel = st.colorB[b];
+      box.innerHTML = '<p class="h4p-tipo-acl">Acabado: <b>' + sel + '</b></p><span class="pkl-sw" role="radiogroup" aria-label="Acabado ' + (b === 'canape' ? 'del canapé' : 'de la base') + '">' + COLS.map(function (x) {
+        return '<button type="button" role="radio" data-pkc="' + x.k + '" data-pkb="' + b + '" aria-checked="' + (x.k === sel) + '" aria-label="' + x.k + '" title="' + x.k + '"><img src="../img/tienda/' + x.sw + '-700.webp" alt="" width="28" height="28" loading="lazy"></button>';
+      }).join('') + '</span>';
+    });
+  }
   function pintarPack() {
     var col = PC.colchones.filter(function (c) { return c.k === st.col; })[0];
     $$('[data-base]', segB).forEach(function (b) { var on = b.getAttribute('data-base') === st.base; b.setAttribute('aria-checked', on); b.tabIndex = on ? 0 : -1; });
@@ -94,7 +106,10 @@
     // Paco, 12/11: lista con cada pieza y cada regalo con su precio real para la medida; al final, por separado y lo que te ahorras
     var pkKey = st.col + (st.base === 'canape' ? 'Canape' : 'Base');
     var COLS = (st.base === 'canape' ? LM.TIENDA.canape : LM.TIENDA.base3d).colores;
-    if (!COLS.some(function (x) { return x.k === st.color; })) st.color = st.base === 'canape' ? 'Nogal' : 'Chocolate';
+    st.colorB = st.colorB || { canape: 'Nogal', base: 'Chocolate' };
+    if (!COLS.some(function (x) { return x.k === st.color; })) st.color = st.colorB[st.base] || (st.base === 'canape' ? 'Nogal' : 'Chocolate');
+    st.colorB[st.base] = st.color;
+    pintarAcabados();
     // Medidas de este pack (sin repetir las de 2 partes), en el orden de siempre
     var MP = LM.MEDIDAS.filter(function (x) { var t = LM.TIENDA.packs[pkKey].tabla; return t[x] || t[x + '-2p']; });
     if (MP.indexOf(st.medida) < 0) st.medida = MP.indexOf(M) > -1 ? M : MP[0];
@@ -117,8 +132,8 @@
   }
   /* Paco, 13/11 · Configurador grande: izquierda lo que compras, derecha lo que te regalamos, abajo el precio */
   function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
-  function linea(l, sw) {
-    return '<li class="pkl-li' + (l.regalo ? ' is-regalo' : '') + '"><img src="' + l.img + '" alt="" width="92" height="92" loading="lazy">' +
+  function linea(l, sw, sinFoto) {
+    return '<li class="pkl-li' + (l.regalo ? ' is-regalo' : '') + (sinFoto ? ' pkl-li--sf' : '') + '">' + (sinFoto ? '' : '<img src="' + l.img + '" alt="" width="92" height="92" loading="lazy">') +
       '<span><b>' + esc(l.t) + '</b><small>' + esc(l.sub) + '</small>' + (sw || '') + '</span>' +
       (l.regalo ? '<em><s>' + LM.eur(l.p) + '</s><strong>Gratis</strong></em>'
       : l.r > l.p ? '<em class="pkl-pr"><span><s>' + LM.eur(l.r) + '</s><span class="lm-price-off">-' + Math.round((1 - l.p / l.r) * 100) + ' %</span></span><b>' + LM.eur(l.p) + '</b></em>'
@@ -129,7 +144,7 @@
     var sw = '<span class="pkl-sw" role="radiogroup" aria-label="Color del ' + (D.pk.base === 'canape' ? 'canapé' : 'la base') + '">' + COLS.map(function (x) {
       return '<button type="button" role="radio" data-pkc="' + esc(x.k) + '" aria-checked="' + (x.k === D.color) + '" aria-label="' + esc(x.k) + '" title="' + esc(x.k) + '"><img src="../img/tienda/' + x.sw + '-700.webp" alt="" width="28" height="28" loading="lazy"></button>';
     }).join('') + '</span>';
-    $('#h4p-sel').innerHTML = '<p class="h4p-k">Tu selección</p><ul class="pkl" aria-label="Lo que compras">' + linea(D.lineas[0]) + linea(D.lineas[1], sw) + '</ul>';
+    $('#h4p-sel').innerHTML = '<p class="h4p-k">Tu selección</p><ul class="pkl" aria-label="Lo que compras">' + linea(D.lineas[0], '', FOTOS) + linea(D.lineas[1], FOTOS ? '' : sw, FOTOS) + '</ul>'; // Paco, 13/11: sin fotos ni selector de color (ya están arriba)
     // Regalos
     $('#h4p-rgk').innerHTML = LM.ico('gift') + '<span>Lo que te regalamos</span>';
     $('#h4p-reg').innerHTML = '<p class="h4p-rg-v">' + D.regalos.length + ' regalos valorados en <s>' + LM.eur(D.valorRegalos) + '</s> <strong>Gratis</strong></p>' +
@@ -164,12 +179,14 @@
   // Paco, 12/11: color del canapé o de la base, elegido en su línea del listado
   pc.addEventListener('click', function (e) {
     var b = e.target.closest('[data-pkc]'); if (!b) return;
+    var pb = b.getAttribute('data-pkb');
+    if (pb) { st.base = pb; st.colorB = st.colorB || {}; st.colorB[pb] = b.getAttribute('data-pkc'); }
     st.color = b.getAttribute('data-pkc'); pintarPack();
-    var n = $('[data-pkc="' + st.color + '"]', pc); if (n) n.focus({ preventScroll: true });
+    var n = $('[data-pkc="' + st.color + '"]' + (pb ? '[data-pkb="' + pb + '"]' : ''), pc); if (n) n.focus({ preventScroll: true });
     LM.track('pack_color', { color: st.color, base: st.base });
   });
   LM.repintarPacks = function () { st.medida = LM.medidaInicial(); pintarPack(); }; // la home lo llama al cambiar la medida de las tarjetas
-  radios(segB, 'data-base', function (v) { st.base = v; });
+  radios(segB, 'data-base', function (v) { st.base = v; if (st.colorB && st.colorB[v]) st.color = st.colorB[v]; });
   radios(colB, 'data-col', function (v) { st.col = v; });
   $('#h4p-go').addEventListener('click', function () { if (this.hasAttribute('data-pid')) LM.track('select_item', { item_list_name: 'home_pack_config', item_id: +this.getAttribute('data-pid') }); });
   pintarPack();
