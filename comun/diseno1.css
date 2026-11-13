@@ -1611,8 +1611,7 @@ html.s-cm-open { overflow: hidden; }
 .h4p-info-b .lm-i { width: 18px; height: 18px; flex: none; color: var(--acc); }
 .h4p-info-l { display: inline-block; margin-top: 10px; font-weight: 600; color: var(--acc); text-underline-offset: 3px; }
 
-/* B · Franja LM sin horario ni teléfono: «Ofertas en packs» en el centro */
-.lm-top-in.lm-top-a { justify-content: center; }
+/* Paco, 13/11: la franja vuelve a llevar horario a la izquierda, «Ofertas en packs» en el centro y teléfono a la derecha */
 
 /* B · Botón de packs del menú, con su submenú */
 .lm-nl.lm-nl-packs { margin-left: 6px; min-height: 38px; padding: 0 12px 0 16px; border-radius: 10px; background: var(--acc); color: #fff; font-weight: 600; }
@@ -2691,3 +2690,103 @@ body[data-cat="packs"] #tc-h4p .h4p-head { display: none; }
 .tc-nota { margin: -4px 0 10px; font-size: 13px; color: var(--mute); }
 /* Paco, 12/11 · Configurador de packs: los precios no van pegados al borde de cada línea */
 .h4p .pkl-li { padding: 8px 18px 8px 8px; }
+
+/* Paco, 13/11 · Configurador de packs: canapé o base con foto; izquierda lo que compras, derecha lo que te regalamos, abajo el precio */
+.h4p--v13 .h4p-box { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 3.4vw, 56px); align-items: start; }
+.h4p--v13 .h4p-buy, .h4p--v13 .h4p-rg { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.h4p--v13 .h4p-k { margin: 6px 0 -2px; }
+.h4p-colk { display: flex; align-items: center; gap: 10px; margin: 0 0 4px; padding-bottom: 14px; border-bottom: 1px solid var(--line); font-size: clamp(20px, 1.7vw, 24px); font-weight: 700; letter-spacing: -.01em; color: var(--ink); }
+.h4p-colk .lm-i { width: 24px; height: 24px; flex: none; color: var(--acc); }
+.h4p-tipo { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.h4p-tipo button { position: relative; display: grid; padding: 0; border-radius: 14px; overflow: hidden; background: #fff; text-align: left; box-shadow: inset 0 0 0 1.5px var(--line); cursor: pointer; transition: box-shadow .2s; }
+.h4p-tipo img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--bg2); }
+.h4p-tipo span { display: flex; align-items: center; gap: 8px; min-height: 46px; padding: 8px 14px; font-size: 15px; font-weight: 600; line-height: 1.2; color: var(--ink); }
+.h4p-tipo .h4p-tipo-ok { display: none; width: 18px; height: 18px; flex: none; padding: 3px; border-radius: 50%; background: var(--acc); color: #fff; }
+.h4p-tipo button:hover { box-shadow: inset 0 0 0 1.5px var(--ink); }
+.h4p-tipo button[aria-checked="true"] { box-shadow: inset 0 0 0 2.5px var(--acc); }
+.h4p-tipo button[aria-checked="true"] .h4p-tipo-ok { display: block; }
+.h4p-tipo button[aria-checked="true"] span { color: var(--acc); }
+.h4p-tipo button img, .h4p-tipo button span { pointer-events: none; }
+.h4p-tipo button:focus-visible { outline: 2px solid var(--acc); outline-offset: 3px; }
+.h4p--v13 .h4p-sel { display: flex; flex-direction: column; gap: 10px; }
+.h4p-rg-v { margin: -2px 0 2px; font-size: 15px; color: var(--mute); }
+.h4p-rg-v s { color: var(--mute); }
+.h4p-rg-v strong { color: var(--acc); font-weight: 800; }
+.h4p-rg-n { margin: 2px 0 0; font-size: 13.5px; color: var(--mute); }
+.h4p--v13 .h4p-rg .pkl { gap: 8px; }
+.h4p-tot { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 18px 32px; padding: clamp(18px, 2.2vw, 28px) clamp(18px, 2.6vw, 34px); border-radius: 16px; background: var(--bg2); }
+.h4p--v13 .h4p-from { margin: 0 0 4px; font-size: 14.5px; color: var(--mute); }
+.h4p-pr-row { display: flex; align-items: baseline; flex-wrap: wrap; gap: 6px 16px; }
+.h4p-pr-row--2 { align-items: center; margin-top: 6px; }
+.h4p--v13 .h4p-now { margin: 0; }
+.h4p-was { margin: 0; font-size: 15px; color: var(--mute); }
+.h4p--v13 .h4p-save { margin: 0; }
+.h4p--v13 .h4p-price .lm-price-fee { margin: 0; }
+.h4p-cta { display: grid; justify-items: stretch; gap: 10px; min-width: min(300px, 100%); }
+.h4p--v13 .h4p-go { justify-content: center; }
+.h4p-trust { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; font-size: 13.5px; color: var(--mute); }
+.h4p-trust li { display: flex; align-items: center; justify-content: center; gap: 6px; }
+.h4p-trust .lm-i { width: 16px; height: 16px; color: var(--acc); }
+@media (max-width: 900px) {
+  .h4p--v13 .h4p-box { grid-template-columns: 1fr; gap: 26px; }
+  .h4p-tot { flex-direction: column; align-items: stretch; }
+  .h4p-cta { min-width: 0; }
+}
+@media (max-width: 480px) {
+  .h4p-tipo span { min-height: 42px; padding: 6px 10px; font-size: 13.5px; }
+}
+/* 13/11: el precio y el botón van debajo de los regalos (columna derecha) */
+.h4p--v13 .h4p-tot { grid-column: auto; flex-direction: column; align-items: stretch; gap: 16px; margin-top: 10px; }
+.h4p--v13 .h4p-cta { min-width: 0; }
+.h4p--v13 .h4p-tipo img { aspect-ratio: 16 / 10; }
+
+/* Paco, 13/11 · Test: «¿Para quién es el colchón?» con la edad dentro (para mí, en pareja, para mis hijos) */
+.h4q-grupos { display: grid; gap: 14px; margin-top: 18px; }
+.h4q-gr { display: grid; grid-template-columns: 200px minmax(0, 1fr); align-items: center; gap: 10px 16px; padding-top: 14px; border-top: 1px solid var(--line); }
+.h4q-gr:first-child { padding-top: 0; border-top: 0; }
+.h4q-gr-t { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 16px; font-weight: 700; color: var(--ink); }
+.h4q-gr-t .lm-i { width: 22px; height: 22px; flex: none; color: var(--acc); }
+.h4q-gr-b { display: flex; flex-wrap: wrap; gap: 8px; }
+.h4q-op--ch { min-height: 46px; padding: 8px 16px; font-size: 15px; }
+@media (max-width: 640px) { .h4q-gr { grid-template-columns: 1fr; } .h4q-gr-b .h4q-op--ch { flex: 1 1 calc(50% - 4px); justify-content: center; text-align: center; } }
+
+/* Paco, 13/11 · Botón «Versiones»: elegir diseño A o B */
+.lm-hist-ab { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 0 0 12px; }
+.lm-hist-ab a { display: grid; place-items: center; min-height: 38px; border-radius: 10px; font-weight: 700; font-size: 14px; color: var(--ink); text-decoration: none; box-shadow: inset 0 0 0 1.5px var(--line); }
+.lm-hist-ab a:hover { box-shadow: inset 0 0 0 1.5px var(--ink); }
+.lm-hist-ab a[aria-current] { background: var(--acc); color: #fff; box-shadow: none; }
+
+/* Paco, 13/11 · Test, diseño B: caritas en vez de % (siempre en positivo) */
+.h4q-caras { display: grid; gap: 8px; }
+.h4q-caras-i { display: flex; gap: 6px; }
+.h4q-cara { position: relative; display: block; width: 34px; height: 34px; flex: none; }
+.h4q-cara svg { display: block; width: 34px; height: 34px; }
+.h4q-cara-v circle:first-child { fill: none; stroke: var(--line); stroke-width: 1.4; }
+.h4q-cara-v .o { fill: #c9c4c0; }
+.h4q-cara-v .b { fill: none; stroke: #c9c4c0; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.h4q-cara-v .b.is-ab { fill: #c9c4c0; }
+.h4q-cara-f { position: absolute; inset: 0 auto 0 0; overflow: hidden; }
+.h4q-cara-f circle:first-child { fill: var(--acc); }
+.h4q-cara-f .o { fill: #fff; }
+.h4q-cara-f .b { fill: none; stroke: #fff; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.h4q-cara-f .b.is-ab { fill: #fff; }
+.h4q-caras > span { font-size: 15px; font-weight: 700; color: var(--acc); }
+
+/* Paco, 13/11 · Montaje del canapé: gratis (valor primero) y, debajo, las instrucciones por si te mudas */
+.tf-mont-val { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 0 0 clamp(36px, 4vw, 56px); padding: 0; list-style: none; }
+.tf-mont-val li { display: grid; gap: 6px; align-content: start; padding: 22px; border-radius: var(--r); background: #fff; box-shadow: inset 0 0 0 1px var(--line); }
+.tf-mont-val .lm-i { width: 30px; height: 30px; margin-bottom: 6px; color: var(--acc); }
+.tf-mont-val b { font-size: 18px; font-weight: 700; color: var(--ink); }
+.tf-mont-val span { font-size: 15px; line-height: 1.45; color: var(--mute); }
+.tf-mont-mud { margin-bottom: 18px; }
+.tf-mont-mud-t { margin: 0; font-size: clamp(20px, 1.8vw, 24px); font-weight: 700; letter-spacing: -.01em; color: var(--ink); }
+.tf-mont-mud-s { margin: 6px 0 0; font-size: 15.5px; color: var(--mute); }
+@media (max-width: 700px) { .tf-mont-val { grid-template-columns: 1fr; } .tf-mont-val li { grid-template-columns: 30px minmax(0, 1fr); column-gap: 14px; padding: 16px; } .tf-mont-val .lm-i { grid-row: span 2; margin: 0; } }
+
+/* Paco, 13/11 · Ficha del canapé: «Montaje gratis incluido» debajo del precio */
+.tf-montaje { display: flex; align-items: center; gap: 12px; margin: 2px 0 6px; padding: 12px 14px; border-radius: 12px; background: var(--bg2); color: var(--ink); font-size: 15px; line-height: 1.35; text-decoration: none; transition: box-shadow .2s; }
+.tf-montaje:hover { box-shadow: inset 0 0 0 1.5px var(--acc); }
+.tf-montaje > .lm-i { width: 22px; height: 22px; flex: none; color: var(--acc); }
+.tf-montaje span { flex: 1; }
+.tf-montaje b { color: var(--acc); font-weight: 700; }
+.tf-montaje .tf-montaje-f { width: 18px; height: 18px; color: var(--mute); }

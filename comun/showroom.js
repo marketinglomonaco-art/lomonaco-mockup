@@ -668,7 +668,7 @@
             '<dl class="p-tech-dl s-cp-dl">' + [
               ['Alto', T.cotas.alto + ' cm'], ['Fondo del arcón', T.cotas.fondo + ' cm'], ['Altura con la tapa abierta', T.cotas.apertura + ' cm'],
               ['Acabados', 'Blanco, Nórdico, Roble y Nogal'], ['Apertura', 'Abatible, con frenos de seguridad'], ['Tapa', 'Antideslizante. Partida en 180 × 200 y 200 × 200 cm'],
-              ['Material', 'Madera de alta calidad'], ['Medidas', MD.map(txt).join(' · ')], ['Montaje', 'Lo montas tú, con las instrucciones paso a paso'],
+              ['Material', 'Madera de alta calidad'], ['Medidas', MD.map(txt).join(' · ')], ['Montaje', 'Gratis: te lo montamos en casa'],
               ['Garantía', T.garantia], ['Entrega', T.entrega]
             ].map(function (r) { return '<div><dt>' + r[0] + '</dt><dd>' + r[1] + '</dd></div>'; }).join('') + '</dl></section>' +
           '<div class="s-cp-cta"><button type="button" class="lm-btn lm-btn--video" data-cp-ver>' + LM.ico('video') + 'Quiero verlo en videollamada</button><a class="lm-link" href="' + T.pagina + '">Ver la ficha del canapé</a></div>' +

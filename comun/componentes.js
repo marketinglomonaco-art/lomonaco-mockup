@@ -116,14 +116,21 @@
     return best;
   };
   var desdePack = LM.desdePack;
-  LM.tfPackCard = function (pk) {
+  /* Paco, 13/11: precio de un pack para una medida (el color más barato); si no se hace en esa medida, null */
+  LM.precioPackMedida = function (pk, m) {
+    var row = pk.tabla[m] || pk.tabla[m + '-2p'], best = null; if (!row) return null;
+    Object.keys(row).forEach(function (c) { if (!best || row[c].p < best.p) best = row[c]; }); return best;
+  };
+  LM.tfPackCard = function (pk, medida) {
+    // Paco, 13/11: con medida (filtro de la categoría de packs B), el precio de esa medida
+    var dm = medida && typeof medida === 'string' ? LM.precioPackMedida(pk, medida) : null;
     var d = desdePack(pk), foto = pk.fotoColor[Object.keys(pk.fotoColor)[0]], R = LM.REGALOS_TIENDA;
     var col = LM.PRODUCTOS[pk.colchon];
     return '<article class="lm-card tf-pk"><div class="lm-card-img">' + LM.tfImg(foto, { alt: pk.nombre, sizes: '(max-width: 900px) 100vw, 25vw' }) + '<span class="lm-pill">Regalos incluidos</span></div>' +
       '<div class="lm-card-b"><p class="lm-card-k">' + esc(col.nombre) + ' + ' + (pk.base === 'canape' ? 'canapé' : 'base antideslizante') + '</p>' +
       '<h3><a class="lm-stretch" href="' + pk.pagina + '">' + esc(pk.nombre) + '</a></h3>' +
       '<p class="tf-pk-reg">' + LM.ico('gift') + 'De regalo: ' + pk.regalos.map(function (r, i) { return i ? R[r][0].toLowerCase() : R[r][0]; }).join(', ').replace(/, ([^,]*)$/, ' y $1') + '</p>' +
-      '<div class="lm-card-f">' + LM.precio(d, { desde: true }) + '<span class="lm-btn lm-btn--full" aria-hidden="true">Ver pack</span></div></div></article>';
+      '<div class="lm-card-f">' + (dm ? LM.precio(dm, { medida: medida }) : LM.precio(d, { desde: true })) + '<span class="lm-btn lm-btn--full" aria-hidden="true">Ver pack</span></div></div></article>';
   };
   /* Desglose de un pack (Paco, 12/11): cada pieza con su precio real para esa medida y color, y los regalos valorados
      con el precio de la tienda para esa medida (almohadas: 120 €, dato de Paco; edredón según el ancho de la cama;
@@ -528,10 +535,10 @@
     el.innerHTML =
       // V4 · Cambio 1 y 1b: franja en color LM. Al pasar el hero cambia a los valores de marca, en corto
       '<div class="lm-top"><div class="lm-w lm-top-in lm-top-a">' +
-        // Paco, 10/11 · Opción B: fuera el horario y el teléfono de la franja (salen en el menú, debajo)
-        (OPB ? '' : '<span class="lm-top-h">' + esc(C.horario.v) + '</span>') +
+        // Paco, 13/11: vuelven el horario (izquierda) y el teléfono (derecha) a la franja; se quitaron por error el 10/11
+        ('<span class="lm-top-h">' + esc(C.horario.v) + '</span>') +
         '<a class="lm-top-promo" href="' + LM.href('/packs/') + '">Ofertas en packs</a>' +
-        (OPB ? '' : '<a class="lm-top-tel" href="tel:' + C.telefono.tel + '" data-lead="topbar">' + LM.ico('phone') + tel + '<span class="lm-top-hm">' + esc(C.horario.corto) + '</span></a>') +
+        ('<a class="lm-top-tel" href="tel:' + C.telefono.tel + '" data-lead="topbar">' + LM.ico('phone') + tel + '<span class="lm-top-hm">' + esc(C.horario.corto) + '</span></a>') +
       '</div>' +
       '<div class="lm-w lm-top-b">' +
         '<a class="lm-top-dto" href="' + LM.href('/packs/') + '">Hasta 60 % DTO</a>' +
@@ -542,7 +549,7 @@
         '<li>' + LM.ico('shield') + '<span>' + LM.c('garantia') + ' de garantía</span></li>' +
         '<li>' + LM.ico('home') + '<span>' + LM.mark(C.fabricacion, 'Fabricación propia') + '</span></li>' +
         '<li>' + LM.ico('user') + '<span>+' + LM.c('clientes') + ' clientes</span></li></ul>' +
-        (OPB ? '' : '<a class="lm-top-tel lm-top-tel2" href="tel:' + C.telefono.tel + '" data-lead="topbar-fija">' + LM.ico('phone') + tel + '<span class="lm-top-hor">' + esc(C.horario.corto) + '</span></a>') +
+        ('<a class="lm-top-tel lm-top-tel2" href="tel:' + C.telefono.tel + '" data-lead="topbar-fija">' + LM.ico('phone') + tel + '<span class="lm-top-hor">' + esc(C.horario.corto) + '</span></a>') +
       '</div></div>' +
       '<header class="lm-head"><div class="lm-w lm-head-in">' +
         '<button class="lm-burger" type="button" aria-label="Abrir el menú" aria-expanded="false" aria-controls="lm-drawer">' + LM.ico('menu') + '</button>' +
@@ -923,6 +930,32 @@
     els.forEach(function (e) { io.observe(e); });
   };
 
+  /* ---------- banner de la promo en carrusel (Colchones y, en el diseño B, Packs) ---------- */
+  /* Paco, 06/11: se desliza con el dedo, con los puntos o solo cada 4 s. Se para al pasar el ratón, al tocarlo o con el foco;
+     sin paso automático si el usuario reduce el movimiento */
+  LM.promoCarrusel = function () {
+    var tr = $('#c-promo-track'), dots = $('#c-promo-dots'); if (!tr || !dots || tr.getAttribute('data-on')) return;
+    tr.setAttribute('data-on', '1');
+    var sl = $$('.c-promo-in', tr), cur = 0, pausa = false, toc = false;
+    if (sl.length < 2) { dots.hidden = true; return; }
+    dots.innerHTML = sl.map(function (s, i) { return '<button type="button" aria-label="Ver promoción ' + (i + 1) + ' de ' + sl.length + '"></button>'; }).join('');
+    var bs = $$('button', dots);
+    function marcar(i) { cur = i; bs.forEach(function (b, j) { b.setAttribute('aria-current', j === i); }); sl.forEach(function (s, j) { s.setAttribute('aria-hidden', j !== i); $$('a', s).forEach(function (a) { a.tabIndex = j === i ? 0 : -1; }); }); }
+    var fin;
+    function ir(i) {
+      var x = i * tr.clientWidth; tr.scrollTo({ left: x, behavior: 'smooth' }); marcar(i);
+      clearTimeout(fin); fin = setTimeout(function () { if (Math.abs(tr.scrollLeft - x) > 2) tr.scrollLeft = x; marcar(i); }, 900);
+    }
+    bs.forEach(function (b, i) { b.addEventListener('click', function () { toc = true; ir(i); }); });
+    var t; tr.addEventListener('scroll', function () { clearTimeout(t); t = setTimeout(function () { marcar(Math.round(tr.scrollLeft / tr.clientWidth)); }, 80); }, { passive: true });
+    var caja = tr.parentNode;
+    caja.addEventListener('mouseenter', function () { pausa = true; }); caja.addEventListener('mouseleave', function () { pausa = false; });
+    caja.addEventListener('focusin', function () { pausa = true; }); caja.addEventListener('focusout', function () { pausa = false; });
+    tr.addEventListener('touchstart', function () { toc = true; }, { passive: true });
+    marcar(0);
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(function () { if (!pausa && !toc && !document.hidden) ir((cur + 1) % sl.length); }, 4000);
+  };
+
   /* ---------- interruptor de marcas de revisión ---------- */
   /* Paco, 12/11: fuera las pastillas «Ver marcas de revisión» y «Opción A / B». Queda un botón pequeño, abajo a la izquierda,
      que despliega el histórico de versiones (LM.HISTORICO, comun/historico.js) y, dentro, el interruptor de las marcas */
@@ -933,7 +966,13 @@
     var w = document.createElement('div');
     w.className = 'lm-hist-w';
     w.innerHTML = '<button type="button" class="lm-hist-btn" aria-expanded="false" aria-controls="lm-hist-p" aria-label="Versiones de la maqueta">' + LM.ico('layers') + '<span>Versiones</span></button>' +
-      '<div class="lm-hist-p" id="lm-hist-p" hidden><p class="lm-hist-t">Versiones de la maqueta</p><ol>' +
+      '<div class="lm-hist-p" id="lm-hist-p" hidden>' +
+      // Paco, 13/11: cambiar de diseño A a B (y al revés) en la misma página
+      '<p class="lm-hist-t">Diseño</p><div class="lm-hist-ab" role="group" aria-label="Diseño">' + ['a', 'b'].map(function (o) {
+        var yo = (document.body.getAttribute('data-op') || 'a') === o;
+        return '<a href="../diseno1-' + o + '/' + pag + '" data-ab' + (yo ? ' aria-current="page"' : '') + '>Diseño ' + o.toUpperCase() + '</a>';
+      }).join('') + '</div>' +
+      '<p class="lm-hist-t">Versiones de la maqueta</p><ol>' +
       '<li class="is-on"><b>Actual</b><span>La que estás viendo</span></li>' +
       H.map(function (v) {
         var p = v.pags.indexOf(pag) > -1 ? pag : 'index.html';
@@ -945,6 +984,8 @@
     var b = w.querySelector('.lm-hist-btn'), p = w.querySelector('.lm-hist-p');
     function set() { document.documentElement.classList.toggle('lm-nomarks', !on); }
     b.addEventListener('click', function () { p.hidden = !p.hidden; b.setAttribute('aria-expanded', !p.hidden); });
+    // al cambiar de diseño se conserva lo que haya en la dirección (?…#…)
+    w.addEventListener('click', function (e) { var x = e.target.closest('[data-ab]'); if (x && !x.hasAttribute('aria-current')) { e.preventDefault(); location.href = x.getAttribute('href') + location.search + location.hash; } });
     document.addEventListener('click', function (e) { if (!w.contains(e.target)) { p.hidden = true; b.setAttribute('aria-expanded', 'false'); } });
     w.querySelector('.lm-hist-m input').addEventListener('change', function () { on = this.checked; LM.store.set('lm_marcas', on ? '1' : '0'); set(); });
     set();

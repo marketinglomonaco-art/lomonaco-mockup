@@ -30,11 +30,23 @@
     // el filtro de medidas de la página (si lo hay) marca la misma
     LM.$$('[data-hm]').forEach(function (x) { x.setAttribute('aria-checked', x.getAttribute('data-hm') === st.medida); });
   });
+  // Paco, 13/11: en el configurador grande, canapé o base se elige con su foto
+  var FOTOS = segB.classList.contains('h4p-tipo'), NUEVO = !!$('#h4p-sel');
+  if (FOTOS) {
+    segB.innerHTML = PC.orden.map(function (b) {
+      var f = PC.bases[b];
+      return '<button type="button" role="radio" data-base="' + b + '" aria-label="' + f.t + '">' +
+        '<img src="' + f.img + '-700.webp" alt="" width="700" height="523" loading="lazy">' +
+        '<span>' + LM.ico('check', 'h4p-tipo-ok') + f.t + '</span></button>';
+    }).join('');
+  } else {
   // Paco, 06/11: la pastilla granate se desliza de una opción a la otra (h4p-seg-ind)
   segB.innerHTML = '<span class="h4p-seg-ind" aria-hidden="true"></span>' +
     PC.orden.map(function (b) { return '<button type="button" role="radio" data-base="' + b + '">' + PC.bases[b].t + '</button>'; }).join('');
+  }
   var ind = $('.h4p-seg-ind', segB);
   function deslizar() {
+    if (!ind) return;
     var b = $('[data-base="' + st.base + '"]', segB); if (!b || !b.offsetWidth) return;
     ind.style.width = b.offsetWidth + 'px'; ind.style.height = b.offsetHeight + 'px';
     ind.style.borderRadius = getComputedStyle(b).borderRadius;
@@ -90,15 +102,48 @@
     var m = st.medida, D = LM.packDesglose(pkKey, m, st.color);
     if (!D) { m = M; D = LM.packDesglose(pkKey, m, st.color); }
     var pack = D.d, go = $('#h4p-go');
+    if (NUEVO) pintarNuevo(D, col);
+    else {
     var h = LM.packLista(D, { precio: false, colores: true });
     var precio = '<p class="h4p-from">Pack para ' + LM.medidaTxt(m) + '</p><p class="h4p-now">' + LM.eur(pack.p) + '</p>' +
       (D.ahorro >= 1 ? '<p class="h4p-save">Te ahorras ' + LM.eur(D.ahorro) + '</p>' : '');
     $('#h4p-det').innerHTML = h;
     $('#h4p-price').innerHTML = precio + '<p class="lm-price-fee">' + LM.cuotaTxt(pack.p) + '</p>';
+    }
     go.innerHTML = CTA_HTML;
     go.href = LM.packPagina(st.col, st.base);
     go.setAttribute('data-pid', PC.packs[st.col + (st.base === 'canape' ? 'Canape' : 'Base')].pid);
     go.setAttribute('aria-label', 'Ver el pack ' + col.t + ' ' + PC.bases[st.base].t.toLowerCase());
+  }
+  /* Paco, 13/11 · Configurador grande: izquierda lo que compras, derecha lo que te regalamos, abajo el precio */
+  function esc(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function linea(l, sw) {
+    return '<li class="pkl-li' + (l.regalo ? ' is-regalo' : '') + '"><img src="' + l.img + '" alt="" width="92" height="92" loading="lazy">' +
+      '<span><b>' + esc(l.t) + '</b><small>' + esc(l.sub) + '</small>' + (sw || '') + '</span>' +
+      (l.regalo ? '<em><s>' + LM.eur(l.p) + '</s><strong>Gratis</strong></em>'
+      : l.r > l.p ? '<em class="pkl-pr"><span><s>' + LM.eur(l.r) + '</s><span class="lm-price-off">-' + Math.round((1 - l.p / l.r) * 100) + ' %</span></span><b>' + LM.eur(l.p) + '</b></em>'
+      : '<em>' + (l.p != null ? LM.eur(l.p) : '—') + '</em>') + '</li>';
+  }
+  function pintarNuevo(D, col) {
+    var COLS = D.pk.base === 'canape' ? LM.TIENDA.canape.colores : LM.TIENDA.base3d.colores;
+    var sw = '<span class="pkl-sw" role="radiogroup" aria-label="Color del ' + (D.pk.base === 'canape' ? 'canapé' : 'la base') + '">' + COLS.map(function (x) {
+      return '<button type="button" role="radio" data-pkc="' + esc(x.k) + '" aria-checked="' + (x.k === D.color) + '" aria-label="' + esc(x.k) + '" title="' + esc(x.k) + '"><img src="../img/tienda/' + x.sw + '-700.webp" alt="" width="28" height="28" loading="lazy"></button>';
+    }).join('') + '</span>';
+    $('#h4p-sel').innerHTML = '<p class="h4p-k">Tu selección</p><ul class="pkl" aria-label="Lo que compras">' + linea(D.lineas[0]) + linea(D.lineas[1], sw) + '</ul>';
+    // Regalos
+    $('#h4p-rgk').innerHTML = LM.ico('gift') + '<span>Lo que te regalamos</span>';
+    $('#h4p-reg').innerHTML = '<p class="h4p-rg-v">' + D.regalos.length + ' regalos valorados en <s>' + LM.eur(D.valorRegalos) + '</s> <strong>Gratis</strong></p>' +
+      '<ul class="pkl" aria-label="Lo que te regalamos">' + D.regalos.map(function (l) { return linea(l); }).join('') + '</ul>' +
+      '<p class="h4p-rg-n">Van dentro de tu pack. No pagas nada más por ellos.</p>';
+    // Precio: después de ver lo que compras y lo que te regalan
+    var pack = D.d, nom = col.t + (st.base === 'canape' ? ' con canapé ' : ' con base ') + D.color;
+    $('#h4p-price').innerHTML = '<p class="h4p-from">Tu pack · ' + nom + ' · ' + LM.medidaTxt(D.m) + '</p>' +
+      '<div class="h4p-pr-row"><p class="h4p-now">' + LM.eur(pack.p) + '</p>' +
+      (D.suelto > pack.p ? '<p class="h4p-was">Por separado <s>' + LM.eur(D.suelto) + '</s></p>' : '') + '</div>' +
+      '<div class="h4p-pr-row h4p-pr-row--2">' + (D.ahorro >= 1 ? '<p class="h4p-save">Te ahorras ' + LM.eur(D.ahorro) + '</p>' : '') +
+      '<p class="lm-price-fee">' + LM.cuotaTxt(pack.p) + '</p></div>';
+    var tr = $('#h4p-trust');
+    if (tr && !tr.firstChild) tr.innerHTML = '<li>' + LM.ico('truck') + LM.c('envioDevolucion') + '</li><li>' + LM.ico('moon') + LM.c('prueba') + ' de prueba</li>';
   }
   function foto() {
     if (!img) return; // versión reducida (categorías): sin foto
@@ -117,10 +162,10 @@
     });
   }
   // Paco, 12/11: color del canapé o de la base, elegido en su línea del listado
-  $('#h4p-det').addEventListener('click', function (e) {
+  pc.addEventListener('click', function (e) {
     var b = e.target.closest('[data-pkc]'); if (!b) return;
     st.color = b.getAttribute('data-pkc'); pintarPack();
-    var n = $('#h4p-det [data-pkc="' + st.color + '"]'); if (n) n.focus({ preventScroll: true });
+    var n = $('[data-pkc="' + st.color + '"]', pc); if (n) n.focus({ preventScroll: true });
     LM.track('pack_color', { color: st.color, base: st.base });
   });
   LM.repintarPacks = function () { st.medida = LM.medidaInicial(); pintarPack(); }; // la home lo llama al cambiar la medida de las tarjetas

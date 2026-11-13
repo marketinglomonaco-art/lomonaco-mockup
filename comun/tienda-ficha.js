@@ -88,6 +88,8 @@
         '<p class="p-vp">' + esc(P.lema) + '</p>' +
         '<ul class="p-facts">' + facts.map(function (f) { return '<li>' + esc(f) + '</li>'; }).join('') + '</ul>' +
         '<div class="p-price" id="tf-price" aria-live="polite"></div>' +
+        // Paco, 13/11 (CRO): en el canapé, el montaje gratis justo debajo del precio: suma valor a lo que pagas. Lleva al módulo de montaje
+        (TIPO === 'canape' ? '<a class="tf-montaje" href="#montaje">' + LM.ico('tool') + '<span><b>Montaje gratis incluido.</b> Te lo dejamos montado en casa.</span>' + LM.ico('right', 'tf-montaje-f') + '</a>' : '') +
         (COLS ? '<fieldset class="tf-cols"><legend>' + esc(P.colorLabel) + ': <b id="tf-col-n">' + esc(st.color) + '</b></legend><div class="tf-sw" role="radiogroup" aria-label="' + esc(P.colorLabel) + '">' +
           COLS.map(function (c) { return '<button type="button" role="radio" class="tf-sw-b" data-col="' + esc(c.k) + '" aria-checked="' + (c.k === st.color) + '" aria-label="' + esc(c.k) + '" title="' + esc(c.k) + '"><img src="../img/tienda/' + c.sw + '-700.webp" alt="" width="56" height="56" loading="lazy"></button>'; }).join('') +
           '</div></fieldset>' : '') +
@@ -263,7 +265,13 @@
   /* ---------------- CANAPÉ y BASES: montaje, ficha, combina ---------------- */
   if (esMueble) {
     if (TIPO === 'canape') {
-      H.push(sec('montaje', 'lm-alt tf-mont-sec', 'Montaje', 'Te ayudamos <em>a que lo montes.</em>',
+      // Paco, 13/11: el montaje siempre es gratis. Primero el valor; debajo, las instrucciones por si te mudas o lo cambias de sitio
+      H.push(sec('montaje', 'lm-alt tf-mont-sec', 'Montaje incluido', 'Te lo montamos <em>gratis.</em>',
+        '<ul class="tf-mont-val">' +
+          '<li>' + LM.ico('home') + '<b>Te lo montamos en casa</b><span>Lo llevamos y te lo dejamos montado en tu habitación.</span></li>' +
+          '<li>' + LM.ico('tool') + '<b>Sin herramientas ni esfuerzo</b><span>No cargas piezas ni aprietas un tornillo.</span></li>' +
+          '<li>' + LM.ico('dinero') + '<b>0 € de montaje</b><span>Va incluido en el precio. Sin sorpresas.</span></li></ul>' +
+        '<div class="tf-mont-mud"><h3 class="tf-mont-mud-t">¿Te mudas o lo cambias de sitio?</h3><p class="tf-mont-mud-s">Aquí tienes las instrucciones oficiales, paso a paso, para desmontarlo y volver a montarlo.</p></div>' +
         '<div class="tf-mont" id="tf-mont">' +
           '<div class="tf-mont-tabs" role="tablist"><button role="tab" type="button" data-v="normal" aria-selected="true">Tapa entera</button><button role="tab" type="button" data-v="partida" aria-selected="false">Tapa partida (180 y 200)</button></div>' +
           '<div class="tf-mont-g"><figure class="tf-mont-f"><img id="tf-mont-img" src="../img/montaje/canape-normal-03.webp" alt="" width="900" height="1270" loading="lazy">' +
@@ -277,13 +285,13 @@
             '<li>' + LM.ico('lift') + 'Para apretar los herrajes, sube la tapa a media altura.</li></ul>' +
             '<div class="tf-mont-pdf"><a class="lm-btn lm-btn--line" href="../img/montaje/instrucciones-canape-abatible.pdf" target="_blank" rel="noopener">' + LM.ico('pdf') + 'Instrucciones tapa entera (PDF)</a>' +
             '<a class="lm-btn lm-btn--line" href="../img/montaje/instrucciones-canape-abatible-tapa-partida.pdf" target="_blank" rel="noopener">' + LM.ico('pdf') + 'Instrucciones tapa partida (PDF)</a></div>' +
-            '<p class="tf-mont-dudas">¿Dudas con el montaje? Escríbenos a <a href="mailto:gestion@lomonaco.es">gestion@lomonaco.es</a> o llámanos al <a href="tel:' + C.telefono.tel + '" data-lead="montaje">' + LM.mark(C.telefono, C.telefono.v) + '</a>.</p>' +
-          '</div></div></div>', { sub: 'Paso a paso, con las instrucciones oficiales. Y si te atascas, te ayudamos por teléfono o por email.' }));
+            '<p class="tf-mont-dudas">¿Te atascas al volver a montarlo? Escríbenos a <a href="mailto:gestion@lomonaco.es">gestion@lomonaco.es</a> o llámanos al <a href="tel:' + C.telefono.tel + '" data-lead="montaje">' + LM.mark(C.telefono, C.telefono.v) + '</a>.</p>' +
+          '</div></div></div>', { sub: 'Con tu canapé, el montaje va incluido: nuestro equipo te lo deja listo para usar.' }));
     }
     var filas = TIPO === 'canape' ? [
       ['Alto', LM.mark({ estado: 'confirmar', nota: 'Plano de medidas de la web actual' }, P.cotas.alto + ' cm')], ['Fondo del arcón', P.cotas.fondo + ' cm'], ['Altura con la tapa abierta', P.cotas.apertura + ' cm'],
       ['Acabados', 'Blanco, Nórdico, Roble y Nogal'], ['Apertura', 'Abatible, con frenos de seguridad'], ['Tapa', 'Antideslizante. Partida en 180 × 200 y 200 × 200 cm'],
-      ['Material', 'Madera de alta calidad'], ['Medidas', medidasTxt], ['Montaje', 'Lo montas tú, con las instrucciones paso a paso de esta página'], ['Garantía', garantia], ['Entrega', esc(P.entrega)], ['Retirada del viejo', 'Base o canapé: 49,01 €. Base y colchón: 89 €. Se retira la base si está desmontada.']
+      ['Material', 'Madera de alta calidad'], ['Medidas', medidasTxt], ['Montaje', 'Gratis: te lo montamos en casa'], ['Garantía', garantia], ['Entrega', esc(P.entrega)], ['Retirada del viejo', 'Base o canapé: 49,01 €. Base y colchón: 89 €. Se retira la base si está desmontada.']
     // Paco, 12/11 (cambio 26): en las bases, los datos en el mismo orden que la ficha técnica de los packs:
     // modelo y altura, después los materiales, y al final medidas, garantía, entrega y retirada
     ] : K === 'base3d' ? [
@@ -331,7 +339,8 @@
 
   /* Paco, 12/11: orden de los módulos de cada ficha */
   var ORDEN = PKD ? (TIPO === 'canape' ? ['cabe', 'ventajas', 'tapa', 'montaje'] : ['ventajas', 'robot', 'hecha'])
-    : TIPO === 'canape' ? ['cabe', 'ficha', 'ventajas', 'tapa', 'montaje', 'detalle', 'opiniones', 'dudas']
+    // Paco, 13/11: en el canapé, «¿Qué te cabe dentro?» va debajo de la ficha técnica
+    : TIPO === 'canape' ? ['ficha', 'cabe', 'ventajas', 'tapa', 'montaje', 'detalle', 'opiniones', 'dudas']
     : TIPO === 'base' ? ['ventajas', 'robot', 'hecha', 'ficha', 'detalle', 'opiniones', 'dudas']
     : ['ventajas', 'detalle', 'medida', 'cuidados', 'opiniones'];
   var porId = {}; H.forEach(function (h) { var m = h.match(/ id="([\w-]+)"/); if (m) porId[m[1]] = h; });

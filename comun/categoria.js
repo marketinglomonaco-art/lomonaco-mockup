@@ -116,30 +116,8 @@
     seo.appendChild(head); seo.appendChild(acc);
   })();
 
-  /* Paco, 06/11 · Banner de la promo en carrusel: se desliza con el dedo, con los puntos o solo cada 4 s (Paco, 06/11).
-     Se para al pasar el ratón, al tocarlo o con el foco; sin paso automático si el usuario reduce el movimiento */
-  (function () {
-    var tr = $('#c-promo-track'), dots = $('#c-promo-dots'); if (!tr || !dots) return;
-    var sl = $$('.c-promo-in', tr), cur = 0, pausa = false, toc = false;
-    if (sl.length < 2) { dots.hidden = true; return; }
-    dots.innerHTML = sl.map(function (s, i) { return '<button type="button" aria-label="Ver promoción ' + (i + 1) + ' de ' + sl.length + '"></button>'; }).join('');
-    var bs = $$('button', dots);
-    function marcar(i) { cur = i; bs.forEach(function (b, j) { b.setAttribute('aria-current', j === i); }); sl.forEach(function (s, j) { s.setAttribute('aria-hidden', j !== i); $$('a', s).forEach(function (a) { a.tabIndex = j === i ? 0 : -1; }); }); }
-    var fin;
-    function ir(i) {
-      var x = i * tr.clientWidth; tr.scrollTo({ left: x, behavior: 'smooth' }); marcar(i);
-      // Red de seguridad: si el desplazamiento suave no llega (pestaña en segundo plano), se coloca sin animación
-      clearTimeout(fin); fin = setTimeout(function () { if (Math.abs(tr.scrollLeft - x) > 2) tr.scrollLeft = x; marcar(i); }, 900);
-    }
-    bs.forEach(function (b, i) { b.addEventListener('click', function () { toc = true; ir(i); }); });
-    var t; tr.addEventListener('scroll', function () { clearTimeout(t); t = setTimeout(function () { marcar(Math.round(tr.scrollLeft / tr.clientWidth)); }, 80); }, { passive: true });
-    var caja = tr.parentNode;
-    caja.addEventListener('mouseenter', function () { pausa = true; }); caja.addEventListener('mouseleave', function () { pausa = false; });
-    caja.addEventListener('focusin', function () { pausa = true; }); caja.addEventListener('focusout', function () { pausa = false; });
-    tr.addEventListener('touchstart', function () { toc = true; }, { passive: true });
-    marcar(0);
-    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(function () { if (!pausa && !toc && !document.hidden) ir((cur + 1) % sl.length); }, 4000);
-  })();
+  /* Paco, 06/11 · Banner de la promo en carrusel (13/11: el código pasa a LM.promoCarrusel, comun/componentes.js) */
+  LM.promoCarrusel();
 
   var f = LM.faqs(); $('#c-faq').innerHTML = LM.faqHTML([f[6], f[0], f[3], f[5], f[1]]);
 

@@ -41,14 +41,21 @@
     return '<section class="lm-sec tc-sec ' + (cls || '') + '" id="' + id + '" aria-labelledby="' + id + '-t"><div class="lm-w"><div class="tf-head"><p class="lm-eyebrow">' + eyebrow + '</p><h2 class="lm-h2" id="' + id + '-t">' + titulo + '</h2></div>' + cuerpo + '</div></section>';
   }
 
+  var OPB = document.body.getAttribute('data-op') === 'b', LISTA_PK = CAT === 'packs' && OPB;
   var EYE = { packs: 'Colchón + canapé o base', canape: 'Canapés de madera', bases: 'Bases tapizadas', almohadas: 'Almohadas', otros: 'Complementos de descanso' }[CAT];
   var H1 = { canape: 'Canapé abatible', almohadas: 'Almohadas' }[CAT] || D.h1;
   var html = '<nav class="lm-w c-crumbs" aria-label="Estás aquí"><a href="index.html">Inicio</a><span aria-hidden="true">/</span><span aria-current="page">' + esc(H1) + '</span></nav>' +
     '<section class="c-head tc-head"><div class="lm-w"><p class="lm-eyebrow">' + EYE + '</p><h1 class="lm-h2">' + esc(H1) + '</h1><p class="lm-sub">' + esc(D.meta) + '</p></div></section>';
 
   /* ---------- listado ---------- */
-  if (CAT === 'packs') {
-    // Paco, 12/11: en vez de los 8 packs, el configurador de la home
+  if (LISTA_PK) {
+    // Paco, 13/11 · Diseño B: listado de los 8 packs, como cualquier otra categoría (filtro de medidas, con canapé o base y colchón)
+    html += '<section class="c-list tc-list"><div class="lm-w"><div id="tc-hmed"></div>' +
+      '<div class="tc-filtros" role="group" aria-label="Filtrar packs"><span>Con</span>' + [['todos', 'Todos'], ['canape', 'Canapé abatible'], ['base', 'Base antideslizante']].map(function (f, i) { return '<button type="button" data-fb="' + f[0] + '" aria-pressed="' + !i + '">' + f[1] + '</button>'; }).join('') +
+        '<span class="tc-sep">Colchón</span>' + [['todos', 'Todos']].concat(LM.ORDEN.map(function (k) { return [k, LM.PRODUCTOS[k].nombre]; })).map(function (f, i) { return '<button type="button" data-fc="' + f[0] + '" aria-pressed="' + !i + '">' + f[1] + '</button>'; }).join('') + '</div>' +
+      '<p class="c-count" id="tc-count" aria-live="polite"></p><div class="tc-grid tc-grid--4" id="tc-grid"></div></div></section>';
+  } else if (CAT === 'packs') {
+    // Paco, 12/11: en vez de los 8 packs, el configurador de la home (diseño A)
     html += '<div class="lm-w"><div id="tc-hmed"></div></div><div id="tc-h4p"></div>';
   } else {
     var listaHTML = function () {
@@ -104,11 +111,36 @@
   /* Filtro de medidas: cambia los precios de la lista (o del configurador, en packs) */
   if ($('#tc-hmed')) LM.filtroMedidas($('#tc-hmed'), function (m) {
     MED = m;
+    if (LISTA_PK) { pintarPk(); return; }
     if (CAT === 'packs') { if (LM.repintarPacks) LM.repintarPacks(); return; }
     var g = $('#tc-lista'); if (g) { g.innerHTML = listaHTML().join(''); LM.fill(g); }
   });
-  /* Packs: el configurador de la home (plantilla #tpl-h4p de la página) */
-  if (CAT === 'packs') {
+  /* Packs, diseño B: listado con filtros por base y colchón; el precio, el de la medida del filtro */
+  var fb = 'todos', fc = 'todos';
+  function pintarPk() {
+    var l = packs(function (p) { return (fb === 'todos' || p.base === fb) && (fc === 'todos' || p.colchon === fc); });
+    $('#tc-grid').innerHTML = l.map(function (p) { return LM.tfPackCard(p, MED); }).join('');
+    $('#tc-count').textContent = l.length + (l.length === 1 ? ' pack' : ' packs');
+    LM.fill($('#tc-grid'));
+  }
+  if (LISTA_PK) {
+    root.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-fb],[data-fc]'); if (!b) return;
+      var attr = b.hasAttribute('data-fb') ? 'data-fb' : 'data-fc';
+      $$('[' + attr + ']', root).forEach(function (x) { x.setAttribute('aria-pressed', x === b); });
+      if (attr === 'data-fb') fb = b.getAttribute(attr); else fc = b.getAttribute(attr);
+      pintarPk(); LM.track('filter_packs', { base: fb, colchon: fc });
+    });
+    pintarPk();
+    // Paco, 13/11 · el banner de la promo arriba, como en Colchones (la plantilla va al final de la página)
+    var ponerPromo = function () {
+      var tp = document.getElementById('tpl-promo'); if (!tp || $('#tc .c-promo')) return !!tp;
+      root.insertBefore(tp.content.cloneNode(true), root.firstChild); LM.fill(root); LM.promoCarrusel(); return true;
+    };
+    if (!ponerPromo()) document.addEventListener('DOMContentLoaded', ponerPromo);
+  }
+  /* Packs, diseño A: el configurador de la home (plantilla #tpl-h4p de la página) */
+  if (CAT === 'packs' && !LISTA_PK) {
     var montar = function () {
       var tp = document.getElementById('tpl-h4p'), dest = $('#tc-h4p'); if (!tp || !dest || dest.firstChild) return !!(dest && dest.firstChild);
       dest.appendChild(tp.content.cloneNode(true)); LM.fill(dest); if (LM.iniciarPacks) LM.iniciarPacks(); return true;
