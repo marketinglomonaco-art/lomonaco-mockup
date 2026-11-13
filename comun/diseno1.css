@@ -2814,3 +2814,25 @@ body[data-cat="packs"] #tc-h4p .h4p-head { display: none; }
   .h4p--v13 .h4p-tipo-sw .pkl-sw { flex-wrap: nowrap; gap: 6px; }
   .h4p--v13 .h4p-tipo-sw .pkl-sw button { width: 26px; height: 26px; flex: none; }
 }
+
+/* Paco, 13/11 · Configurador: el precio en cada opción */
+.h4p-opt-pr s { font-size: 12.5px; font-weight: 400; color: var(--mute); }
+.h4p-opt-pr b { font-size: 16px; font-weight: 700; color: var(--ink); }
+.h4p-opt-pr small { font-size: 12.5px; color: var(--mute); }
+html body .h4p-tipo .h4p-opt-pr { display: flex; align-items: baseline; gap: 8px; min-height: 0; margin-top: -8px; padding: 0 14px 12px 40px; }
+.h4p-tipo button[aria-checked="true"] .h4p-opt-pr b { color: var(--ink); }
+.h4p-tipo button:not([aria-checked="true"]) .h4p-opt-pr { padding-left: 14px; }
+.h4p--v13 .h4p-cols button { grid-template-columns: 56px minmax(0, 1fr) auto; }
+.h4p--v13 .h4p-cols .h4p-opt-pr { grid-column: 3; grid-row: 1 / span 2; display: grid; justify-items: end; line-height: 1.2; }
+.h4p--v13 .h4p-cols .h4p-opt-pr b { font-size: 15px; }
+.h4p--v13 .h4p-sel:empty { display: none; }
+@media (max-width: 560px) {
+  .h4p--v13 .h4p-cols button { grid-template-columns: 48px minmax(0, 1fr) auto; }
+  html body .h4p-tipo .h4p-opt-pr { flex-wrap: wrap; gap: 0 6px; padding: 0 10px 10px; margin-top: -6px; }
+  .h4p-tipo .h4p-opt-pr b { font-size: 15px; }
+}
+/* 13/11 · el precio del colchón, debajo de su tipo (no aprieta el nombre) */
+.h4p--v13 .h4p-cols button, .h4p--v13 .h4p-cols button { grid-template-columns: 56px minmax(0, 1fr); }
+.h4p--v13 .h4p-cols button img { grid-row: 1 / span 3; }
+.h4p--v13 .h4p-cols .h4p-opt-pr { grid-column: 2; grid-row: 3; display: flex; align-items: baseline; gap: 6px; justify-items: start; margin-top: 2px; }
+@media (max-width: 560px) { .h4p--v13 .h4p-cols button { grid-template-columns: 48px minmax(0, 1fr); } }

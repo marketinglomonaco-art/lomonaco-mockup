@@ -38,7 +38,7 @@
       var f = PC.bases[b];
       return '<div class="h4p-tipo-c"><button type="button" role="radio" data-base="' + b + '" aria-label="' + f.t + '">' +
         '<img src="../img/pack-tipo-' + b + '-700.webp" srcset="../img/pack-tipo-' + b + '-700.webp 700w, ../img/pack-tipo-' + b + '-1200.webp 1200w" sizes="(max-width: 900px) 50vw, 25vw" alt="" width="700" height="438" loading="lazy">' +
-        '<span>' + LM.ico('check', 'h4p-tipo-ok') + f.t + '</span></button><div class="h4p-tipo-sw" data-sw-base="' + b + '"></div></div>';
+        '<span>' + LM.ico('check', 'h4p-tipo-ok') + f.t + '</span><span class="h4p-opt-pr" data-pr-base="' + b + '"></span></button><div class="h4p-tipo-sw" data-sw-base="' + b + '"></div></div>';
     }).join('');
   } else {
   // Paco, 06/11: la pastilla granate se desliza de una opción a la otra (h4p-seg-ind)
@@ -58,7 +58,7 @@
   addEventListener('resize', recolocar);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(recolocar);
   // Paco, 13/11: en el configurador grande, cada colchón con su foto
-  colB.innerHTML = PC.colchones.map(function (c) { return '<button type="button" role="radio" data-col="' + c.k + '">' + (FOTOS ? '<img src="../img/' + LM.FOTO_HOME[c.k] + '-480.webp" alt="" width="480" height="480" loading="lazy">' : '') + '<b>' + c.t + '</b><small>' + c.d + '</small></button>'; }).join('');
+  colB.innerHTML = PC.colchones.map(function (c) { return '<button type="button" role="radio" data-col="' + c.k + '">' + (FOTOS ? '<img src="../img/' + LM.FOTO_HOME[c.k] + '-480.webp" alt="" width="480" height="480" loading="lazy">' : '') + '<b>' + c.t + '</b><small>' + c.d + '</small>' + (FOTOS ? '<span class="h4p-opt-pr" data-pr-col="' + c.k + '"></span>' : '') + '</button>'; }).join('');
   var img = $('#h4p-img'), ultimaFoto = 'canape'; // 12/11: la home ya no lleva foto (img = null)
   /* Paco, 10/11 · Categoría (versión reducida): que no se elija el colchón a ciegas. Bajo los botones,
      qué es el colchón elegido, cómo se siente, sus tres puntos fuertes y el enlace a su ficha */
@@ -118,6 +118,7 @@
     if (!D) { m = M; D = LM.packDesglose(pkKey, m, st.color); }
     var pack = D.d, go = $('#h4p-go');
     if (NUEVO) pintarNuevo(D, col);
+    if (FOTOS) pintarPrecios(m);
     else {
     var h = LM.packLista(D, { precio: false, colores: true });
     var precio = '<p class="h4p-from">Pack para ' + LM.medidaTxt(m) + '</p><p class="h4p-now">' + LM.eur(pack.p) + '</p>' +
@@ -139,12 +140,24 @@
       : l.r > l.p ? '<em class="pkl-pr"><span><s>' + LM.eur(l.r) + '</s><span class="lm-price-off">-' + Math.round((1 - l.p / l.r) * 100) + ' %</span></span><b>' + LM.eur(l.p) + '</b></em>'
       : '<em>' + (l.p != null ? LM.eur(l.p) : '—') + '</em>') + '</li>';
   }
+  /* Paco, 13/11: el precio de cada opción para la medida elegida (canapé o base con su acabado; cada colchón) */
+  function prHTML(d) { return d && d.p ? (d.r > d.p ? '<s>' + LM.eur(d.r) + '</s> ' : '') + '<b>' + LM.eur(d.p) + '</b>' : '<small>No en esta medida</small>'; }
+  function pintarPrecios(m) {
+    PC.orden.forEach(function (b) {
+      var x = LM.packDesglose(st.col + (b === 'canape' ? 'Canape' : 'Base'), m, (st.colorB || {})[b]), el = $('[data-pr-base="' + b + '"]', segB);
+      if (el) el.innerHTML = prHTML(x && x.lineas[1]);
+    });
+    PC.colchones.forEach(function (c) {
+      var el = $('[data-pr-col="' + c.k + '"]', colB); if (el) el.innerHTML = prHTML(LM.PRECIOS[c.k][m] || LM.PRECIOS[c.k][m + '-2p']);
+    });
+  }
   function pintarNuevo(D, col) {
     var COLS = D.pk.base === 'canape' ? LM.TIENDA.canape.colores : LM.TIENDA.base3d.colores;
     var sw = '<span class="pkl-sw" role="radiogroup" aria-label="Color del ' + (D.pk.base === 'canape' ? 'canapé' : 'la base') + '">' + COLS.map(function (x) {
       return '<button type="button" role="radio" data-pkc="' + esc(x.k) + '" aria-checked="' + (x.k === D.color) + '" aria-label="' + esc(x.k) + '" title="' + esc(x.k) + '"><img src="../img/tienda/' + x.sw + '-700.webp" alt="" width="28" height="28" loading="lazy"></button>';
     }).join('') + '</span>';
-    $('#h4p-sel').innerHTML = '<p class="h4p-k">Tu selección</p><ul class="pkl" aria-label="Lo que compras">' + linea(D.lineas[0], '', FOTOS) + linea(D.lineas[1], FOTOS ? '' : sw, FOTOS) + '</ul>'; // Paco, 13/11: sin fotos ni selector de color (ya están arriba)
+    if (FOTOS) $('#h4p-sel').innerHTML = ''; // Paco, 13/11: fuera «Tu selección»; el precio va en cada opción
+    else $('#h4p-sel').innerHTML = '<p class="h4p-k">Tu selección</p><ul class="pkl" aria-label="Lo que compras">' + linea(D.lineas[0], '', FOTOS) + linea(D.lineas[1], FOTOS ? '' : sw, FOTOS) + '</ul>'; // Paco, 13/11: sin fotos ni selector de color (ya están arriba)
     // Regalos
     $('#h4p-rgk').innerHTML = LM.ico('gift') + '<span>Lo que te regalamos</span>';
     $('#h4p-reg').innerHTML = '<p class="h4p-rg-v">' + D.regalos.length + ' regalos valorados en <s>' + LM.eur(D.valorRegalos) + '</s> <strong>Gratis</strong></p>' +
