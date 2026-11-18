@@ -12,12 +12,6 @@
   var $ = LM.$, $$ = LM.$$, C = LM.CONFIG, P = LM.PRODUCTOS;
   var res = $('#h4q-res');
 
-  // Paco, 18/11: abajo a la izquierda, la otra forma de elegir: que te lo recomiende el equipo por teléfono
-  var ay = $('#h4q-ayuda');
-  if (ay) ay.innerHTML = '<div class="h4q-ay-top"><img src="../img/avatar-showroom-192.webp" width="192" height="192" alt="" loading="lazy">' +
-    '<p><b>¿Prefieres que te lo recomendemos nosotros?</b> Llámanos y te ayudamos a elegir en unos minutos, sin compromiso.</p></div>' +
-    LM.llamar('home-cuestionario-izq', { label: 'Te asesoramos por teléfono' });
-
   /* Paco, 12/11 · cambios 5 y 6. Preguntas y puntos de su Excel (pulido/recomendador_colchones_puntuado.xlsx, hoja «Puntos»).
      Cada respuesta suma puntos a cada colchón [Natura Visco, Natura Gold, Natura Látex, Gran Natura]; el que más suma es la
      recomendación y el segundo, la alternativa. Empate: gana el que va antes (Visco, Gold, Látex, Gran Natura).
@@ -32,9 +26,11 @@
                ['h', 'Para mis hijos', 'user', [['ninos', 'Menos de 12 años'], ['adol', 'De 12 a 17 años']]]],
       ops: [['1', 'Para mí', 'body', [3, 3, 5, 4]], ['2', 'Para dormir en pareja', 'couple', [4, 5, 4, 6]], ['h', 'Para mis hijos', 'user', [3, 3, 5, 4]]] },
     // Peso en rangos amplios, sin pedir el peso exacto. Se traduce al IMC del Excel con una altura media de 1,70 m
+    /* Paco, 18/11: máximo 4 respuestas por pregunta, para que entren en una fila. Peso: «Menos de 55» y «Entre 55 y 70» se juntan
+       en «Menos de 70 kg» (puntos de 55-70) y sale «Prefiero no decirlo» (ya pone que no se guarda) */
     { k: 'peso', yo: 1, t: '¿Cuánto pesas, más o menos?', t2: '¿Cuánto pesáis, más o menos?', t3: '¿Cuánto pesa, más o menos?', s: 'Solo para recomendarte la firmeza justa. No se guarda.', ops: [
-      ['i1', 'Menos de 55 kg', '', [5, 1, 6, 4]], ['i2', 'Entre 55 y 70 kg', '', [3, 3, 5, 5]], ['i3', 'Entre 70 y 85 kg', '', [1, 4, 4, 5]],
-      ['i4', 'Entre 85 y 100 kg', '', [1, 6, 6, 5]], ['i5', 'Más de 100 kg', '', [0, 6, 2, 4]], ['nd', 'Prefiero no decirlo', '', [0, 0, 0, 0]]] },
+      ['i2', 'Menos de 70 kg', '', [3, 3, 5, 5]], ['i3', 'Entre 70 y 85 kg', '', [1, 4, 4, 5]],
+      ['i4', 'Entre 85 y 100 kg', '', [1, 6, 6, 5]], ['i5', 'Más de 100 kg', '', [0, 6, 2, 4]]] },
     // La edad ya no se pregunta aparte (sale del primer paso), pero sigue sumando sus puntos
     { k: 'edad', yo: 1, auto: 1, ops: [
       ['ninos', '', '', [1, 5, 3, 4]], ['adol', '', '', [1, 5, 4, 4]], ['jov', '', '', [3, 4, 4, 5]],
@@ -46,19 +42,19 @@
       ['sin', 'Duermo bien, nada en especial', '', [2, 3, 4, 4], 'Duerme bien, nada en especial'],
       ['hombro', 'Duermo de lado y noto el hombro o la cadera', '', [5, 2, 6, 4], 'Duerme de lado y nota el hombro o la cadera'],
       ['inq', 'Me muevo mucho por la noche', '', [1, 4, 5, 5], 'Se mueve mucho por la noche'],
-      ['calor', 'Paso calor por la noche', '', [1, 6, 4, 4], 'Pasa calor por la noche'],
-      ['movil', 'Me cuesta darme la vuelta o levantarme de la cama', '', [1, 5, 6, 5], null]] },
+      ['calor', 'Paso calor por la noche', '', [1, 6, 4, 4], 'Pasa calor por la noche']] },
     { k: 'dia', yo: 1, t: '¿Y en tu día a día, con cuál te identificas más?', t2: '¿Y en vuestro día a día, con cuál se identifica más cada uno?', t3: '¿Y en su día a día, con cuál se identifica más?',
       s: 'Lo que haces durante el día también cuenta para elegir el colchón.', s2: 'Lo que hacéis durante el día también cuenta para elegir el colchón.', s3: 'Lo que hace durante el día también cuenta para elegir el colchón.', ops: [
       ['tranq', 'Llevo un ritmo tranquilo', '', [2, 3, 4, 4], 'Lleva un ritmo tranquilo'],
       ['sed', 'Paso muchas horas sentado o sin moverme', '', [1, 4, 4, 5], 'Pasa muchas horas sentado (clases, pantallas)'],
       ['lumb', 'Trabajo sentado y acabo con la zona lumbar cargada', '', [1, 4, 4, 5], null],
       ['dep', 'Hago mucho deporte', '', [3, 3, 5, 5], 'Hace mucho deporte']] },
+    /* Paco, 18/11: de 6 a 4 respuestas: «parte baja» y «mitad de la espalda» pasan a «En la espalda» (puntos de la parte baja);
+       «rigidez» y «varias zonas» pasan a «Rigidez o varias zonas» (puntos de rigidez) */
     // Paco, 13/11: punto delicado. Nada de enfermedades ni diagnósticos: solo molestias al levantarse, dicho de forma sencilla
     { k: 'pato', yo: 1, t: '¿Te levantas con alguna molestia?', t2: '¿Os levantáis con alguna molestia?', t3: '¿Se levanta con alguna molestia?', ops: [
-      ['sin', 'No, ninguna', '', [2, 3, 4, 4]], ['lumbalgia', 'En la parte baja de la espalda', '', [1, 4, 4, 5]],
-      ['dorsal', 'En la mitad de la espalda', '', [1, 3, 4, 5]], ['cervical', 'En el cuello', '', [2, 3, 5, 5]],
-      ['artrosis', 'Me levanto con rigidez', '', [3, 2, 6, 4], 'Se levanta con rigidez'], ['fibro', 'Molestias en varias zonas', '', [5, 1, 6, 4]]] },
+      ['sin', 'No, ninguna', '', [2, 3, 4, 4]], ['lumbalgia', 'En la espalda', '', [1, 4, 4, 5]],
+      ['cervical', 'En el cuello', '', [2, 3, 5, 5]], ['artrosis', 'Rigidez o en varias zonas', '', [3, 2, 6, 4]]] },
     { k: 'indep', solo2: 1, t: '¿Os molesta notar al otro moverse?', ops: [['baja', 'No, nada', 'check', [0, 0, 0, 0]], ['media', 'Un poco', 'waves', [3, 3, 3, 4]], ['alta', 'Sí, mucho', 'couple', [5, 4, 4, 5]]] }
   ];
   function pregs() { return PREG.filter(function (p) { return !p.auto && (!p.solo2 || r.quien === '2'); }); }
@@ -101,9 +97,9 @@
   // «Buscas un colchón para ___, que te ayude con ___» (como en el script de llamadas)
   var AYUDA = {
     postural: { hombro: 'que alivie la presión en hombro y cadera',
-      movil: 'que te ponga fácil moverte y levantarte', inq: 'que no se note cada vez que te mueves', calor: 'que no dé calor' },
+      inq: 'que no se note cada vez que te mueves', calor: 'que no dé calor' },
     dia: { sed: 'que te sostenga aunque pases horas sin moverte', lumb: 'que descargue la zona lumbar', dep: 'que te ayude a recuperarte' },
-    pato: { lumbalgia: 'que descargue la parte baja de la espalda', cervical: 'que acompañe bien al cuello', dorsal: 'que sostenga bien la espalda',
+    pato: { lumbalgia: 'que sostenga bien la espalda', cervical: 'que acompañe bien al cuello', dorsal: 'que sostenga bien la espalda',
       artrosis: 'que reparta bien el peso', fibro: 'acogedor, que reparta bien la presión' }
   };
   function resumen() {
@@ -125,8 +121,8 @@
       }).join('') + '</div></div>';
     }).join('') + '</div>';
     var sel = p.yo ? (r[p.k] || [])[quien] : r[p.k];
-    var ops = p.ops.filter(function (o) { return !(hijo() && o[4] === null); }), largo = ops.length > 4;
-    return '<div class="h4q-ops' + (largo ? ' h4q-ops--lista' : ops.length > 3 ? ' h4q-ops--4' : '') + '" role="group" aria-label="' + (p.yo && dos() ? (quien ? 'Tu pareja' : 'Tú') : tit(p)) + '">' + ops.map(function (o) {
+    var ops = p.ops.filter(function (o) { return !(hijo() && o[4] === null); });
+    return '<div class="h4q-ops h4q-ops--fila" style="--n:' + ops.length + '" role="group" aria-label="' + (p.yo && dos() ? (quien ? 'Tu pareja' : 'Tú') : tit(p)) + '">' + ops.map(function (o) {
       return '<button type="button" class="h4q-op" data-v="' + o[0] + '" data-quien="' + quien + '"' + (sel === o[0] ? ' aria-pressed="true"' : '') + '>' + (o[2] ? LM.ico(o[2]) : '') + '<span>' + (hijo() && o[4] ? o[4] : o[1]) + '</span></button>';
     }).join('') + '</div>';
   }
