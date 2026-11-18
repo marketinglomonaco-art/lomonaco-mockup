@@ -2852,3 +2852,6 @@ html body .h4p-tipo .h4p-opt-pr { display: flex; align-items: baseline; gap: 8px
   .h4 .h4-foto--2 img { object-position: 50% 50%; }
 }
 @media (prefers-reduced-motion: reduce) { .h4 .h4-foto { transition: none; } }
+/* Paco, 18/11 · Más zoom en la segunda foto del banner, para que la pareja tenga un tamaño parecido al de la primera */
+.h4 .h4-foto--2 img { scale: 1.4; transform-origin: 52% 22%; }
+@media (max-width: 767px) { .h4 .h4-foto--2 img { scale: 1.12; transform-origin: 50% 30%; } }
