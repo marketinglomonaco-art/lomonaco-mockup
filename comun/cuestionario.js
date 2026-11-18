@@ -23,10 +23,11 @@
     /* Paco, 18/11: la primera pregunta se queda en 4 respuestas, en una fila, sin pedir la edad exacta. Las 4 que más cambian
        la recomendación: una persona, pareja, hijos y persona mayor (la edad pesa en el Excel: más de 70 sube Látex y baja Gold).
        Cada una suma la edad más habitual: mí y pareja = 36-55; hijos = 12-17; persona mayor = más de 70.
-       «Para una persona mayor» suma como «Para mí» (una persona) y las preguntas siguientes van en tercera persona, como hijos */
+       «Para una persona mayor» suma como «Para mí» (una persona) y las preguntas siguientes van en tercera persona, como hijos.
+       Paco, 18/11 (después): fuera «Para una persona mayor»; quedan 3 y «Para dormir en pareja» en dos líneas */
     { k: 'quien', t: '¿Para quién es el colchón?', s: 'Elige quién va a dormir en él.',
-      ops: [['1', 'Para mí', 'user', [3, 3, 5, 4], 'med'], ['2', 'Para dormir en pareja', 'couple', [4, 5, 4, 6], 'med'],
-            ['h', 'Para mis hijos', 'nino', [3, 3, 5, 4], 'adol'], ['m', 'Para una persona mayor', 'mayor', [3, 3, 5, 4], 'anc']] },
+      ops: [['1', 'Para mí', 'user', [3, 3, 5, 4], 'med'], ['2', 'Para dormir<br>en pareja', 'couple', [4, 5, 4, 6], 'med'],
+            ['h', 'Para mis hijos', 'nino', [3, 3, 5, 4], 'adol']] },
     // Peso en rangos amplios, sin pedir el peso exacto. Se traduce al IMC del Excel con una altura media de 1,70 m
     /* Paco, 18/11: máximo 4 respuestas por pregunta, para que entren en una fila. Peso: «Menos de 55» y «Entre 55 y 70» se juntan
        en «Menos de 70 kg» (puntos de 55-70) y sale «Prefiero no decirlo» (ya pone que no se guarda) */
