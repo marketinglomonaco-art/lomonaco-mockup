@@ -12,6 +12,12 @@
   var $ = LM.$, $$ = LM.$$, C = LM.CONFIG, P = LM.PRODUCTOS;
   var res = $('#h4q-res');
 
+  // Paco, 18/11: abajo a la izquierda, la otra forma de elegir: que te lo recomiende el equipo por teléfono
+  var ay = $('#h4q-ayuda');
+  if (ay) ay.innerHTML = '<div class="h4q-ay-top"><img src="../img/avatar-showroom-192.webp" width="192" height="192" alt="" loading="lazy">' +
+    '<p><b>¿Prefieres que te lo recomendemos nosotros?</b> Llámanos y te ayudamos a elegir en unos minutos, sin compromiso.</p></div>' +
+    LM.llamar('home-cuestionario-izq', { label: 'Te asesoramos por teléfono' });
+
   /* Paco, 12/11 · cambios 5 y 6. Preguntas y puntos de su Excel (pulido/recomendador_colchones_puntuado.xlsx, hoja «Puntos»).
      Cada respuesta suma puntos a cada colchón [Natura Visco, Natura Gold, Natura Látex, Gran Natura]; el que más suma es la
      recomendación y el segundo, la alternativa. Empate: gana el que va antes (Visco, Gold, Látex, Gran Natura).

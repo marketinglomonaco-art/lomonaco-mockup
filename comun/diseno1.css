@@ -2855,3 +2855,16 @@ html body .h4p-tipo .h4p-opt-pr { display: flex; align-items: baseline; gap: 8px
 /* Paco, 18/11 · Más zoom en la segunda foto del banner, para que la pareja tenga un tamaño parecido al de la primera */
 .h4 .h4-foto--2 img { scale: 1.4; transform-origin: 52% 22%; }
 @media (max-width: 767px) { .h4 .h4-foto--2 img { scale: 1.12; transform-origin: 50% 30%; } }
+
+/* Paco, 18/11 · Test de 1 minuto: más equilibrio. La columna izquierda llega hasta abajo y cierra con la ayuda por teléfono,
+   alineada con el final del test; el texto queda arriba, a la altura de la pregunta */
+.h4q-in { grid-template-columns: 1fr 1.2fr; align-items: stretch; }
+.h4q-intro { display: flex; flex-direction: column; }
+.h4q-ayuda { margin-top: auto; padding: 22px 24px; border-radius: var(--r); background: #fff; border: 1px solid var(--card-bd); max-width: 460px; }
+.h4q-intro .h4q-pts { margin-bottom: 32px; }
+.h4q-ay-top { display: flex; gap: 14px; align-items: center; }
+.h4q-ay-top img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; flex: none; }
+.h4q-ay-top p { margin: 0; font-size: 15px; line-height: 1.45; color: var(--ink-2, #555); }
+.h4q-ay-top b { display: block; color: var(--ink, #1a1a1a); font-size: 16px; margin-bottom: 2px; }
+.h4q-ayuda .lm-call { margin-top: 16px; }
+@media (max-width: 900px) { .h4q-ayuda { display: none; } .h4q-intro .h4q-pts { margin-bottom: 0; } }
