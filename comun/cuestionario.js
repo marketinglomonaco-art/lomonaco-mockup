@@ -33,16 +33,20 @@
     { k: 'edad', yo: 1, auto: 1, ops: [
       ['ninos', '', '', [1, 5, 3, 4]], ['adol', '', '', [1, 5, 4, 4]], ['jov', '', '', [3, 4, 4, 5]],
       ['med', '', '', [2, 4, 5, 6]], ['sen', '', '', [2, 4, 6, 5]], ['anc', '', '', [2, 3, 6, 5]]] },
-    // Paco, 13/11: título que encaje con las respuestas (hay de día a día y de la noche). 5.º campo: texto para «Para mis hijos» (null = no sale)
-    { k: 'postural', yo: 1, t: '¿Qué se parece más a ti?', t2: '¿Qué se parece más a cada uno?', t3: '¿Qué se parece más a tu hijo o hija?',
-      s: 'Tu día a día y tu forma de dormir cuentan para elegir el colchón.', s3: 'Su día a día y su forma de dormir cuentan para elegir el colchón.', ops: [
-      ['sin', 'Descanso bien, nada en especial', '', [2, 3, 4, 4], 'Descansa bien, nada en especial'],
-      ['sed', 'Paso muchas horas sin moverme', '', [1, 4, 4, 5], 'Pasa muchas horas sentado (clases, pantallas)'],
-      ['lumb', 'Trabajo sentado y acabo con la zona lumbar cargada', '', [1, 4, 4, 5], null],
+    /* Paco, 18/11: la antigua «¿Qué se parece más a ti?» se parte en dos: una de la noche (con cuál te identificas al dormir)
+       y otra del día a día (horas sentado, zona lumbar, deporte). Mismos puntos del Excel. 5.º campo: texto para «Para mis hijos» (null = no sale) */
+    { k: 'postural', yo: 1, t: '¿Con cuál te identificas más por la noche?', t2: '¿Con cuál se identifica más cada uno por la noche?', t3: '¿Con cuál se identifica más por la noche?',
+      s: 'Elige la frase que más se parezca a ti.', s2: 'Elige una frase para ti y otra para tu pareja.', s3: 'Elige la frase que más se parezca a tu hijo o hija.', ops: [
+      ['sin', 'Duermo bien, nada en especial', '', [2, 3, 4, 4], 'Duerme bien, nada en especial'],
       ['hombro', 'Duermo de lado y noto el hombro o la cadera', '', [5, 2, 6, 4], 'Duerme de lado y nota el hombro o la cadera'],
-      ['movil', 'Me cuesta moverme o levantarme de la cama', '', [1, 5, 6, 5], null],
       ['inq', 'Me muevo mucho por la noche', '', [1, 4, 5, 5], 'Se mueve mucho por la noche'],
       ['calor', 'Paso calor por la noche', '', [1, 6, 4, 4], 'Pasa calor por la noche'],
+      ['movil', 'Me cuesta darme la vuelta o levantarme de la cama', '', [1, 5, 6, 5], null]] },
+    { k: 'dia', yo: 1, t: '¿Y en tu día a día, con cuál te identificas más?', t2: '¿Y en vuestro día a día, con cuál se identifica más cada uno?', t3: '¿Y en su día a día, con cuál se identifica más?',
+      s: 'Lo que haces durante el día también cuenta para elegir el colchón.', s2: 'Lo que hacéis durante el día también cuenta para elegir el colchón.', s3: 'Lo que hace durante el día también cuenta para elegir el colchón.', ops: [
+      ['tranq', 'Llevo un ritmo tranquilo', '', [2, 3, 4, 4], 'Lleva un ritmo tranquilo'],
+      ['sed', 'Paso muchas horas sentado o sin moverme', '', [1, 4, 4, 5], 'Pasa muchas horas sentado (clases, pantallas)'],
+      ['lumb', 'Trabajo sentado y acabo con la zona lumbar cargada', '', [1, 4, 4, 5], null],
       ['dep', 'Hago mucho deporte', '', [3, 3, 5, 5], 'Hace mucho deporte']] },
     // Paco, 13/11: punto delicado. Nada de enfermedades ni diagnósticos: solo molestias al levantarse, dicho de forma sencilla
     { k: 'pato', yo: 1, t: '¿Te levantas con alguna molestia?', t2: '¿Os levantáis con alguna molestia?', t3: '¿Se levanta con alguna molestia?', ops: [
@@ -82,7 +86,7 @@
     function busca(re) { B.forEach(function (b) { if (out.length < 3 && out.indexOf(b) < 0 && re.test(b[1] + ' ' + b[2])) out.push(b); }); }
     if (dos()) busca(/pareja/i);
     if (tiene('postural', ['calor'])) busca(/calor|frescor|ventilaci|temperatura/i);
-    if (tiene('pato', ['lumbalgia', 'hernia', 'ciatica', 'dorsal', 'escol']) || tiene('postural', ['lumb', 'sed'])) busca(/soporte|postura|espalda/i);
+    if (tiene('pato', ['lumbalgia', 'hernia', 'ciatica', 'dorsal', 'escol']) || tiene('dia', ['lumb', 'sed'])) busca(/soporte|postura|espalda/i);
     if (tiene('postural', ['hombro']) || tiene('pato', ['cervical', 'artrosis', 'fibro'])) busca(/adapt|acoge|presi/i);
     B.forEach(function (b) { if (out.length < 3 && out.indexOf(b) < 0) out.push(b); });
     return out;
@@ -90,14 +94,15 @@
 
   // «Buscas un colchón para ___, que te ayude con ___» (como en el script de llamadas)
   var AYUDA = {
-    postural: { sed: 'que te sostenga aunque pases horas sin moverte', lumb: 'que descargue la zona lumbar', hombro: 'que alivie la presión en hombro y cadera',
-      movil: 'que te ponga fácil moverte y levantarte', inq: 'que no se note cada vez que te mueves', calor: 'que no dé calor', dep: 'que te ayude a recuperarte' },
+    postural: { hombro: 'que alivie la presión en hombro y cadera',
+      movil: 'que te ponga fácil moverte y levantarte', inq: 'que no se note cada vez que te mueves', calor: 'que no dé calor' },
+    dia: { sed: 'que te sostenga aunque pases horas sin moverte', lumb: 'que descargue la zona lumbar', dep: 'que te ayude a recuperarte' },
     pato: { lumbalgia: 'que descargue la parte baja de la espalda', cervical: 'que acompañe bien al cuello', dorsal: 'que sostenga bien la espalda',
       artrosis: 'que reparta bien el peso', fibro: 'acogedor, que reparta bien la presión' }
   };
   function resumen() {
     var partes = ['Buscas un colchón ' + (dos() ? 'para dormir en pareja' : hijo() ? 'para tus hijos' : 'para ti')];
-    ['postural', 'pato'].forEach(function (k) { (r[k] || []).forEach(function (v) { var t = AYUDA[k][v]; if (t && partes.indexOf(t) < 0) partes.push(t); }); });
+    ['postural', 'dia', 'pato'].forEach(function (k) { (r[k] || []).forEach(function (v) { var t = AYUDA[k][v]; if (t && partes.indexOf(t) < 0) partes.push(t); }); });
     if (r.indep === 'alta') partes.push('en el que no notéis al otro moveros');
     partes = partes.slice(0, 4);
     var u = partes.pop();
@@ -126,7 +131,7 @@
         (paso ? '<button type="button" class="h4q-back" data-back>' + LM.ico('right', 'h4q-back-i') + 'Atrás</button>' : '') + '</div>' +
       '<div class="h4q-bar" aria-hidden="true"><i style="width:' + Math.round(paso / L.length * 100) + '%"></i></div>' +
       '<h3 class="h4q-q" id="h4q-q" tabindex="-1">' + tit(p) + '</h3>' +
-      ((hijo() && p.s3) || p.s ? '<p class="h4q-s">' + ((hijo() && p.s3) || p.s) + '</p>' : '') +
+      ((hijo() && p.s3) || (dos() && p.s2) || p.s ? '<p class="h4q-s">' + ((hijo() && p.s3) || (dos() && p.s2) || p.s) + '</p>' : '') +
       (par ? '<div class="h4q-par"><p class="h4q-quien">Tú</p>' + botones(p, 0) + '<p class="h4q-quien">Tu pareja</p>' + botones(p, 1) + '</div>' +
         '<button type="button" class="lm-btn h4q-sig" data-sig' + ((r[p.k] || [])[0] && (r[p.k] || [])[1] ? '' : ' disabled') + '>Siguiente</button>' : botones(p, 0));
   }
