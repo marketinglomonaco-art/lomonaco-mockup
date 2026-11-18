@@ -11,10 +11,10 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300..800&family=Playfair+Display:ital,wght@1,400;1,500&display=swap">
 <link rel="preload" as="image" href="../img/hero-movil-860.webp" media="(max-width: 767px)">
 <link rel="preload" as="image" href="../img/hero-1800.webp" imagesrcset="../img/hero-960.webp 960w, ../img/hero-1800.webp 1800w" imagesizes="100vw" media="(min-width: 768px)">
-<link rel="stylesheet" href="../comun/base.css?v=1795008224">
-<link rel="stylesheet" href="../comun/paginas.css?v=1795008224">
-<link rel="stylesheet" href="../comun/diseno1.css?v=1795008224">
-<link rel="stylesheet" href="../comun/rojo.css?v=1795008224">
+<link rel="stylesheet" href="../comun/base.css?v=1795008471">
+<link rel="stylesheet" href="../comun/paginas.css?v=1795008471">
+<link rel="stylesheet" href="../comun/diseno1.css?v=1795008471">
+<link rel="stylesheet" href="../comun/rojo.css?v=1795008471">
 </head>
 <body data-page="home" data-opcion="diseno1-b" data-variante="a" data-op="b" data-producto="" data-version="4">
 <a class="lm-skip" href="#main">Saltar al contenido</a>
@@ -138,43 +138,40 @@
   <div class="lm-w"><ul class="h4c-g" id="h4c-track" aria-label="Nuestros compromisos"></ul></div>
 </section>
 
-<!-- PACKS · Paco, 05/11: solo los packs reales. Título: «Llévate toda la cama».
-     Paco, 12/11: cada pieza y cada regalo con su precio real para la medida elegida (LM.packDesglose).
-     Paco, 13/11: canapé o base se elige con su foto (no con un botón). A la izquierda, lo que compras (canapé o base,
-     colchón, medida y sus precios); a la derecha, lo que te regalamos. Debajo de los regalos, el precio del pack,
-     lo que te ahorras y el botón: se lee después de ver lo que compras y lo que te regalan (CRO: valor primero, precio después;
-     abajo a la derecha, donde termina la lectura, y a la vista mientras eliges) -->
-<section class="lm-sec lm-alt h4p h4p--lista h4p--v13" id="packs" aria-labelledby="h4p-t">
+<!-- PACKS · Paco, 18/11: nueva estructura (la que le han pasado), con el estilo de la web.
+     Arriba, todo lo que se elige: canapé o base, medida y colchón. Debajo, la cuenta del pack:
+     colchón + canapé o base + regalos = tu pack completo; y una franja con el resumen.
+     Sale igual en la home, en la categoría de packs y en la de colchones. Lo pinta comun/packs.js.
+     Versión anterior guardada en pulido/copias-1811-packs/ -->
+<section class="lm-sec lm-alt h4p pk2" id="packs" aria-labelledby="h4p-t">
   <div class="lm-w">
-    <div class="h4p-head">
-      <div>
-        <p class="lm-eyebrow">Packs de descanso</p>
-        <h2 class="lm-h2" id="h4p-t">Llévate toda la cama.</h2>
-      </div>
-      <p class="lm-sub">Colchón y canapé abatible o base tapizada, en una sola compra, con regalos.</p>
+    <div class="pk2-head">
+      <p class="lm-eyebrow">Packs de descanso</p>
+      <h2 class="lm-h2" id="h4p-t">Llévate toda la cama.</h2>
+      <p class="lm-sub">Elige tu colchón. Canapé o base y regalos, en una sola compra.</p>
     </div>
-    <div class="h4p-in" id="h4p" data-testid="pack-config">
-      <div class="h4p-box">
-        <div class="h4p-buy">
-          <h3 class="h4p-colk">Lo que compras</h3>
-          <p class="h4p-k" id="h4p-bk">Canapé o base</p>
-          <div class="h4p-tipo" role="radiogroup" aria-labelledby="h4p-bk" id="h4p-base"></div>
-          <p class="h4p-k" id="h4p-ck">Elige tu colchón</p>
-          <div class="h4p-cols" role="radiogroup" aria-labelledby="h4p-ck" id="h4p-col"></div>
-          <div class="h4p-sel" id="h4p-sel" aria-live="polite"></div>
-        </div>
-        <div class="h4p-rg">
-          <h3 class="h4p-colk h4p-colk--rg" id="h4p-rgk"></h3>
-          <div id="h4p-reg" aria-labelledby="h4p-rgk"></div>
-        <div class="h4p-tot">
-          <div class="h4p-price" id="h4p-price" aria-live="polite"></div>
-          <div class="h4p-cta">
-            <a class="lm-btn h4p-go" id="h4p-go" href="#">Ver el pack <svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-            <ul class="h4p-trust" id="h4p-trust"></ul>
-          </div>
-        </div>
-        </div>
+    <div class="pk2-in" id="h4p" data-testid="pack-config">
+      <div class="pk2-ctl">
+        <div class="h4p-seg pk2-seg" role="radiogroup" aria-label="Canapé o base" id="h4p-base"></div>
+        <span class="pk2-div" aria-hidden="true"></span>
+        <label class="pk2-med"><span>Medida</span><select id="h4p-med"></select></label>
+        <span class="pk2-div" aria-hidden="true"></span>
+        <div class="pk2-cols" role="radiogroup" aria-label="Elige tu colchón" id="h4p-col"></div>
       </div>
+      <div class="pk2-row">
+        <article class="pk2-c" id="pk2-col" aria-live="polite"></article>
+        <span class="pk2-op" aria-hidden="true">+</span>
+        <article class="pk2-c" id="pk2-base" aria-live="polite"></article>
+        <span class="pk2-op" aria-hidden="true">+</span>
+        <article class="pk2-c pk2-c--reg" id="pk2-reg"></article>
+        <span class="pk2-op" aria-hidden="true">=</span>
+        <article class="pk2-c pk2-c--tot">
+          <div id="h4p-price" aria-live="polite"></div>
+          <a class="lm-btn pk2-go" id="h4p-go" href="#">Ver el pack <svg class="lm-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <ul class="pk2-trust" id="h4p-trust"></ul>
+        </article>
+      </div>
+      <div class="pk2-bar" id="pk2-bar"></div>
     </div>
   </div>
 </section>
@@ -193,20 +190,20 @@
 
 </main>
 <div id="lm-footer"></div>
-<script src="../comun/datos.js?v=1795008224"></script>
-<script src="../comun/tienda.js?v=1795008224"></script>
-<script src="../comun/historico.js?v=1795008224"></script>
-<script src="../comun/componentes.js?v=1795008224"></script>
+<script src="../comun/datos.js?v=1795008471"></script>
+<script src="../comun/tienda.js?v=1795008471"></script>
+<script src="../comun/historico.js?v=1795008471"></script>
+<script src="../comun/componentes.js?v=1795008471"></script>
 <script>LM.init();</script>
-<script src="../comun/compromisos.js?v=1795008224"></script>
-<script src="../comun/packs.js?v=1795008224"></script>
-<script src="../comun/home.js?v=1795008224"></script>
-<script src="../comun/pack.js?v=1795008224"></script>
-<script src="../comun/asistente.js?v=1795008224"></script>
-<script src="../comun/presion.js?v=1795008224"></script>
+<script src="../comun/compromisos.js?v=1795008471"></script>
+<script src="../comun/packs.js?v=1795008471"></script>
+<script src="../comun/home.js?v=1795008471"></script>
+<script src="../comun/pack.js?v=1795008471"></script>
+<script src="../comun/asistente.js?v=1795008471"></script>
+<script src="../comun/presion.js?v=1795008471"></script>
 <!-- Paco, 09/11: fuera el módulo «Así se adaptan los muelles» (comun/muelles.js se conserva, sin cargar) -->
-<script src="../comun/animaciones.js?v=1795008224"></script>
-<script src="../comun/v4.js?v=1795008224"></script>
-<script src="../comun/cuestionario.js?v=1795008224"></script>
+<script src="../comun/animaciones.js?v=1795008471"></script>
+<script src="../comun/v4.js?v=1795008471"></script>
+<script src="../comun/cuestionario.js?v=1795008471"></script>
 </body>
 </html>
