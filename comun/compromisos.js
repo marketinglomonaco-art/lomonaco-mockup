@@ -53,18 +53,18 @@
     var pr = partir(C.prueba.v), ga = partir(C.garantia.v), tr = partir(C.trayectoria.v), test = (document.getElementById('cuestionario') ? '' : 'index.html') + '#cuestionario';
     ct.innerHTML = [
       // 1 · Te ayudamos a elegir: misma tarjeta que las demás; el test, como enlace
-      k(foto('llamada-movil', 800, 1200, 'Una chica sentada en la cama mira el móvil'), '', ic('phone'), 'Te ayudamos a elegir',
+      k(foto('comp-ayuda', 800, 896, 'Una mujer sonríe mirando el móvil tumbada en su cama Lomonaco'), '', ic('phone'), 'Te ayudamos a elegir',
         'Cuéntanos cómo duermes y te recomendamos el colchón que encaja contigo. Sin compromiso.',
         '<a class="h4c-more" href="' + test + '" data-lead="home-ayuda-test">Haz el test de 1 minuto</a>' +
         '<a class="h4c-more h4c-more--tel" href="tel:' + C.telefono.tel + '" data-lead="home-ayuda" data-testid="call-home-ayuda">o llámanos al ' + LM.mark(C.telefono, C.telefono.v) + '</a>'),
       // 2 · 150 noches de prueba (con la devolución dentro)
-      k(foto('comp-noches', 800, 896, 'Una mujer en pijama toma un café sentada en su cama Lomonaco'), ic('moon'), cifra(pr[0], pr[1] + ' de prueba'), 'Pruébalo en tu cama',
+      k(foto('comp-noches', 800, 800, 'Una mujer en pijama toma un café sentada en su cama Lomonaco'), ic('moon'), cifra(pr[0], pr[1] + ' de prueba'), 'Pruébalo en tu cama',
         'El cuerpo necesita unos días para acostumbrarse. Si no te convence, lo recogemos en tu casa.', verCond('devolucion')),
       // 3 · Compra garantizada (Trusted Shops)
-      k(foto('asesor', 800, 1400, 'Una pareja contenta junto a su colchón Lomonaco'), '<span class="h4c-ic h4c-ic--ts" aria-hidden="true"><img src="../img/trusted-shops.png" alt="" width="124" height="116" loading="lazy"></span>',
+      k(foto('comp-compra', 800, 1116, 'Una mujer ríe con una taza sentada en su cama'), '<span class="h4c-ic h4c-ic--ts" aria-hidden="true"><img src="../img/trusted-shops.png" alt="" width="124" height="116" loading="lazy"></span>',
         cifra(C.valoracion.media, 'de 5 en ' + C.valoracion.plataforma), 'Compra garantizada', LM.c('compraGarantizada') + '.', '<a class="h4c-more" href="' + C.valoracion.url + '" target="_blank" rel="noopener">Ver las opiniones</a>'),
       // 4 · 30 años
-      k(foto('comp-vida', 800, 1200, 'Una pareja lee abrazada en la cama, sobre su colchón Lomonaco'), ic('users'), cifra(tr[0], tr[1] + ' contigo'), 'La marca de toda la vida', 'Desde 1996 y con más de ' + LM.c('clientes') + ' clientes que ya duermen en un Lomonaco.'),
+      k(foto('comp-vida', 800, 800, 'Una pareja lee abrazada en la cama, sobre su colchón Lomonaco'), ic('users'), cifra(tr[0], tr[1] + ' contigo'), 'La marca de toda la vida', 'Desde 1996 y con más de ' + LM.c('clientes') + ' clientes que ya duermen en un Lomonaco.'),
       // 5 · 10 años de garantía
       k(foto('comp-garantia', 800, 1200, 'Una pareja lee en la cama con luz de mañana, sobre su colchón Lomonaco'), ic('shield'), cifra(ga[0], ga[1] + ' de garantía'), 'En todos los colchones', 'Cubre los defectos de fabricación y el núcleo del colchón.', verCond('garantia'))
     ].join('');
