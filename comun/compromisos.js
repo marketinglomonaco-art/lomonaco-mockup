@@ -58,15 +58,15 @@
         '<a class="h4c-more" href="' + test + '" data-lead="home-ayuda-test">Haz el test de 1 minuto</a>' +
         '<a class="h4c-more h4c-more--tel" href="tel:' + C.telefono.tel + '" data-lead="home-ayuda" data-testid="call-home-ayuda">o llámanos al ' + LM.mark(C.telefono, C.telefono.v) + '</a>'),
       // 2 · 150 noches de prueba (con la devolución dentro)
-      k(foto('prueba', 800, 1400, 'Una persona se despierta y se estira en su cama'), ic('moon'), cifra(pr[0], pr[1] + ' de prueba'), 'Pruébalo en tu cama',
+      k(foto('comp-noches', 800, 896, 'Una mujer en pijama toma un café sentada en su cama Lomonaco'), ic('moon'), cifra(pr[0], pr[1] + ' de prueba'), 'Pruébalo en tu cama',
         'El cuerpo necesita unos días para acostumbrarse. Si no te convence, lo recogemos en tu casa.', verCond('devolucion')),
       // 3 · Compra garantizada (Trusted Shops)
       k(foto('asesor', 800, 1400, 'Una pareja contenta junto a su colchón Lomonaco'), '<span class="h4c-ic h4c-ic--ts" aria-hidden="true"><img src="../img/trusted-shops.png" alt="" width="124" height="116" loading="lazy"></span>',
         cifra(C.valoracion.media, 'de 5 en ' + C.valoracion.plataforma), 'Compra garantizada', LM.c('compraGarantizada') + '.', '<a class="h4c-more" href="' + C.valoracion.url + '" target="_blank" rel="noopener">Ver las opiniones</a>'),
       // 4 · 30 años
-      k(foto('vida-06', 520, 900, 'Una familia con su bebé sobre un colchón Lomonaco'), ic('users'), cifra(tr[0], tr[1] + ' contigo'), 'La marca de toda la vida', 'Desde 1996 y con más de ' + LM.c('clientes') + ' clientes que ya duermen en un Lomonaco.'),
+      k(foto('comp-vida', 800, 1200, 'Una pareja lee abrazada en la cama, sobre su colchón Lomonaco'), ic('users'), cifra(tr[0], tr[1] + ' contigo'), 'La marca de toda la vida', 'Desde 1996 y con más de ' + LM.c('clientes') + ' clientes que ya duermen en un Lomonaco.'),
       // 5 · 10 años de garantía
-      k(foto('sr2-gran-bordado', 900, 1600, 'Detalle del bordado del colchón Gran Natura'), ic('shield'), cifra(ga[0], ga[1] + ' de garantía'), 'En todos los colchones', 'Cubre los defectos de fabricación y el núcleo del colchón.', verCond('garantia'))
+      k(foto('comp-garantia', 800, 1200, 'Una pareja lee en la cama con luz de mañana, sobre su colchón Lomonaco'), ic('shield'), cifra(ga[0], ga[1] + ' de garantía'), 'En todos los colchones', 'Cubre los defectos de fabricación y el núcleo del colchón.', verCond('garantia'))
     ].join('');
 
     ct.addEventListener('click', function (e) {
