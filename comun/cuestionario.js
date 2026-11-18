@@ -65,10 +65,12 @@
   function hijo() { return r.quien === 'h'; }
   function mayor() { return r.quien === 'm'; }
   function terc() { return hijo() || mayor(); }
-  function tit(p) { return dos() ? (p.t2 || p.t) : terc() ? (p.t3 || p.t) : p.t; }
+  /* Paco, 18/11: en pareja ya no se contesta por los dos: una sola fila de respuestas, centrada en una persona (la que hace el test).
+     Las preguntas van en «tú» como «Para mí»; la de notar al otro moverse sigue saliendo solo en pareja */
+  function tit(p) { return terc() ? (p.t3 || p.t) : p.t; }
   // Texto de cada respuesta: en tercera persona para hijos o persona mayor (lo de «clases, pantallas» solo para hijos)
   function txt(o) { return terc() && o[4] ? (mayor() ? o[4].replace(/ \(.*\)$/, '') : o[4]) : o[1]; }
-  function sub(p) { var s = (terc() && p.s3) || (dos() && p.s2) || p.s; return s && mayor() ? s.replace('a tu hijo o hija', 'a esa persona') : s; }
+  function sub(p) { var s = (terc() && p.s3) || p.s; return s && mayor() ? s.replace('a tu hijo o hija', 'a esa persona') : s; }
   function op(p, v) { return p.ops.filter(function (o) { return o[0] === v; })[0]; }
 
   LM.recomendar = function (r) {
@@ -135,7 +137,7 @@
     }).join('') + '</div>';
   }
   function pregunta() {
-    var L = pregs(), p = L[paso], par = p.yo && dos();
+    var L = pregs(), p = L[paso], par = false;
     box.innerHTML =
       '<div class="h4q-top"><p class="h4q-n">Pregunta ' + (paso + 1) + ' de ' + L.length + '</p>' +
         (paso ? '<button type="button" class="h4q-back" data-back>' + LM.ico('right', 'h4q-back-i') + 'Atrás</button>' : '') + '</div>' +
@@ -165,11 +167,10 @@
     }
     if (p.yo) {
       r[p.k] = (r[p.k] || []).slice(); r[p.k][q] = v;
-      if (dos()) { $$('.h4q-op[data-quien="' + q + '"]', box).forEach(function (x) { x.setAttribute('aria-pressed', x === b); }); $('[data-sig]', box).disabled = !(r[p.k][0] && r[p.k][1]); return; }
     } else {
       if (p.k === 'quien' && r.quien !== v) { var q0 = r.quien; r = {}; if (q0) LM.track('quiz_restart_quien'); }
       r[p.k] = v;
-      if (p.k === 'quien') { var e = op(p, v)[4]; r.edad = v === '2' ? [e, e] : [e]; }
+      if (p.k === 'quien') r.edad = [op(p, v)[4]];
     }
     avanzar();
   });
