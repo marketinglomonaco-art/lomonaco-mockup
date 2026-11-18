@@ -61,6 +61,9 @@
     back: '<path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/>',
     shield: '<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/>',
     user: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+    /* 18/11: test de la home, «Para mis hijos» y «Para una persona mayor» */
+    nino: '<circle cx="12" cy="10" r="3"/><path d="M6.5 21a5.5 5.5 0 0 1 11 0"/>',
+    mayor: '<circle cx="10" cy="4.5" r="2.2"/><path d="M10 7.5v6.5l-2.5 7M10 14l2.5 7M10 9.5l4 2.5"/><path d="M14 12v9M14 12c0-1.6 2.4-1.6 2.4 0"/>',
     cart: '<path d="M3 4h2l2.4 11h10.2L20 8H6.2"/><circle cx="9" cy="19.5" r="1.4"/><circle cx="17" cy="19.5" r="1.4"/>',
     down: '<path d="m6 9 6 6 6-6"/>',
     right: '<path d="M5 12h14M13 6l6 6-6 6"/>',

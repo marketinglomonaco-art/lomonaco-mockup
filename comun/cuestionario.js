@@ -20,11 +20,13 @@
   var PREG = [
     /* Paco, 13/11: la edad va dentro de «¿Para quién es el colchón?». Cada botón = quién + su edad (grupos).
        Los puntos de «para quién» y de la edad son los del Excel; «Para mis hijos» suma como «Para mí» (una persona). */
-    { k: 'quien', t: '¿Para quién es el colchón?', s: 'Elige quién va a dormir en él y su edad.',
-      grupos: [['1', 'Para mí', 'body', [['jov', 'De 18 a 35 años'], ['med', 'De 36 a 55 años'], ['sen', 'De 56 a 70 años'], ['anc', 'Más de 70 años']]],
-               ['2', 'Para dormir en pareja', 'couple', [['jov', 'De 18 a 35 años'], ['med', 'De 36 a 55 años'], ['sen', 'Más de 55 años']]],
-               ['h', 'Para mis hijos', 'user', [['ninos', 'Menos de 12 años'], ['adol', 'De 12 a 17 años']]]],
-      ops: [['1', 'Para mí', 'body', [3, 3, 5, 4]], ['2', 'Para dormir en pareja', 'couple', [4, 5, 4, 6]], ['h', 'Para mis hijos', 'user', [3, 3, 5, 4]]] },
+    /* Paco, 18/11: la primera pregunta se queda en 4 respuestas, en una fila, sin pedir la edad exacta. Las 4 que más cambian
+       la recomendación: una persona, pareja, hijos y persona mayor (la edad pesa en el Excel: más de 70 sube Látex y baja Gold).
+       Cada una suma la edad más habitual: mí y pareja = 36-55; hijos = 12-17; persona mayor = más de 70.
+       «Para una persona mayor» suma como «Para mí» (una persona) y las preguntas siguientes van en tercera persona, como hijos */
+    { k: 'quien', t: '¿Para quién es el colchón?', s: 'Elige quién va a dormir en él.',
+      ops: [['1', 'Para mí', 'user', [3, 3, 5, 4], 'med'], ['2', 'Para dormir en pareja', 'couple', [4, 5, 4, 6], 'med'],
+            ['h', 'Para mis hijos', 'nino', [3, 3, 5, 4], 'adol'], ['m', 'Para una persona mayor', 'mayor', [3, 3, 5, 4], 'anc']] },
     // Peso en rangos amplios, sin pedir el peso exacto. Se traduce al IMC del Excel con una altura media de 1,70 m
     /* Paco, 18/11: máximo 4 respuestas por pregunta, para que entren en una fila. Peso: «Menos de 55» y «Entre 55 y 70» se juntan
        en «Menos de 70 kg» (puntos de 55-70) y sale «Prefiero no decirlo» (ya pone que no se guarda) */
@@ -60,7 +62,12 @@
   function pregs() { return PREG.filter(function (p) { return !p.auto && (!p.solo2 || r.quien === '2'); }); }
   function dos() { return r.quien === '2'; }
   function hijo() { return r.quien === 'h'; }
-  function tit(p) { return dos() ? (p.t2 || p.t) : hijo() ? (p.t3 || p.t) : p.t; }
+  function mayor() { return r.quien === 'm'; }
+  function terc() { return hijo() || mayor(); }
+  function tit(p) { return dos() ? (p.t2 || p.t) : terc() ? (p.t3 || p.t) : p.t; }
+  // Texto de cada respuesta: en tercera persona para hijos o persona mayor (lo de «clases, pantallas» solo para hijos)
+  function txt(o) { return terc() && o[4] ? (mayor() ? o[4].replace(/ \(.*\)$/, '') : o[4]) : o[1]; }
+  function sub(p) { var s = (terc() && p.s3) || (dos() && p.s2) || p.s; return s && mayor() ? s.replace('a tu hijo o hija', 'a esa persona') : s; }
   function op(p, v) { return p.ops.filter(function (o) { return o[0] === v; })[0]; }
 
   LM.recomendar = function (r) {
@@ -103,7 +110,7 @@
       artrosis: 'que reparta bien el peso', fibro: 'acogedor, que reparta bien la presión' }
   };
   function resumen() {
-    var partes = ['Buscas un colchón ' + (dos() ? 'para dormir en pareja' : hijo() ? 'para tus hijos' : 'para ti')];
+    var partes = ['Buscas un colchón ' + (dos() ? 'para dormir en pareja' : hijo() ? 'para tus hijos' : mayor() ? 'para una persona mayor' : 'para ti')];
     ['postural', 'dia', 'pato'].forEach(function (k) { (r[k] || []).forEach(function (v) { var t = AYUDA[k][v]; if (t && partes.indexOf(t) < 0) partes.push(t); }); });
     if (r.indep === 'alta') partes.push('en el que no notéis al otro moveros');
     partes = partes.slice(0, 4);
@@ -121,9 +128,9 @@
       }).join('') + '</div></div>';
     }).join('') + '</div>';
     var sel = p.yo ? (r[p.k] || [])[quien] : r[p.k];
-    var ops = p.ops.filter(function (o) { return !(hijo() && o[4] === null); });
+    var ops = p.ops.filter(function (o) { return !(terc() && o[4] === null); });
     return '<div class="h4q-ops h4q-ops--fila" style="--n:' + ops.length + '" role="group" aria-label="' + (p.yo && dos() ? (quien ? 'Tu pareja' : 'Tú') : tit(p)) + '">' + ops.map(function (o) {
-      return '<button type="button" class="h4q-op" data-v="' + o[0] + '" data-quien="' + quien + '"' + (sel === o[0] ? ' aria-pressed="true"' : '') + '>' + (o[2] ? LM.ico(o[2]) : '') + '<span>' + (hijo() && o[4] ? o[4] : o[1]) + '</span></button>';
+      return '<button type="button" class="h4q-op" data-v="' + o[0] + '" data-quien="' + quien + '"' + (sel === o[0] ? ' aria-pressed="true"' : '') + '>' + (o[2] ? LM.ico(o[2]) : '') + '<span>' + (p.k === 'quien' ? o[1] : txt(o)) + '</span></button>';
     }).join('') + '</div>';
   }
   function pregunta() {
@@ -133,7 +140,7 @@
         (paso ? '<button type="button" class="h4q-back" data-back>' + LM.ico('right', 'h4q-back-i') + 'Atrás</button>' : '') + '</div>' +
       '<div class="h4q-bar" aria-hidden="true"><i style="width:' + Math.round(paso / L.length * 100) + '%"></i></div>' +
       '<h3 class="h4q-q" id="h4q-q" tabindex="-1">' + tit(p) + '</h3>' +
-      ((hijo() && p.s3) || (dos() && p.s2) || p.s ? '<p class="h4q-s">' + ((hijo() && p.s3) || (dos() && p.s2) || p.s) + '</p>' : '') +
+      (sub(p) ? '<p class="h4q-s">' + sub(p) + '</p>' : '') +
       (par ? '<div class="h4q-par"><p class="h4q-quien">Tú</p>' + botones(p, 0) + '<p class="h4q-quien">Tu pareja</p>' + botones(p, 1) + '</div>' +
         '<button type="button" class="lm-btn h4q-sig" data-sig' + ((r[p.k] || [])[0] && (r[p.k] || [])[1] ? '' : ' disabled') + '>Siguiente</button>' : botones(p, 0));
   }
@@ -161,6 +168,7 @@
     } else {
       if (p.k === 'quien' && r.quien !== v) { var q0 = r.quien; r = {}; if (q0) LM.track('quiz_restart_quien'); }
       r[p.k] = v;
+      if (p.k === 'quien') { var e = op(p, v)[4]; r.edad = v === '2' ? [e, e] : [e]; }
     }
     avanzar();
   });
