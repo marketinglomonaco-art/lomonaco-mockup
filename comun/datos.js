@@ -107,7 +107,7 @@ LM.MENU = [
     ], fichas: ['bajera', 'edredon'] }
 ];
 // 29/10: el botón rojo del menú lleva a la ficha de pack de la maqueta (Natura Gold, el más vendido)
-LM.MENU_PACKS = { t: 'Packs colchón + canapé o base', href: 'packs.html' }; // 12/11: a la categoría de packs
+LM.MENU_PACKS = { t: 'Packs', href: 'packs.html' }; // 12/11: a la categoría de packs
 
 /* Medidas en el orden de la web */
 /* Calculadora de cuotas de Lo Monaco (Paco, 06/11), columna «Normal» (coste para el cliente).
