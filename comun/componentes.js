@@ -683,7 +683,8 @@
     ['oeko', 'OEKO-TEX®', 'STANDARD 100', 'Tejidos con certificado OEKO-TEX Standard 100'],
     // Paco, 12/11: fuera ISO, entra 150 noches de prueba; «Top marcas» pasa a marca preferida por el consumidor
     ['noches', 'PRUÉBALO EN CASA', 'DE PRUEBA', '150 noches de prueba en casa'],
-    ['top', 'MARCA PREFERIDA', 'POR EL CONSUMIDOR', 'Marca reconocida y preferida por el consumidor'],
+    // Paco, 18/11: «preferida» pasa a «reconocida»
+    ['top', 'MARCA RECONOCIDA', 'POR EL CONSUMIDOR', 'Marca reconocida por el consumidor'],
     ['trusted', 'TIENDA VERIFICADA', 'TRUSTED SHOPS', 'Tienda verificada por Trusted Shops: ' + C.valoracion.media + ' de 5'],
     ['calidad', 'PRODUCTO DE CALIDAD', 'GARANTIZADA', 'Producto de calidad garantizada'],
     // Paco, 09/11: dos más

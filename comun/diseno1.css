@@ -2998,3 +2998,15 @@ html body .h4p-tipo .h4p-opt-pr { display: flex; align-items: baseline; gap: 8px
   .h4c-track .h4c-k--main { flex-basis: 86vw; flex-direction: column; }
   .h4c-track .h4c-k--main .h4c-k-img { flex: none; aspect-ratio: 16 / 10; }
 }
+
+/* Paco, 18/11 (después) · Compromisos: todas las tarjetas iguales, con su foto arriba como cabecera.
+   La de «Te ayudamos a elegir» ya no es más ancha ni lleva botón grande (el test, como enlace) */
+.h4c-track .h4c-k { padding: 0; gap: 0; }
+.h4c-k::before { z-index: 1; }
+.h4c-k-head { position: relative; width: 100%; aspect-ratio: 16 / 10; overflow: hidden; background: #F6F6F6; }
+.h4c-k-head img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.h4c-track .h4c-k > .h4c-k-b { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; flex: 1; padding: 22px 24px 24px; }
+.h4c-k-b .h4c-k-top { min-height: 40px; }
+.h4c-k-b h3 { margin-top: 6px; }
+.h4c-k .h4c-more + .h4c-more { margin-top: 0; padding-top: 2px; }
+.h4c-k .h4c-more--tel { font-weight: 600; color: var(--ink); text-decoration-color: var(--line); }

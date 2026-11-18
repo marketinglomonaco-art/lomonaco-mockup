@@ -42,27 +42,31 @@
   if (ct) {
     function partir(v) { var i = v.indexOf(' '); return i < 0 ? [v, ''] : [v.slice(0, i), v.slice(i + 1)]; }
     function cifra(n, u) { return '<div class="h4c-fig"><b>' + n + '</b><span>' + u + '</span></div>'; }
-    function k(icono, fig, titulo, texto, extra) {
-      return '<li class="h4c-k">' + '<div class="h4c-k-top">' + fig + icono + '</div><h3>' + titulo + '</h3><p>' + texto + '</p>' + (extra || '') + '</li>';
+    /* Paco, 18/11 (después): fuera la foto pegada a la primera tarjeta y menos protagonismo al test (enlace, no botón).
+       Cada tarjeta lleva arriba su foto, como cabecera (fotos reales de la web) */
+    function foto(n, a, b, alt) {
+      return '<div class="h4c-k-head"><img src="../img/' + n + '-' + a + '.webp" srcset="../img/' + n + '-' + a + '.webp ' + a + 'w, ../img/' + n + '-' + b + '.webp ' + b + 'w" sizes="(max-width: 700px) 82vw, 330px" alt="' + alt + '" width="' + a + '" height="' + Math.round(a * 0.625) + '" loading="lazy"></div>';
+    }
+    function k(img, icono, fig, titulo, texto, extra) {
+      return '<li class="h4c-k">' + img + '<div class="h4c-k-b">' + '<div class="h4c-k-top">' + fig + icono + '</div><h3>' + titulo + '</h3><p>' + texto + '</p>' + (extra || '') + '</div></li>';
     }
     var pr = partir(C.prueba.v), ga = partir(C.garantia.v), tr = partir(C.trayectoria.v), test = (document.getElementById('cuestionario') ? '' : 'index.html') + '#cuestionario';
     ct.innerHTML = [
-      // 1 · Te ayudamos a elegir (grande, con la foto)
-      '<li class="h4c-k h4c-k--main"><div class="h4c-k-img"><img src="../img/llamada-movil-800.webp" srcset="../img/llamada-movil-800.webp 800w, ../img/llamada-movil-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 640px" width="800" height="597" alt="Una chica sentada en la cama mira el móvil" loading="lazy"></div>' +
-        '<div class="h4c-k-b">' + ic('phone') + '<h3>Te ayudamos a elegir</h3>' +
-        '<p>Cuéntanos cómo duermes y te recomendamos el colchón que encaja contigo. Sin compromiso.</p>' +
-        '<div class="h4c-k-cta"><a class="lm-btn" href="' + test + '" data-lead="home-ayuda-test">Haz el test de 1 minuto</a>' +
-        '<a class="h4c-tel" href="tel:' + C.telefono.tel + '" data-lead="home-ayuda" data-testid="call-home-ayuda">' + LM.ico('phone') + '<span>o llámanos al <b>' + LM.mark(C.telefono, C.telefono.v) + '</b></span></a></div></div></li>',
+      // 1 · Te ayudamos a elegir: misma tarjeta que las demás; el test, como enlace
+      k(foto('llamada-movil', 800, 1200, 'Una chica sentada en la cama mira el móvil'), '', ic('phone'), 'Te ayudamos a elegir',
+        'Cuéntanos cómo duermes y te recomendamos el colchón que encaja contigo. Sin compromiso.',
+        '<a class="h4c-more" href="' + test + '" data-lead="home-ayuda-test">Haz el test de 1 minuto</a>' +
+        '<a class="h4c-more h4c-more--tel" href="tel:' + C.telefono.tel + '" data-lead="home-ayuda" data-testid="call-home-ayuda">o llámanos al ' + LM.mark(C.telefono, C.telefono.v) + '</a>'),
       // 2 · 150 noches de prueba (con la devolución dentro)
-      k(ic('moon'), cifra(pr[0], pr[1] + ' de prueba'), 'Pruébalo en tu cama',
+      k(foto('prueba', 800, 1400, 'Una persona se despierta y se estira en su cama'), ic('moon'), cifra(pr[0], pr[1] + ' de prueba'), 'Pruébalo en tu cama',
         'El cuerpo necesita unos días para acostumbrarse. Si no te convence, lo recogemos en tu casa.', verCond('devolucion')),
       // 3 · Compra garantizada (Trusted Shops)
-      k('<span class="h4c-ic h4c-ic--ts" aria-hidden="true"><img src="../img/trusted-shops.png" alt="" width="124" height="116" loading="lazy"></span>',
+      k(foto('asesor', 800, 1400, 'Una pareja contenta junto a su colchón Lomonaco'), '<span class="h4c-ic h4c-ic--ts" aria-hidden="true"><img src="../img/trusted-shops.png" alt="" width="124" height="116" loading="lazy"></span>',
         cifra(C.valoracion.media, 'de 5 en ' + C.valoracion.plataforma), 'Compra garantizada', LM.c('compraGarantizada') + '.', '<a class="h4c-more" href="' + C.valoracion.url + '" target="_blank" rel="noopener">Ver las opiniones</a>'),
       // 4 · 30 años
-      k(ic('users'), cifra(tr[0], tr[1] + ' contigo'), 'La marca de toda la vida', 'Desde 1996 y con más de ' + LM.c('clientes') + ' clientes que ya duermen en un Lomonaco.'),
+      k(foto('vida-06', 520, 900, 'Una familia con su bebé sobre un colchón Lomonaco'), ic('users'), cifra(tr[0], tr[1] + ' contigo'), 'La marca de toda la vida', 'Desde 1996 y con más de ' + LM.c('clientes') + ' clientes que ya duermen en un Lomonaco.'),
       // 5 · 10 años de garantía
-      k(ic('shield'), cifra(ga[0], ga[1] + ' de garantía'), 'En todos los colchones', 'Cubre los defectos de fabricación y el núcleo del colchón.', verCond('garantia'))
+      k(foto('sr2-gran-bordado', 900, 1600, 'Detalle del bordado del colchón Gran Natura'), ic('shield'), cifra(ga[0], ga[1] + ' de garantía'), 'En todos los colchones', 'Cubre los defectos de fabricación y el núcleo del colchón.', verCond('garantia'))
     ].join('');
 
     ct.addEventListener('click', function (e) {
