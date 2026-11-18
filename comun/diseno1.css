@@ -2864,3 +2864,44 @@ html body .h4p-tipo .h4p-opt-pr { display: flex; align-items: baseline; gap: 8px
 .h4q-ops--fila .h4q-op { min-height: 72px; font-size: 15.5px; line-height: 1.3; }
 @media (max-width: 900px) { .h4q-in { grid-template-columns: 1fr; } }
 @media (max-width: 640px) { .h4q-ops--fila { grid-template-columns: 1fr 1fr; } .h4q-ops--fila .h4q-op { min-height: 60px; font-size: 15px; } }
+
+/* Paco, 18/11 · Compromisos: solo 5 y con más empaque (son los valores de la marca). Rejilla fija, sin carrusel:
+   «Te ayudamos a elegir» en grande con la foto y, al lado, 4 tarjetas con su cifra grande en granate. Sale igual en todas las páginas */
+.h4c-g { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: clamp(24px, 3vw, 40px); }
+.h4c-k { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 30px 28px 28px; border-radius: var(--r); background: #fff; border: 1px solid var(--card-bd); box-shadow: var(--shadow); overflow: hidden; }
+.h4c-k::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 4px; background: var(--acc); }
+.h4c-k-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; width: 100%; }
+.h4c-fig { display: grid; gap: 2px; margin: 0; color: var(--acc); }
+.h4c-fig b { font: 800 clamp(54px, 5.2vw, 76px)/.9 var(--font); letter-spacing: -.045em; }
+.h4c-fig span { font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); margin-top: 8px; }
+.h4c-k .h4c-ic { width: 40px; height: 40px; }
+.h4c-k .h4c-ic svg { width: 34px; height: 34px; }
+.h4c-k .h4c-ic--ts img { width: 40px; }
+.h4c-k h3 { margin-top: 14px; font-size: 21px; font-weight: 700; letter-spacing: -.015em; line-height: 1.2; }
+.h4c-k p { font-size: 15.5px; line-height: 1.5; color: var(--mute); }
+.h4c-k .h4c-more { margin-top: auto; padding-top: 8px; }
+.h4c-k .h4c-rate { margin-top: auto; padding-top: 8px; }
+.h4c-k--main { grid-column: span 2; grid-row: span 2; padding: 0; gap: 0; }
+.h4c-k--main::before { z-index: 1; }
+.h4c-k-img { width: 100%; aspect-ratio: 16 / 9; }
+.h4c-k-img img { width: 100%; height: 100%; object-fit: cover; }
+.h4c-k-b { display: flex; flex-direction: column; align-items: flex-start; gap: 12px; padding: 30px 32px 32px; flex: 1; }
+.h4c-k--main h3 { margin-top: 4px; font-size: clamp(28px, 2.6vw, 36px); letter-spacing: -.025em; color: var(--acc); }
+.h4c-k--main p { font-size: 17px; max-width: 46ch; }
+.h4c-k-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: auto; padding-top: 10px; }
+.h4c-tel { display: inline-flex; align-items: center; gap: 8px; font-size: 15.5px; color: var(--ink); text-decoration: none; }
+.h4c-tel .lm-i { width: 18px; height: 18px; color: var(--acc); }
+.h4c-tel b { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--line); }
+@media (max-width: 1100px) {
+  .h4c-g { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .h4c-k--main { grid-row: auto; display: grid; grid-template-columns: 45% 1fr; }
+  .h4c-k-img { aspect-ratio: auto; height: 100%; }
+}
+@media (max-width: 700px) {
+  .h4c-g { grid-template-columns: 1fr; gap: 12px; }
+  .h4c-k--main { grid-column: auto; display: flex; }
+  .h4c-k-img { aspect-ratio: 16 / 10; height: auto; }
+  .h4c-k-b { padding: 24px 22px 26px; }
+  .h4c-k { padding: 26px 22px 24px; }
+  .h4c-k.h4c-k--main { padding: 0; }
+}

@@ -35,35 +35,36 @@
   function ic(n, extra) { return '<span class="h4c-ic' + (extra || '') + '" aria-hidden="true">' + IC[n] + '</span>'; }
   function verCond(k) { return '<button type="button" class="h4c-more" data-cond="' + k + '">Ver condiciones</button>'; }
 
+  /* Paco, 18/11: solo 5 compromisos (los valores de la marca) y con más presencia: cada uno con su cifra grande.
+     Sin carrusel: rejilla fija. La foto de la chica con el móvil va con «Te ayudamos a elegir», en grande.
+     Fuera: envío, devolución (va dentro de las 150 noches), producto premium y financiación. Sale igual en todas las páginas */
   var ct = $('#h4c-track');
   if (ct) {
-    var cards = [
-      // Paco, 05/11: todas las tarjetas con el mismo formato (icono, título, texto y enlace). Empieza con figura humana:
-      // la foto de la chica con el móvil va sola, como tarjeta de imagen. Ninguna otra lleva foto
-      '<li class="h4c-card h4c-card--img" aria-hidden="true"><img src="../img/llamada-movil-800.webp" srcset="../img/llamada-movil-800.webp 800w, ../img/llamada-movil-1200.webp 1200w" sizes="(max-width: 700px) 82vw, 330px" width="800" height="597" alt="" loading="lazy"></li>',
-      // 1 · Te ayudamos a elegir: lleva al cuestionario de la home
-      '<li class="h4c-card">' + ic('phone') + '<h3>Te ayudamos a elegir</h3>' +
+    function partir(v) { var i = v.indexOf(' '); return i < 0 ? [v, ''] : [v.slice(0, i), v.slice(i + 1)]; }
+    function cifra(n, u) { return '<div class="h4c-fig"><b>' + n + '</b><span>' + u + '</span></div>'; }
+    function k(icono, fig, titulo, texto, extra) {
+      return '<li class="h4c-k">' + '<div class="h4c-k-top">' + fig + icono + '</div><h3>' + titulo + '</h3><p>' + texto + '</p>' + (extra || '') + '</li>';
+    }
+    var pr = partir(C.prueba.v), ga = partir(C.garantia.v), tr = partir(C.trayectoria.v), test = (document.getElementById('cuestionario') ? '' : 'index.html') + '#cuestionario';
+    ct.className = 'h4c-g';
+    ct.innerHTML = [
+      // 1 · Te ayudamos a elegir (grande, con la foto)
+      '<li class="h4c-k h4c-k--main"><div class="h4c-k-img"><img src="../img/llamada-movil-800.webp" srcset="../img/llamada-movil-800.webp 800w, ../img/llamada-movil-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 640px" width="800" height="597" alt="Una chica sentada en la cama mira el móvil" loading="lazy"></div>' +
+        '<div class="h4c-k-b">' + ic('phone') + '<h3>Te ayudamos a elegir</h3>' +
         '<p>Cuéntanos cómo duermes y te recomendamos el colchón que encaja contigo. Sin compromiso.</p>' +
-        '<a class="h4c-more" href="' + (document.getElementById('cuestionario') ? '' : 'index.html') + '#cuestionario" data-lead="home-ayuda-test">Haz el test de 1 minuto</a>' +
-        '<a class="h4c-more h4c-more--tel" href="tel:' + C.telefono.tel + '" data-lead="home-ayuda" data-testid="call-home-ayuda">o llámanos al ' + LM.mark(C.telefono, C.telefono.v) + '</a></li>',
-      // 2 · Envío
-      '<li class="h4c-card">' + ic('truck') + '<h3>Te lo llevamos a casa</h3><p>' + LM.c('envio') + '. Te llega en ' + LM.c('entrega') + '.</p></li>',
-      // 3 · Prueba en casa (Paco, 05/11: 150 noches; sin foto)
-      '<li class="h4c-card">' + ic('moon') + '<h3>Pruébalo ' + LM.c('prueba') + ' en tu cama</h3><p>El cuerpo necesita unos días para acostumbrarse. Tómate tu tiempo.</p></li>',
-      // 4 · Devolución
-      '<li class="h4c-card">' + ic('back') + '<h3>Si no te convence, lo devuelves</h3><p>' + LM.c('devolucion') + '. Tienes las ' + LM.c('prueba') + ' de prueba para decidir.</p>' + verCond('devolucion') + '</li>',
-      // 5 · Garantía
-      '<li class="h4c-card">' + ic('shield') + '<h3>' + LM.c('garantia') + ' de garantía</h3><p>En todos nuestros colchones. Cubre los defectos de fabricación y el núcleo.</p>' + verCond('garantia') + '</li>',
-      // 6 · Compra garantizada (sello Trusted Shops)
-      '<li class="h4c-card"><span class="h4c-ic h4c-ic--ts" aria-hidden="true"><img src="../img/trusted-shops.png" alt="" width="124" height="116" loading="lazy"></span><h3>Compra garantizada</h3><p>' + LM.c('compraGarantizada') + '.</p>' + LM.rating('h4c-rate') + '</li>',
-      // 7 · Trayectoria y clientes
-      '<li class="h4c-card">' + ic('users') + '<h3>' + LM.c('trayectoria') + ' y <span class="h4c-count" data-n="750000">' + LM.c('clientes') + '</span> clientes</h3><p>La marca de toda la vida.</p></li>',
-      // 8 · Producto premium
-      '<li class="h4c-card">' + ic('gem') + '<h3>Producto premium</h3><p>Látex, muelles ensacados y viscoelástica, capa a capa. ' + LM.pend('certificados o materiales que lo respalden') + '</p></li>',
-      // 9 · Facilidades de pago
-      '<li class="h4c-card">' + ic('card') + '<h3>Facilidades de pago</h3><p>Financia tu compra de 3 a 36 meses. A 12 meses, sin intereses en compras desde 1.200 €.' + LM.ast + '</p></li>'
-    ];
-    ct.innerHTML = cards.join('');
+        '<div class="h4c-k-cta"><a class="lm-btn" href="' + test + '" data-lead="home-ayuda-test">Haz el test de 1 minuto</a>' +
+        '<a class="h4c-tel" href="tel:' + C.telefono.tel + '" data-lead="home-ayuda" data-testid="call-home-ayuda">' + LM.ico('phone') + '<span>o llámanos al <b>' + LM.mark(C.telefono, C.telefono.v) + '</b></span></a></div></div></li>',
+      // 2 · 150 noches de prueba (con la devolución dentro)
+      k(ic('moon'), cifra(pr[0], pr[1] + ' de prueba'), 'Pruébalo en tu cama',
+        'El cuerpo necesita unos días para acostumbrarse. Si no te convence, lo recogemos en tu casa.', verCond('devolucion')),
+      // 3 · Compra garantizada (Trusted Shops)
+      k('<span class="h4c-ic h4c-ic--ts" aria-hidden="true"><img src="../img/trusted-shops.png" alt="" width="124" height="116" loading="lazy"></span>',
+        cifra(C.valoracion.media, 'de 5 en ' + C.valoracion.plataforma), 'Compra garantizada', LM.c('compraGarantizada') + '.', '<a class="h4c-more" href="' + C.valoracion.url + '" target="_blank" rel="noopener">Ver las opiniones</a>'),
+      // 4 · 30 años
+      k(ic('users'), cifra(tr[0], tr[1] + ' contigo'), 'La marca de toda la vida', 'Desde 1996 y con más de ' + LM.c('clientes') + ' clientes que ya duermen en un Lomonaco.'),
+      // 5 · 10 años de garantía
+      k(ic('shield'), cifra(ga[0], ga[1] + ' de garantía'), 'En todos los colchones', 'Cubre los defectos de fabricación y el núcleo del colchón.', verCond('garantia'))
+    ].join('');
 
     ct.addEventListener('click', function (e) {
       var b = e.target.closest('[data-cond]'); if (!b) return;
@@ -72,51 +73,6 @@
       else hoja('Garantía de ' + LM.c('garantia'), '<p>' + LM.c('garantiaCubre') + '</p>');
       LM.track('trust_preview_open', { source: 'home-compromisos-' + k });
     });
-
-    // Iconos animados al entrar cada tarjeta; el número de clientes cuenta hasta 750.000
-    function contar(el) {
-      if (!motion || el.querySelector('.lm-chk')) return;
-      var fin = +el.getAttribute('data-n'), t0 = null;
-      function paso(t) {
-        if (!t0) t0 = t; var k = Math.min((t - t0) / 1400, 1), e = 1 - Math.pow(1 - k, 3);
-        el.textContent = Math.round(fin * e).toLocaleString('es-ES');
-        if (k < 1) requestAnimationFrame(paso);
-      }
-      requestAnimationFrame(paso);
-    }
-    var lis = $$('.h4c-card', ct);
-    if ('IntersectionObserver' in window) {
-      var io = new IntersectionObserver(function (en) {
-        en.forEach(function (x) {
-          if (!x.isIntersecting) return;
-          x.target.classList.add('is-in'); io.unobserve(x.target);
-          var n = x.target.querySelector('.h4c-count'); if (n) contar(n);
-        });
-      }, { threshold: 0.45 });
-      lis.forEach(function (li) { io.observe(li); });
-    } else lis.forEach(function (li) { li.classList.add('is-in'); });
-
-    // Flechas y puntos
-    var dots = $('#h4c-dots');
-    dots.innerHTML = lis.map(function (_, i) { return '<button type="button" tabindex="-1" data-i="' + i + '"></button>'; }).join('');
-    var db = $$('button', dots), arr = $$('.h4c-arr');
-    function ir(i) { var li = lis[Math.max(0, Math.min(lis.length - 1, i))]; ct.scrollTo({ left: li.offsetLeft - ct.firstElementChild.offsetLeft, behavior: motion ? 'smooth' : 'auto' }); }
-    function actual() {
-      var x = ct.scrollLeft, best = 0;
-      lis.forEach(function (li, i) { if (Math.abs(li.offsetLeft - lis[0].offsetLeft - x) < Math.abs(lis[best].offsetLeft - lis[0].offsetLeft - x)) best = i; });
-      return best;
-    }
-    function pintar() {
-      var a = actual(), fin = ct.scrollLeft + ct.clientWidth >= ct.scrollWidth - 4;
-      db.forEach(function (b, i) { b.classList.toggle('is-on', fin ? i === db.length - 1 : i === a); });
-      arr[0].disabled = ct.scrollLeft < 4; arr[1].disabled = fin;
-    }
-    arr.forEach(function (b) { b.addEventListener('click', function () { ir(actual() + +b.getAttribute('data-dir')); }); });
-    dots.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) ir(+b.getAttribute('data-i')); });
-    var pend = 0;
-    ct.addEventListener('scroll', function () { if (!pend) pend = requestAnimationFrame(function () { pend = 0; pintar(); }); }, { passive: true });
-    addEventListener('resize', pintar);
-    pintar();
   }
 
 })();
