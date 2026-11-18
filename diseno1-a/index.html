@@ -11,10 +11,10 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@300..800&family=Playfair+Display:ital,wght@1,400;1,500&display=swap">
 <link rel="preload" as="image" href="../img/hero-movil-860.webp" media="(max-width: 767px)">
 <link rel="preload" as="image" href="../img/hero-1800.webp" imagesrcset="../img/hero-960.webp 960w, ../img/hero-1800.webp 1800w" imagesizes="100vw" media="(min-width: 768px)">
-<link rel="stylesheet" href="../comun/base.css?v=1794997538">
-<link rel="stylesheet" href="../comun/paginas.css?v=1794997538">
-<link rel="stylesheet" href="../comun/diseno1.css?v=1794997538">
-<link rel="stylesheet" href="../comun/rojo.css?v=1794997538">
+<link rel="stylesheet" href="../comun/base.css?v=1794998114">
+<link rel="stylesheet" href="../comun/paginas.css?v=1794998114">
+<link rel="stylesheet" href="../comun/diseno1.css?v=1794998114">
+<link rel="stylesheet" href="../comun/rojo.css?v=1794998114">
 </head>
 <body data-page="home" data-opcion="diseno1-a" data-variante="a" data-op="a" data-producto="" data-version="4">
 <a class="lm-skip" href="#main">Saltar al contenido</a>
@@ -22,12 +22,19 @@
 <main id="main">
 <!-- HERO · V4 cambio 3: el banner de Paco, tal cual, en escritorio y en móvil [H1] -->
 <section class="h-hero h4" aria-labelledby="h-h1" data-testid="home-hero">
-  <picture class="h-hero-img">
-    <!-- Paco, 12/11: banner nuevo (pareja esperando un bebé, colchón Natura Látex). Móvil: recorte vertical centrado en la pareja -->
-    <!-- Paco, 13/11: foto nueva del banner (original en pulido/capturas/1311-hero3-pareja.jpg) -->
-    <source media="(max-width: 767px)" srcset="../img/hero3-movil-526.webp" width="526" height="976">
-    <img src="../img/hero3-2000.webp" srcset="../img/hero3-1000.webp 1000w, ../img/hero3-2000.webp 2000w" sizes="100vw" width="2000" height="976" alt="Una pareja en su dormitorio: él se calza sentado en el borde de la cama y ella lee tumbada sobre su colchón Lomonaco" fetchpriority="high">
-  </picture>
+  <!-- Paco, 18/11: el fondo del banner pasa de una foto a otra deslizándose (cada 6 s); encima, un velo negro fino para leer los textos.
+       Foto 2: original en pulido/capturas/1811-hero4-pareja-leyendo.jpg (16:9; en móvil, recorte vertical centrado en la pareja) -->
+  <div class="h-hero-img h4-fotos" id="h4-fotos">
+    <picture class="h4-foto is-on">
+      <!-- Paco, 13/11: foto del banner (original en pulido/capturas/1311-hero3-pareja.jpg) -->
+      <source media="(max-width: 767px)" srcset="../img/hero3-movil-526.webp" width="526" height="976">
+      <img src="../img/hero3-2000.webp" srcset="../img/hero3-1000.webp 1000w, ../img/hero3-2000.webp 2000w" sizes="100vw" width="2000" height="976" alt="Una pareja en su dormitorio: él se calza sentado en el borde de la cama y ella lee tumbada sobre su colchón Lomonaco" fetchpriority="high">
+    </picture>
+    <picture class="h4-foto h4-foto--2">
+      <source media="(max-width: 767px)" srcset="../img/hero4-movil-526.webp" width="526" height="976">
+      <img src="../img/hero4-1376.webp" srcset="../img/hero4-1000.webp 1000w, ../img/hero4-1376.webp 1376w" sizes="100vw" width="1376" height="768" alt="Una pareja lee un libro abrazada en la cama, sobre su colchón Lomonaco" decoding="async">
+    </picture>
+  </div>
   <!-- SEO: H1 con keyword (documento SEO, regla 4). No se ve; el eslogan es el titular visual -->
   <h1 id="h-h1" class="lm-sr">Tienda de colchones, canapés y almohadas</h1>
   <p class="h4-t">La marca de <em>toda la vida</em></p>
@@ -191,20 +198,20 @@
 
 </main>
 <div id="lm-footer"></div>
-<script src="../comun/datos.js?v=1794997538"></script>
-<script src="../comun/tienda.js?v=1794997538"></script>
-<script src="../comun/historico.js?v=1794997538"></script>
-<script src="../comun/componentes.js?v=1794997538"></script>
+<script src="../comun/datos.js?v=1794998114"></script>
+<script src="../comun/tienda.js?v=1794998114"></script>
+<script src="../comun/historico.js?v=1794998114"></script>
+<script src="../comun/componentes.js?v=1794998114"></script>
 <script>LM.init();</script>
-<script src="../comun/compromisos.js?v=1794997538"></script>
-<script src="../comun/packs.js?v=1794997538"></script>
-<script src="../comun/home.js?v=1794997538"></script>
-<script src="../comun/pack.js?v=1794997538"></script>
-<script src="../comun/asistente.js?v=1794997538"></script>
-<script src="../comun/presion.js?v=1794997538"></script>
+<script src="../comun/compromisos.js?v=1794998114"></script>
+<script src="../comun/packs.js?v=1794998114"></script>
+<script src="../comun/home.js?v=1794998114"></script>
+<script src="../comun/pack.js?v=1794998114"></script>
+<script src="../comun/asistente.js?v=1794998114"></script>
+<script src="../comun/presion.js?v=1794998114"></script>
 <!-- Paco, 09/11: fuera el módulo «Así se adaptan los muelles» (comun/muelles.js se conserva, sin cargar) -->
-<script src="../comun/animaciones.js?v=1794997538"></script>
-<script src="../comun/v4.js?v=1794997538"></script>
-<script src="../comun/cuestionario.js?v=1794997538"></script>
+<script src="../comun/animaciones.js?v=1794998114"></script>
+<script src="../comun/v4.js?v=1794998114"></script>
+<script src="../comun/cuestionario.js?v=1794998114"></script>
 </body>
 </html>

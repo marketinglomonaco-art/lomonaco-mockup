@@ -2836,3 +2836,19 @@ html body .h4p-tipo .h4p-opt-pr { display: flex; align-items: baseline; gap: 8px
 .h4p--v13 .h4p-cols button img { grid-row: 1 / span 3; }
 .h4p--v13 .h4p-cols .h4p-opt-pr { grid-column: 2; grid-row: 3; display: flex; align-items: baseline; gap: 6px; justify-items: start; margin-top: 2px; }
 @media (max-width: 560px) { .h4p--v13 .h4p-cols button { grid-template-columns: 48px minmax(0, 1fr); } }
+
+/* Paco, 18/11 · Banner de la home: dos fotos que se deslizan (la nueva entra por la derecha cada 6 s)
+   y un velo negro fino y uniforme entre la foto y los textos, para leerlos mejor */
+.h4 .h4-fotos { z-index: -2; overflow: hidden; }
+.h4 .h4-foto { position: absolute; inset: 0; display: block; transform: translate3d(100%, 0, 0); transition: transform 1.4s cubic-bezier(.65, 0, .35, 1); }
+.h4 .h4-foto.is-on { transform: translate3d(0, 0, 0); }
+.h4 .h4-foto.is-fuera { transform: translate3d(-100%, 0, 0); }
+.h4 .h4-foto.sin-trans { transition: none; }
+.h4 .h4-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: auto; }
+.h4 .h4-foto--2 img { object-position: 50% 30%; }
+.h4::before { background: linear-gradient(rgba(0,0,0,.22), rgba(0,0,0,.22)), linear-gradient(90deg, rgba(18,12,10,.45) 0%, rgba(18,12,10,.15) 40%, rgba(18,12,10,0) 100%); }
+@media (max-width: 767px) {
+  .h4::before { background: linear-gradient(rgba(0,0,0,.22), rgba(0,0,0,.22)), linear-gradient(180deg, rgba(18,12,10,.3) 0%, rgba(18,12,10,0) 35%, rgba(18,12,10,0) 60%, rgba(18,12,10,.3) 100%); }
+  .h4 .h4-foto--2 img { object-position: 50% 50%; }
+}
+@media (prefers-reduced-motion: reduce) { .h4 .h4-foto { transition: none; } }

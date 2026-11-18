@@ -29,6 +29,18 @@
     }, 5000);
   }
 
+  // Paco, 18/11: las fotos del banner se deslizan: la actual sale por la izquierda y entra la siguiente por la derecha (cada 6 s)
+  var fotos = $$('#h4-fotos .h4-foto');
+  if (fotos.length > 1 && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var fi = 0;
+    setInterval(function () {
+      if (document.hidden) return;
+      var a = fotos[fi]; fi = (fi + 1) % fotos.length; var b = fotos[fi];
+      b.classList.add('sin-trans'); b.classList.remove('is-fuera', 'is-on'); void b.offsetWidth; b.classList.remove('sin-trans');
+      a.classList.remove('is-on'); a.classList.add('is-fuera'); b.classList.add('is-on');
+    }, 6000);
+  }
+
   // Parallax suave: la foto del banner baja más despacio que la página al hacer scroll
   var hh = $('.h4'), foto = hh && $('.h-hero-img', hh);
   if (foto && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
