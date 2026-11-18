@@ -46,7 +46,6 @@
       return '<li class="h4c-k">' + '<div class="h4c-k-top">' + fig + icono + '</div><h3>' + titulo + '</h3><p>' + texto + '</p>' + (extra || '') + '</li>';
     }
     var pr = partir(C.prueba.v), ga = partir(C.garantia.v), tr = partir(C.trayectoria.v), test = (document.getElementById('cuestionario') ? '' : 'index.html') + '#cuestionario';
-    ct.className = 'h4c-g';
     ct.innerHTML = [
       // 1 · Te ayudamos a elegir (grande, con la foto)
       '<li class="h4c-k h4c-k--main"><div class="h4c-k-img"><img src="../img/llamada-movil-800.webp" srcset="../img/llamada-movil-800.webp 800w, ../img/llamada-movil-1200.webp 1200w" sizes="(max-width: 900px) 92vw, 640px" width="800" height="597" alt="Una chica sentada en la cama mira el móvil" loading="lazy"></div>' +
@@ -73,6 +72,28 @@
       else hoja('Garantía de ' + LM.c('garantia'), '<p>' + LM.c('garantiaCubre') + '</p>');
       LM.track('trust_preview_open', { source: 'home-compromisos-' + k });
     });
+
+    // Paco, 18/11: sigue en carrusel. Flechas y puntos
+    var lis = $$('.h4c-k', ct), dots = $('#h4c-dots'), arr = $$('.h4c-arr');
+    if (dots) dots.innerHTML = lis.map(function (_, i) { return '<button type="button" tabindex="-1" data-i="' + i + '"></button>'; }).join('');
+    var db = dots ? $$('button', dots) : [];
+    function ir(i) { var li = lis[Math.max(0, Math.min(lis.length - 1, i))]; ct.scrollTo({ left: li.offsetLeft - lis[0].offsetLeft, behavior: motion ? 'smooth' : 'auto' }); }
+    function actual() {
+      var x = ct.scrollLeft, best = 0;
+      lis.forEach(function (li, i) { if (Math.abs(li.offsetLeft - lis[0].offsetLeft - x) < Math.abs(lis[best].offsetLeft - lis[0].offsetLeft - x)) best = i; });
+      return best;
+    }
+    function pintar() {
+      var a = actual(), fin = ct.scrollLeft + ct.clientWidth >= ct.scrollWidth - 4;
+      db.forEach(function (b, i) { b.classList.toggle('is-on', fin ? i === db.length - 1 : i === a); });
+      if (arr.length) { arr[0].disabled = ct.scrollLeft < 4; arr[1].disabled = fin; }
+    }
+    arr.forEach(function (b) { b.addEventListener('click', function () { ir(actual() + +b.getAttribute('data-dir')); }); });
+    if (dots) dots.addEventListener('click', function (e) { var b = e.target.closest('button'); if (b) ir(+b.getAttribute('data-i')); });
+    var pend = 0;
+    ct.addEventListener('scroll', function () { if (!pend) pend = requestAnimationFrame(function () { pend = 0; pintar(); }); }, { passive: true });
+    addEventListener('resize', pintar);
+    pintar();
   }
 
 })();

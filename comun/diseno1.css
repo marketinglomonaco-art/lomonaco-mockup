@@ -2983,3 +2983,18 @@ html body .h4p-tipo .h4p-opt-pr { display: flex; align-items: baseline; gap: 8px
 .pk2-img { position: relative; overflow: hidden; }
 .pk2-img img { position: absolute; inset: 0; }
 @media (max-width: 700px) { .pk2-img { aspect-ratio: 16 / 10; } }
+
+/* Paco, 18/11 · Compromisos: siguen en carrusel (flechas y puntos), con las tarjetas nuevas de cifra grande.
+   «Te ayudamos a elegir» más ancha, con la foto a la izquierda */
+.h4c-track .h4c-k { flex: 0 0 clamp(270px, 23vw, 320px); scroll-snap-align: start; }
+.h4c-track .h4c-k--main { flex: 0 0 clamp(300px, 46vw, 660px); flex-direction: row; align-items: stretch; }
+.h4c-track .h4c-k--main .h4c-k-img { flex: 0 0 44%; width: auto; aspect-ratio: auto; position: relative; }
+.h4c-track .h4c-k--main .h4c-k-img img { position: absolute; inset: 0; }
+.h4c-track .h4c-k--main h3 { font-size: clamp(26px, 2.2vw, 32px); }
+.h4c-track .h4c-k--main p { font-size: 16px; }
+.h4c-track .h4c-k-cta { flex-direction: column; align-items: flex-start; gap: 12px; }
+@media (max-width: 700px) {
+  .h4c-track .h4c-k { flex-basis: 82vw; }
+  .h4c-track .h4c-k--main { flex-basis: 86vw; flex-direction: column; }
+  .h4c-track .h4c-k--main .h4c-k-img { flex: none; aspect-ratio: 16 / 10; }
+}
