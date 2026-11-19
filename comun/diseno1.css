@@ -3073,3 +3073,10 @@ body .p-card.p-card--v2 > input { align-self: center; }
 .p-ind-brillo { fill: none; stroke: #fff; stroke-width: 5; stroke-linecap: round; vector-effect: non-scaling-stroke; filter: drop-shadow(0 0 4px rgba(255,255,255,.95)) drop-shadow(0 0 8px rgba(255,255,255,.7)); }
 @media (max-width: 700px) { .p-ind-brillo { stroke-width: 4; } }
 @media (prefers-reduced-motion: reduce) { .p-ind-brillo { display: none; } }
+/* Paco, 19/11 · El destello, del mismo color que su onda (azul él, verde ella), con brillo y un ligero parpadeo */
+.p-ind-brillo--el { stroke: #3f7fb0; filter: drop-shadow(0 0 3px rgba(63,127,176,.95)) drop-shadow(0 0 9px rgba(63,127,176,.75)); }
+.p-ind-brillo--ella { stroke: #5e9a7c; filter: drop-shadow(0 0 3px rgba(94,154,124,.95)) drop-shadow(0 0 9px rgba(94,154,124,.75)); }
+@keyframes p-parpadeo { 0%, 100% { opacity: 1; } 18% { opacity: .55; } 22% { opacity: 1; } 47% { opacity: .8; } 52% { opacity: .35; } 56% { opacity: 1; } 78% { opacity: .7; } }
+.p-ind-svg.is-on .p-ind-brillo { animation: p-parpadeo 1.3s steps(1, end) infinite; }
+.p-ind-svg.is-on .p-ind-brillo--ella { animation-duration: 2.1s; }
+@media (prefers-reduced-motion: reduce) { .p-ind-svg.is-on .p-ind-brillo { animation: none; } }

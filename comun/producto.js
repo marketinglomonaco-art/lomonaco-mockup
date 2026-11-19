@@ -250,7 +250,7 @@
         '<animate attributeName="d" values="' + d0 + ';' + d1 + '" dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".2 .6 .3 1"/>' +
         '<animate attributeName="stroke-opacity" values="0;.95;.35;0" keyTimes="0;.12;.7;1" dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite"/></path>' +
         // Paco, 19/11: destello que recorre la línea de la onda
-        '<path class="p-ind-brillo" d="' + d0 + '" pathLength="100" stroke-dasharray="7 93" stroke-opacity="0">' +
+        '<path class="p-ind-brillo p-ind-brillo--' + (cls === 'p-ind-onda' ? 'el' : 'ella') + '" d="' + d0 + '" pathLength="100" stroke-dasharray="7 93" stroke-opacity="0">' +
         '<animate attributeName="d" values="' + d0 + ';' + d1 + '" dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".2 .6 .3 1"/>' +
         '<animate attributeName="stroke-dashoffset" values="100;0" dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite"/>' +
         '<animate attributeName="stroke-opacity" values="0;1;.4;0" keyTimes="0;.12;.7;1" dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite"/></path>';
