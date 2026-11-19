@@ -233,20 +233,20 @@ LM.ORDEN = ['visco', 'gold', 'latex', 'gran'];
    El vídeo es del Natura Látex (escena de Blender natura_latex_capas.py: 11 capas, 32 cm, de arriba abajo con su grosor).
    Paco, 09/11: en todos los modelos del mockup (el mismo vídeo y las mismas capas en todas las fichas y packs).
    [nombre, texto, x, y] · x, y = punto sobre la capa, en % del fotograma abierto (960 × 960). Paco, 09/11: centrados en la capa.
-   PROVISIONAL: nombres de la escena 3D; faltan los nombres y textos comerciales de Paco */
+   PROVISIONAL: nombres de la escena 3D. Paco, 19/11: cada capa con un texto sencillo de qué es y para qué sirve (sin tecnicismos) */
 LM.VIDEO_CAPAS = {
   todos: [
-    ['Látex natural', '3 cm. Una capa suave que te acoge al tumbarte. Hipoalergénica y transpirable.', 63.96, 35.73],
-    ['Capa de confort', '1 cm.', 63.96, 39.79],
-    ['Capa de confort', '1 cm.', 63.96, 43.02],
-    ['Capa fina', '1 cm.', 63.96, 46.56],
-    ['Espuma', '3 cm.', 63.96, 50.31],
-    ['Espuma', '3 cm.', 63.96, 54.9],
-    ['Muelles ensacados', '14 cm. Cada muelle trabaja solo: soporte a tu medida y no notas a tu pareja.', 63.96, 60.42],
-    ['Base', '2 cm.', 63.96, 65.94],
-    ['Capa fina', '1 cm.', 63.96, 70.1],
-    ['Capa fina', '1 cm.', 63.96, 73.44],
-    ['Capa inferior', '2 cm.', 63.96, 76.77]
+    ['Látex natural', '3 cm. Es lo primero que notas al tumbarte. El látex natural se adapta a tu cuerpo y recupera su forma en cuanto te mueves. Deja pasar el aire, así que no acumula calor, y es hipoalergénico.', 63.96, 35.73],
+    ['Capa de confort', '1 cm. Un acolchado fino justo debajo del látex. Hace más suave la primera sensación al tumbarte.', 63.96, 39.79],
+    ['Capa de confort', '1 cm. Una segunda capa de acolchado. Suma suavidad sin que el colchón pierda firmeza.', 63.96, 43.02],
+    ['Capa fina', '1 cm. Separa la parte suave de las espumas, para que cada capa se mantenga en su sitio.', 63.96, 46.56],
+    ['Espuma', '3 cm. Hace de puente entre la parte suave de arriba y los muelles, para que no los notes al tumbarte.', 63.96, 50.31],
+    ['Espuma', '3 cm. Una segunda capa de espuma que da cuerpo al colchón y ayuda a que la espalda quede bien recta.', 63.96, 54.9],
+    ['Muelles ensacados', '14 cm. El corazón del colchón. Cada muelle va en su propia funda y trabaja solo: cede donde pesas más y sujeta donde lo necesitas. Si tu pareja se mueve, tu lado sigue quieto.', 63.96, 60.42],
+    ['Base', '2 cm. Una capa firme sobre la que descansan los muelles. Les da un apoyo estable para que trabajen igual en todo el colchón.', 63.96, 65.94],
+    ['Capa fina', '1 cm. Protege la parte de abajo de los muelles y mantiene el interior del colchón ordenado.', 63.96, 70.1],
+    ['Capa fina', '1 cm. Un refuerzo más para que el colchón conserve su forma con el paso de los años.', 63.96, 73.44],
+    ['Capa inferior', '2 cm. La cara que apoya sobre el canapé o la base. Firme y estable, para que el colchón no se mueva.', 63.96, 76.77]
   ]
 };
 LM.ESCENA_PAREJA = {
