@@ -3140,3 +3140,7 @@ body .p-card.p-card--v2 > input { align-self: center; }
 .p-esc-f { top: 12%; }
 /* Paco, 19/11 · Espalda: frases más abajo, justo encima de la persona */
 .p-esc-f { top: 27%; }
+/* Paco, 19/11 · Espalda: frases más hacia el centro (no en los extremos) y la foto más oscura con un overlay negro uniforme, siempre puesto */
+.p-esc-f.p-ind-f--l { left: 10%; }
+.p-esc-f.p-ind-f--r { right: 10%; }
+.p-esc-velo, .p-esc-velo.is-on { opacity: 1; background: rgba(0,0,0,.34); }
