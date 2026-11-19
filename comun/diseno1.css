@@ -3108,3 +3108,9 @@ body .p-card.p-card--v2 > input { align-self: center; }
 
 /* Paco, 19/11 · Frases de la pareja: una línea (el tamaño lo ajusta producto.js); hasta el 45 % del ancho de la foto */
 .p-ind-f { max-width: 45%; font-size: clamp(26px, 3vw, 46px); }
+
+/* Paco, 19/11 · Fuera la línea discontinua del centro. Trama de puntos (muelles ensacados), muy suave, mientras dura la historia */
+.p-ind-svg .p-ind-lim { display: none; }
+.p-ind-trama { opacity: 0; transition: opacity .8s; }
+#p-ind-pat circle { fill: rgba(70, 80, 95, .2); }
+.p-ind-svg.is-on .p-ind-trama { opacity: 1; }
