@@ -3060,3 +3060,6 @@ body .p-card.p-card--v2 > input { align-self: center; }
 .p-ind-svg.is-on .p-ind-onda { animation: p-onda-sil 2.4s cubic-bezier(.2,.6,.3,1) infinite; }
 .p-ind-svg.is-on .p-ind-onda2 { animation: p-onda-sil2 3.6s ease-in-out infinite; }
 .p-ind-onda, .p-ind-onda2 { stroke-linejoin: round; }
+/* Paco, 19/11 · Las siluetas crecen sobre todo a lo ancho del colchón y poco a lo largo (no llenan toda la imagen; cada una se queda en su lado) */
+@keyframes p-onda-sil { 0% { transform: scale(1, 1); opacity: .9; } 70% { opacity: .3; } 100% { transform: scale(2.3, 1.1); opacity: 0; } }
+@keyframes p-onda-sil2 { 0% { transform: scale(1, 1); opacity: 0; } 25% { opacity: .85; } 100% { transform: scale(1.8, 1.06); opacity: 0; } }
