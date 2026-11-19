@@ -3100,3 +3100,8 @@ body .p-card.p-card--v2 > input { align-self: center; }
 .p-ind-svg .p-ind-onda2 { stroke: #10c58d; stroke-width: 4; }
 .p-ind-brillo--el { stroke: #a9d2ff; filter: drop-shadow(0 0 3px rgba(47,140,255,1)) drop-shadow(0 0 10px rgba(47,140,255,.85)); }
 .p-ind-brillo--ella { stroke: #a6f5d8; filter: drop-shadow(0 0 3px rgba(16,197,141,1)) drop-shadow(0 0 10px rgba(16,197,141,.85)); }
+
+/* Paco, 19/11 · Textos como su diseño: grandes y en una línea a cada lado (si no caben, en dos); el velo llega algo más adentro */
+.p-ind-f { width: auto; max-width: 40%; font-size: clamp(26px, 2.9vw, 46px); line-height: 1.1; text-wrap: balance; }
+.p-ind-velo { background: linear-gradient(90deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.32) 26%, rgba(0,0,0,0) 44%, rgba(0,0,0,0) 56%, rgba(0,0,0,.32) 74%, rgba(0,0,0,.55) 100%); }
+.p-ind-brillo { display: none; }

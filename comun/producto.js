@@ -229,9 +229,9 @@
     var muelles = P.nucleo.toLowerCase().indexOf('muelles') > -1;
     var T = [E.textos[0][1], muelles ? E.textos[1][1] : E.textos[1][2]];
     // Paco, 19/11: el argumento de la independencia de lechos, en tres momentos (izquierda · derecha)
-    var F = [['No te despiertes', 'cuando tu pareja se mueve.'],
-      muelles ? ['Cada muelle trabaja solo:', 'su movimiento se queda en su lado.'] : ['El látex absorbe el movimiento:', 'se queda en su lado.'],
-      ['Tú sigues durmiendo.', 'Y los dos descansáis mejor.']];
+    var F = [['No te despiertes', 'cuando tu pareja se mueve'],
+      muelles ? ['Cada muelle trabaja solo', 'y su movimiento no te llega'] : ['El látex absorbe', 'su movimiento no te llega'],
+      ['Tú sigues durmiendo', 'y los dos descansáis mejor']];
     var nf = 0;
     var L = E.lado, O = E.ondas, M = E.limite;
     // Contorno suave (Catmull-Rom cerrado) por los puntos de la silueta [x %, y % del alto]
@@ -254,16 +254,11 @@
       var tiempo = ' dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".2 .6 .3 1"';
       // Paco, 19/11: la onda emite luz (halo de su color) y se desenfoca según se aleja
       return '<filter id="' + fid + '" filterUnits="userSpaceOnUse" x="0" y="0" width="100" height="' + k.toFixed(2) + '">' +
-          '<feGaussianBlur in="SourceGraphic" stdDeviation="0" result="b"><animate attributeName="stdDeviation" values="0;.85"' + tiempo + '/></feGaussianBlur>' +
+          '<feGaussianBlur in="SourceGraphic" stdDeviation="0" result="b"><animate attributeName="stdDeviation" values="0;2.4"' + tiempo + '/></feGaussianBlur>' +
           '<feGaussianBlur in="b" stdDeviation=".45" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="g"/><feMergeNode in="b"/></feMerge></filter>' +
         '<path class="' + cls + '" style="filter:url(#' + fid + ')" d="' + d0 + '" stroke-opacity="0">' +
         '<animate attributeName="d" values="' + d0 + ';' + d1 + '" dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".2 .6 .3 1"/>' +
-        '<animate attributeName="stroke-opacity" values="0;.95;.35;0" keyTimes="0;.12;.7;1" dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite"/></path>' +
-        // Paco, 19/11: destello que recorre la línea de la onda
-        '<path class="p-ind-brillo p-ind-brillo--' + (cls === 'p-ind-onda' ? 'el' : 'ella') + '" d="' + d0 + '" pathLength="100" stroke-dasharray="7 93" stroke-opacity="0">' +
-        '<animate attributeName="d" values="' + d0 + ';' + d1 + '" dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".2 .6 .3 1"/>' +
-        '<animate attributeName="stroke-dashoffset" values="100;0" dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite"/>' +
-        '<animate attributeName="stroke-opacity" values="0;1;.4;0" keyTimes="0;.12;.7;1" dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite"/></path>';
+        '<animate attributeName="stroke-opacity" values="0;.95;.35;0" keyTimes="0;.12;.7;1" dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite"/></path>'; // Paco, 19/11: fuera los destellos
     }
     fig.innerHTML = '<div class="p-esc-stick"><div class="p-esc-img">' +
         '<div class="p-esc-zoom">' +
@@ -272,10 +267,10 @@
             '<defs><clipPath id="p-ind-clip"><rect x="' + L[0] + '" y="' + y(L[1]) + '" width="' + (L[2] - L[0]) + '" height="' + y(L[3] - L[1]) + '" rx="1.2"/></clipPath></defs>' +
             /* Paco, 19/11: las ondas tienen la forma del cuerpo (silueta de cada uno, vista desde arriba) y crecen desde él */
             /* Paco, 19/11: cada onda nace con la silueta del cuerpo y, al alejarse, se va suavizando hasta una forma redondeada y más ancha */
-            '<g class="p-ind-g" clip-path="url(#p-ind-clip)">' + [0, 1, 2].map(function (i) { return onda('p-ind-onda', E.silueta, E.centro, 15, 41, 2.4, i * .8); }).join('') + '</g>' +
+            '<g class="p-ind-g" clip-path="url(#p-ind-clip)">' + [0, 1, 2].map(function (i) { return onda('p-ind-onda', E.silueta, E.centro, 20, 36, 2.4, i * .8); }).join('') + '</g>' +
             /* Paco, 19/11: ella también tiene sus ondas (lentas y suaves, su descanso). Las de él no pasan a su lado y las de ella no cambian */
             (E.ondas2 ? '<defs><clipPath id="p-ind-clip2"><rect x="' + E.lado2[0] + '" y="' + y(E.lado2[1]) + '" width="' + (E.lado2[2] - E.lado2[0]) + '" height="' + y(E.lado2[3] - E.lado2[1]) + '" rx="1.2"/></clipPath></defs>' +
-              '<g class="p-ind-g" clip-path="url(#p-ind-clip2)">' + [0, 1].map(function (i) { return onda('p-ind-onda2', E.silueta2, E.centro2, 11, 39, 3.6, i * 1.8); }).join('') + '</g>' : '') +
+              '<g class="p-ind-g" clip-path="url(#p-ind-clip2)">' + [0, 1].map(function (i) { return onda('p-ind-onda2', E.silueta2, E.centro2, 11, 39, 6, i * 3); }).join('') + '</g>' : '') +
             '<line class="p-ind-lim" x1="' + M[0] + '" y1="' + y(M[1]) + '" x2="' + M[0] + '" y2="' + y(M[2]) + '"/>' +
           '</svg>' +
           '<p class="p-esc-cap" data-z="0" style="left:' + E.textos[0][0] + '%">' + T[0] + '</p>' +
