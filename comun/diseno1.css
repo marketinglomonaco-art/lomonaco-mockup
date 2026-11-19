@@ -3138,3 +3138,5 @@ body .p-card.p-card--v2 > input { align-self: center; }
 /* Paco, 19/11 · Espalda: fondo algo más oscuro (velo) para que resalten el texto y los puntos */
 .p-esc-velo { background: linear-gradient(180deg, rgba(0,0,0,.58) 0%, rgba(0,0,0,.34) 32%, rgba(0,0,0,.24) 100%); }
 .p-esc-f { top: 12%; }
+/* Paco, 19/11 · Espalda: frases más abajo, justo encima de la persona */
+.p-esc-f { top: 27%; }
