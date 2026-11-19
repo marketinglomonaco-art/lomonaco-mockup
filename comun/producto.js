@@ -278,24 +278,25 @@
               var defs = '<defs><filter id="p-ind-suave"><feGaussianBlur stdDeviation=".5"/></filter>' +
                 '<mask id="p-ind-caras" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="' + k.toFixed(2) + '"><rect width="100" height="' + k.toFixed(2) + '" fill="#fff"/>' +
                   C.map(function (c) { return '<ellipse cx="' + c[0] + '" cy="' + y(c[1]) + '" rx="' + c[2] + '" ry="' + y(c[3]) + '" fill="#000" filter="url(#p-ind-suave)"/>'; }).join('') + '</mask>' +
-                '<pattern id="p-ind-pat" width="2.1" height="2.1" patternUnits="userSpaceOnUse"><circle cx="1.05" cy="1.05" r=".28"/></pattern>' +
-                '<pattern id="p-ind-pat-el" width="2.1" height="2.1" patternUnits="userSpaceOnUse"><circle cx="1.05" cy="1.05" r=".42"/></pattern>' +
-                '<pattern id="p-ind-pat-ella" width="2.1" height="2.1" patternUnits="userSpaceOnUse"><circle cx="1.05" cy="1.05" r=".42"/></pattern>' +
+                '<pattern id="p-ind-pat" width="2.1" height="2.1" patternUnits="userSpaceOnUse"><circle cx="1.05" cy="1.05" r=".15"/></pattern>' +
+                '<pattern id="p-ind-pat-el" width="2.1" height="2.1" patternUnits="userSpaceOnUse"><circle cx="1.05" cy="1.05" r=".48"/></pattern>' +
+                '<pattern id="p-ind-pat-ella" width="2.1" height="2.1" patternUnits="userSpaceOnUse"><circle cx="1.05" cy="1.05" r=".48"/></pattern>' +
                 // Paco, 19/11: las ondas «afectan» a los muelles: donde pasa la onda, los puntos se encienden de su color
                 '<mask id="p-ind-mk-el" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="' + k.toFixed(2) + '">' + [0, 1, 2].map(function (i) { return ondaMascara(E.silueta, E.centro, 20, 36, 2.4, i * .8); }).join('') + '</mask>' +
                 (E.ondas2 ? '<mask id="p-ind-mk-ella" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="' + k.toFixed(2) + '">' + [0, 1].map(function (i) { return ondaMascara(E.silueta2, E.centro2, 11, 39, 6, i * 3); }).join('') + '</mask>' : '') +
                 '</defs>';
               return defs + '<g mask="url(#p-ind-caras)">' + r('url(#p-ind-pat)', ' class="p-ind-trama"') +
-                '<g class="p-ind-g" clip-path="url(#p-ind-clip)">' + r('url(#p-ind-pat-el)', ' mask="url(#p-ind-mk-el)"') + '</g>' +
-                (E.ondas2 ? '<g class="p-ind-g" clip-path="url(#p-ind-clip2)">' + r('url(#p-ind-pat-ella)', ' mask="url(#p-ind-mk-ella)"') + '</g>' : '') + '</g>';
+                '<g class="p-ind-g" mask="url(#p-ind-clip)">' + r('url(#p-ind-pat-el)', ' mask="url(#p-ind-mk-el)"') + '</g>' +
+                (E.ondas2 ? '<g class="p-ind-g" mask="url(#p-ind-clip2)">' + r('url(#p-ind-pat-ella)', ' mask="url(#p-ind-mk-ella)"') + '</g>' : '') + '</g>';
             })() : '') +
-            '<defs><clipPath id="p-ind-clip"><rect x="' + L[0] + '" y="' + y(L[1]) + '" width="' + (L[2] - L[0]) + '" height="' + y(L[3] - L[1]) + '" rx="1.2"/></clipPath></defs>' +
+            '<defs><filter id="p-ind-borde" filterUnits="userSpaceOnUse" x="0" y="0" width="100" height="' + k.toFixed(2) + '"><feGaussianBlur stdDeviation="1.1"/></filter>' +
+              '<mask id="p-ind-clip" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="' + k.toFixed(2) + '"><rect x="' + L[0] + '" y="' + y(L[1]) + '" width="' + (L[2] - L[0] - 1.2) + '" height="' + y(L[3] - L[1]) + '" rx="1.2" fill="#fff" filter="url(#p-ind-borde)"/></mask></defs>' +
             /* Paco, 19/11: las ondas tienen la forma del cuerpo (silueta de cada uno, vista desde arriba) y crecen desde él */
             /* Paco, 19/11: cada onda nace con la silueta del cuerpo y, al alejarse, se va suavizando hasta una forma redondeada y más ancha */
-            '<g class="p-ind-g" clip-path="url(#p-ind-clip)">' + [0, 1, 2].map(function (i) { return onda('p-ind-onda', E.silueta, E.centro, 20, 36, 2.4, i * .8); }).join('') + '</g>' +
+            '<g class="p-ind-g" mask="url(#p-ind-clip)">' + [0, 1, 2].map(function (i) { return onda('p-ind-onda', E.silueta, E.centro, 20, 36, 2.4, i * .8); }).join('') + '</g>' +
             /* Paco, 19/11: ella también tiene sus ondas (lentas y suaves, su descanso). Las de él no pasan a su lado y las de ella no cambian */
-            (E.ondas2 ? '<defs><clipPath id="p-ind-clip2"><rect x="' + E.lado2[0] + '" y="' + y(E.lado2[1]) + '" width="' + (E.lado2[2] - E.lado2[0]) + '" height="' + y(E.lado2[3] - E.lado2[1]) + '" rx="1.2"/></clipPath></defs>' +
-              '<g class="p-ind-g" clip-path="url(#p-ind-clip2)">' + [0, 1].map(function (i) { return onda('p-ind-onda2', E.silueta2, E.centro2, 11, 39, 6, i * 3); }).join('') + '</g>' : '') +
+            (E.ondas2 ? '<defs><mask id="p-ind-clip2" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="' + k.toFixed(2) + '"><rect x="' + (E.lado2[0] + 1.2) + '" y="' + y(E.lado2[1]) + '" width="' + (E.lado2[2] - E.lado2[0] - 1.2) + '" height="' + y(E.lado2[3] - E.lado2[1]) + '" rx="1.2" fill="#fff" filter="url(#p-ind-borde)"/></mask></defs>' +
+              '<g class="p-ind-g" mask="url(#p-ind-clip2)">' + [0, 1].map(function (i) { return onda('p-ind-onda2', E.silueta2, E.centro2, 11, 39, 6, i * 3); }).join('') + '</g>' : '') +
             '<line class="p-ind-lim" x1="' + M[0] + '" y1="' + y(M[1]) + '" x2="' + M[0] + '" y2="' + y(M[2]) + '"/>' +
           '</svg>' +
           '<p class="p-esc-cap" data-z="0" style="left:' + E.textos[0][0] + '%">' + T[0] + '</p>' +
