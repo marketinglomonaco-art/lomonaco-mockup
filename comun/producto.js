@@ -64,7 +64,9 @@
   }
   function renderBases() {
     var solo = LM.PRECIOS[K][st.medida];
-    $('#p-base').innerHTML = BASES.map(function (b) {
+    // Paco, 19/11: las 3 opciones siempre de más a menos precio (las que no hay en esta medida, al final)
+    var ORDEN = BASES.slice().sort(function (x, y) { var a = x.tabla[st.medida], c = y.tabla[st.medida]; return (c ? c.p : -1) - (a ? a.p : -1); });
+    $('#p-base').innerHTML = ORDEN.map(function (b) {
       var d = b.tabla[st.medida], dis = !d;
       var diff = d && b.k !== 'solo' ? '+' + LM.eur(d.p - solo.p) : (d ? LM.eur(d.p) : 'No disponible en ' + LM.medidaTxt(st.medida));
       // Paco, 30/10: cada opción lleva la foto de sus regalos y su valor tachado («Gratis»), sin la franja granate.
@@ -81,7 +83,7 @@
         /* Paco, 19/11: usabilidad. El precio en la misma línea que el nombre y siempre el total (se comparan las tres opciones
            de un vistazo); en los packs, debajo y en pequeño, lo que suma respecto al colchón solo */
         '<span class="p-card-tx"><span class="p-card-h"><b>' + (b.k === 'solo' ? R.t : b.t) + '</b><em>' +
-          (d ? LM.eur(d.p) + (b.k !== 'solo' ? '<small>' + diff + ' sobre el colchón</small>' : '') : '<small>No disponible en ' + LM.medidaTxt(st.medida) + '</small>') +
+          (d ? diff : '<small>No disponible en ' + LM.medidaTxt(st.medida) + '</small>') + // Paco, 19/11: vuelve el «+» (solo colchón: su precio)
         '</em></span><small>' + b.d + '</small>' +
         (conRegalo ? '<small class="p-card-val">Valorado en <s>' + LM.eur(v) + '</s> <strong>Gratis</strong></small>' : '') + '</span>' +
         '</label>';
