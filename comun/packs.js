@@ -57,10 +57,9 @@
         '<a class="pk2-l" href="' + LM.href(P.url) + '">Ver el colchón</a></div>';
       // 2 · Canapé o base, con sus acabados
       $('#pk2-base').innerHTML = '<div class="pk2-img pk2-img--gris"><img src="../img/pack-tipo-' + st.base + '-700.webp" srcset="../img/pack-tipo-' + st.base + '-700.webp 700w, ../img/pack-tipo-' + st.base + '-1200.webp 1200w" sizes="(max-width: 700px) 90vw, 320px" alt="' + esc(L1.t) + '" width="700" height="438" loading="lazy"></div>' +
-        '<div class="pk2-b"><h3>' + esc(canape ? 'Canapé abatible' : L1.t) + '</h3><p class="pk2-sub">Acabado <b>' + esc(D.color) + '</b></p>' +
-        '<span class="pkl-sw pk2-sw" role="radiogroup" aria-label="Acabado ' + (canape ? 'del canapé' : 'de la base') + '">' + COLS.map(function (x) {
-          return '<button type="button" role="radio" data-pkc="' + esc(x.k) + '" aria-checked="' + (x.k === D.color) + '" aria-label="' + esc(x.k) + '" title="' + esc(x.k) + '"><img src="../img/tienda/' + x.sw + '-700.webp" alt="" width="28" height="28" loading="lazy"></button>';
-        }).join('') + '</span>' + precio(L1) + '</div>';
+        // Paco, 19/11: fuera el selector de acabados (se elige en la página del pack); precio con el acabado de siempre
+        '<div class="pk2-b"><h3>' + esc(canape ? 'Canapé abatible' : L1.t) + '</h3><p class="pk2-sub">' + COLS.length + ' acabados a elegir en el pack</p>' +
+        precio(L1) + '</div>';
       // 3 · Regalos
       $('#pk2-reg').innerHTML = '<div class="pk2-reg-h">' + LM.ico('gift') + '<h3>' + D.regalos.length + ' regalos incluidos</h3></div>' +
         '<p class="pk2-pill">Valorados en ' + LM.eur(D.valorRegalos) + '</p>' +
