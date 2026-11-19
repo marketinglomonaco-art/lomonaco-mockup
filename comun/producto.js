@@ -229,18 +229,29 @@
     var muelles = P.nucleo.toLowerCase().indexOf('muelles') > -1;
     var T = [E.textos[0][1], muelles ? E.textos[1][1] : E.textos[1][2]];
     var L = E.lado, O = E.ondas, M = E.limite;
+    // Contorno suave (Catmull-Rom cerrado) por los puntos de la silueta [x %, y % del alto]
+    function silueta(pt) {
+      var q = pt.map(function (p) { return [p[0], +y(p[1])]; }), n = q.length, d = 'M' + q[0][0] + ' ' + q[0][1];
+      for (var i = 0; i < n; i++) {
+        var p0 = q[(i - 1 + n) % n], p1 = q[i], p2 = q[(i + 1) % n], p3 = q[(i + 2) % n];
+        d += 'C' + (p1[0] + (p2[0] - p0[0]) / 6).toFixed(2) + ' ' + (p1[1] + (p2[1] - p0[1]) / 6).toFixed(2) + ' ' +
+          (p2[0] - (p3[0] - p1[0]) / 6).toFixed(2) + ' ' + (p2[1] - (p3[1] - p1[1]) / 6).toFixed(2) + ' ' + p2[0] + ' ' + p2[1];
+      }
+      return d + 'Z';
+    }
     fig.innerHTML = '<div class="p-esc-stick"><div class="p-esc-img">' +
         '<div class="p-esc-zoom">' +
           '<img src="' + s(1200) + '" srcset="' + s(800) + ' 800w, ' + s(1200) + ' ' + E.w + 'w" sizes="(max-width: 1320px) 100vw, 1320px" alt="Pareja durmiendo abrazada sobre el ' + P.titulo + ', vista desde arriba" width="' + E.w + '" height="' + E.h + '" loading="lazy">' +
           '<svg class="p-ind-svg" viewBox="0 0 100 ' + k.toFixed(2) + '" preserveAspectRatio="none" aria-hidden="true">' +
             '<defs><clipPath id="p-ind-clip"><rect x="' + L[0] + '" y="' + y(L[1]) + '" width="' + (L[2] - L[0]) + '" height="' + y(L[3] - L[1]) + '" rx="1.2"/></clipPath></defs>' +
+            /* Paco, 19/11: las ondas tienen la forma del cuerpo (silueta de cada uno, vista desde arriba) y crecen desde él */
             '<g clip-path="url(#p-ind-clip)">' + [0, 1, 2].map(function (i) {
-              return '<circle class="p-ind-onda" style="animation-delay:' + (i * .8) + 's;transform-origin:' + O[0] + 'px ' + y(O[1]) + 'px" cx="' + O[0] + '" cy="' + y(O[1]) + '" r="24"/>';
+              return '<path class="p-ind-onda" style="animation-delay:' + (i * .8) + 's;transform-origin:' + E.centro[0] + 'px ' + y(E.centro[1]) + 'px" d="' + silueta(E.silueta) + '"/>';
             }).join('') + '</g>' +
             /* Paco, 19/11: ella también tiene sus ondas (lentas y suaves, su descanso). Las de él no pasan a su lado y las de ella no cambian */
             (E.ondas2 ? '<defs><clipPath id="p-ind-clip2"><rect x="' + E.lado2[0] + '" y="' + y(E.lado2[1]) + '" width="' + (E.lado2[2] - E.lado2[0]) + '" height="' + y(E.lado2[3] - E.lado2[1]) + '" rx="1.2"/></clipPath></defs>' +
               '<g clip-path="url(#p-ind-clip2)">' + [0, 1].map(function (i) {
-                return '<circle class="p-ind-onda2" style="animation-delay:' + (i * 1.8) + 's;transform-origin:' + E.ondas2[0] + 'px ' + y(E.ondas2[1]) + 'px" cx="' + E.ondas2[0] + '" cy="' + y(E.ondas2[1]) + '" r="12"/>';
+                return '<path class="p-ind-onda2" style="animation-delay:' + (i * 1.8) + 's;transform-origin:' + E.centro2[0] + 'px ' + y(E.centro2[1]) + 'px" d="' + silueta(E.silueta2) + '"/>';
               }).join('') + '</g>' : '') +
             '<line class="p-ind-lim" x1="' + M[0] + '" y1="' + y(M[1]) + '" x2="' + M[0] + '" y2="' + y(M[2]) + '"/>' +
           '</svg>' +

@@ -3053,3 +3053,10 @@ body .p-card.p-card--v2 > input { align-self: center; }
 .p-ind-lim { stroke: #8a8a8f; }
 @media (max-width: 700px) { .p-ind-onda2 { stroke-width: 3.2; } }
 @media (prefers-reduced-motion: reduce) { .p-ind-svg.is-on .p-ind-onda2 { animation: none; opacity: .6; transform: scale(.7); } }
+
+/* Paco, 19/11 · Ondas con forma de silueta: salen del contorno de cada cuerpo y crecen hacia fuera */
+@keyframes p-onda-sil { 0% { transform: scale(1); opacity: .9; } 70% { opacity: .3; } 100% { transform: scale(1.45); opacity: 0; } }
+@keyframes p-onda-sil2 { 0% { transform: scale(1); opacity: 0; } 25% { opacity: .85; } 100% { transform: scale(1.22); opacity: 0; } }
+.p-ind-svg.is-on .p-ind-onda { animation: p-onda-sil 2.4s cubic-bezier(.2,.6,.3,1) infinite; }
+.p-ind-svg.is-on .p-ind-onda2 { animation: p-onda-sil2 3.6s ease-in-out infinite; }
+.p-ind-onda, .p-ind-onda2 { stroke-linejoin: round; }
