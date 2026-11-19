@@ -449,7 +449,9 @@
   /* ---------- cabecera y menú (estructura de grupolomonaco.com) [T1] ---------- */
   function megaCard(k) {
     var p = LM.PRODUCTOS[k], d = LM.desde(k);
-    return '<a class="lm-mc" href="' + LM.href(p.url) + '"><img src="' + p.img + '" alt="" width="120" height="120" loading="lazy">' +
+    // Paco, 19/11: en el menú de escritorio, la foto del colchón solo (la de las tarjetas), no la del colchón con canapé o base
+    var foto = LM.FOTO_HOME && LM.FOTO_HOME[k] ? '../img/' + LM.FOTO_HOME[k] + '-480.webp' : p.img;
+    return '<a class="lm-mc" href="' + LM.href(p.url) + '"><img src="' + foto + '" alt="" width="120" height="120" loading="lazy">' +
       '<span><small>' + esc(p.nucleo) + '</small><b>' + esc(p.titulo) + '</b><em>Desde ' + LM.eur(d.p) + '</em></span></a>';
   }
   function fichaCard(k) {
