@@ -184,7 +184,7 @@
           '<p class="p-esc-lab" style="left:' + E.etiqueta[0] + '%;top:' + E.etiqueta[1] + '%">' + LM.ico('check') + 'Columna recta</p>' +
         '</div>' +
         // Paco, 19/11: el argumento en grande sobre la foto, como en la pareja: izquierda y luego derecha, en cada momento
-        '<i class="p-esc-velo" aria-hidden="true"></i>' +
+        '<i class="p-esc-sombra" aria-hidden="true"></i>' +
         FE.map(function (f, i) { return '<p class="p-ind-f p-esc-f p-ind-f--l" data-f="' + i + '">' + f[0] + '</p><p class="p-ind-f p-esc-f p-ind-f--r" data-f="' + i + '">' + f[1] + '</p>'; }).join('') +
         '<ol class="p-esc-pasos" aria-hidden="true"><li></li><li></li><li></li></ol>' +
         // Paco, 09/11: aviso integrado, como el de «Por dentro» (sin «Recreación ilustrativa»)
@@ -193,7 +193,7 @@
     esc.hidden = false;
     var zoom = $('.p-esc-zoom', esc), sp = $('.p-esc-sp', esc), pasos = $$('.p-esc-pasos li', esc);
     var caps = $$('.p-esc-cap', esc), lab = $('.p-esc-lab', esc), aviso = $('.p-esc-aviso', esc), stick = $('.p-esc-stick', esc);
-    var frasesE = $$('.p-esc-f', esc), veloE = $('.p-esc-velo', esc);
+    var frasesE = $$('.p-esc-f', esc), veloE = $('.p-esc-sombra', esc);
     ajustarFrases($('.p-esc-img', esc), frasesE, FE.length);
     addEventListener('resize', function () { ajustarFrases($('.p-esc-img', esc), frasesE, FE.length); });
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { ajustarFrases($('.p-esc-img', esc), frasesE, FE.length); });

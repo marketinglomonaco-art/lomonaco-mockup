@@ -3144,3 +3144,6 @@ body .p-card.p-card--v2 > input { align-self: center; }
 .p-esc-f.p-ind-f--l { left: 10%; }
 .p-esc-f.p-ind-f--r { right: 10%; }
 .p-esc-velo, .p-esc-velo.is-on { opacity: 1; background: rgba(0,0,0,.34); }
+/* Paco, 19/11 · Espalda: overlay negro uniforme sobre la foto (clase nueva: había una regla antigua que ocultaba .p-esc-velo) */
+.p-esc-sombra { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: rgba(0,0,0,.34); }
+@media (max-width: 900px) { .p-esc-sombra { background: rgba(0,0,0,.2); } }
