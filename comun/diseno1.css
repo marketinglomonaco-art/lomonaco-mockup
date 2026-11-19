@@ -3035,3 +3035,11 @@ body .p-card.p-card--v2 .p-card-imgs .p-card-prod { width: 84px; background: #F6
   body .p-card.p-card--v2 .p-card-imgs img { width: 44px; height: 44px; }
   body .p-card.p-card--v2 .p-card-imgs .p-card-prod { width: 64px; }
 }
+
+/* Paco, 19/11 · Opciones de la ficha: el precio total en la línea del nombre (a la derecha) y, en los packs, lo que suma debajo */
+body .p-card.p-card--v2 { grid-template-columns: auto minmax(0, 1fr); }
+body .p-card.p-card--v2 > .p-card-tx { grid-column: 2; grid-row: 2; display: block; }
+.p-card-h { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+body .p-card .p-card-h em { flex: none; display: grid; justify-items: end; font-style: normal; font-weight: 800; font-size: 17px; line-height: 1.15; text-align: right; color: var(--ink); }
+body .p-card .p-card-h em small { font-size: 12.5px; font-weight: 600; color: var(--mute); margin-top: 2px; }
+body .p-card.p-card--v2 > input { align-self: center; }

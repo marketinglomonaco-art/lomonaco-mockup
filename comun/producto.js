@@ -78,8 +78,12 @@
       var foto = !G ? '<span class="p-card-imgs"><img src="' + R.img + '" alt="' + R.alt + '" width="240" height="180" loading="lazy"></span>'
         : '<span class="p-card-imgs">' + prod + (G.length ? '<b class="p-card-mas" aria-hidden="true">+</b>' + G.map(function (x) { return '<img src="' + x[3] + '" alt="' + x[0] + ' de regalo" width="160" height="160" loading="lazy">'; }).join('<b class="p-card-plus" aria-hidden="true">+</b>') : '') + '</span>';
       return '<label class="p-card p-card--v2' + (conRegalo ? ' p-card--regalo' : '') + (dis ? ' is-na' : '') + '"><input type="radio" name="base" value="' + b.k + '"' + (st.base === b.k ? ' checked' : '') + (dis ? ' disabled' : '') + '>' + foto +
-        '<span><b>' + (b.k === 'solo' ? R.t : b.t) + '</b><small>' + b.d + '</small>' +
-        (conRegalo ? '<small class="p-card-val">Valorado en <s>' + LM.eur(v) + '</s> <strong>Gratis</strong></small>' : '') + '</span><em>' + diff + '</em>' +
+        /* Paco, 19/11: usabilidad. El precio en la misma línea que el nombre y siempre el total (se comparan las tres opciones
+           de un vistazo); en los packs, debajo y en pequeño, lo que suma respecto al colchón solo */
+        '<span class="p-card-tx"><span class="p-card-h"><b>' + (b.k === 'solo' ? R.t : b.t) + '</b><em>' +
+          (d ? LM.eur(d.p) + (b.k !== 'solo' ? '<small>' + diff + ' sobre el colchón</small>' : '') : '<small>No disponible en ' + LM.medidaTxt(st.medida) + '</small>') +
+        '</em></span><small>' + b.d + '</small>' +
+        (conRegalo ? '<small class="p-card-val">Valorado en <s>' + LM.eur(v) + '</s> <strong>Gratis</strong></small>' : '') + '</span>' +
         '</label>';
     }).join('');
   }
