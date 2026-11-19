@@ -216,10 +216,12 @@
     var top = LM.recomendar(r).slice(0, 2);
     box.innerHTML =
       '<p class="h4q-n">Tu resultado</p><div class="h4q-bar" aria-hidden="true"><i style="width:100%"></i></div>' +
-      '<h3 class="h4q-q" id="h4q-q" tabindex="-1">' + resumen() + '</h3>' +
-      '<p class="h4q-s">Estos son los dos colchones que mejor encajan contigo. Elige tu medida para ver el precio:</p>' +
-      '<label class="h4q-med"><span>Medida</span><select id="h4q-med">' + LM.MEDIDAS.map(function (m) { return '<option value="' + m + '"' + (m === medida ? ' selected' : '') + '>' + LM.medidaTxt(m) + '</option>'; }).join('') + '</select></label>' +
-      '<button type="button" class="h4q-again" data-again>Repetir el test</button>';
+      /* Paco, 19/11: el resumen («Buscas un colchón…») pasa a texto pequeño; titular corto y medida y «Repetir» en una fila,
+         para llegar antes a los colchones */
+      '<h3 class="h4q-q" id="h4q-q" tabindex="-1">Tus dos colchones más compatibles</h3>' +
+      '<p class="h4q-s h4q-res-r">' + resumen() + '</p>' +
+      '<div class="h4q-res-row"><label class="h4q-med"><span>Medida</span><select id="h4q-med">' + LM.MEDIDAS.map(function (m) { return '<option value="' + m + '"' + (m === medida ? ' selected' : '') + '>' + LM.medidaTxt(m) + '</option>'; }).join('') + '</select></label>' +
+      '<button type="button" class="h4q-again" data-again>Repetir el test</button></div>';
     res.hidden = false;
     res.innerHTML = '<div class="h4q-cards">' + top.map(tarjeta).join('') + '</div>' +
       '<div class="h4q-call"><p><b>¿Lo hablamos?</b> Te ayudamos a decidir entre los dos, sin compromiso. ' + C.horario.v + '.</p>' + LM.llamar('home-cuestionario') + '</div>';

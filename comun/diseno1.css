@@ -3014,3 +3014,8 @@ html body .h4p-tipo .h4p-opt-pr { display: flex; align-items: baseline; gap: 8px
 /* Paco, 19/11 · Tarjetas de colchón: el texto siempre en 2 líneas (mismo alto en todas, las barras alineadas) y sin viudas */
 .lm-card-d { line-height: 1.5; min-height: 3em; text-wrap: balance; }
 @media (min-width: 1101px) and (max-width: 1360px) { .lm-card-d { font-size: 14.5px; } }
+
+/* Paco, 19/11 · Resultado del test más compacto: resumen en texto pequeño; medida y «Repetir el test» en una fila */
+.h4q-res-r { font-size: 15.5px; line-height: 1.5; color: var(--mute); margin-top: 8px; }
+.h4q-res-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; margin-top: 18px; }
+.h4q-res-row .h4q-med, .h4q-res-row .h4q-again { margin: 0; }
