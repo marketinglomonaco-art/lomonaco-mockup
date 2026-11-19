@@ -4,9 +4,11 @@
      de golpe (sin degradado ni fundido) y por grupos, empezando por los que más superficie ocupan (comun/rojo.css). */
 (function () {
   'use strict';
-  var OPS = [['a', 'Opción A', 'diseno1-a'], ['b', 'Opción B', 'diseno1-b']];
+  // Paco, 19/11: la opción B queda desactivada. Solo se trabaja la A; si alguien abre una página de la B, va a la misma página de la A
+  var OPS = [['a', 'Opción A', 'diseno1-a']];
   var actual = document.body.getAttribute('data-variante') || 'a';
   var file = location.pathname.split('/').pop() || 'index.html';
+  if (actual === 'b' || /\/diseno1-b\//.test(location.pathname)) { location.replace('../diseno1-a/' + file + location.search + location.hash); return; }
   // Grupos de mayor a menor superficie: [variable, nombre]
   var G = [['p1', 'Franja de confianza'], ['p2', 'Franja superior'], ['p3', 'Titulares'], ['p4', 'Botones de tarjeta y menú'],
            ['p5', 'Etiquetas de foto'], ['p6', 'Descuentos'], ['p7', 'Barras de firmeza'], ['p8', 'Detalles (flechas, iconos, selección)']];
