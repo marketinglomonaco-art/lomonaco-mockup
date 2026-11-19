@@ -253,6 +253,8 @@ LM.VIDEO_CAPAS = {
 LM.ESCENA_PAREJA = {
   img: '../img/escena-pareja', w: 1200, h: 896,
   ondas: [43.5, 57], lado: [26, 8.5, 50.8, 92], limite: [50.8, 22, 90], etiqueta: [66, 44],
+  // Paco, 19/11: las ondas de ella (su descanso, tranquilo) y su lado del colchón
+  ondas2: [57.5, 52], lado2: [50.8, 8.5, 75.6, 92],
   textos: [[37, 'Tu pareja se mueve…'], [50.8, '…pero cada muelle trabaja solo', '…pero el colchón absorbe el movimiento']]
 };
 /* Paco, 12/11: foto nueva (pulido/capturas/1211-07b-columna-recta-nueva.jpg), recortada a 1200 × 750 */

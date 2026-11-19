@@ -3043,3 +3043,13 @@ body .p-card.p-card--v2 > .p-card-tx { grid-column: 2; grid-row: 2; display: blo
 body .p-card .p-card-h em { flex: none; display: grid; justify-items: end; font-style: normal; font-weight: 800; font-size: 17px; line-height: 1.15; text-align: right; color: var(--ink); }
 body .p-card .p-card-h em small { font-size: 12.5px; font-weight: 600; color: var(--mute); margin-top: 2px; }
 body .p-card.p-card--v2 > input { align-self: center; }
+
+/* Paco, 19/11 · Independencia de lechos: colores que no recuerdan a dolor. Él: ondas azules (su movimiento), que se quedan en su lado.
+   Ella: ondas verde salvia, lentas y suaves (su descanso), que siguen igual aunque él se mueva. La línea del centro, gris */
+.p-ind-onda { stroke: #3f7fb0; }
+.p-ind-onda2 { fill: none; stroke: #5e9a7c; stroke-width: 4; vector-effect: non-scaling-stroke; opacity: 0; transform-box: view-box; filter: drop-shadow(0 0 3px rgba(255,255,255,.9)); }
+.p-ind-svg.is-on .p-ind-onda2 { animation: p-onda2 3.6s ease-in-out infinite; }
+@keyframes p-onda2 { 0% { transform: scale(.25); opacity: 0; } 30% { opacity: .85; } 100% { transform: scale(1); opacity: 0; } }
+.p-ind-lim { stroke: #8a8a8f; }
+@media (max-width: 700px) { .p-ind-onda2 { stroke-width: 3.2; } }
+@media (prefers-reduced-motion: reduce) { .p-ind-svg.is-on .p-ind-onda2 { animation: none; opacity: .6; transform: scale(.7); } }

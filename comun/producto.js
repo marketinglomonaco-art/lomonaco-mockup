@@ -237,6 +237,11 @@
             '<g clip-path="url(#p-ind-clip)">' + [0, 1, 2].map(function (i) {
               return '<circle class="p-ind-onda" style="animation-delay:' + (i * .8) + 's;transform-origin:' + O[0] + 'px ' + y(O[1]) + 'px" cx="' + O[0] + '" cy="' + y(O[1]) + '" r="24"/>';
             }).join('') + '</g>' +
+            /* Paco, 19/11: ella también tiene sus ondas (lentas y suaves, su descanso). Las de él no pasan a su lado y las de ella no cambian */
+            (E.ondas2 ? '<defs><clipPath id="p-ind-clip2"><rect x="' + E.lado2[0] + '" y="' + y(E.lado2[1]) + '" width="' + (E.lado2[2] - E.lado2[0]) + '" height="' + y(E.lado2[3] - E.lado2[1]) + '" rx="1.2"/></clipPath></defs>' +
+              '<g clip-path="url(#p-ind-clip2)">' + [0, 1].map(function (i) {
+                return '<circle class="p-ind-onda2" style="animation-delay:' + (i * 1.8) + 's;transform-origin:' + E.ondas2[0] + 'px ' + y(E.ondas2[1]) + 'px" cx="' + E.ondas2[0] + '" cy="' + y(E.ondas2[1]) + '" r="12"/>';
+              }).join('') + '</g>' : '') +
             '<line class="p-ind-lim" x1="' + M[0] + '" y1="' + y(M[1]) + '" x2="' + M[0] + '" y2="' + y(M[2]) + '"/>' +
           '</svg>' +
           '<p class="p-esc-cap" data-z="0" style="left:' + E.textos[0][0] + '%">' + T[0] + '</p>' +
