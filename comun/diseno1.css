@@ -3152,3 +3152,6 @@ body .p-card.p-card--v2 > input { align-self: center; }
 /* Paco, 19/11 · Espalda: fondo más oscuro, más contraste para el texto blanco */
 .p-esc-sombra { background: linear-gradient(180deg, rgba(0,0,0,.56) 0%, rgba(0,0,0,.46) 45%, rgba(0,0,0,.4) 100%); }
 @media (max-width: 900px) { .p-esc-sombra { background: rgba(0,0,0,.28); } }
+/* Paco, 19/11 · Espalda: overlay más suave (estaba demasiado oscuro) */
+.p-esc-sombra { background: linear-gradient(180deg, rgba(0,0,0,.36) 0%, rgba(0,0,0,.24) 45%, rgba(0,0,0,.18) 100%); }
+@media (max-width: 900px) { .p-esc-sombra { background: rgba(0,0,0,.18); } }
