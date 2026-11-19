@@ -3010,3 +3010,7 @@ html body .h4p-tipo .h4p-opt-pr { display: flex; align-items: baseline; gap: 8px
 .h4c-k-b h3 { margin-top: 6px; }
 .h4c-k .h4c-more + .h4c-more { margin-top: 0; padding-top: 2px; }
 .h4c-k .h4c-more--tel { font-weight: 600; color: var(--ink); text-decoration-color: var(--line); }
+
+/* Paco, 19/11 · Tarjetas de colchón: el texto siempre en 2 líneas (mismo alto en todas, las barras alineadas) y sin viudas */
+.lm-card-d { line-height: 1.5; min-height: 3em; text-wrap: balance; }
+@media (min-width: 1101px) and (max-width: 1360px) { .lm-card-d { font-size: 14.5px; } }
