@@ -228,6 +228,11 @@
     var s = function (w) { return E.img + '-' + w + '.webp'; }, k = E.h / E.w * 100, y = function (v) { return (v * k / 100).toFixed(2); };
     var muelles = P.nucleo.toLowerCase().indexOf('muelles') > -1;
     var T = [E.textos[0][1], muelles ? E.textos[1][1] : E.textos[1][2]];
+    // Paco, 19/11: el argumento de la independencia de lechos, en tres momentos (izquierda · derecha)
+    var F = [['No te despiertes', 'cuando tu pareja se mueve.'],
+      muelles ? ['Cada muelle trabaja solo:', 'su movimiento se queda en su lado.'] : ['El látex absorbe el movimiento:', 'se queda en su lado.'],
+      ['Tú sigues durmiendo.', 'Y los dos descansáis mejor.']];
+    var nf = 0;
     var L = E.lado, O = E.ondas, M = E.limite;
     // Contorno suave (Catmull-Rom cerrado) por los puntos de la silueta [x %, y % del alto]
     function silueta(pt) {
@@ -245,8 +250,13 @@
     }
     // Una onda: de la silueta al óvalo (la forma cambia según se aleja) y se desvanece
     function onda(cls, pt, c, rx, ry, dur, ini) {
-      var d0 = silueta(pt), d1 = silueta(ovalo(pt, c, rx, ry));
-      return '<path class="' + cls + '" d="' + d0 + '" stroke-opacity="0">' +
+      var d0 = silueta(pt), d1 = silueta(ovalo(pt, c, rx, ry)), fid = 'p-ind-f' + (nf++);
+      var tiempo = ' dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".2 .6 .3 1"';
+      // Paco, 19/11: la onda emite luz (halo de su color) y se desenfoca según se aleja
+      return '<filter id="' + fid + '" filterUnits="userSpaceOnUse" x="0" y="0" width="100" height="' + k.toFixed(2) + '">' +
+          '<feGaussianBlur in="SourceGraphic" stdDeviation="0" result="b"><animate attributeName="stdDeviation" values="0;.85"' + tiempo + '/></feGaussianBlur>' +
+          '<feGaussianBlur in="b" stdDeviation=".45" result="g"/><feMerge><feMergeNode in="g"/><feMergeNode in="g"/><feMergeNode in="b"/></feMerge></filter>' +
+        '<path class="' + cls + '" style="filter:url(#' + fid + ')" d="' + d0 + '" stroke-opacity="0">' +
         '<animate attributeName="d" values="' + d0 + ';' + d1 + '" dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".2 .6 .3 1"/>' +
         '<animate attributeName="stroke-opacity" values="0;.95;.35;0" keyTimes="0;.12;.7;1" dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite"/></path>' +
         // Paco, 19/11: destello que recorre la línea de la onda
@@ -272,12 +282,15 @@
           '<p class="p-esc-cap" data-z="1" style="left:' + E.textos[1][0] + '%">' + T[1] + '</p>' +
           '<p class="p-esc-lab" style="left:' + E.etiqueta[0] + '%;top:' + E.etiqueta[1] + '%">' + LM.ico('check') + 'Tú sigues durmiendo</p>' +
         '</div>' +
+        // Paco, 19/11: el argumento en grande sobre la foto, primero a la izquierda y luego a la derecha (escritorio)
+        '<i class="p-ind-velo" aria-hidden="true"></i>' +
+        F.map(function (f, i) { return '<p class="p-ind-f p-ind-f--l" data-f="' + i + '">' + f[0] + '</p><p class="p-ind-f p-ind-f--r" data-f="' + i + '">' + f[1] + '</p>'; }).join('') +
         '<ol class="p-esc-pasos" aria-hidden="true"><li></li><li></li><li></li></ol>' +
         '<p class="p-esc-aviso"><span class="p-scrub-mouse" aria-hidden="true"><i></i></span><span>Sigue bajando<small>y verás por qué no te despierta</small></span></p></div>' +
         txtMovil('Independencia de lechos', 'Si tu pareja se gira o se levanta, el movimiento se queda en su lado y no te despierta.') + '</div>';
     fig.hidden = false;
     var zoom = $('.p-esc-zoom', fig), svg = $('.p-ind-svg', fig), lim = $('.p-ind-lim', fig), lab = $('.p-esc-lab', fig);
-    var caps = $$('.p-esc-cap', fig), pasos = $$('.p-esc-pasos li', fig), aviso = $('.p-esc-aviso', fig);
+    var caps = $$('.p-esc-cap', fig), pasos = $$('.p-esc-pasos li', fig), aviso = $('.p-esc-aviso', fig), frases = $$('.p-ind-f', fig), velo = $('.p-ind-velo', fig);
     function c01(v) { return Math.max(0, Math.min(1, v)); }
     function pintar(p) {
       var paso = p < .42 ? 0 : p < .74 ? 1 : 2;
@@ -291,7 +304,10 @@
       aviso.classList.toggle('is-off', p > .82);
       pasos.forEach(function (li, i) { li.classList.toggle('is-on', i <= paso && p > .02); });
       zoom.style.transform = 'scale(' + (1 + .05 * p).toFixed(4) + ')';
-      txtSincro(fig, paso);
+      var fa = p > .06 && p < .97 ? paso : -1;
+      frases.forEach(function (el) { el.classList.toggle('is-on', +el.getAttribute('data-f') === fa); });
+      velo.classList.toggle('is-on', fa > -1);
+      txtSincro(fig, paso, F[paso].join(' '));
     }
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) { pintar(1); return; }
     fig.classList.add('is-story');
