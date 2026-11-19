@@ -3118,3 +3118,12 @@ body .p-card.p-card--v2 > input { align-self: center; }
 /* Paco, 19/11 · Muelles encendidos por las ondas (del color de cada uno) */
 #p-ind-pat-el circle { fill: #2f8cff; }
 #p-ind-pat-ella circle { fill: #10c58d; }
+
+/* Paco, 19/11 · «Tu espalda, recta»: frases grandes arriba a cada lado (izquierda y luego derecha), con velo negro arriba.
+   En escritorio fuera los globos; en móvil, el texto de debajo */
+.p-esc--f .p-esc-img { position: relative; }
+.p-esc-f { top: 15%; }
+.p-esc-velo { position: absolute; inset: 0; z-index: 2; pointer-events: none; opacity: 0; transition: opacity .6s; background: linear-gradient(180deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.28) 22%, rgba(0,0,0,0) 38%); }
+.p-esc-velo.is-on { opacity: 1; }
+@media (min-width: 901px) { .p-esc.p-esc--f .p-esc-cap, .p-esc.p-esc--f .p-esc-lab { display: none !important; } }
+@media (max-width: 900px) { .p-esc-f, .p-esc-velo { display: none !important; } }
