@@ -2846,9 +2846,9 @@ html body .h4p-tipo .h4p-opt-pr { display: flex; align-items: baseline; gap: 8px
 .h4 .h4-foto.sin-trans { transition: none; }
 .h4 .h4-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: auto; }
 .h4 .h4-foto--2 img { object-position: 50% 30%; }
-.h4::before { background: linear-gradient(rgba(0,0,0,.22), rgba(0,0,0,.22)), linear-gradient(90deg, rgba(18,12,10,.45) 0%, rgba(18,12,10,.15) 40%, rgba(18,12,10,0) 100%); }
+.h4::before { background: linear-gradient(rgba(0,0,0,.12), rgba(0,0,0,.12)), linear-gradient(90deg, rgba(18,12,10,.32) 0%, rgba(18,12,10,.08) 40%, rgba(18,12,10,0) 100%); } /* Paco, 19/11: velo más transparente (antes .22 y .45) */
 @media (max-width: 767px) {
-  .h4::before { background: linear-gradient(rgba(0,0,0,.22), rgba(0,0,0,.22)), linear-gradient(180deg, rgba(18,12,10,.3) 0%, rgba(18,12,10,0) 35%, rgba(18,12,10,0) 60%, rgba(18,12,10,.3) 100%); }
+  .h4::before { background: linear-gradient(rgba(0,0,0,.12), rgba(0,0,0,.12)), linear-gradient(180deg, rgba(18,12,10,.22) 0%, rgba(18,12,10,0) 35%, rgba(18,12,10,0) 60%, rgba(18,12,10,.22) 100%); }
   .h4 .h4-foto--2 img { object-position: 50% 50%; }
 }
 @media (prefers-reduced-motion: reduce) { .h4 .h4-foto { transition: none; } }
