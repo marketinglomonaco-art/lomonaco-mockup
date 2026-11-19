@@ -264,10 +264,10 @@ LM.ESCENA_PAREJA = {
 };
 /* Paco, 12/11: foto nueva (pulido/capturas/1211-07b-columna-recta-nueva.jpg), recortada a 1200 × 750 */
 LM.ESCENA_CORTE = {
-  img: '../img/escena-espalda2', w: 1200, h: 750,
+  img: '../img/escena-espalda3', w: 1200, h: 896, /* Paco, 19/11: foto entera, más cuadrada */
   // y0 → y1: la columna va de la nuca a la zona lumbar por el centro de la espalda (la espalda baja un poco hacia la cadera)
-  columna: { x0: 30.5, x1: 70, y0: 29, y1: 34.7, curva: 3 }, etiqueta: [49, 19],
-  zonas: [[38, 44, 'El hombro se hunde lo justo'], [50, 45.5, 'La cintura, con apoyo'], [62, 44.5, 'La cadera reparte el peso']]
+  columna: { x0: 30.5, x1: 70.0, y0: 34.1, y1: 38.87, curva: 2.51 }, etiqueta: [49.0, 25.73],
+  zonas: [[38, 46.65, 'El hombro se hunde lo justo'], [50, 47.91, 'La cintura, con apoyo'], [62, 47.07, 'La cadera reparte el peso']]
 };
 /* Paco, 29/10: foto nueva de cada modelo SOLO en el bloque de la home donde eliges colchón (ficha y listas sin cambios) */
 LM.FOTO_HOME = { visco: 'natura-visco-home', gold: 'natura-gold-home', latex: 'natura-latex-home', gran: 'gran-natura-home' };

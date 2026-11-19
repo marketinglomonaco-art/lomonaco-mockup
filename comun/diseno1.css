@@ -3127,3 +3127,10 @@ body .p-card.p-card--v2 > input { align-self: center; }
 .p-esc-velo.is-on { opacity: 1; }
 @media (min-width: 901px) { .p-esc.p-esc--f .p-esc-cap, .p-esc.p-esc--f .p-esc-lab { display: none !important; } }
 @media (max-width: 900px) { .p-esc-f, .p-esc-velo { display: none !important; } }
+
+/* Paco, 19/11 · «Tu espalda, recta»: foto más cuadrada (1200 × 896), frases algo más abajo (encima de la persona)
+   y un velo negro ligero en toda la foto para que resalten el texto y los puntos */
+.p-esc:not(.p-ind) .p-esc-img { aspect-ratio: 1200 / 896; width: min(100%, calc((100vh - 150px) * 1.339)); }
+.p-esc-f { top: 13%; }
+.p-esc-velo { background: linear-gradient(180deg, rgba(0,0,0,.45) 0%, rgba(0,0,0,.22) 30%, rgba(0,0,0,.14) 100%); }
+@media (max-width: 900px) { .p-esc:not(.p-ind) .p-esc-zoom { aspect-ratio: 1200 / 896; } }
