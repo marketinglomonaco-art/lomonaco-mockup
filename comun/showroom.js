@@ -6,7 +6,11 @@
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
 
-  $$('[data-estado]').forEach(function (el) { el.innerHTML = LM.estado(); });
+  /* Paco, 19/11: en vez de «Asesores disponibles ahora», un aviso que anime a reservar cuanto antes (mucha demanda, huecos limitados) */
+  $$('[data-estado]').forEach(function (el) {
+    el.innerHTML = '<span class="lm-state lm-state--aviso"><i aria-hidden="true"></i><span><b>' +
+      (LM.abierto() ? 'Mucha demanda hoy.' : 'La agenda se llena rápido.') + '</b> Reserva ya tu videollamada para asegurarte un hueco.</span></span>';
+  });
 
   /* ================= SALA (plano general) =================
      Paco, 09/11: se empieza por la sala, donde se ven los 3 colchones. Efecto de cámara 3D (falso): al arrastrar, la vista gira

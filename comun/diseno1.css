@@ -3156,3 +3156,10 @@ body .p-card.p-card--v2 > input { align-self: center; }
 .p-esc-sombra { background: linear-gradient(180deg, rgba(0,0,0,.36) 0%, rgba(0,0,0,.24) 45%, rgba(0,0,0,.18) 100%); }
 @media (max-width: 900px) { .p-esc-sombra { background: rgba(0,0,0,.18); } }
 
+
+/* Paco, 19/11 · Showroom Live: aviso de mucha demanda (punto ámbar que late) en vez de «Asesores disponibles ahora» */
+.lm-state--aviso { align-items: flex-start; font-weight: 500; line-height: 1.4; max-width: 460px; }
+.lm-state--aviso b { font-weight: 700; }
+.lm-state--aviso i { flex: none; margin-top: 5px; background: #f5a524; box-shadow: 0 0 0 0 rgba(245,165,36,.6); animation: lm-aviso 1.8s ease-out infinite; }
+@keyframes lm-aviso { 0% { box-shadow: 0 0 0 0 rgba(245,165,36,.6); } 100% { box-shadow: 0 0 0 10px rgba(245,165,36,0); } }
+@media (prefers-reduced-motion: reduce) { .lm-state--aviso i { animation: none; } }
