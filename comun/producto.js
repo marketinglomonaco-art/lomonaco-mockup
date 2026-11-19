@@ -180,9 +180,7 @@
           '<img src="' + s(1200) + '" srcset="' + s(800) + ' 800w, ' + s(1200) + ' ' + E.w + 'w" sizes="(max-width: 1320px) 100vw, 1320px" alt="Persona durmiendo de lado sobre el ' + P.titulo + ', con la columna recta" width="' + E.w + '" height="' + E.h + '" loading="lazy">' +
           '<i class="p-esc-sombra" aria-hidden="true"></i>' + // Paco, 19/11: overlay negro entre la foto y los puntos
           // Paco, 12/11: sin brillos rojos. Los globos de las zonas y «Columna recta», como en la versión inicial
-          '<svg class="p-esc-col" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">' +
-            // Paco, 19/11: en vez de puntos, una curva por la columna que emite ondas (azul, desenfocadas) y, al bajar, se define, pasa a verde y queda recta
-            '<g class="p-esc-olas"><path class="p-esc-ola"/><path class="p-esc-ola"/><path class="p-esc-ola"/></g><path class="p-esc-sp"/></svg>' +
+          '<svg class="p-esc-col" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="p-esc-sp"/></svg>' +
           E.zonas.map(function (z, i) { return '<p class="p-esc-cap" data-z="' + i + '" style="left:' + z[0] + '%">' + z[2] + '</p>'; }).join('') +
           '<p class="p-esc-lab" style="left:' + E.etiqueta[0] + '%;top:' + E.etiqueta[1] + '%">' + LM.ico('check') + 'Columna recta</p>' +
         '</div>' +
@@ -193,7 +191,7 @@
         '<p class="p-esc-aviso"><span class="p-scrub-mouse" aria-hidden="true"><i></i></span><span>Sigue bajando<small>y verás cómo se queda recta tu espalda</small></span></p></div>' +
         txtMovil('Columna recta', 'El colchón cede donde hace falta y sujeta donde lo necesitas, para que tu espalda descanse recta.') + '</div>';
     esc.hidden = false;
-    var zoom = $('.p-esc-zoom', esc), sp = $('.p-esc-sp', esc), pasos = $$('.p-esc-pasos li', esc), olas = $$('.p-esc-ola', esc), gOlas = $('.p-esc-olas', esc), svgC = $('.p-esc-col', esc);
+    var zoom = $('.p-esc-zoom', esc), sp = $('.p-esc-sp', esc), pasos = $$('.p-esc-pasos li', esc);
     var caps = $$('.p-esc-cap', esc), lab = $('.p-esc-lab', esc), aviso = $('.p-esc-aviso', esc), stick = $('.p-esc-stick', esc);
     var frasesE = $$('.p-esc-f', esc), veloE = $('.p-esc-sombra', esc);
     ajustarFrases($('.p-esc-img', esc), frasesE, FE.length);
@@ -211,14 +209,9 @@
         d += (i ? ' L' : 'M') + x.toFixed(2) + ' ' + y.toFixed(2);
       }
       sp.setAttribute('d', d || 'M0 0');
-      olas.forEach(function (o) { o.setAttribute('d', d || 'M0 0'); });
-      // Paco, 19/11: línea continua. Azul y desenfocada mientras está curvada (con ondas); al enderezarse, nítida y verde
-      var t = lim((p - .2) / .75), c0 = [47, 140, 255], c1 = [16, 197, 141];
-      var col = 'rgb(' + c0.map(function (v, i) { return Math.round(v + (c1[i] - v) * t); }).join(',') + ')';
-      svgC.style.setProperty('--c', col);
-      svgC.style.setProperty('--bl', ((1 - t) * 2.2).toFixed(2) + 'px');
-      sp.style.strokeWidth = movil.matches ? '4' : '5'; sp.style.strokeDasharray = 'none';
-      gOlas.style.opacity = ((1 - rect) * lim(dib * 2)).toFixed(3);
+      // Puntos blancos con halo: empiezan grandes y se hacen pequeños hasta su tamaño final al quedar recta
+      var w0 = movil.matches ? 10 : 15, w = w0 * (1 + .9 * (1 - lim(p / .95)));
+      sp.style.strokeWidth = w.toFixed(2); sp.style.strokeDasharray = '.1 ' + (w * 1.6).toFixed(2);
       var tramo = .5 / E.zonas.length, activa = -1;
       E.zonas.forEach(function (z, k) { var a = .2 + k * tramo; if (p >= a && p < a + tramo) activa = k; });
       caps.forEach(function (c, k) { c.classList.toggle('is-on', k === activa); });
