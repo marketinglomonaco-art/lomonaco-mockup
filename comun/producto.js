@@ -64,8 +64,9 @@
   }
   function renderBases() {
     var solo = LM.PRECIOS[K][st.medida];
-    // Paco, 19/11: las 3 opciones siempre de más a menos precio (las que no hay en esta medida, al final)
-    var ORDEN = BASES.slice().sort(function (x, y) { var a = x.tabla[st.medida], c = y.tabla[st.medida]; return (c ? c.p : -1) - (a ? a.p : -1); });
+    // Paco, 19/11: orden por precio, de menos a más: solo colchón + almohadas (siempre marcada al entrar), base tapizada y pack con canapé.
+    // Las que no hay en esta medida, al final
+    var ORDEN = BASES.slice().sort(function (x, y) { var a = x.tabla[st.medida], c = y.tabla[st.medida]; return (a ? a.p : 1e9) - (c ? c.p : 1e9); });
     $('#p-base').innerHTML = ORDEN.map(function (b) {
       var d = b.tabla[st.medida], dis = !d;
       var diff = d && b.k !== 'solo' ? '+' + LM.eur(d.p - solo.p) : (d ? LM.eur(d.p) : 'No disponible en ' + LM.medidaTxt(st.medida));
