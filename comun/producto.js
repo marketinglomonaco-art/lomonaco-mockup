@@ -178,13 +178,13 @@
     esc.innerHTML = '<div class="p-esc-stick"><div class="p-esc-img">' +
         '<div class="p-esc-zoom">' +
           '<img src="' + s(1200) + '" srcset="' + s(800) + ' 800w, ' + s(1200) + ' ' + E.w + 'w" sizes="(max-width: 1320px) 100vw, 1320px" alt="Persona durmiendo de lado sobre el ' + P.titulo + ', con la columna recta" width="' + E.w + '" height="' + E.h + '" loading="lazy">' +
+          '<i class="p-esc-sombra" aria-hidden="true"></i>' + // Paco, 19/11: overlay negro entre la foto y los puntos
           // Paco, 12/11: sin brillos rojos. Los globos de las zonas y «Columna recta», como en la versión inicial
           '<svg class="p-esc-col" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"><path class="p-esc-sp"/></svg>' +
           E.zonas.map(function (z, i) { return '<p class="p-esc-cap" data-z="' + i + '" style="left:' + z[0] + '%">' + z[2] + '</p>'; }).join('') +
           '<p class="p-esc-lab" style="left:' + E.etiqueta[0] + '%;top:' + E.etiqueta[1] + '%">' + LM.ico('check') + 'Columna recta</p>' +
         '</div>' +
         // Paco, 19/11: el argumento en grande sobre la foto, como en la pareja: izquierda y luego derecha, en cada momento
-        '<i class="p-esc-sombra" aria-hidden="true"></i>' +
         FE.map(function (f, i) { return '<p class="p-ind-f p-esc-f p-ind-f--l" data-f="' + i + '">' + f[0] + '</p><p class="p-ind-f p-esc-f p-ind-f--r" data-f="' + i + '">' + f[1] + '</p>'; }).join('') +
         '<ol class="p-esc-pasos" aria-hidden="true"><li></li><li></li><li></li></ol>' +
         // Paco, 09/11: aviso integrado, como el de «Por dentro» (sin «Recreación ilustrativa»)
