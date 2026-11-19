@@ -248,6 +248,12 @@
     function ovalo(pt, c, rx, ry) {
       return pt.map(function (p) { var a = Math.atan2((p[1] - c[1]) / ry, (p[0] - c[0]) / rx); return [+(c[0] + rx * Math.cos(a)).toFixed(2), +(c[1] + ry * Math.sin(a)).toFixed(2)]; });
     }
+    function ondaMascara(pt, c, rx, ry, dur, ini) {
+      var d0 = silueta(pt), d1 = silueta(ovalo(pt, c, rx, ry));
+      return '<path d="' + d0 + '" fill="none" stroke="#fff" stroke-width="16" vector-effect="non-scaling-stroke" stroke-opacity="0" filter="url(#p-ind-suave)">' +
+        '<animate attributeName="d" values="' + d0 + ';' + d1 + '" dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".2 .6 .3 1"/>' +
+        '<animate attributeName="stroke-opacity" values="0;1;.4;0" keyTimes="0;.12;.7;1" dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite"/></path>';
+    }
     // Una onda: de la silueta al óvalo (la forma cambia según se aleja) y se desvanece
     function onda(cls, pt, c, rx, ry, dur, ini) {
       var d0 = silueta(pt), d1 = silueta(ovalo(pt, c, rx, ry)), fid = 'p-ind-f' + (nf++);
@@ -265,8 +271,24 @@
           '<img src="' + s(1200) + '" srcset="' + s(800) + ' 800w, ' + s(1200) + ' ' + E.w + 'w" sizes="(max-width: 1320px) 100vw, 1320px" alt="Pareja durmiendo abrazada sobre el ' + P.titulo + ', vista desde arriba" width="' + E.w + '" height="' + E.h + '" loading="lazy">' +
           '<svg class="p-ind-svg" viewBox="0 0 100 ' + k.toFixed(2) + '" preserveAspectRatio="none" aria-hidden="true">' +
             /* Paco, 19/11: sobre el colchón, una trama de puntos muy suave: los muelles ensacados (solo en los modelos con muelles) */
-            (muelles ? '<defs><pattern id="p-ind-pat" width="2.1" height="2.1" patternUnits="userSpaceOnUse"><circle cx="1.05" cy="1.05" r=".28"/></pattern></defs>' +
-              '<rect class="p-ind-trama" x="' + L[0] + '" y="' + y(L[1]) + '" width="' + (E.lado2 ? E.lado2[2] - L[0] : (L[2] - L[0]) * 2) + '" height="' + y(L[3] - L[1]) + '" rx="1.6" fill="url(#p-ind-pat)"/>' : '') +
+            (muelles ? (function () {
+              var X = L[0], Y = y(L[1]), W = (E.lado2 ? E.lado2[2] - L[0] : (L[2] - L[0]) * 2), H = y(L[3] - L[1]), C = E.caras || [];
+              var r = function (fill, extra) { return '<rect x="' + X + '" y="' + Y + '" width="' + W + '" height="' + H + '" rx="1.6" fill="' + fill + '"' + (extra || '') + '/>'; };
+              // Paco, 19/11: los muelles no se dibujan sobre las caras (máscara con un óvalo suave en cada cabeza)
+              var defs = '<defs><filter id="p-ind-suave"><feGaussianBlur stdDeviation=".5"/></filter>' +
+                '<mask id="p-ind-caras" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="' + k.toFixed(2) + '"><rect width="100" height="' + k.toFixed(2) + '" fill="#fff"/>' +
+                  C.map(function (c) { return '<ellipse cx="' + c[0] + '" cy="' + y(c[1]) + '" rx="' + c[2] + '" ry="' + y(c[3]) + '" fill="#000" filter="url(#p-ind-suave)"/>'; }).join('') + '</mask>' +
+                '<pattern id="p-ind-pat" width="2.1" height="2.1" patternUnits="userSpaceOnUse"><circle cx="1.05" cy="1.05" r=".28"/></pattern>' +
+                '<pattern id="p-ind-pat-el" width="2.1" height="2.1" patternUnits="userSpaceOnUse"><circle cx="1.05" cy="1.05" r=".42"/></pattern>' +
+                '<pattern id="p-ind-pat-ella" width="2.1" height="2.1" patternUnits="userSpaceOnUse"><circle cx="1.05" cy="1.05" r=".42"/></pattern>' +
+                // Paco, 19/11: las ondas «afectan» a los muelles: donde pasa la onda, los puntos se encienden de su color
+                '<mask id="p-ind-mk-el" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="' + k.toFixed(2) + '">' + [0, 1, 2].map(function (i) { return ondaMascara(E.silueta, E.centro, 20, 36, 2.4, i * .8); }).join('') + '</mask>' +
+                (E.ondas2 ? '<mask id="p-ind-mk-ella" maskUnits="userSpaceOnUse" x="0" y="0" width="100" height="' + k.toFixed(2) + '">' + [0, 1].map(function (i) { return ondaMascara(E.silueta2, E.centro2, 11, 39, 6, i * 3); }).join('') + '</mask>' : '') +
+                '</defs>';
+              return defs + '<g mask="url(#p-ind-caras)">' + r('url(#p-ind-pat)', ' class="p-ind-trama"') +
+                '<g class="p-ind-g" clip-path="url(#p-ind-clip)">' + r('url(#p-ind-pat-el)', ' mask="url(#p-ind-mk-el)"') + '</g>' +
+                (E.ondas2 ? '<g class="p-ind-g" clip-path="url(#p-ind-clip2)">' + r('url(#p-ind-pat-ella)', ' mask="url(#p-ind-mk-ella)"') + '</g>' : '') + '</g>';
+            })() : '') +
             '<defs><clipPath id="p-ind-clip"><rect x="' + L[0] + '" y="' + y(L[1]) + '" width="' + (L[2] - L[0]) + '" height="' + y(L[3] - L[1]) + '" rx="1.2"/></clipPath></defs>' +
             /* Paco, 19/11: las ondas tienen la forma del cuerpo (silueta de cada uno, vista desde arriba) y crecen desde él */
             /* Paco, 19/11: cada onda nace con la silueta del cuerpo y, al alejarse, se va suavizando hasta una forma redondeada y más ancha */

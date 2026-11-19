@@ -257,6 +257,8 @@ LM.ESCENA_PAREJA = {
   ondas2: [57.5, 52], lado2: [50.8, 8.5, 75.6, 92],
   // Paco, 19/11: silueta de cada uno vista desde arriba ([x %, y % del alto]), para que las ondas tengan forma de cuerpo
   centro: [44.5, 50], silueta: [[44.5, 15.5], [48.5, 18], [49, 25], [51, 30], [51, 44], [51, 55], [50.5, 68], [48.5, 82], [45, 88], [39, 87], [38.5, 80], [41, 68], [39.5, 55], [39, 44], [39.5, 31], [41.5, 26], [41, 19]],
+  // Paco, 19/11: las cabezas, para que la trama de muelles no se dibuje sobre las caras
+  caras: [[44, 21.5, 4.2, 7.5], [56, 23.5, 4.2, 7.5]],
   centro2: [56.5, 51], silueta2: [[56, 16.5], [60, 19.5], [61, 27], [62.5, 33], [62, 45], [61, 56], [60.5, 68], [63, 82], [61, 88], [55.5, 87], [52.5, 80], [52, 70], [51.5, 56], [51.5, 45], [52, 33], [53.5, 27], [53, 20]],
   textos: [[37, 'Tu pareja se mueve…'], [50.8, '…pero cada muelle trabaja solo', '…pero el colchón absorbe el movimiento']]
 };

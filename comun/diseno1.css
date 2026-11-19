@@ -3114,3 +3114,7 @@ body .p-card.p-card--v2 > input { align-self: center; }
 .p-ind-trama { opacity: 0; transition: opacity .8s; }
 #p-ind-pat circle { fill: rgba(70, 80, 95, .2); }
 .p-ind-svg.is-on .p-ind-trama { opacity: 1; }
+
+/* Paco, 19/11 · Muelles encendidos por las ondas (del color de cada uno) */
+#p-ind-pat-el circle { fill: #2f8cff; }
+#p-ind-pat-ella circle { fill: #10c58d; }
