@@ -66,7 +66,10 @@
       // 4 · 30 años
       k(foto('comp-vida-medio', 800, 800, 'Una pareja lee abrazada en la cama, sobre su colchón Lomonaco'), ic('users'), cifra(tr[0], tr[1] + ' contigo'), 'La marca de toda la vida', 'Desde 1996 y con más de ' + LM.c('clientes') + ' clientes que ya duermen en un Lomonaco.'),
       // 5 · 10 años de garantía
-      k(foto('comp-garantia', 800, 1200, 'Una pareja lee en la cama con luz de mañana, sobre su colchón Lomonaco'), ic('shield'), cifra(ga[0], ga[1] + ' de garantía'), 'En todos los colchones', 'Cubre los defectos de fabricación y el núcleo del colchón.', verCond('garantia'))
+      k(foto('comp-garantia', 800, 1200, 'Una pareja lee en la cama con luz de mañana, sobre su colchón Lomonaco'), ic('shield'), cifra(ga[0], ga[1] + ' de garantía'), 'En todos los colchones', 'Cubre los defectos de fabricación y el núcleo del colchón.', verCond('garantia')),
+      // 6 · Paco, 19/11: financiación adaptada a cada cliente (datos de LM.CONFIG.financiacion)
+      k(foto('comp-financia-medio', 800, 800, 'Una mujer mira el móvil recostada en su cama Lomonaco'), ic('card'), cifra('36', 'meses para pagar'), 'Financiación a tu medida',
+        'Elige cuánto pagar al mes, de 3 a 36 meses. A 12 meses, sin intereses en compras desde 1.200 €.' + LM.ast, '<a class="h4c-more" href="#lm-legal">Ver condiciones</a>')
     ].join('');
 
     ct.addEventListener('click', function (e) {
