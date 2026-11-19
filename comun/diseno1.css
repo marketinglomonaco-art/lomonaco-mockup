@@ -3155,3 +3155,15 @@ body .p-card.p-card--v2 > input { align-self: center; }
 /* Paco, 19/11 · Espalda: overlay más suave (estaba demasiado oscuro) */
 .p-esc-sombra { background: linear-gradient(180deg, rgba(0,0,0,.36) 0%, rgba(0,0,0,.24) 45%, rgba(0,0,0,.18) 100%); }
 @media (max-width: 900px) { .p-esc-sombra { background: rgba(0,0,0,.18); } }
+
+/* Paco, 19/11 · «Tu espalda, recta»: la columna es una curva que emite ondas (como la independencia de lechos).
+   Empieza azul y desenfocada; al bajar se define, pasa a verde y acaba recta */
+.p-esc.p-esc--f .p-esc-sp { fill: none; stroke: var(--c, #2f8cff); stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke;
+  filter: blur(var(--bl, 0px)) drop-shadow(0 0 4px var(--c, #2f8cff)) drop-shadow(0 0 12px var(--c, #2f8cff)); transition: none; }
+.p-esc-olas { transition: opacity .3s; }
+.p-esc-ola { fill: none; stroke: var(--c, #2f8cff); stroke-width: 3; stroke-linecap: round; vector-effect: non-scaling-stroke; transform-box: fill-box; transform-origin: center;
+  opacity: 0; animation: p-esc-ola 2.6s cubic-bezier(.2,.6,.3,1) infinite; }
+.p-esc-ola:nth-child(2) { animation-delay: .87s; }
+.p-esc-ola:nth-child(3) { animation-delay: 1.73s; }
+@keyframes p-esc-ola { 0% { transform: scaleY(1); opacity: .95; filter: blur(0) drop-shadow(0 0 4px var(--c, #2f8cff)); } 100% { transform: scaleY(5); opacity: 0; filter: blur(7px); } }
+@media (prefers-reduced-motion: reduce) { .p-esc-ola { animation: none; } }
