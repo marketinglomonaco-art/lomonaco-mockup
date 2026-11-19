@@ -3063,3 +3063,13 @@ body .p-card.p-card--v2 > input { align-self: center; }
 /* Paco, 19/11 · Las siluetas crecen sobre todo a lo ancho del colchón y poco a lo largo (no llenan toda la imagen; cada una se queda en su lado) */
 @keyframes p-onda-sil { 0% { transform: scale(1, 1); opacity: .9; } 70% { opacity: .3; } 100% { transform: scale(2.3, 1.1); opacity: 0; } }
 @keyframes p-onda-sil2 { 0% { transform: scale(1, 1); opacity: 0; } 25% { opacity: .85; } 100% { transform: scale(1.8, 1.06); opacity: 0; } }
+
+/* Paco, 19/11 · Las ondas cambian de forma con SVG (de la silueta al óvalo); la animación CSS anterior se apaga.
+   Se ven solo mientras dura la historia (svg.is-on) */
+.p-ind-svg .p-ind-onda, .p-ind-svg .p-ind-onda2, .p-ind-svg.is-on .p-ind-onda, .p-ind-svg.is-on .p-ind-onda2 { animation: none; transform: none; opacity: 1; }
+.p-ind-g { opacity: 0; transition: opacity .4s; }
+.p-ind-svg.is-on .p-ind-g { opacity: 1; }
+/* Paco, 19/11 · Destello blanco que recorre cada onda */
+.p-ind-brillo { fill: none; stroke: #fff; stroke-width: 5; stroke-linecap: round; vector-effect: non-scaling-stroke; filter: drop-shadow(0 0 4px rgba(255,255,255,.95)) drop-shadow(0 0 8px rgba(255,255,255,.7)); }
+@media (max-width: 700px) { .p-ind-brillo { stroke-width: 4; } }
+@media (prefers-reduced-motion: reduce) { .p-ind-brillo { display: none; } }

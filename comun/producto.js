@@ -239,20 +239,33 @@
       }
       return d + 'Z';
     }
+    // Los mismos puntos llevados a un óvalo alrededor del centro (rx, ry en %): la forma final de la onda
+    function ovalo(pt, c, rx, ry) {
+      return pt.map(function (p) { var a = Math.atan2((p[1] - c[1]) / ry, (p[0] - c[0]) / rx); return [+(c[0] + rx * Math.cos(a)).toFixed(2), +(c[1] + ry * Math.sin(a)).toFixed(2)]; });
+    }
+    // Una onda: de la silueta al óvalo (la forma cambia según se aleja) y se desvanece
+    function onda(cls, pt, c, rx, ry, dur, ini) {
+      var d0 = silueta(pt), d1 = silueta(ovalo(pt, c, rx, ry));
+      return '<path class="' + cls + '" d="' + d0 + '" stroke-opacity="0">' +
+        '<animate attributeName="d" values="' + d0 + ';' + d1 + '" dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".2 .6 .3 1"/>' +
+        '<animate attributeName="stroke-opacity" values="0;.95;.35;0" keyTimes="0;.12;.7;1" dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite"/></path>' +
+        // Paco, 19/11: destello que recorre la línea de la onda
+        '<path class="p-ind-brillo" d="' + d0 + '" pathLength="100" stroke-dasharray="7 93" stroke-opacity="0">' +
+        '<animate attributeName="d" values="' + d0 + ';' + d1 + '" dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".2 .6 .3 1"/>' +
+        '<animate attributeName="stroke-dashoffset" values="100;0" dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite"/>' +
+        '<animate attributeName="stroke-opacity" values="0;1;.4;0" keyTimes="0;.12;.7;1" dur="' + dur + 's" begin="' + ini + 's" repeatCount="indefinite"/></path>';
+    }
     fig.innerHTML = '<div class="p-esc-stick"><div class="p-esc-img">' +
         '<div class="p-esc-zoom">' +
           '<img src="' + s(1200) + '" srcset="' + s(800) + ' 800w, ' + s(1200) + ' ' + E.w + 'w" sizes="(max-width: 1320px) 100vw, 1320px" alt="Pareja durmiendo abrazada sobre el ' + P.titulo + ', vista desde arriba" width="' + E.w + '" height="' + E.h + '" loading="lazy">' +
           '<svg class="p-ind-svg" viewBox="0 0 100 ' + k.toFixed(2) + '" preserveAspectRatio="none" aria-hidden="true">' +
             '<defs><clipPath id="p-ind-clip"><rect x="' + L[0] + '" y="' + y(L[1]) + '" width="' + (L[2] - L[0]) + '" height="' + y(L[3] - L[1]) + '" rx="1.2"/></clipPath></defs>' +
             /* Paco, 19/11: las ondas tienen la forma del cuerpo (silueta de cada uno, vista desde arriba) y crecen desde él */
-            '<g clip-path="url(#p-ind-clip)">' + [0, 1, 2].map(function (i) {
-              return '<path class="p-ind-onda" style="animation-delay:' + (i * .8) + 's;transform-origin:' + E.centro[0] + 'px ' + y(E.centro[1]) + 'px" d="' + silueta(E.silueta) + '"/>';
-            }).join('') + '</g>' +
+            /* Paco, 19/11: cada onda nace con la silueta del cuerpo y, al alejarse, se va suavizando hasta una forma redondeada y más ancha */
+            '<g class="p-ind-g" clip-path="url(#p-ind-clip)">' + [0, 1, 2].map(function (i) { return onda('p-ind-onda', E.silueta, E.centro, 15, 41, 2.4, i * .8); }).join('') + '</g>' +
             /* Paco, 19/11: ella también tiene sus ondas (lentas y suaves, su descanso). Las de él no pasan a su lado y las de ella no cambian */
             (E.ondas2 ? '<defs><clipPath id="p-ind-clip2"><rect x="' + E.lado2[0] + '" y="' + y(E.lado2[1]) + '" width="' + (E.lado2[2] - E.lado2[0]) + '" height="' + y(E.lado2[3] - E.lado2[1]) + '" rx="1.2"/></clipPath></defs>' +
-              '<g clip-path="url(#p-ind-clip2)">' + [0, 1].map(function (i) {
-                return '<path class="p-ind-onda2" style="animation-delay:' + (i * 1.8) + 's;transform-origin:' + E.centro2[0] + 'px ' + y(E.centro2[1]) + 'px" d="' + silueta(E.silueta2) + '"/>';
-              }).join('') + '</g>' : '') +
+              '<g class="p-ind-g" clip-path="url(#p-ind-clip2)">' + [0, 1].map(function (i) { return onda('p-ind-onda2', E.silueta2, E.centro2, 11, 39, 3.6, i * 1.8); }).join('') + '</g>' : '') +
             '<line class="p-ind-lim" x1="' + M[0] + '" y1="' + y(M[1]) + '" x2="' + M[0] + '" y2="' + y(M[2]) + '"/>' +
           '</svg>' +
           '<p class="p-esc-cap" data-z="0" style="left:' + E.textos[0][0] + '%">' + T[0] + '</p>' +
