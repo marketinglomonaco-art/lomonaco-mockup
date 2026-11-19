@@ -51,7 +51,7 @@
       ['tranq', 'Llevo un ritmo tranquilo', '', [2, 3, 4, 4], 'Lleva un ritmo tranquilo'],
       ['sed', 'Paso muchas horas sentado o sin moverme', '', [1, 4, 4, 5], 'Pasa muchas horas sentado (clases, pantallas)'],
       ['lumb', 'Trabajo sentado y acabo con la zona lumbar cargada', '', [1, 4, 4, 5], null],
-      ['dep', 'Hago mucho deporte', '', [3, 3, 5, 5], 'Hace mucho deporte']] },
+      ['dep', 'Soy una persona muy activa', '', [3, 3, 5, 5], 'Es una persona muy activa']] },
     /* Paco, 18/11: de 6 a 4 respuestas: «parte baja» y «mitad de la espalda» pasan a «En la espalda» (puntos de la parte baja);
        «rigidez» y «varias zonas» pasan a «Rigidez o varias zonas» (puntos de rigidez) */
     // Paco, 13/11: punto delicado. Nada de enfermedades ni diagnósticos: solo molestias al levantarse, dicho de forma sencilla
