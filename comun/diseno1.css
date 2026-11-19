@@ -3105,3 +3105,6 @@ body .p-card.p-card--v2 > input { align-self: center; }
 .p-ind-f { width: auto; max-width: 40%; font-size: clamp(26px, 2.9vw, 46px); line-height: 1.1; text-wrap: balance; }
 .p-ind-velo { background: linear-gradient(90deg, rgba(0,0,0,.55) 0%, rgba(0,0,0,.32) 26%, rgba(0,0,0,0) 44%, rgba(0,0,0,0) 56%, rgba(0,0,0,.32) 74%, rgba(0,0,0,.55) 100%); }
 .p-ind-brillo { display: none; }
+
+/* Paco, 19/11 · Frases de la pareja: una línea (el tamaño lo ajusta producto.js); hasta el 45 % del ancho de la foto */
+.p-ind-f { max-width: 45%; font-size: clamp(26px, 3vw, 46px); }

@@ -286,6 +286,21 @@
     fig.hidden = false;
     var zoom = $('.p-esc-zoom', fig), svg = $('.p-ind-svg', fig), lim = $('.p-ind-lim', fig), lab = $('.p-esc-lab', fig);
     var caps = $$('.p-esc-cap', fig), pasos = $$('.p-esc-pasos li', fig), aviso = $('.p-esc-aviso', fig), frases = $$('.p-ind-f', fig), velo = $('.p-ind-velo', fig);
+    /* Paco, 19/11: cada frase en una sola línea; si no cabe, la letra baja un poco (las dos del mismo momento, igual).
+       Solo si ni así cabe, pasa a dos líneas */
+    function ajustarFrases() {
+      var caja = $('.p-esc-img', fig), max = caja.clientWidth * .45;
+      if (!caja.clientWidth || getComputedStyle(frases[0]).display === 'none') return;
+      F.forEach(function (f, i) {
+        var par = frases.filter(function (el) { return +el.getAttribute('data-f') === i; });
+        par.forEach(function (el) { el.style.fontSize = ''; el.style.whiteSpace = 'nowrap'; });
+        var fs = parseFloat(getComputedStyle(par[0]).fontSize);
+        while (fs > 22 && par.some(function (el) { return el.scrollWidth > max; })) { fs -= 1; par.forEach(function (el) { el.style.fontSize = fs + 'px'; }); }
+        par.forEach(function (el) { if (el.scrollWidth > max) el.style.whiteSpace = 'normal'; });
+      });
+    }
+    ajustarFrases(); addEventListener('resize', ajustarFrases);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(ajustarFrases);
     function c01(v) { return Math.max(0, Math.min(1, v)); }
     function pintar(p) {
       var paso = p < .42 ? 0 : p < .74 ? 1 : 2;
