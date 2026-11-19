@@ -235,18 +235,19 @@ LM.ORDEN = ['visco', 'gold', 'latex', 'gran'];
    [nombre, texto, x, y] · x, y = punto sobre la capa, en % del fotograma abierto (960 × 960). Paco, 09/11: centrados en la capa.
    PROVISIONAL: nombres de la escena 3D. Paco, 19/11: cada capa con un texto sencillo de qué es y para qué sirve (sin tecnicismos) */
 LM.VIDEO_CAPAS = {
+  /* Paco, 19/11: cada capa contada como lo que hace por ti (qué notas, cómo te ayuda), no como un dato técnico */
   todos: [
-    ['Látex natural', '3 cm. Es lo primero que notas al tumbarte. El látex natural se adapta a tu cuerpo y recupera su forma en cuanto te mueves. Deja pasar el aire, así que no acumula calor, y es hipoalergénico.', 63.96, 35.73],
-    ['Capa de confort', '1 cm. Un acolchado fino justo debajo del látex. Hace más suave la primera sensación al tumbarte.', 63.96, 39.79],
-    ['Capa de confort', '1 cm. Una segunda capa de acolchado. Suma suavidad sin que el colchón pierda firmeza.', 63.96, 43.02],
-    ['Capa fina', '1 cm. Separa la parte suave de las espumas, para que cada capa se mantenga en su sitio.', 63.96, 46.56],
-    ['Espuma', '3 cm. Hace de puente entre la parte suave de arriba y los muelles, para que no los notes al tumbarte.', 63.96, 50.31],
-    ['Espuma', '3 cm. Una segunda capa de espuma que da cuerpo al colchón y ayuda a que la espalda quede bien recta.', 63.96, 54.9],
-    ['Muelles ensacados', '14 cm. El corazón del colchón. Cada muelle va en su propia funda y trabaja solo: cede donde pesas más y sujeta donde lo necesitas. Si tu pareja se mueve, tu lado sigue quieto.', 63.96, 60.42],
-    ['Base', '2 cm. Una capa firme sobre la que descansan los muelles. Les da un apoyo estable para que trabajen igual en todo el colchón.', 63.96, 65.94],
-    ['Capa fina', '1 cm. Protege la parte de abajo de los muelles y mantiene el interior del colchón ordenado.', 63.96, 70.1],
-    ['Capa fina', '1 cm. Un refuerzo más para que el colchón conserve su forma con el paso de los años.', 63.96, 73.44],
-    ['Capa inferior', '2 cm. La cara que apoya sobre el canapé o la base. Firme y estable, para que el colchón no se mueva.', 63.96, 76.77]
+    ['Látex natural', 'Al tumbarte, notas cómo se adapta a tu cuerpo y te recibe suave. Te mueves y vuelve a su sitio al momento. Y como respira, no pasas calor.', 63.96, 35.73],
+    ['Capa de confort', 'Es la sensación de mullido al tumbarte: hombros y cadera descansan desde el primer momento.', 63.96, 39.79],
+    ['Capa de confort', 'Más suavidad sin hundirte: te sientes acogido, pero bien sujeto.', 63.96, 43.02],
+    ['Capa fina', 'Mantiene cada capa en su sitio, para que tu colchón se sienta igual la primera noche que dentro de unos años.', 63.96, 46.56],
+    ['Espuma', 'Gracias a ella no notas los muelles: tu cuerpo solo siente comodidad.', 63.96, 50.31],
+    ['Espuma', 'Te ayuda a mantener la espalda recta mientras duermes, para que te levantes más descansado.', 63.96, 54.9],
+    ['Muelles ensacados', 'Cada muelle trabaja solo: cede donde pesas más y te sujeta donde lo necesitas. Si tu pareja se gira, tú ni te enteras.', 63.96, 60.42],
+    ['Base', 'Da a los muelles un apoyo firme, para que te sujeten igual en cualquier parte del colchón.', 63.96, 65.94],
+    ['Capa fina', 'Protege el interior del colchón para que siga como el primer día, noche tras noche.', 63.96, 70.1],
+    ['Capa fina', 'Un refuerzo más para que tu colchón no se deforme y descanses igual de bien con los años.', 63.96, 73.44],
+    ['Capa inferior', 'Mantiene el colchón firme y quieto sobre el canapé o la base, también cuando te subes o te levantas.', 63.96, 76.77]
   ]
 };
 LM.ESCENA_PAREJA = {
