@@ -389,7 +389,7 @@
   $('#p-faq').innerHTML = LM.faqHTML(LM.faqs(P));
   $('#p-faq-call').innerHTML = LM.llamar('ficha-faq', { label: '¿No encuentras tu duda? Llámanos' });
 
-  $('#p-reco').innerHTML = LM.ORDEN.filter(function (k) { return k !== K; }).map(function (k) {
+  if ($('#p-reco')) $('#p-reco').innerHTML = LM.ORDEN.filter(function (k) { return k !== K; }).map(function (k) {
     var p = LM.PRODUCTOS[k], d = LM.PRECIOS[k][st.medida] || LM.desde(k);
     return '<a class="p-reco-c" href="' + LM.href(p.url) + '"><img src="' + p.img + '" alt="" width="160" height="160" loading="lazy"><span>' + (p.etiqueta ? '<small>' + p.etiqueta + '</small>' : '') + '<b>' + p.titulo + '</b><span>' + p.diferencia + '</span>' + LM.precio(d, { cuota: false }) + '</span></a>';
   }).join('');
