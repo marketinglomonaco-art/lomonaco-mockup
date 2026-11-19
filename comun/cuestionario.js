@@ -41,7 +41,7 @@
     /* Paco, 18/11: la antigua «¿Qué se parece más a ti?» se parte en dos: una de la noche (con cuál te identificas al dormir)
        y otra del día a día (horas sentado, zona lumbar, deporte). Mismos puntos del Excel. 5.º campo: texto para «Para mis hijos» (null = no sale) */
     { k: 'postural', yo: 1, t: '¿Con cuál te identificas más por la noche?', t2: '¿Con cuál se identifica más cada uno por la noche?', t3: '¿Con cuál se identifica más por la noche?',
-      s: 'Elige la frase que más se parezca a ti.', s2: 'Elige una frase para ti y otra para tu pareja.', s3: 'Elige la frase que más se parezca a tu hijo o hija.', ops: [
+      s: 'Piensa en cómo son tus noches. Aquí no hay respuestas buenas ni malas.', s3: 'Piensa en cómo son sus noches. Aquí no hay respuestas buenas ni malas.', ops: [
       ['sin', 'Duermo bien, nada en especial', '', [2, 3, 4, 4], 'Duerme bien, nada en especial'],
       ['hombro', 'Duermo de lado y noto el hombro o la cadera', '', [5, 2, 6, 4], 'Duerme de lado y nota el hombro o la cadera'],
       ['inq', 'Me muevo mucho por la noche', '', [1, 4, 5, 5], 'Se mueve mucho por la noche'],
