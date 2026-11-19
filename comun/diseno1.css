@@ -3019,3 +3019,19 @@ html body .h4p-tipo .h4p-opt-pr { display: flex; align-items: baseline; gap: 8px
 .h4q-res-r { font-size: 15.5px; line-height: 1.5; color: var(--mute); margin-top: 8px; }
 .h4q-res-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; margin-top: 18px; }
 .h4q-res-row .h4q-med, .h4q-res-row .h4q-again { margin: 0; }
+
+/* Paco, 19/11 · Ficha: opciones «¿Lo quieres con canapé o base?». Arriba las fotos (canapé o base + regalos) y el precio;
+   debajo, el título y el subtítulo a todo el ancho */
+body .p-card.p-card--v2 { grid-template-columns: auto minmax(0, 1fr) auto; grid-template-rows: auto auto; align-items: center; column-gap: 14px; row-gap: 10px; padding: 14px 16px; }
+body .p-card.p-card--v2 > input { grid-column: 1; grid-row: 1; }
+body .p-card.p-card--v2 .p-card-imgs { grid-column: 2; grid-row: 1; display: flex; align-items: center; gap: 6px; margin: 0; }
+body .p-card.p-card--v2 > em { grid-column: 3; grid-row: 1; }
+body .p-card.p-card--v2 > span:not(.p-card-imgs) { grid-column: 2 / -1; grid-row: 2; }
+body .p-card.p-card--v2 .p-card-imgs img { width: 56px; height: 56px; object-fit: cover; border-radius: 8px; background: #e2e2e2; }
+body .p-card.p-card--v2 .p-card-imgs .p-card-prod { width: 84px; background: #F6F6F6; }
+@media (max-width: 600px) {
+  body .p-card.p-card--v2 { column-gap: 10px; padding: 12px; }
+  body .p-card.p-card--v2 .p-card-imgs { gap: 4px; }
+  body .p-card.p-card--v2 .p-card-imgs img { width: 44px; height: 44px; }
+  body .p-card.p-card--v2 .p-card-imgs .p-card-prod { width: 64px; }
+}

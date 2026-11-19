@@ -72,9 +72,12 @@
       // Paco, 05/11: cada pack con sus regalos reales. Canapé: almohadas, edredón y protector (Visco: sin edredón). Base: sin regalos
       var R = LM.REGALO_SOLO, G = b.k === 'solo' ? null : LM.regalosPack(K, b.k);
       var v = G ? G.reduce(function (s, r) { return s + r[4]; }, 0) : R.valor, conRegalo = !G || G.length;
-      var foto = !G ? '<img class="p-card-img" src="' + R.img + '" alt="' + R.alt + '" width="240" height="180" loading="lazy">'
-        : G.length ? '<span class="p-card-imgs"><i class="p-card-tipo" title="' + (b.k === 'canape' ? 'Con canapé abatible' : 'Con base tapizada') + '">' + LM.ico(b.k === 'canape' ? 'canape' : 'base') + '</i><b class="p-card-mas" aria-hidden="true">+</b>' + G.map(function (x) { return '<img src="' + x[3] + '" alt="' + x[0] + ' de regalo" width="160" height="160" loading="lazy">'; }).join('<b class="p-card-plus" aria-hidden="true">+</b>') + '</span>' : '';
-      return '<label class="p-card' + (conRegalo ? ' p-card--regalo' : '') + (dis ? ' is-na' : '') + '"><input type="radio" name="base" value="' + b.k + '"' + (st.base === b.k ? ' checked' : '') + (dis ? ' disabled' : '') + '>' + foto +
+      /* Paco, 19/11: en vez del icono, la foto del canapé o de la base (se mantiene el «+» con los regalos);
+         título y subtítulo debajo de las fotos, para ganar espacio */
+      var prod = b.k === 'solo' ? '' : '<img class="p-card-prod" src="../img/pack-tipo-' + b.k + '-700.webp" alt="' + (b.k === 'canape' ? 'Canapé abatible' : 'Base tapizada antideslizante') + '" width="700" height="438" loading="lazy">';
+      var foto = !G ? '<span class="p-card-imgs"><img src="' + R.img + '" alt="' + R.alt + '" width="240" height="180" loading="lazy"></span>'
+        : '<span class="p-card-imgs">' + prod + (G.length ? '<b class="p-card-mas" aria-hidden="true">+</b>' + G.map(function (x) { return '<img src="' + x[3] + '" alt="' + x[0] + ' de regalo" width="160" height="160" loading="lazy">'; }).join('<b class="p-card-plus" aria-hidden="true">+</b>') : '') + '</span>';
+      return '<label class="p-card p-card--v2' + (conRegalo ? ' p-card--regalo' : '') + (dis ? ' is-na' : '') + '"><input type="radio" name="base" value="' + b.k + '"' + (st.base === b.k ? ' checked' : '') + (dis ? ' disabled' : '') + '>' + foto +
         '<span><b>' + (b.k === 'solo' ? R.t : b.t) + '</b><small>' + b.d + '</small>' +
         (conRegalo ? '<small class="p-card-val">Valorado en <s>' + LM.eur(v) + '</s> <strong>Gratis</strong></small>' : '') + '</span><em>' + diff + '</em>' +
         '</label>';
