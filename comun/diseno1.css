@@ -3163,3 +3163,5 @@ body .p-card.p-card--v2 > input { align-self: center; }
 .lm-state--aviso i { flex: none; margin-top: 5px; background: #f5a524; box-shadow: 0 0 0 0 rgba(245,165,36,.6); animation: lm-aviso 1.8s ease-out infinite; }
 @keyframes lm-aviso { 0% { box-shadow: 0 0 0 0 rgba(245,165,36,.6); } 100% { box-shadow: 0 0 0 10px rgba(245,165,36,0); } }
 @media (prefers-reduced-motion: reduce) { .lm-state--aviso i { animation: none; } }
+/* Paco, 24/11 · Banner: la foto 2 (con zoom) asomaba por la derecha de la foto 1; cada foto recorta su propio zoom */
+.h4 .h4-foto { overflow: hidden; }
