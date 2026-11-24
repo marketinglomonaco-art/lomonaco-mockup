@@ -966,10 +966,7 @@
   /* Paco, 12/11: fuera las pastillas «Ver marcas de revisión» y «Opción A / B». Queda un botón pequeño, abajo a la izquierda,
      que despliega el histórico de versiones (LM.HISTORICO, comun/historico.js) y, dentro, el interruptor de las marcas */
   function marksToggle() {
-    // Paco, 19/11: el diseño B queda desactivado: cualquier página de la B lleva a la misma página de la A
-    if ((document.body.getAttribute('data-op') || 'a') === 'b' || /\/diseno1-b\//.test(location.pathname)) {
-      location.replace(location.pathname.replace('/diseno1-b/', '/diseno1-a/') + location.search + location.hash); return;
-    }
+    // Paco, 24/11: el diseño B vuelve (copia de la A); ya no se redirige
     var on = LM.store.get('lm_marcas') === '1'; // las marcas empiezan ocultas
     var pag = location.pathname.split('/').pop() || 'index.html', H = LM.HISTORICO || [];
     var URL = 'https://marketinglomonaco-art.github.io/lomonaco-mockup/historico/';
@@ -977,7 +974,11 @@
     w.className = 'lm-hist-w';
     w.innerHTML = '<button type="button" class="lm-hist-btn" aria-expanded="false" aria-controls="lm-hist-p" aria-label="Versiones de la maqueta">' + LM.ico('layers') + '<span>Versiones</span></button>' +
       '<div class="lm-hist-p" id="lm-hist-p" hidden>' +
-      // Paco, 19/11: fuera el cambio de diseño A/B (la B queda desactivada)
+      // Paco, 24/11: vuelve el cambio de diseño A / B en la misma página
+      '<p class="lm-hist-t">Diseño</p><div class="lm-hist-ab" role="group" aria-label="Diseño">' + ['a', 'b'].map(function (o) {
+        var yo = (document.body.getAttribute('data-opcion') || 'diseno1-a') === 'diseno1-' + o;
+        return '<a href="../diseno1-' + o + '/' + pag + '" data-ab' + (yo ? ' aria-current="page"' : '') + '>Diseño ' + o.toUpperCase() + '</a>';
+      }).join('') + '</div>' +
 
       '<p class="lm-hist-t">Versiones de la maqueta</p><ol>' +
       '<li class="is-on"><b>Actual</b><span>La que estás viendo</span></li>' +

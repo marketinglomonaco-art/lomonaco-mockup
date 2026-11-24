@@ -3172,3 +3172,11 @@ body .p-card.p-card--v2 > input { align-self: center; }
 .h4c-k h3 { font-weight: 600; }
 .h4c-k .h4c-more { font-weight: 500; }
 .h4c-k .h4c-more--tel { font-weight: 400; }
+
+/* Paco, 24/11 · Diseño B: «Nuestros compromisos» en cuadrícula de 2 filas × 3 columnas (en la A, carrusel) */
+body[data-opcion="diseno1-b"] .h4c-nav, body[data-opcion="diseno1-b"] .h4c-dots { display: none; }
+body[data-opcion="diseno1-b"] .h4c-track { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; overflow: visible;
+  max-width: var(--max); margin: 0 auto; padding: 6px var(--pad) 18px; scroll-snap-type: none; }
+body[data-opcion="diseno1-b"] .h4c-track .h4c-k { flex: none; width: auto; }
+@media (max-width: 1000px) { body[data-opcion="diseno1-b"] .h4c-track { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { body[data-opcion="diseno1-b"] .h4c-track { grid-template-columns: 1fr; } }
