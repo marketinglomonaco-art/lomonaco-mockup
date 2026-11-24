@@ -74,6 +74,7 @@
     home: '<path d="M3 11 12 4l9 7"/><path d="M5 10v10h14V10"/>',
     leaf: '<path d="M5 19c0-9 6-14 15-14 0 9-5 15-14 15"/><path d="M5 19 13 11"/>',
     chat: '<path d="M4 5h16v11H8l-4 4z"/>',
+    mail: '<rect x="3" y="5.5" width="18" height="13" rx="2"/><path d="m3.5 7 8.5 6.5L20.5 7"/>', // Paco, 24/11: contacto
     card: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/>',
     star: '<path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>',
     ruler: '<path d="M3 17 17 3l4 4L7 21z"/><path d="m7 13 2 2M10 10l2 2M13 7l2 2"/>',

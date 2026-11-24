@@ -36,7 +36,11 @@
 
   function render() {
     var B = document.body.getAttribute('data-variante') === 'b';
+    /* Paco, 24/11: páginas del pie (visco, látex, muelles, medidas…): solo sus colchones y, en las de medida, los que hay en esa medida */
+    var FILTRO = (document.body.getAttribute('data-filtro') || '').split(',').filter(Boolean);
     var list = LM.ORDEN.filter(function (k) {
+      if (FILTRO.length && FILTRO.indexOf(k) < 0) return false;
+      if (MEDIDA_FIJA && !precio(k)) return false;
       // Opción B: sensación según el reparto de Paco (un colchón puede estar en varias)
       var sensOk = state.sens === 'all' || (B ? FB.sens[state.sens].indexOf(k) > -1 : P[k].sensacion === state.sens);
       var matOk = state.mat === 'all' || FB.matDe[state.mat].indexOf(k) > -1;
@@ -80,6 +84,8 @@
     if ($('#c-table')) $('#c-table').innerHTML = h;
   }
 
+  var MEDIDA_FIJA = document.body.getAttribute('data-medida');
+  if (MEDIDA_FIJA) { state.medida = MEDIDA_FIJA; if ($('#c-hmed')) $('#c-hmed').remove(); }
   if ($('#c-hmed')) { state.medida = LM.medidaFiltro(); LM.filtroMedidas($('#c-hmed'), function (m) { state.medida = m; render(); }); }
   chips($('#c-medidas'), LM.MEDIDAS.map(function (m) { return [m, m.replace('x', '×')]; }), 'medida');
   chips($('#c-sens'), SENS, 'sens');
@@ -116,10 +122,13 @@
     seo.appendChild(head); seo.appendChild(acc);
   })();
 
+  $$('.lm-seo-content a[href]').forEach(function (x) { var h = x.getAttribute('href'), r = LM.ruta(/^\//.test(h) ? LM.WEB + h : h); if (r && r !== h) x.setAttribute('href', r); });
   /* Paco, 06/11 · Banner de la promo en carrusel (13/11: el código pasa a LM.promoCarrusel, comun/componentes.js) */
   LM.promoCarrusel();
 
-  var f = LM.faqs(); $('#c-faq').innerHTML = LM.faqHTML([f[6], f[0], f[3], f[5], f[1]]);
+  var fp = $('#c-faqs-pagina'), f = LM.faqs(), fl = fp ? JSON.parse(fp.textContent) : [];
+  if (fl.length) $('#c-faq').innerHTML = LM.faqHTML(fl.map(function (q) { return [q[0], q[1].replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; })]; }));
+  else $('#c-faq').innerHTML = LM.faqHTML([f[6], f[0], f[3], f[5], f[1]]);
 
   render();
   LM.track('view_item_list', { item_list_name: 'colchones', items: LM.ORDEN.map(function (k) { return { item_id: P[k].id, item_name: P[k].titulo }; }) });

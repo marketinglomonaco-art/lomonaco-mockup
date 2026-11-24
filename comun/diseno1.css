@@ -3219,3 +3219,27 @@ body[data-opcion="diseno1-b"] #compromisos .h4c-sub { margin-left: auto; margin-
 .h4c-k .h4c-icb svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .h4c-k .h4c-icb svg * { animation: none !important; stroke-dasharray: none !important; stroke-dashoffset: 0 !important; opacity: 1 !important; transform: none !important; }
 @media (max-width: 700px) { .h4c-k .h4c-icb { width: 40px; height: 40px; } .h4c-k .h4c-icb svg { width: 22px; height: 22px; } }
+
+/* Paco, 24/11 · Páginas del pie: la plantilla «info» usa la maqueta de las entradas del blog; aquí solo lo propio */
+.if-art .bl-head { max-width: 900px; }
+.if-h1 { font-size: clamp(32px, 4.4vw, 56px); }
+.if-art .bl-head .lm-sub { margin-top: 12px; max-width: 46em; }
+.if-datos { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 210px), 1fr)); gap: 12px; margin-top: 26px; padding: 0; list-style: none; }
+.if-datos li { display: grid; grid-template-columns: 44px 1fr; column-gap: 14px; align-items: center; padding: 18px; border-radius: var(--r); background: #fff; }
+.if-ic { grid-row: span 2; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--acc); color: #fff; }
+.if-ic .lm-i, .if-ic svg { width: 22px; height: 22px; }
+.if-datos b { font-size: 18px; line-height: 1.2; color: var(--ink); overflow-wrap: anywhere; }
+.if-datos small { font-size: 14px; color: var(--mute); line-height: 1.35; }
+.if-art .bl-body { font-size: 17px; }
+.if-art .bl-body h2:first-child { margin-top: 0; }
+.if-art .bl-body h3 { font-size: 19px; }
+.if-ayuda ul { display: grid; margin: 4px 0 0; padding: 0; list-style: none; }
+.if-ayuda a { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 10px 0; border-top: 1px solid var(--line); color: var(--ink); text-decoration: none; font-size: 15px; }
+.if-ayuda li:first-child a { border-top: 0; }
+.if-ayuda a .lm-i { width: 16px; height: 16px; color: var(--acc); flex: none; }
+.if-faq .bl-body details.lm-faq { margin-top: 10px; }
+.if-faq .bl-body details.lm-faq summary h3 { display: inline; margin: 0; font-size: 17px; line-height: 1.4; }
+.if-faq .bl-body .lm-faq-a > * + * { margin-top: .8em; }
+.if-faq .bl-body .lm-faq-a ul { padding-left: 1.2em; }
+.if-faq .bl-body h2 + details.lm-faq { margin-top: 14px; }
+@media (max-width: 700px) { .if-datos { grid-template-columns: 1fr 1fr; gap: 10px; } .if-datos li { grid-template-columns: 1fr; padding: 14px; row-gap: 8px; } .if-ic { grid-row: auto; width: 38px; height: 38px; } .if-datos b { font-size: 16px; } }
