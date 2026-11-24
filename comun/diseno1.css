@@ -3210,3 +3210,6 @@ body[data-opcion="diseno1-b"] #compromisos .h4c-sub { margin-left: auto; margin-
 .lm-sheet--cart .lm-cart-body > * { margin-top: 0; margin-bottom: 0; }
 .lm-sheet--cart .lm-cart-ok { align-self: flex-start; }
 .lm-sheet--cart .lm-cart-trust { gap: 12px; }
+
+/* Paco, 24/11 · Los títulos de los compromisos nunca se cortan */
+.h4c-k h3 { overflow: visible; text-overflow: clip; }
