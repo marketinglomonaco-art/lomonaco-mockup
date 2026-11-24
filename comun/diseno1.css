@@ -3204,3 +3204,9 @@ body[data-opcion="diseno1-b"] #compromisos .h4c-sub { margin-left: auto; margin-
 .h4c-k p { font-size: 15.5px; color: var(--mute); opacity: 1; }
 
 .h4c-k h3 { width: 100%; overflow: hidden; }
+
+/* Paco, 24/11 · Panel del carrito: el mismo espacio entre todos los bloques, en vertical igual que en horizontal (12 px) */
+.lm-sheet--cart .lm-cart-body { display: flex; flex-direction: column; align-items: stretch; gap: 12px; }
+.lm-sheet--cart .lm-cart-body > * { margin-top: 0; margin-bottom: 0; }
+.lm-sheet--cart .lm-cart-ok { align-self: flex-start; }
+.lm-sheet--cart .lm-cart-trust { gap: 12px; }
