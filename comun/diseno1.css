@@ -3165,3 +3165,10 @@ body .p-card.p-card--v2 > input { align-self: center; }
 @media (prefers-reduced-motion: reduce) { .lm-state--aviso i { animation: none; } }
 /* Paco, 24/11 · Banner: la foto 2 (con zoom) asomaba por la derecha de la foto 1; cada foto recorta su propio zoom */
 .h4 .h4-foto { overflow: hidden; }
+
+/* Paco, 24/11 · Compromisos: menos negritas (cifra, rótulo, título y enlaces más ligeros) */
+.h4c-fig b { font-weight: 600; letter-spacing: -.035em; }
+.h4c-fig span { font-weight: 500; letter-spacing: .1em; }
+.h4c-k h3 { font-weight: 600; }
+.h4c-k .h4c-more { font-weight: 500; }
+.h4c-k .h4c-more--tel { font-weight: 400; }
