@@ -481,10 +481,11 @@
   LM.ruta = function (h) {
     if (!h || /^(tel:|mailto:|#)/.test(h) || /wa\.me/.test(h) || /^[\w-]+\.html([?#].*)?$/.test(h)) return h;
     if (/^https?:/.test(h) && h.indexOf(LM.WEB) !== 0) return h;
-    var u = h.replace(LM.WEB, ''), path = u.split('?')[0], q = u.split('?')[1] || '', R = LM.RUTAS || {};
+    var hash = h.indexOf('#') > -1 ? h.slice(h.indexOf('#')) : ''; // Paco, 24/11: /metodos-de-pago/#mastercard
+    var u = h.replace(LM.WEB, '').split('#')[0], path = u.split('?')[0], q = u.split('?')[1] || '', R = LM.RUTAS || {};
     if (R[path]) {
       var col = (q.match(/attribute_pa_color=([\w-]+)/) || [])[1];
-      return R[path] + (col ? '?color=' + col : '');
+      return R[path] + (col ? '?color=' + col : '') + hash;
     }
     var cm = path.match(/^\/canape-(\d+)-x-(\d+)\/$/);
     if (cm && R['/canape-abatible-de-madera/']) return R['/canape-abatible-de-madera/'] + '?medida=' + cm[1] + 'x' + cm[2];
