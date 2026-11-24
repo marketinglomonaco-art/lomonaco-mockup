@@ -3202,3 +3202,5 @@ body[data-opcion="diseno1-b"] #compromisos .h4c-sub { margin-left: auto; margin-
 /* Paco, 24/11 · Compromisos: títulos en Albert Sans, igual que las tarjetas de la home (20 px, mismo peso y color); párrafo como ellas */
 .h4c-k h3 { font: 700 20px/1.15 var(--font); font-style: normal; letter-spacing: -.015em; color: var(--ink); }
 .h4c-k p { font-size: 15.5px; color: var(--mute); opacity: 1; }
+
+.h4c-k h3 { width: 100%; overflow: hidden; }

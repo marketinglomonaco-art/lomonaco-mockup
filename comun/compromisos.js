@@ -77,6 +77,17 @@
         'Confiamos tanto en la calidad de nuestros colchones que te ofrecemos hasta 10 años de garantía. Para que descanses tranquilo durante muchos años.', verCond('garantia', 'Ver garantía'))
     ].join('');
 
+    /* Paco, 24/11: los títulos siempre en una línea y todos del mismo tamaño: si alguno no cabe, bajan todos a la vez */
+    function ajustarTitulos() {
+      var hs = $$('.h4c-k h3', ct); if (!hs.length) return;
+      hs.forEach(function (h) { h.style.fontSize = ''; h.style.whiteSpace = 'nowrap'; });
+      var fs = parseFloat(getComputedStyle(hs[0]).fontSize);
+      function sobra() { return hs.some(function (h) { return h.scrollWidth > h.clientWidth + 1; }); }
+      while (fs > 15 && sobra()) { fs -= .5; hs.forEach(function (h) { h.style.fontSize = fs + 'px'; }); }
+    }
+    ajustarTitulos(); addEventListener('resize', ajustarTitulos);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(ajustarTitulos);
+
     ct.addEventListener('click', function (e) {
       var b = e.target.closest('[data-cond]'); if (!b) return;
       var k = b.getAttribute('data-cond');
