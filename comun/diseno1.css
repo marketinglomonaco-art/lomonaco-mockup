@@ -3180,3 +3180,6 @@ body[data-opcion="diseno1-b"] .h4c-track { display: grid; grid-template-columns:
 body[data-opcion="diseno1-b"] .h4c-track .h4c-k { flex: none; width: auto; }
 @media (max-width: 1000px) { body[data-opcion="diseno1-b"] .h4c-track { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { body[data-opcion="diseno1-b"] .h4c-track { grid-template-columns: 1fr; } }
+/* Paco, 24/11 · Compromisos: mismo esquema en todas (icono, título y párrafo), mismo tamaño de título */
+.h4c-k .h4c-k-top { min-height: 0; }
+.h4c-k h3 { margin-top: 10px; font-size: 21px; font-weight: 600; }
