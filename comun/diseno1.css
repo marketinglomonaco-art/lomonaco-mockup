@@ -3183,3 +3183,18 @@ body[data-opcion="diseno1-b"] .h4c-track .h4c-k { flex: none; width: auto; }
 /* Paco, 24/11 · Compromisos: mismo esquema en todas (icono, título y párrafo), mismo tamaño de título */
 .h4c-k .h4c-k-top { min-height: 0; }
 .h4c-k h3 { margin-top: 10px; font-size: 21px; font-weight: 600; }
+
+/* Paco, 24/11 · Compromisos como su referencia: sin iconos; título en Playfair cursiva 600 granate, párrafo y un enlace con flecha.
+   Subtítulo bajo el titular. En la B, cabecera centrada con líneas a los lados del antetítulo */
+.h4c-k .h4c-k-top { display: none; }
+.h4c-k h3 { margin-top: 0; font: italic 600 clamp(22px, 1.9vw, 27px)/1.15 'Playfair Display', Georgia, serif; letter-spacing: -.01em; color: var(--acc); }
+.h4c-k p { color: var(--ink); opacity: .82; }
+.h4c-k .h4c-more { display: inline-flex; align-items: center; gap: 8px; font-weight: 500; }
+.h4c-k .h4c-more::after { content: "→"; font-size: 1.05em; transition: transform .2s; }
+.h4c-k .h4c-more:hover::after { transform: translateX(3px); }
+.h4c-sub { margin-top: 10px; }
+body[data-opcion="diseno1-b"] #compromisos .lm-head2 { justify-content: center; text-align: center; }
+body[data-opcion="diseno1-b"] #compromisos .lm-head2 > div { width: 100%; }
+body[data-opcion="diseno1-b"] #compromisos .lm-eyebrow { display: inline-flex; align-items: center; gap: 16px; color: var(--acc); }
+body[data-opcion="diseno1-b"] #compromisos .lm-eyebrow::before, body[data-opcion="diseno1-b"] #compromisos .lm-eyebrow::after { content: ""; width: 48px; height: 1.5px; background: currentColor; }
+body[data-opcion="diseno1-b"] #compromisos .h4c-sub { margin-left: auto; margin-right: auto; }
