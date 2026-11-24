@@ -32,6 +32,11 @@
     gem: '<svg class="ic-gem" viewBox="0 0 24 24"><g class="ic-g"><path d="M6.5 3.5h11l4 5.5L12 21 2.5 9z"/><path d="M2.5 9h19M9 3.5 12 9l3-5.5M12 9v12"/></g><path class="ic-spark" d="M20.5 1.5v3M19 3h3"/></svg>',
     card: '<svg class="ic-card" viewBox="0 0 24 24"><g class="ic-c"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M2.5 9.5h19M6 15h4"/></g><text class="ic-3" x="17" y="16.6" text-anchor="middle">12</text></svg>'
   };
+  /* Paco, 24/11: icono antes del titular, con la identidad: línea blanca sobre círculo granate (como el logo principal) */
+  IC.lock = '<svg viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.2"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/><path d="m9.5 15.5 1.8 1.8 3.4-3.6"/></svg>';
+  IC.sello = '<svg viewBox="0 0 24 24"><circle cx="12" cy="9.5" r="6"/><path d="m9.6 9.6 1.7 1.7 3.2-3.4"/><path d="M8.6 14.5 7 21l5-2.6 5 2.6-1.6-6.5"/></svg>';
+  IC.tarjeta = '<svg viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M2.5 9.5h19M6 15h4"/></svg>';
+  function icK(n) { return '<span class="h4c-icb" aria-hidden="true">' + IC[n] + '</span>'; }
   function ic(n, extra) { return '<span class="h4c-ic' + (extra || '') + '" aria-hidden="true">' + IC[n] + '</span>'; }
   function verCond(k, t) { return '<button type="button" class="h4c-more" data-cond="' + k + '">' + (t || 'Ver condiciones') + '</button>'; }
 
@@ -49,31 +54,31 @@
       return '<div class="h4c-k-head"><img src="../img/' + n + '-' + a + '.webp" srcset="../img/' + n + '-' + a + '.webp ' + a + 'w, ../img/' + n + '-' + b + '.webp ' + b + 'w" sizes="(max-width: 700px) 82vw, 330px" alt="' + alt + '" width="' + a + '" height="' + Math.round(a * 0.625) + '" loading="lazy"></div>';
     }
     function k(img, icono, fig, titulo, texto, extra) {
-      return '<li class="h4c-k">' + img + '<div class="h4c-k-b">' + '<div class="h4c-k-top">' + fig + icono + '</div><h3>' + titulo + '</h3><p>' + texto + '</p>' + (extra || '') + '</div></li>';
+      return '<li class="h4c-k">' + img + '<div class="h4c-k-b">' + icono + '<h3>' + titulo + '</h3><p>' + texto + '</p>' + (extra || '') + '</div></li>';
     }
     var pr = partir(C.prueba.v), ga = partir(C.garantia.v), tr = partir(C.trayectoria.v), test = (document.getElementById('cuestionario') ? '' : 'index.html') + '#cuestionario';
     /* Paco, 24/11 (2.ª): textos definitivos de Paco, tal cual. Antes: textos de Paco revisados con el tono de «La marca de toda la vida» (cercano, tranquilo, sin tecnicismos)
        y en su orden: asesoramiento, 150 noches, compra protegida, tres décadas, financiación y garantía */
     ct.innerHTML = [
       // 1 · Asesoramiento experto: el test, como enlace
-      k(foto('comp-ayuda', 800, 896, 'Una mujer sonríe mirando el móvil tumbada en su cama Lomonaco'), '', ic('phone'), 'Asesoramiento experto',
+      k(foto('comp-ayuda', 800, 896, 'Una mujer sonríe mirando el móvil tumbada en su cama Lomonaco'), icK('phone'), '', 'Asesoramiento experto',
         'Cuéntanos cómo te gusta dormir y nuestros expertos te ayudarán a encontrar tu colchón ideal, con un consejo personalizado y sin compromiso.',
         '<a class="h4c-more" href="' + test + '" data-lead="home-ayuda-test">Haz el test de 1 minuto</a>'), // Paco, 24/11: un solo enlace por tarjeta
       // 2 · 150 noches de prueba (con la devolución dentro)
-      k(foto('comp-noches-medio', 800, 800, 'Una mujer en pijama toma un café sentada en su cama Lomonaco'), ic('moon'), cifra(pr[0], pr[1] + ' de prueba'), '150 noches de prueba',
+      k(foto('comp-noches-medio', 800, 800, 'Una mujer en pijama toma un café sentada en su cama Lomonaco'), icK('moon'), cifra(pr[0], pr[1] + ' de prueba'), '150 noches de prueba',
         'Acostumbrarse a un colchón nuevo lleva su tiempo. Por eso tienes 150 noches para probarlo en casa. Si no te convence, pasamos a recogerlo.', verCond('devolucion')),
       // 3 · Compra protegida (Trusted Shops)
-      k(foto('comp-compra', 800, 1116, 'Una mujer ríe con una taza sentada en su cama'), '<span class="h4c-ic h4c-ic--ts" aria-hidden="true"><img src="../img/trusted-shops.png" alt="" width="124" height="116" loading="lazy"></span>',
+      k(foto('comp-compra', 800, 1116, 'Una mujer ríe con una taza sentada en su cama'), icK('lock'),
         cifra(C.valoracion.media, 'de 5 en ' + C.valoracion.plataforma), 'Compra protegida',
         'Compra con toda tranquilidad: tenemos una valoración de ' + C.valoracion.media + ' sobre 5 y tu compra está protegida, para que solo te preocupes de descansar.', '<a class="h4c-more" href="' + C.valoracion.url + '" target="_blank" rel="noopener">Conoce Trusted Shops</a>'),
       // 4 · Tres décadas de confianza
-      k(foto('comp-vida-medio', 800, 800, 'Una pareja lee abrazada en la cama, sobre su colchón Lomonaco'), ic('users'), cifra(tr[0], tr[1] + ' contigo'), '30 años de confianza',
+      k(foto('comp-vida-medio', 800, 800, 'Una pareja lee abrazada en la cama, sobre su colchón Lomonaco'), icK('users'), cifra(tr[0], tr[1] + ' contigo'), '30 años de confianza',
         'Desde 1996, más de ' + LM.c('clientes') + ' familias ya descansan con LoMonaco. Una marca de toda la vida, reconocida y elegida por generaciones.'),
       // 5 · Financiación a tu medida (datos de LM.CONFIG.financiacion)
-      k(foto('comp-financia-medio', 800, 800, 'Una mujer mira el móvil recostada en su cama Lomonaco'), ic('card'), cifra('36', 'meses para pagar'), 'Financiación a medida',
+      k(foto('comp-financia-medio', 800, 800, 'Una mujer mira el móvil recostada en su cama Lomonaco'), icK('tarjeta'), cifra('36', 'meses para pagar'), 'Financiación a medida',
         'Elige cómo prefieres pagar, con plazos de hasta 36 meses. Y si tu compra supera los 1.200 €, fináncialo en 12 meses sin intereses.' + LM.ast, '<a class="h4c-more" href="#lm-legal">Ver financiación</a>'),
       // 6 · 10 años de garantía
-      k(foto('comp-garantia', 800, 1200, 'Una pareja lee en la cama con luz de mañana, sobre su colchón Lomonaco'), ic('shield'), cifra(ga[0], ga[1] + ' de garantía'), '10 años de garantía',
+      k(foto('comp-garantia', 800, 1200, 'Una pareja lee en la cama con luz de mañana, sobre su colchón Lomonaco'), icK('sello'), cifra(ga[0], ga[1] + ' de garantía'), '10 años de garantía',
         'Confiamos tanto en la calidad de nuestros colchones que te ofrecemos hasta 10 años de garantía, para que descanses tranquilo muchos años.', verCond('garantia', 'Ver garantía'))
     ].join('');
 

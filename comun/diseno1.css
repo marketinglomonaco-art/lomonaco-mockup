@@ -3213,3 +3213,9 @@ body[data-opcion="diseno1-b"] #compromisos .h4c-sub { margin-left: auto; margin-
 
 /* Paco, 24/11 · Los títulos de los compromisos nunca se cortan */
 .h4c-k h3 { overflow: visible; text-overflow: clip; }
+
+/* Paco, 24/11 · Compromisos: icono antes del titular, en la línea de la identidad (blanco sobre granate, trazo fino, sin animación) */
+.h4c-k .h4c-icb { display: grid; place-items: center; width: 44px; height: 44px; flex: none; border-radius: 50%; background: var(--acc); color: #fff; margin-bottom: 4px; }
+.h4c-k .h4c-icb svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.h4c-k .h4c-icb svg * { animation: none !important; stroke-dasharray: none !important; stroke-dashoffset: 0 !important; opacity: 1 !important; transform: none !important; }
+@media (max-width: 700px) { .h4c-k .h4c-icb { width: 40px; height: 40px; } .h4c-k .h4c-icb svg { width: 22px; height: 22px; } }
