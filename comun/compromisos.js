@@ -61,7 +61,7 @@
        y en su orden: asesoramiento, 150 noches, compra protegida, tres décadas, financiación y garantía */
     ct.innerHTML = [
       // 1 · Asesoramiento experto: el test, como enlace
-      k(foto('comp2-ayuda', 800, 1200, 'Una asesora de LOMONACO sonríe con sus cascos en el showroom'), icK('phone'), '', 'Asesoramiento experto',
+      k(foto('comp3-ayuda', 800, 1200, 'Una asesora de LOMONACO sonríe con sus cascos en el showroom'), icK('phone'), '', 'Asesoramiento experto',
         'Cuéntanos cómo te gusta dormir y nuestros expertos te ayudarán a encontrar tu colchón ideal, con un consejo personalizado y sin compromiso.',
         '<a class="h4c-more" href="' + test + '" data-lead="home-ayuda-test">Haz el test de 1 minuto</a>'), // Paco, 24/11: un solo enlace por tarjeta
       // 2 · 150 noches de prueba (con la devolución dentro)
