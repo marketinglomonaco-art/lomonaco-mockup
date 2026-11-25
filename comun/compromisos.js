@@ -61,24 +61,24 @@
        y en su orden: asesoramiento, 150 noches, compra protegida, tres décadas, financiación y garantía */
     ct.innerHTML = [
       // 1 · Asesoramiento experto: el test, como enlace
-      k(foto('comp-ayuda', 800, 896, 'Una mujer sonríe mirando el móvil tumbada en su cama Lomonaco'), icK('phone'), '', 'Asesoramiento experto',
+      k(foto('comp2-ayuda', 800, 1200, 'Una asesora de LOMONACO sonríe con sus cascos en el showroom'), icK('phone'), '', 'Asesoramiento experto',
         'Cuéntanos cómo te gusta dormir y nuestros expertos te ayudarán a encontrar tu colchón ideal, con un consejo personalizado y sin compromiso.',
         '<a class="h4c-more" href="' + test + '" data-lead="home-ayuda-test">Haz el test de 1 minuto</a>'), // Paco, 24/11: un solo enlace por tarjeta
       // 2 · 150 noches de prueba (con la devolución dentro)
-      k(foto('comp-noches-medio', 800, 800, 'Una mujer en pijama toma un café sentada en su cama Lomonaco'), icK('moon'), cifra(pr[0], pr[1] + ' de prueba'), '150 noches de prueba',
+      k(foto('comp2-noches', 800, 1200, 'Una mujer duerme tranquila en su colchón Lomonaco'), icK('moon'), cifra(pr[0], pr[1] + ' de prueba'), '150 noches de prueba',
         'Acostumbrarse a un colchón nuevo lleva su tiempo. Por eso tienes 150 noches para probarlo en casa. Si no te convence, pasamos a recogerlo.', verCond('devolucion')),
       // 3 · Compra protegida (Trusted Shops)
-      k(foto('comp-compra', 800, 1116, 'Una mujer ríe con una taza sentada en su cama'), icK('lock'),
+      k(foto('comp2-compra', 800, 1200, 'Una asesora atiende a una pareja en el showroom de LOMONACO'), icK('lock'),
         cifra(C.valoracion.media, 'de 5 en ' + C.valoracion.plataforma), 'Compra protegida',
         'Compra con toda tranquilidad: tenemos una valoración de ' + C.valoracion.media + ' sobre 5 y tu compra está protegida, para que solo te preocupes de descansar.', '<a class="h4c-more" href="' + C.valoracion.url + '" target="_blank" rel="noopener">Conoce Trusted Shops</a>'),
       // 4 · Tres décadas de confianza
-      k(foto('comp-vida-medio', 800, 800, 'Una pareja lee abrazada en la cama, sobre su colchón Lomonaco'), icK('users'), cifra(tr[0], tr[1] + ' contigo'), '30 años de confianza',
+      k(foto('comp2-vida', 800, 1200, 'Tres generaciones de una familia sonríen en el sofá de casa'), icK('users'), cifra(tr[0], tr[1] + ' contigo'), '30 años de confianza',
         'Desde 1996, más de ' + LM.c('clientes') + ' familias ya descansan con LoMonaco. Una marca de toda la vida, reconocida y elegida por generaciones.'),
       // 5 · Financiación a tu medida (datos de LM.CONFIG.financiacion)
-      k(foto('comp-financia-medio', 800, 800, 'Una mujer mira el móvil recostada en su cama Lomonaco'), icK('tarjeta'), cifra('36', 'meses para pagar'), 'Financiación a medida',
+      k(foto('comp2-financia', 800, 1200, 'Una pareja mira el portátil sentada en la cama'), icK('tarjeta'), cifra('36', 'meses para pagar'), 'Financiación a medida',
         'Elige cómo prefieres pagar, con plazos de hasta 36 meses. Y si tu compra supera los 1.200 €, fináncialo en 12 meses sin intereses.' + LM.ast, '<a class="h4c-more" href="#lm-legal">Ver financiación</a>'),
       // 6 · 10 años de garantía
-      k(foto('comp-garantia', 800, 1200, 'Una pareja lee en la cama con luz de mañana, sobre su colchón Lomonaco'), icK('sello'), cifra(ga[0], ga[1] + ' de garantía'), '10 años de garantía',
+      k(foto('comp2-garantia', 800, 1200, 'Una familia juega en la cama sobre su colchón Lomonaco'), icK('sello'), cifra(ga[0], ga[1] + ' de garantía'), '10 años de garantía',
         'Confiamos tanto en la calidad de nuestros colchones que te ofrecemos hasta 10 años de garantía, para que descanses tranquilo muchos años.', verCond('garantia', 'Ver garantía'))
     ].join('');
 
