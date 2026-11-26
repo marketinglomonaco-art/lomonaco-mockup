@@ -1227,7 +1227,7 @@ LM.TIENDA = {
    [
     "leaf",
     "Hipoalergénico y antiácaros",
-    "Además es antihongos: tu cama se mantiene limpia para un descanso más sano."
+    "Y además antihongos: mantiene tu cama limpia para un descanso más sano."
    ],
    [
     "check",
@@ -1237,7 +1237,7 @@ LM.TIENDA = {
    [
     "moon",
     "Sin despertares",
-    "Mantiene la temperatura ideal toda la noche, para que duermas sin interrupciones."
+    "La temperatura ideal toda la noche, para que duermas sin interrupciones."
    ]
   ],
   "detalle": [
