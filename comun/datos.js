@@ -497,3 +497,267 @@ LM.PROVINCIAS = { '01': 'Álava', '02': 'Albacete', '03': 'Alicante', '04': 'Alm
   '33': 'Asturias', '34': 'Palencia', '35': 'Las Palmas', '36': 'Pontevedra', '37': 'Salamanca', '38': 'Santa Cruz de Tenerife', '39': 'Cantabria',
   '40': 'Segovia', '41': 'Sevilla', '42': 'Soria', '43': 'Tarragona', '44': 'Teruel', '45': 'Toledo', '46': 'Valencia', '47': 'Valladolid',
   '48': 'Vizcaya', '49': 'Zamora', '50': 'Zaragoza', '51': 'Ceuta', '52': 'Melilla' };
+
+/* Paco, 26/11 · Capas reales de cada modelo, de arriba abajo, con los nombres definitivos de su Excel
+   («LM - Material de capas.xlsx», columna «Versión definitiva»; las celdas vacías heredan el nombre del mismo material en otro modelo).
+   [zona, nombre, qué notas] */
+LM.CAPAS_MODELO = {
+ "visco": [
+  [
+   "Tapa",
+   "Tejido extra suave",
+   "Es lo primero que tocas al tumbarte: un tejido suave y con cuerpo que mantiene su tacto noche tras noche."
+  ],
+  [
+   "Tapa",
+   "Fibra transpirable",
+   "Una capa mullida que deja pasar el aire: la superficie se nota acogedora y fresca desde el primer momento."
+  ],
+  [
+   "Tapa",
+   "Viscogel Memory",
+   "Se amolda a tu forma y reparte el peso de hombros y caderas, para que no se te carguen. El gel la hace más transpirable."
+  ],
+  [
+   "Tapa",
+   "Visco Soft",
+   "Una capa de suavidad justo debajo: primero te recoge y después te sostiene, sin que te hundas."
+  ],
+  [
+   "Tapa",
+   "Tejido ProTech",
+   "Cierra la tapa y protege las capas de confort, para que se sientan igual la primera noche que dentro de unos años."
+  ],
+  [
+   "Núcleo",
+   "Naturcel Flex",
+   "Espuma de alta resiliencia que recupera su forma al instante: te acompaña cuando te giras y no se queda marcada."
+  ],
+  [
+   "Núcleo",
+   "Naturcel Firme",
+   "La base del colchón: le da altura y estabilidad para que descanses recto y sin hundirte."
+  ],
+  [
+   "Cara inferior",
+   "Tejido ProTech",
+   "Protege el interior del colchón por la cara de abajo, para que siga como el primer día."
+  ],
+  [
+   "Cara inferior",
+   "Naturcomfort",
+   "Da cuerpo a la cara de abajo y hace el colchón más estable sobre tu canapé o tu base."
+  ],
+  [
+   "Cara inferior",
+   "Fibra transpirable",
+   "Deja respirar el colchón también por debajo y suma un punto de confort a la cara de abajo."
+  ],
+  [
+   "Cara inferior",
+   "Malla 3D Hipertranspirable",
+   "Su tejido en relieve deja circular el aire por debajo: el colchón respira y se mantiene seco."
+  ]
+ ],
+ "gold": [
+  [
+   "Tapa",
+   "Tejido extra suave",
+   "Es lo primero que tocas al tumbarte: un tejido suave y con cuerpo que mantiene su tacto noche tras noche."
+  ],
+  [
+   "Tapa",
+   "Fibra transpirable",
+   "Una capa mullida que deja pasar el aire: la superficie se nota acogedora y fresca desde el primer momento."
+  ],
+  [
+   "Tapa",
+   "Viscogel Memory",
+   "Se amolda a tu forma y reparte el peso de hombros y caderas, para que no se te carguen. El gel la hace más transpirable."
+  ],
+  [
+   "Tapa",
+   "Visco Soft",
+   "Una capa de suavidad justo debajo: primero te recoge y después te sostiene, sin que te hundas."
+  ],
+  [
+   "Tapa",
+   "Tejido ProTech",
+   "Cierra la tapa y protege las capas de confort, para que se sientan igual la primera noche que dentro de unos años."
+  ],
+  [
+   "Núcleo",
+   "Naturcel Soporte",
+   "Gracias a ella no notas los muelles: reparte tu peso y tu cuerpo solo siente comodidad."
+  ],
+  [
+   "Núcleo",
+   "Núcleo de muelles ensacados",
+   "Cada muelle trabaja solo: cede donde pesas más y te sujeta donde lo necesitas. Si tu pareja se gira, tú ni te enteras."
+  ],
+  [
+   "Núcleo",
+   "Marco perimetral reforzado",
+   "Refuerza todo el borde del colchón: aprovechas la cama de lado a lado y te sientas en el filo con firmeza."
+  ],
+  [
+   "Núcleo",
+   "Naturcel Base",
+   "Da a los muelles un apoyo firme, para que te sujeten igual en cualquier parte del colchón."
+  ],
+  [
+   "Cara inferior",
+   "Tejido ProTech",
+   "Protege el interior del colchón por la cara de abajo, para que siga como el primer día."
+  ],
+  [
+   "Cara inferior",
+   "Naturcomfort",
+   "Da cuerpo a la cara de abajo y hace el colchón más estable sobre tu canapé o tu base."
+  ],
+  [
+   "Cara inferior",
+   "Fibra transpirable",
+   "Deja respirar el colchón también por debajo y suma un punto de confort a la cara de abajo."
+  ],
+  [
+   "Cara inferior",
+   "Malla 3D Hipertranspirable",
+   "Su tejido en relieve deja circular el aire por debajo: el colchón respira y se mantiene seco."
+  ]
+ ],
+ "latex": [
+  [
+   "Tapa",
+   "Tejido extra suave",
+   "Es lo primero que tocas al tumbarte: un tejido suave y con cuerpo que mantiene su tacto noche tras noche."
+  ],
+  [
+   "Tapa",
+   "Látex",
+   "Al tumbarte notas cómo se adapta a ti y vuelve a su sitio en cuanto te mueves. Y como respira, no pasas calor."
+  ],
+  [
+   "Tapa",
+   "Viscogel Memory",
+   "Se amolda a tu forma y reparte el peso de hombros y caderas, para que no se te carguen. El gel la hace más transpirable."
+  ],
+  [
+   "Tapa",
+   "Algodón",
+   "Una capa natural que suma frescor y suavidad y ayuda a regular la humedad."
+  ],
+  [
+   "Tapa",
+   "Visco Soft",
+   "Una capa de suavidad justo debajo: primero te recoge y después te sostiene, sin que te hundas."
+  ],
+  [
+   "Tapa",
+   "Tejido ProTech",
+   "Cierra la tapa y protege las capas de confort, para que se sientan igual la primera noche que dentro de unos años."
+  ],
+  [
+   "Núcleo",
+   "Naturcel Bio",
+   "Espuma de alta densidad que te sujeta con firmeza y conserva su forma con los años."
+  ],
+  [
+   "Núcleo",
+   "Naturcel Confort",
+   "Una capa suave entre el soporte y los muelles, para que la firmeza se note progresiva."
+  ],
+  [
+   "Núcleo",
+   "Núcleo de muelles ensacados",
+   "Cada muelle trabaja solo: cede donde pesas más y te sujeta donde lo necesitas. Si tu pareja se gira, tú ni te enteras."
+  ],
+  [
+   "Núcleo",
+   "Marco perimetral reforzado",
+   "Refuerza todo el borde del colchón: aprovechas la cama de lado a lado y te sientas en el filo con firmeza."
+  ],
+  [
+   "Núcleo",
+   "Naturcel Base",
+   "Da a los muelles un apoyo firme, para que te sujeten igual en cualquier parte del colchón."
+  ],
+  [
+   "Cara inferior",
+   "Tejido ProTech",
+   "Protege el interior del colchón por la cara de abajo, para que siga como el primer día."
+  ],
+  [
+   "Cara inferior",
+   "Naturcomfort",
+   "Da cuerpo a la cara de abajo y hace el colchón más estable sobre tu canapé o tu base."
+  ],
+  [
+   "Cara inferior",
+   "Fibra transpirable",
+   "Deja respirar el colchón también por debajo y suma un punto de confort a la cara de abajo."
+  ],
+  [
+   "Cara inferior",
+   "Malla 3D Hipertranspirable",
+   "Su tejido en relieve deja circular el aire por debajo: el colchón respira y se mantiene seco."
+  ]
+ ],
+ "gran": [
+  [
+   "Tapa",
+   "Tejido extra suave",
+   "Es lo primero que tocas al tumbarte: un tejido suave y con cuerpo que mantiene su tacto noche tras noche."
+  ],
+  [
+   "Tapa",
+   "Visco Soft",
+   "Una capa de suavidad justo debajo: primero te recoge y después te sostiene, sin que te hundas."
+  ],
+  [
+   "Tapa",
+   "Algodón",
+   "Una capa natural que suma frescor y suavidad y ayuda a regular la humedad."
+  ],
+  [
+   "Tapa",
+   "Visco Soft",
+   "Más suavidad sin hundirte: te sientes acogido, pero bien sujeto toda la noche."
+  ],
+  [
+   "Tapa",
+   "Tejido ProTech",
+   "Cierra la tapa y protege las capas de confort, para que se sientan igual la primera noche que dentro de unos años."
+  ],
+  [
+   "Núcleo",
+   "Núcleo 100% Látex",
+   "El corazón del colchón: se adapta a todo tu cuerpo, recupera su forma al momento y deja pasar el aire."
+  ],
+  [
+   "Núcleo",
+   "Naturbase",
+   "Da al núcleo de látex un apoyo estable, para que conserve su forma noche tras noche."
+  ],
+  [
+   "Cara inferior",
+   "Tejido ProTech",
+   "Protege el interior del colchón por la cara de abajo, para que siga como el primer día."
+  ],
+  [
+   "Cara inferior",
+   "Naturcomfort",
+   "Da cuerpo a la cara de abajo y hace el colchón más estable sobre tu canapé o tu base."
+  ],
+  [
+   "Cara inferior",
+   "Fibra transpirable",
+   "Deja respirar el colchón también por debajo y suma un punto de confort a la cara de abajo."
+  ],
+  [
+   "Cara inferior",
+   "Malla 3D Hipertranspirable",
+   "Su tejido en relieve deja circular el aire por debajo: el colchón respira y se mantiene seco."
+  ]
+ ]
+};

@@ -438,7 +438,7 @@
     $('#base').scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
 
-  var tech = [['Modelo', P.titulo], ['Altura', P.altura], ['Núcleo', P.nucleo], ['Capas', P.capas.map(function (c) { return c[0]; }).join(' · ')],
+  var tech = [['Modelo', P.titulo], ['Altura', P.altura], ['Núcleo', P.nucleo], ['Capas', (LM.CAPAS_MODELO && LM.CAPAS_MODELO[K] ? LM.CAPAS_MODELO[K].map(function (c) { return c[1]; }) : P.capas.map(function (c) { return c[0]; })).join(' · ')],
     ['Firmeza', P.firmeza + '% (escala de la web actual)'], ['Adaptabilidad', P.adaptabilidad + '%'], ['Medidas', LM.MEDIDAS.map(function (m) { return m.replace('x', '×'); }).join(', ') + ' cm'],
     ['Garantía', LM.c('garantia')], ['Referencia', 'ID ' + P.id]];
   $('#p-tech').innerHTML = tech.map(function (t) { return '<div><dt>' + t[0] + '</dt><dd>' + t[1] + '</dd></div>'; }).join('');
@@ -450,10 +450,14 @@
     var pin = $('.p-scrub-pin', sec), v = $('.p-scrub-v', sec), list = $('#p-scrub-steps'), bar = $('#p-scrub-prog');
     // Paco, 09/11: si hay capas del vídeo para este modelo (LM.VIDEO_CAPAS), una tarjeta por capa y un punto sobre ella
     var CV = (LM.VIDEO_CAPAS || {}).todos, capas = CV || P.capas, n = capas.length, dd = function (x) { return (x < 10 ? '0' : '') + x; };
-    var NUM = ['', 'Una', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis', 'Siete', 'Ocho', 'Nueve', 'Diez', 'Once', 'Doce'];
+    // Paco, 26/11: las capas reales de cada modelo con los nombres definitivos (LM.CAPAS_MODELO). El vídeo es común a los 4,
+    // así que ya no se marcan puntos sobre él (no coincidirían con las capas de cada modelo)
+    var CM = LM.CAPAS_MODELO && LM.CAPAS_MODELO[K];
+    if (CM) { CV = null; capas = CM.map(function (c) { return [c[1], c[2], c[0]]; }); n = capas.length; }
+    var NUM = ['', 'Una', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis', 'Siete', 'Ocho', 'Nueve', 'Diez', 'Once', 'Doce', 'Trece', 'Catorce', 'Quince'];
     var A0 = .15, A1 = .86, tr = (A1 - A0) / n;
     var pasos = [{ a: 0, b: A0, k: 'Por dentro', t: 'Así es tu ' + P.nombre + '.', p: 'Lo abrimos capa a capa.', h2: true, aviso: true }]
-      .concat(capas.map(function (c, i) { return { a: A0 + i * tr, b: A0 + (i + 1) * tr, k: 'Capa ' + dd(i + 1) + ' de ' + dd(n), t: c[0], p: c[1], pt: CV ? i : -1 }; }))
+      .concat(capas.map(function (c, i) { return { a: A0 + i * tr, b: A0 + (i + 1) * tr, k: (c[2] ? c[2] + ' · ' : '') + 'Capa ' + dd(i + 1) + ' de ' + dd(n), t: c[0], p: c[1], pt: CV ? i : -1 }; }))
       .concat([{ a: A1, b: 1.01, k: P.altura + ' de descanso', t: (NUM[n] || n) + ' capas. Un solo objetivo.', p: 'Que duermas fresco y te levantes descansado. Firmeza ' + P.firmeza + '% y adaptabilidad ' + P.adaptabilidad + '%.', cta: true }]);
     // Puntos sobre las capas: la capa se ajusta al trozo de vídeo que se ve (object-fit: cover)
     var pts = $('.p-scrub-pts', sec), dots = [];
