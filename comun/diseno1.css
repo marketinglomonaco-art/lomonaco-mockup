@@ -3264,4 +3264,8 @@ body[data-page="info"] { background: #F6F6F6; }
 @media (max-width: 699px) {
   .h-strip-in { grid-template-columns: 1fr 1fr; gap: 14px 14px; padding: 18px var(--pad); }
   .h-strip li:last-child { grid-column: 1 / -1; }
+  /* En el móvil solo el titular, en dos líneas como mucho: se lee de un vistazo y todas las celdas miden igual */
+  .h-strip li { align-items: center; }
+  .h-strip small { display: none; }
+  .h-strip b { font-size: 13.5px; line-height: 1.3; }
 }
