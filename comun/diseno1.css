@@ -3282,3 +3282,13 @@ body[data-page="info"] { background: #F6F6F6; }
 /* Paco, 26/11 · Enlaces de las tarjetas de compromisos: la flecha sin subrayado (solo el texto lo lleva) */
 .h4c-k .h4c-more { display: inline-block; align-self: flex-start; }
 .h4c-k .h4c-more::after { display: inline-block; margin-left: 8px; text-decoration: none; }
+
+/* Paco, 26/11 · Ficha en móvil: fuera el aviso «Sigue bajando» (los dos módulos de historia) */
+@media (max-width: 900px) { .p-esc .p-esc-aviso { display: none !important; } }
+/* Paco, 26/11 · Independencia de lechos en móvil igual que en escritorio: los trazos iban en píxeles fijos (4 px la onda, 16 px la banda
+   que enciende los muelles) y, con la foto a la mitad de ancho, quedaban el doble de gruesos y se veían como manchas.
+   En móvil y tableta los trazos van en proporción a la foto (los mismos que en escritorio con la foto a ~880 px) */
+@media (max-width: 900px) {
+  .p-ind-svg .p-ind-onda, .p-ind-svg .p-ind-onda2 { vector-effect: none; stroke-width: .46; }
+  #p-ind-mk-el path, #p-ind-mk-ella path { vector-effect: none; stroke-width: 1.82; }
+}
