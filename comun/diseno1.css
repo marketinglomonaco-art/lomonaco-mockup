@@ -3317,3 +3317,7 @@ body[data-page="info"] { background: #F6F6F6; }
   .lm-news-box { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); width: min(900px, 100%); }
   .lm-news-img img { object-position: 44% 50%; }
 }
+@media (max-width: 700px) {
+  .lm-news-img { height: 180px; }
+  .lm-news-img img { object-position: 45% 64%; } /* el logo del colchón entero y las cabezas dentro */
+}
