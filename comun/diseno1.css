@@ -3288,10 +3288,7 @@ body[data-page="info"] { background: #F6F6F6; }
 /* Paco, 26/11 · Independencia de lechos en móvil igual que en escritorio: los trazos iban en píxeles fijos (4 px la onda, 16 px la banda
    que enciende los muelles) y, con la foto a la mitad de ancho, quedaban el doble de gruesos y se veían como manchas.
    En móvil y tableta los trazos van en proporción a la foto (los mismos que en escritorio con la foto a ~880 px) */
-@media (max-width: 900px) {
-  .p-ind-svg .p-ind-onda, .p-ind-svg .p-ind-onda2 { vector-effect: none; stroke-width: .46; }
-  #p-ind-mk-el path, #p-ind-mk-ella path { vector-effect: none; stroke-width: 1.82; }
-}
+/* (26/11: quitado a petición de Paco; vuelve la versión con los puntos) */
 
 /* Paco, 26/11 · Módulos de historia en móvil: indicadores de paso debajo del texto, como los de las tarjetas de la home
    (el activo, alargado y granate). Los de dentro de la foto se quitan en móvil para no repetir */
