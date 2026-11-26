@@ -3292,3 +3292,13 @@ body[data-page="info"] { background: #F6F6F6; }
   .p-ind-svg .p-ind-onda, .p-ind-svg .p-ind-onda2 { vector-effect: none; stroke-width: .46; }
   #p-ind-mk-el path, #p-ind-mk-ella path { vector-effect: none; stroke-width: 1.82; }
 }
+
+/* Paco, 26/11 · Módulos de historia en móvil: indicadores de paso debajo del texto, como los de las tarjetas de la home
+   (el activo, alargado y granate). Los de dentro de la foto se quitan en móvil para no repetir */
+.p-esc-txt-pasos { display: none; }
+@media (max-width: 900px) {
+  .p-esc .p-esc-pasos { display: none; }
+  .p-esc-txt-pasos { display: flex; gap: 8px; margin: 18px 0 0; padding: 0; list-style: none; }
+  .p-esc-txt-pasos li { width: 8px; height: 8px; border-radius: 8px; background: #d6d6da; transition: width .3s, background .3s; }
+  .p-esc-txt-pasos li.is-on { width: 26px; background: var(--acc); }
+}

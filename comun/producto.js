@@ -151,7 +151,9 @@
      el texto del momento en grande, una línea que lo explica y el paso (1 de 3). En escritorio no se ve */
   function txtMovil(k, expl) {
     return '<div class="p-esc-txt"><p class="p-esc-txt-k">' + k + ' · <span class="p-esc-txt-n">Paso 1 de 3</span></p>' +
-      '<p class="p-esc-txt-t" aria-live="polite"></p><p class="p-esc-txt-p">' + expl + '</p></div>';
+      '<p class="p-esc-txt-t" aria-live="polite"></p><p class="p-esc-txt-p">' + expl + '</p>' +
+      // Paco, 26/11: en móvil, indicadores de paso debajo del texto (como los de las tarjetas de la home)
+      '<ol class="p-esc-txt-pasos" aria-hidden="true"><li class="is-on"></li><li></li><li></li></ol></div>';
   }
   function ajustarFrases(caja, frases, n) {
     var max = caja.clientWidth * .45;
@@ -169,6 +171,7 @@
     var v = txt || (on ? on.textContent : (t.textContent || (cap ? cap.textContent : '')));
     if (t.textContent !== v) t.textContent = v;
     var nv = 'Paso ' + (paso + 1) + ' de 3'; if (n.textContent !== nv) n.textContent = nv;
+    LM.$$('.p-esc-txt-pasos li', el).forEach(function (li, i) { li.classList.toggle('is-on', i === paso); });
   }
   function espalda(esc, E) {
     var s = function (w) { return E.img + '-' + w + '.webp'; }, C = E.columna;
