@@ -3311,3 +3311,8 @@ body[data-page="info"] { background: #F6F6F6; }
 .p-ben-grid li b { line-height: 1.2; }
 .p-ben-grid li p { grid-column: 1 / -1; margin: 0; }
 @media (max-width: 700px) { .p-ben-grid li { padding: 16px 18px; } .p-ben-grid li b { font-size: 17px; } .p-ben-grid li p { font-size: 15px; } }
+
+/* Paco, 26/11 · Sin viudas (una palabra sola en la última línea) en ningún párrafo de la web.
+   «pretty» reparte las últimas líneas; en los párrafos cortos de tarjeta, «balance» deja las líneas parejas */
+p, li, dd, figcaption, blockquote, small { text-wrap: pretty; }
+.p-ben-grid li p, .h4c-k p, .p-scrub-p, .p-esc-txt-p, .c-steps li p, .h-trial-steps li p { text-wrap: balance; }
