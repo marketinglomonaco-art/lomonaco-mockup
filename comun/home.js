@@ -169,15 +169,10 @@
   var mq = matchMedia('(max-width: 699px)'), orig = [].slice.call(ul.children), pag = 0, n = Math.ceil(orig.length / 2);
   // Copias de los 2 primeros al final: al llegar a ellas se vuelve al principio sin que se note
   orig.slice(0, 2).forEach(function (li) { var c = li.cloneNode(true); c.classList.add('h-strip-copia'); c.setAttribute('aria-hidden', 'true'); ul.appendChild(c); });
-  // Paco, 26/11: puntitos debajo para saber que son 3 pasos (se pueden pulsar)
-  var dots = document.createElement('div'); dots.className = 'h-strip-dots';
-  for (var d = 0; d < n; d++) dots.insertAdjacentHTML('beforeend', '<button type="button" aria-label="Ver valores ' + (d + 1) + ' de ' + n + '"></button>');
-  ul.parentNode.appendChild(dots);
-  var bs = [].slice.call(dots.children);
-  bs.forEach(function (b, i) { b.addEventListener('click', function () { pag = i; ir(i); t0 = Date.now(); }); });
+  // Paco, 26/11: puntitos quitados a petición de Paco
+  var bs = [];
   var t0 = 0;
-  function ir(p, sin) { if (sin) ul.classList.add('sin-trans'); ul.style.transform = 'translate3d(' + (-100 * p) + '%,0,0)'; if (sin) { void ul.offsetWidth; ul.classList.remove('sin-trans'); }
-    bs.forEach(function (b, i) { b.classList.toggle('is-on', i === p % n); b.setAttribute('aria-current', i === p % n ? 'true' : 'false'); }); }
+  function ir(p, sin) { if (sin) ul.classList.add('sin-trans'); ul.style.transform = 'translate3d(' + (-100 * p) + '%,0,0)'; if (sin) { void ul.offsetWidth; ul.classList.remove('sin-trans'); } }
   ul.addEventListener('transitionend', function () { if (pag === n) { pag = 0; ir(0, true); } });
   mq.addEventListener('change', function () { pag = 0; ul.style.transform = mq.matches ? '' : 'none'; ir(0, true); if (!mq.matches) ul.style.transform = ''; });
   ir(0, true);
