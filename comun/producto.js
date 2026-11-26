@@ -253,7 +253,7 @@
      («…pero cada muelle trabaja solo»); 3) las ondas se apagan y en el lado de ella: «Tú sigues durmiendo» */
   function pareja(fig, E) {
     var s = function (w) { return E.img + '-' + w + '.webp'; }, k = E.h / E.w * 100, y = function (v) { return (v * k / 100).toFixed(2); };
-    var muelles = P.nucleo.toLowerCase().indexOf('muelles') > -1;
+    var muelles = true; // Paco, 26/11: la versión de los puntos en los 4 modelos (antes solo en los de muelles)
     var T = [E.textos[0][1], muelles ? E.textos[1][1] : E.textos[1][2]];
     // Paco, 19/11: el argumento de la independencia de lechos, en tres momentos (izquierda · derecha)
     var F = [['No te despiertes', 'cuando tu pareja se mueve'],

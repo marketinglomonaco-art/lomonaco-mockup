@@ -3310,3 +3310,10 @@ body[data-page="info"] { background: #F6F6F6; }
 @media (max-width: 700px) { .p-ben-grid li { padding: 16px 18px; } .p-ben-grid li b { font-size: 17px; } .p-ben-grid li p { font-size: 15px; } }
 
 /* Paco, 26/11 · Sin viudas: nada de cortes de línea forzados; se arreglan alargando el texto */
+
+/* Paco, 26/11 · Popup del boletín: que no se corte el logo LOMONACO del colchón. La foto un poco más ancha y el encuadre
+   desplazado a la izquierda (logo al 27–39 % de la foto, pareja al 39–72 %) */
+@media (min-width: 701px) {
+  .lm-news-box { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); width: min(900px, 100%); }
+  .lm-news-img img { object-position: 44% 50%; }
+}
