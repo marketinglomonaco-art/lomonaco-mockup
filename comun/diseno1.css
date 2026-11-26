@@ -3302,3 +3302,12 @@ body[data-page="info"] { background: #F6F6F6; }
   .p-esc-txt-pasos li { width: 8px; height: 8px; border-radius: 8px; background: #d6d6da; transition: width .3s, background .3s; }
   .p-esc-txt-pasos li.is-on { width: 26px; background: var(--acc); }
 }
+
+/* Paco, 26/11 · Bloques de ventajas de la ficha (colchones y tienda): titular al lado del icono para que sean más bajos;
+   el párrafo debajo, a todo el ancho (textos acortados para que en el móvil queden en dos líneas) */
+.p-ben-grid li { grid-template-columns: auto minmax(0, 1fr); align-items: center; column-gap: 14px; row-gap: 10px; padding: 20px 22px; }
+.p-ben-grid li .h-ic { margin-bottom: 0; width: 44px; height: 44px; }
+.p-ben-grid li .h-ic svg { width: 22px; height: 22px; }
+.p-ben-grid li b { line-height: 1.2; }
+.p-ben-grid li p { grid-column: 1 / -1; margin: 0; }
+@media (max-width: 700px) { .p-ben-grid li { padding: 16px 18px; } .p-ben-grid li b { font-size: 17px; } .p-ben-grid li p { font-size: 15px; } }

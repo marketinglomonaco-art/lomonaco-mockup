@@ -179,7 +179,7 @@ LM.PRODUCTOS = {
     fotosPropias: true,
     vp: 'Látex natural sobre muelles ensacados. Te recibe suave, te sujeta bien y no pasas calor.',
     beneficios: [['waves', 'No pasas calor', 'El tejido y el látex dejan pasar el aire. La superficie se mantiene fresca.'],
-                 ['body', 'Se adapta a tu cuerpo', 'El látex se amolda a hombros y cadera y recupera su forma en cuanto te mueves.'],
+                 ['body', 'Se adapta a tu cuerpo', 'El látex se amolda a hombros y cadera y recupera su forma al momento.'],
                  ['couple', 'No notas a tu pareja', 'Cada muelle trabaja solo. Si tu pareja se gira, tu lado sigue quieto.'],
                  ['leaf', 'Hipoalergénico', 'El látex natural es hipoalergénico y transpirable.']],
     sensacionLarga: 'Es el más acogedor de nuestros cuatro colchones: tiene la firmeza más baja de la gama. Notas que te recibe suave y, debajo, que los muelles te sujetan.',

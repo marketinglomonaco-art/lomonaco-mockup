@@ -75,22 +75,22 @@ LM.TIENDA = {
    [
     "box",
     "Gran espacio de almacenaje",
-    "Un amplio arcón oculto bajo la cama, con 28 cm de fondo, para guardar mantas, edredones y maletas."
+    "Un arcón de 28 cm de fondo para guardar mantas, edredones y maletas."
    ],
    [
     "lift",
     "Apertura suave y segura",
-    "Sus frenos de seguridad suben y bajan la tapa sin esfuerzo y sin golpes, pensados para el uso diario."
+    "Sus frenos suben y bajan la tapa sin esfuerzo y sin golpes."
    ],
    [
     "shield",
     "Madera robusta y duradera",
-    "Estructura de madera de alta calidad que aporta firmeza y estabilidad a tu colchón."
+    "Madera de alta calidad que da firmeza y estabilidad a tu colchón."
    ],
    [
     "grip",
     "Tapa antideslizante",
-    "Sujeta el colchón en su sitio para que no se mueva al abrir y cerrar el canapé."
+    "Sujeta el colchón para que no se mueva al abrir y cerrar el canapé."
    ],
    [
     "palette",
@@ -444,7 +444,7 @@ LM.TIENDA = {
    [
     "robot",
     "Pensada para robots aspiradores",
-    "Su altura deja pasar el robot de limpieza por debajo de la cama, para que el suelo quede limpio sin esfuerzo."
+    "Su altura deja pasar el robot aspirador por debajo de la cama."
    ],
    [
     "shield",
@@ -454,17 +454,17 @@ LM.TIENDA = {
    [
     "waves",
     "El colchón respira",
-    "Al estar elevada sobre patas, el aire circula por debajo y el colchón se mantiene más fresco y seco."
+    "Sobre patas, el aire circula por debajo y el colchón queda fresco y seco."
    ],
    [
     "grip",
     "Tejido antideslizante",
-    "Su tela sujeta el colchón en su sitio: no se desplaza aunque te muevas durante la noche."
+    "Su tela sujeta el colchón: no se desplaza aunque te muevas de noche."
    ],
    [
     "body",
     "Sin deformaciones",
-    "Reparte el peso por igual: el colchón conserva su forma original y no se marcan huecos con los años."
+    "Reparte el peso por igual y el colchón no se marca con los años."
    ]
   ],
   "detalle": [
@@ -794,7 +794,7 @@ LM.TIENDA = {
    [
     "robot",
     "Pensada para robots aspiradores",
-    "Su altura deja pasar el robot de limpieza por debajo de la cama, para que el suelo quede limpio sin esfuerzo."
+    "Su altura deja pasar el robot aspirador por debajo de la cama."
    ],
    [
     "shield",
@@ -804,17 +804,17 @@ LM.TIENDA = {
    [
     "waves",
     "El colchón respira",
-    "Al estar elevada sobre patas, el aire circula por debajo y el colchón se mantiene más fresco y seco."
+    "Sobre patas, el aire circula por debajo y el colchón queda fresco y seco."
    ],
    [
     "grip",
     "Tejido 3D antideslizante",
-    "Su tela 3D sujeta el colchón en su sitio: no se desplaza aunque te muevas durante la noche."
+    "Su tela 3D sujeta el colchón: no se desplaza aunque te muevas de noche."
    ],
    [
     "body",
     "Sin deformaciones",
-    "Reparte el peso por igual: el colchón conserva su forma original y no se marcan huecos con los años."
+    "Reparte el peso por igual y el colchón no se marca con los años."
    ]
   ],
   "detalle": [
@@ -1010,12 +1010,12 @@ LM.TIENDA = {
    [
     "body",
     "Se adapta a ti",
-    "Se amolda a la forma de tu cabeza y tu cuello para darte un apoyo a tu medida."
+    "Se amolda a tu cabeza y tu cuello para darte un apoyo a tu medida."
    ],
    [
     "moon",
     "Para cualquier postura",
-    "Sujeta el cuello igual de bien si duermes de lado como si duermes boca arriba."
+    "Sujeta bien el cuello tanto si duermes de lado como boca arriba."
    ],
    [
     "waves",
@@ -1030,7 +1030,7 @@ LM.TIENDA = {
    [
     "check",
     "Despierta sin tensión",
-    "Menos carga en el cuello y los hombros al levantarte, para empezar el día sin molestias."
+    "Menos carga en cuello y hombros, para empezar el día sin molestias."
    ]
   ],
   "detalle": [
@@ -1109,12 +1109,12 @@ LM.TIENDA = {
    [
     "body",
     "Se adapta a ti",
-    "Se amolda a la forma de tu cabeza y tu cuello para darte un apoyo a tu medida."
+    "Se amolda a tu cabeza y tu cuello para darte un apoyo a tu medida."
    ],
    [
     "moon",
     "Para cualquier postura",
-    "Sujeta el cuello igual de bien si duermes de lado como si duermes boca arriba."
+    "Sujeta bien el cuello tanto si duermes de lado como boca arriba."
    ],
    [
     "waves",
@@ -1129,7 +1129,7 @@ LM.TIENDA = {
    [
     "check",
     "Despierta sin tensión",
-    "Menos carga en el cuello y los hombros al levantarte, para empezar el día sin molestias."
+    "Menos carga en cuello y hombros, para empezar el día sin molestias."
    ]
   ],
   "detalle": [
@@ -1222,7 +1222,7 @@ LM.TIENDA = {
    [
     "couple",
     "Perfecto para parejas",
-    "Si tú pasas frío y tu pareja calor, cada uno duerme a la temperatura que necesita."
+    "Si tú pasas frío y tu pareja calor, cada uno duerme a su temperatura."
    ],
    [
     "leaf",
@@ -1338,7 +1338,7 @@ LM.TIENDA = {
    [
     "leaf",
     "Tejido Tencel®",
-    "Un tejido ecológico de origen natural, suave y agradable al tacto, como una sábana."
+    "Tejido ecológico de origen natural, suave al tacto, como una sábana."
    ],
    [
     "waves",
