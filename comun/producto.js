@@ -450,10 +450,17 @@
     var pin = $('.p-scrub-pin', sec), v = $('.p-scrub-v', sec), list = $('#p-scrub-steps'), bar = $('#p-scrub-prog');
     // Paco, 09/11: si hay capas del vídeo para este modelo (LM.VIDEO_CAPAS), una tarjeta por capa y un punto sobre ella
     var CV = (LM.VIDEO_CAPAS || {}).todos, capas = CV || P.capas, n = capas.length, dd = function (x) { return (x < 10 ? '0' : '') + x; };
-    // Paco, 26/11: las capas reales de cada modelo con los nombres definitivos (LM.CAPAS_MODELO). El vídeo es común a los 4,
-    // así que ya no se marcan puntos sobre él (no coincidirían con las capas de cada modelo)
+    // Paco, 26/11: las capas reales de cada modelo con los nombres definitivos (LM.CAPAS_MODELO)
     var CM = LM.CAPAS_MODELO && LM.CAPAS_MODELO[K];
-    if (CM) { CV = null; capas = CM.map(function (c) { return [c[1], c[2], c[0]]; }); n = capas.length; }
+    if (CM) {
+      // Paco, 26/11 (2.ª): vuelve el punto sobre el vídeo. Las capas del modelo se reparten de arriba abajo entre las del vídeo
+      var T = CV || [];
+      capas = CM.map(function (c) { return [c[1], c[2], c[0]]; }); n = capas.length;
+      CV = T.length > 1 ? CM.map(function (c, i) {
+        var f = i * (T.length - 1) / Math.max(1, n - 1), a = Math.floor(f), b = Math.min(T.length - 1, a + 1);
+        return [c[1], c[2], T[a][2], +(T[a][3] + (T[b][3] - T[a][3]) * (f - a)).toFixed(2)];
+      }) : null;
+    }
     var NUM = ['', 'Una', 'Dos', 'Tres', 'Cuatro', 'Cinco', 'Seis', 'Siete', 'Ocho', 'Nueve', 'Diez', 'Once', 'Doce', 'Trece', 'Catorce', 'Quince'];
     var A0 = .15, A1 = .86, tr = (A1 - A0) / n;
     var pasos = [{ a: 0, b: A0, k: 'Por dentro', t: 'Así es tu ' + P.nombre + '.', p: 'Lo abrimos capa a capa.', h2: true, aviso: true }]
