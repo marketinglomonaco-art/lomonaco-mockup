@@ -204,7 +204,7 @@ LM.PRODUCTOS = {
     beneficios: [['body', '100% adaptable', 'El látex reduce la presión en hombros, espalda y cadera.'],
                  ['couple', 'No notas a tu pareja', 'Si tu pareja se gira o se levanta, tu lado sigue quieto.'],
                  ['waves', 'Frescor', 'Deja pasar el aire y expulsa el calor y la humedad.'],
-                 ['leaf', 'Hipoalergénico', '100% látex, hipoalergénico y antibacteriano.']],
+                 ['leaf', 'Hipoalergénico', 'Es 100% látex: un material hipoalergénico y antibacteriano para tu descanso.']],
     sensacionLarga: 'Firme, pero se adapta a todo tu cuerpo. Desde la primera noche notas una acogida suave.',
     durTxt: 'El látex recupera su forma después de cada noche: así evitas que se hunda donde duermes.',
     id: 68498, nombre: 'Gran Natura', titulo: 'Colchón Gran Natura', url: 'colchon-gran-natura.html',
