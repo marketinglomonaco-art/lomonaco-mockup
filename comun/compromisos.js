@@ -63,7 +63,7 @@
       // 1 · Asesoramiento experto: el test, como enlace
       k(foto('comp3-ayuda', 800, 1200, 'Una asesora de LOMONACO sonríe con sus cascos en el showroom'), icK('phone'), '', 'Asesoramiento experto',
         'Cuéntanos cómo te gusta dormir y nuestros expertos te ayudarán a encontrar tu colchón ideal, con un consejo personalizado y sin compromiso.',
-        '<a class="h4c-more" href="' + test + '" data-lead="home-ayuda-test">Haz el test de 1 minuto</a>'), // Paco, 24/11: un solo enlace por tarjeta
+        '<a class="h4c-more" href="tel:' + C.telefono.tel + '" data-tel="home-ayuda" data-lead="home-ayuda-tel">Llámanos al ' + C.telefono.v + '</a>'), // Paco, 26/11: el enlace es para llamar, no para el test
       // 2 · 150 noches de prueba (con la devolución dentro)
       k(foto('comp3-noches', 800, 1200, 'Una mujer duerme tranquila en su colchón Lomonaco'), icK('moon'), cifra(pr[0], pr[1] + ' de prueba'), '150 noches de prueba',
         'Acostumbrarse a un colchón nuevo lleva su tiempo. Por eso tienes 150 noches para probarlo en casa. Si no te convence, pasamos a recogerlo.', verCond('devolucion')),

@@ -3278,3 +3278,6 @@ body[data-page="info"] { background: #F6F6F6; }
 @media (min-width: 700px) { .h-strip .h-strip-copia { display: none; } }
 
 /* Paco, 26/11 · Puntitos de la franja móvil: quitados */
+
+/* Paco, 26/11 · Enlaces de las tarjetas de compromisos: la flecha sin subrayado (solo el texto lo lleva) */
+.h4c-k .h4c-more::after { display: inline-block; text-decoration: none; }
