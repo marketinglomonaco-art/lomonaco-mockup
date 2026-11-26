@@ -161,3 +161,16 @@
     LM.track('generate_lead', { method: 'newsletter', source: 'popup_home' });
   });
 })();
+
+/* Paco, 26/11 · Franja de valores en el móvil: de 2 en 2, se desliza sola cada 4 s hacia la izquierda, como el banner */
+(function () {
+  var ul = document.querySelector('.h-strip-in');
+  if (!ul || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var mq = matchMedia('(max-width: 699px)'), orig = [].slice.call(ul.children), pag = 0, n = Math.ceil(orig.length / 2);
+  // Copias de los 2 primeros al final: al llegar a ellas se vuelve al principio sin que se note
+  orig.slice(0, 2).forEach(function (li) { var c = li.cloneNode(true); c.classList.add('h-strip-copia'); c.setAttribute('aria-hidden', 'true'); ul.appendChild(c); });
+  function ir(p, sin) { if (sin) ul.classList.add('sin-trans'); ul.style.transform = 'translate3d(' + (-100 * p) + '%,0,0)'; if (sin) { void ul.offsetWidth; ul.classList.remove('sin-trans'); } }
+  ul.addEventListener('transitionend', function () { if (pag === n) { pag = 0; ir(0, true); } });
+  mq.addEventListener('change', function () { pag = 0; ul.style.transform = mq.matches ? '' : 'none'; ir(0, true); if (!mq.matches) ul.style.transform = ''; });
+  setInterval(function () { if (!mq.matches || document.hidden) return; pag++; ir(pag); }, 4000);
+})();
