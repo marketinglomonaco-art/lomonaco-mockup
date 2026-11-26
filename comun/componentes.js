@@ -269,7 +269,7 @@
     return '<span class="lm-ocu' + (cls ? ' ' + cls : '') + '"><img src="' + LM.SELLO_OCU.img + '" alt="' + LM.SELLO_OCU.alt + '" width="160" height="160" loading="lazy"><span>' + LM.SELLO_OCU.t + '</span></span>';
   };
   /* Paco, 12/11: filtro de medidas de la home, común a todas las categorías */
-  LM.MEDIDAS_FILTRO = ['90x190', '150x190', '180x200'];
+  LM.MEDIDAS_FILTRO = ['90x190', '135x190', '150x190']; /* Paco, 26/11: 135×190 en lugar de 180×200 */
   LM.medidaFiltro = function () { var m = LM.medidaInicial(); return LM.MEDIDAS_FILTRO.indexOf(m) > -1 ? m : '150x190'; };
   LM.filtroMedidas = function (el, onChange) {
     var m = LM.medidaFiltro();

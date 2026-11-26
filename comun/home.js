@@ -58,7 +58,7 @@
   var g = $('#h-productos');
   if (g) {
     // Paco, 05/11: la tarjeta estándar del ecommerce (comun/componentes.js · LM.tarjeta), con precio para 150 × 190
-    var MED = ['90x190', '150x190', '180x200'], selM = $('#h-prod-med');
+    var MED = ['90x190', '135x190', '150x190'] /* Paco, 26/11 */, selM = $('#h-prod-med');
     var med = MED.indexOf(LM.medidaInicial()) > -1 ? LM.medidaInicial() : '150x190';
     function pintarTarjetas() {
       g.innerHTML = LM.ORDEN.map(function (k) { return LM.tarjeta(k, { medida: med }); }).join('');
